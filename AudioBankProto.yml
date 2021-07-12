@@ -1,0 +1,47 @@
+AudioBank:
+  filters:
+  - enumName: "MyFilter"
+    crc: 3681231674
+    eFilter: 0
+    fFrequency: 0
+    fOneOverQ: 0
+  reverbs:
+  - effectDef:
+      eEffectType: 0
+      enumName: "MyReverb"
+      crc: 400025156
+  wetDryMix: 100.0
+  reflectionsDelay: 0
+  reverbDelay: 85
+  roomFilterFreq: 20.0
+  roomFilterMain: 0.0
+  roomFilterHF: 0.0
+  reflectionsGain: 20.0
+  reverbGain: 20.0
+  decayTime: 1.0
+  density: 100.0
+  roomSize: 100.0
+  rooms:
+  - roomName: "MyRoom"
+    crc: 3041900200
+    filterCRC: 3681231674
+    effectCrcs: 
+        - 400025156
+  soundFiles:
+  - enumName: AFTERBURNER
+    filename: ENGINEFI
+    stream: false
+    loop: false
+    volume: 1
+    minDistance: 1
+    maxDistance: 1000
+    eType: 1
+    eFalloff: 0
+    pitchRandomisation: 0
+    priority: 128
+    crossfade: 
+    basePitch: 1
+    dopplerFactor: 0
+    localized: false
+    crc: 3026461678
+    roomNameCRC: 3041900200
