@@ -84,7 +84,7 @@ namespace Yaml_AudioTool_Rebuilt
             return soundSource;
         }
 
-        public static IXAudio2SubmixVoice SetRoomFilter(IXAudio2SubmixVoice submixVoice)
+        public static IXAudio2SourceVoice SetRoomFilter(IXAudio2SourceVoice submixVoice)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
             FilterParameters voiceFilter = new();
@@ -96,49 +96,21 @@ namespace Yaml_AudioTool_Rebuilt
             return submixVoice;
         }
 
-        public static IXAudio2SubmixVoice SetEffectChain(IXAudio2SubmixVoice submixVoice)
+        public static IXAudio2SourceVoice SetRoomReverb(IXAudio2SourceVoice sourceVoice)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
             var reverb = Vortice.XAudio2.Fx.Fx.CreateAudioReverb();
 
-            var effectDescriptor = new EffectDescriptor(reverb);
-            effectDescriptor.OutputChannelCount = submixVoice.VoiceDetails.InputChannelCount;
-
-           // var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex], false);
-           // actualReverbParameter.WetDryMix = Convert.ToSingle(Math.Round(f1.reverbwetdryPot.Value, 1));
-           // submixVoice.SetEffectParameters(0, actualReverbParameter);
-
-            submixVoice.SetEffectChain(effectDescriptor);
-            submixVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex], false));
+            var effectDescriptor = new EffectDescriptor(reverb, sourceVoice.VoiceDetails.InputChannelCount);
+            sourceVoice.SetEffectChain(effectDescriptor);
+            sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex], false));
             ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.reverbwetdryPot.Value, 1));
-            submixVoice.DisableEffect(0);
-            
-                        
-            /*  var volumeMeter = Vortice.XAudio2.Fx.Fx.CreateAudioVolumeMeter();
-              var effectDescriptor = new EffectDescriptor(volumeMeter, submixVoice.VoiceDetails.InputChannelCount);
-              submixVoice.SetEffectChain(effectDescriptor);
-              volumeMeterLevels volumeLevel = new(peakLevel, rmsLevel, 2);
-              volumeLevel.PeakLevels.Length.ToString();
-              submixVoice.SetEffectParameters(0, volumeLevel);
-              submixVoice.EnableEffect();*/
-            return submixVoice;
+            sourceVoice.EnableEffect(0);
+           // MessageBox.Show(submixVoice.GetEffectState(0).ToString());
+            return sourceVoice;
         }
 
-        public static IXAudio2SubmixVoice SetRoomReverb(IXAudio2SubmixVoice submixVoice)
-        {
-            Form1 f1 = (Form1)Application.OpenForms["Form1"];
-            var reverb = Vortice.XAudio2.Fx.Fx.CreateAudioReverb();
-
-            var effectDescriptor = new EffectDescriptor(reverb, submixVoice.VoiceDetails.InputChannelCount);
-            submixVoice.SetEffectChain(effectDescriptor);
-            submixVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex], false));
-            ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.reverbwetdryPot.Value, 1));
-            submixVoice.EnableEffect(0);
-            MessageBox.Show(submixVoice.GetEffectState(0).ToString());
-            return submixVoice;
-        }
-
-        public static IXAudio2SubmixVoice SetVolumeMeter(IXAudio2SubmixVoice submixVoice)
+     /*   public static IXAudio2SubmixVoice SetVolumeMeter(IXAudio2SubmixVoice submixVoice)
         {
           /*  Form1 f1 = (Form1)Application.OpenForms["Form1"];
             var volumeMeter = Vortice.XAudio2.Fx.Fx.CreateAudioVolumeMeter();
@@ -147,8 +119,8 @@ namespace Yaml_AudioTool_Rebuilt
             volumeMeterLevels volumeLevel = new(peakLevel, rmsLevel, 2);
             volumeLevel.PeakLevels.Length.ToString();
             submixVoice.SetEffectParameters(0, volumeLevel);
-            submixVoice.EnableEffect();*/
+            submixVoice.EnableEffect();
             return submixVoice;
-        }
+        }*/
     }
 }

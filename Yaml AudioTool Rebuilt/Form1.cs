@@ -644,30 +644,7 @@ namespace Yaml_AudioTool_Rebuilt
                     playbackTimer.Stop();
                 }
             }
-        }
-
-        private void frequencyPot_ValueChanged(object sender, EventArgs e)
-        {
-            float value = Convert.ToSingle(Math.Round(filterfrequencyPot.Value, 1));
-            filterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(value, 48000f).ToString("0.0") + " Hz";
-            
-
-            if (roomlistView.SelectedItems.Count == 1)
-            {
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text = value.ToString("0.0");
-            }
-        }
-
-        private void oneoverqPot_ValueChanged(object sender, EventArgs e)
-        {
-            double value = Math.Round(filteroneoverqPot.Value, 1);
-            filteroneoverqvalueLabel.Text = value.ToString("0.0");
-
-            if (roomlistView.SelectedItems.Count == 1)
-            {
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text = value.ToString("0.0");
-            }
-        }
+        }        
 
         private void roomstoreButton_Click(object sender, EventArgs e)
         {
@@ -739,6 +716,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (roomlistView.SelectedItems.Count == 1)
             {
+                ap.SetFilterFreq(filelistView.SelectedItems.Count);
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filtertypeHeader)].Text = filtercomboBox.SelectedIndex.ToString();
             }
         }
@@ -767,6 +745,31 @@ namespace Yaml_AudioTool_Rebuilt
                 a++;                
             }
             return false;
+        }
+
+        private void frequencyPot_ValueChanged(object sender, EventArgs e)
+        {
+            ap.SetFilterFreq(filelistView.SelectedItems.Count);
+            float value = Convert.ToSingle(Math.Round(filterfrequencyPot.Value, 1));
+            filterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(value, 48000f).ToString("0.0") + " Hz";
+
+
+            if (roomlistView.SelectedItems.Count == 1)
+            {
+                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text = value.ToString("0.0");
+            }
+        }
+
+        private void oneoverqPot_ValueChanged(object sender, EventArgs e)
+        {
+            ap.SetFilterFreq(filelistView.SelectedItems.Count);
+            double value = Math.Round(filteroneoverqPot.Value, 1);
+            filteroneoverqvalueLabel.Text = value.ToString("0.0");
+
+            if (roomlistView.SelectedItems.Count == 1)
+            {
+                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text = value.ToString("0.0");
+            }
         }
 
         private void reverbwetdryPot_ValueChanged(object sender, EventArgs e)

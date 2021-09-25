@@ -28,7 +28,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         public IXAudio2 xaudio2;
         public IXAudio2SourceVoice sourceVoice;
-        public IXAudio2SubmixVoice submixVoice;
+      //  public IXAudio2SubmixVoice submixVoice;
 
         public IWaveSource soundSource;
 
@@ -164,7 +164,7 @@ namespace Yaml_AudioTool_Rebuilt
                 }
 
                 sourceVoice = xaudio2.CreateSourceVoice(waveFormat, VoiceFlags.UseFilter);
-                submixVoice = xaudio2.CreateSubmixVoice(waveFormat.Channels, 48000, SubmixVoiceFlags.UseFilter, 0); 
+                //submixVoice = xaudio2.CreateSubmixVoice(waveFormat.Channels, 48000, SubmixVoiceFlags.UseFilter, 0); 
 
                 // Set Loop
                 if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text == "true")
@@ -172,11 +172,12 @@ namespace Yaml_AudioTool_Rebuilt
                     audioBuffer.LoopCount = IXAudio2.LoopInfinite;
                 }
 
-                // Set Room
+                // Set Effects
                 if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
                 {
-                    Effects.SetEffectChain(submixVoice);
-                    MessageBox.Show(submixVoice.GetEffectState(0).ToString());
+                    Effects.SetRoomFilter(sourceVoice);
+                    Effects.SetRoomReverb(sourceVoice);
+                    //MessageBox.Show(submixVoice.GetEffectState(0).ToString());
                     /*MessageBox.Show(
                         submixVoice.GetFilterParameters().Frequency.ToString() + "\n" +
                         submixVoice.GetFilterParameters().OneOverQ.ToString() + "\n" +
@@ -191,18 +192,20 @@ namespace Yaml_AudioTool_Rebuilt
                 //ef.SetBrickwallLimiter(xaudio2, waveFormat, masteringVoice);
 
                 sourceVoice.SubmitSourceBuffer(audioBuffer);
-                //sourceVoice.Start();
-
+                sourceVoice.Start();
+                /*
                 VoiceSendDescriptor vs = new()
                 {
                     OutputVoice = submixVoice,
                 };
                 sourceVoice.SetOutputVoices(vs);
-                sourceVoice.Start();
+                sourceVoice.Start();*/
                 f1.PlayButton.Text = "| |";
                 playbackStop = false;
             }
             SetVolume(f1.VolumetrackBar.Value, f1.filelistView.SelectedItems.Count);
+            SetFilterFreq(f1.filelistView.SelectedItems.Count);
+            SetReverbWetDry(f1.filelistView.SelectedItems.Count);
         }
 
         public void StopPlayback()
@@ -218,8 +221,8 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 sourceVoice.Dispose();
                 sourceVoice = null;
-                submixVoice.Dispose();
-                submixVoice = null;
+          //      submixVoice.Dispose();
+            //    submixVoice = null;
             }
             timerCount = 0;
             if (f1 != null)
@@ -238,12 +241,21 @@ namespace Yaml_AudioTool_Rebuilt
             return value;
         }
 
+        public void SetFilterFreq(int filelistValue)
+        {
+            if (xaudio2 != null &&
+                filelistValue == 1)
+            {
+                sourceVoice = Effects.SetRoomFilter(sourceVoice);
+            }
+        }
+
         public void SetReverbWetDry(int filelistValue)
         {
             if (xaudio2 != null &&
                 filelistValue == 1)
             {
-                submixVoice = Effects.SetRoomReverb(submixVoice);
+                sourceVoice = Effects.SetRoomReverb(sourceVoice);
             }
         }
     }
