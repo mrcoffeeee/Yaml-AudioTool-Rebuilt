@@ -29,93 +29,70 @@ namespace Yaml_AudioTool_Rebuilt
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.aboutinfotextBox = new System.Windows.Forms.TextBox();
-            this.abouttitletextBox = new System.Windows.Forms.TextBox();
-            this.aboutauthortextBox = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.LogopictureBox = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.AboutrichTextBox = new System.Windows.Forms.RichTextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.LogopictureBox)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // LogopictureBox
             // 
-            this.pictureBox1.BackgroundImage = global::Yaml_AudioTool_Rebuilt.Properties.Resources.omegaLogo;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(385, 345);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
+            this.LogopictureBox.BackgroundImage = global::Yaml_AudioTool_Rebuilt.Properties.Resources.omegaLogo;
+            this.LogopictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.LogopictureBox.InitialImage = null;
+            this.LogopictureBox.Location = new System.Drawing.Point(5, 6);
+            this.LogopictureBox.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.LogopictureBox.Name = "LogopictureBox";
+            this.LogopictureBox.Size = new System.Drawing.Size(621, 643);
+            this.LogopictureBox.TabIndex = 2;
+            this.LogopictureBox.TabStop = false;
             // 
-            // aboutinfotextBox
+            // panel1
             // 
-            this.aboutinfotextBox.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.aboutinfotextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.aboutinfotextBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.aboutinfotextBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.aboutinfotextBox.Location = new System.Drawing.Point(13, 368);
-            this.aboutinfotextBox.Name = "aboutinfotextBox";
-            this.aboutinfotextBox.ReadOnly = true;
-            this.aboutinfotextBox.Size = new System.Drawing.Size(360, 18);
-            this.aboutinfotextBox.TabIndex = 3;
-            this.aboutinfotextBox.Text = "YAML AudioTool Rebuilt v0.2 for";
-            this.aboutinfotextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.panel1.Controls.Add(this.AboutrichTextBox);
+            this.panel1.Controls.Add(this.LogopictureBox);
+            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(631, 886);
+            this.panel1.TabIndex = 6;
             // 
-            // abouttitletextBox
+            // AboutrichTextBox
             // 
-            this.abouttitletextBox.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.abouttitletextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.abouttitletextBox.Font = new System.Drawing.Font("Segoe UI Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.abouttitletextBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.abouttitletextBox.Location = new System.Drawing.Point(13, 400);
-            this.abouttitletextBox.Name = "abouttitletextBox";
-            this.abouttitletextBox.Size = new System.Drawing.Size(360, 29);
-            this.abouttitletextBox.TabIndex = 4;
-            this.abouttitletextBox.Text = "Wing Commander IV - Remastered";
-            this.abouttitletextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // aboutauthortextBox
-            // 
-            this.aboutauthortextBox.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.aboutauthortextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.aboutauthortextBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.aboutauthortextBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.aboutauthortextBox.Location = new System.Drawing.Point(13, 442);
-            this.aboutauthortextBox.Name = "aboutauthortextBox";
-            this.aboutauthortextBox.Size = new System.Drawing.Size(359, 16);
-            this.aboutauthortextBox.TabIndex = 5;
-            this.aboutauthortextBox.Text = "2021: mrcoffeeee";
-            this.aboutauthortextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.AboutrichTextBox.Font = new System.Drawing.Font("Segoe UI", 9.85F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.AboutrichTextBox.Location = new System.Drawing.Point(6, 599);
+            this.AboutrichTextBox.Name = "AboutrichTextBox";
+            this.AboutrichTextBox.ReadOnly = true;
+            this.AboutrichTextBox.Size = new System.Drawing.Size(620, 284);
+            this.AboutrichTextBox.TabIndex = 4;
+            this.AboutrichTextBox.Text = "\t\t\t\n\t\tYAML AudioTool Rebuilt\n\nVersion: 0.3\n\nNET5 Remake of the Vitei Audio Tool b" +
+    "y Alex Miyamoto\nCode: Johannes Wronka\nLogo: Owen Davis";
             // 
             // AboutDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.ClientSize = new System.Drawing.Size(390, 480);
-            this.Controls.Add(this.aboutauthortextBox);
-            this.Controls.Add(this.abouttitletextBox);
-            this.Controls.Add(this.aboutinfotextBox);
-            this.Controls.Add(this.pictureBox1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(655, 910);
+            this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(406, 519);
+            this.MaximumSize = new System.Drawing.Size(679, 974);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(406, 519);
+            this.MinimumSize = new System.Drawing.Size(679, 974);
             this.Name = "AboutDialog";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogopictureBox)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox aboutinfotextBox;
-        private System.Windows.Forms.TextBox abouttitletextBox;
-        private System.Windows.Forms.TextBox aboutauthortextBox;
+        private System.Windows.Forms.PictureBox LogopictureBox;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RichTextBox AboutrichTextBox;
     }
 }

@@ -35,7 +35,7 @@ namespace Yaml_AudioTool_Rebuilt
         private int basefilterlistviewHeight = 0;
 
         private readonly AudioPlayback ap = new();
-        private readonly Effect_PitchShifter formPitchshifter = new();
+      //  private readonly Effect_PitchShifter formPitchshifter = new();
         
 
         //###############################################################################################
@@ -67,7 +67,7 @@ namespace Yaml_AudioTool_Rebuilt
         //######################################################
 
 
-        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AbouttoolStripMenuItem2_Click(object sender, EventArgs e)
         {
             AboutDialog f2 = new();
             f2.ShowDialog();
@@ -114,14 +114,6 @@ namespace Yaml_AudioTool_Rebuilt
                 FalloffcomboBox.SelectedIndex = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(falloffHeader)].Text);
 
                 PitchenableButton.Enabled = true;
-                if ((Application.OpenForms["Effect_PitchShifter"] as Effect_PitchShifter) != null)
-                {
-                    formPitchshifter.PitchPot.Value = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(pitchHeader)].Text) * 100;
-                    formPitchshifter.PitchvalueLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(pitchHeader)].Text;
-                    formPitchshifter.PitrandPot.Value = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(pitchrandHeader)].Text) * 100;
-                    formPitchshifter.PitchrandvalueLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(pitchrandHeader)].Text;
-                }
-
                 removeButtonEnabled(true);
             }
         }
@@ -473,16 +465,10 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void PitchshifterButton_Click(object sender, EventArgs e)
         {
-            if (formPitchshifter.Visible == false)
-            {
-                formPitchshifter.Show();
-                formPitchshifter.TopMost = true;                
-                formPitchshifter.Visible = true;
-            }
-            else if (formPitchshifter.Visible == true)
-            {
-                formPitchshifter.Visible = false;
-            }
+            Effect_PitchShifter pitchshifterForm = new();            
+            pitchshifterForm.TopMost = true;
+            pitchshifterForm.Show();
+            PitchshifterButton.Enabled = false;
         }
 
         private void PitchenableButton_Click(object sender, EventArgs e)
@@ -497,6 +483,21 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 PitchenableButton.Text = "Off";
                 PitchenableButton.BackColor = Color.Salmon;
+            }
+        }
+
+        private void RoomenableButton_Click(object sender, EventArgs e)
+        {
+            if (RoomenableButton.Text == "Off")
+            {
+                RoomenableButton.Text = "On";
+                RoomenableButton.BackColor = Color.LightGreen;
+            }
+
+            else if (RoomenableButton.Text == "On")
+            {
+                RoomenableButton.Text = "Off";
+                RoomenableButton.BackColor = Color.Salmon;
             }
         }
 

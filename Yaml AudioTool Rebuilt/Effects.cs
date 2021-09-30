@@ -84,7 +84,7 @@ namespace Yaml_AudioTool_Rebuilt
             return soundSource;
         }
 
-        public static IXAudio2SourceVoice SetRoomFilter(IXAudio2SourceVoice submixVoice)
+        public static IXAudio2SourceVoice SetRoomFilter(IXAudio2SourceVoice sourceVoice)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
             FilterParameters voiceFilter = new();
@@ -92,8 +92,8 @@ namespace Yaml_AudioTool_Rebuilt
             voiceFilter.Frequency = Convert.ToSingle(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filterfrequencyHeader)].Text);
             voiceFilter.OneOverQ = Convert.ToSingle(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filteroneoverqHeader)].Text);
             voiceFilter.Type = (FilterType)Convert.ToInt32(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filtertypeHeader)].Text);
-            submixVoice.SetFilterParameters(voiceFilter, operationSet: 0);
-            return submixVoice;
+            sourceVoice.SetFilterParameters(voiceFilter, operationSet: 0);
+            return sourceVoice;
         }
 
         public static IXAudio2SourceVoice SetRoomReverb(IXAudio2SourceVoice sourceVoice)

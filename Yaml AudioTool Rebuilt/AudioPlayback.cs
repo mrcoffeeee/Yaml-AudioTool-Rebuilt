@@ -130,7 +130,7 @@ namespace Yaml_AudioTool_Rebuilt
                 xaudio2 = XAudio2.XAudio2Create(ProcessorSpecifier.UseDefaultProcessor);
                 Vortice.Multimedia.WaveFormat waveFormat;
                 AudioBuffer audioBuffer;
-                var masteringVoice = xaudio2.CreateMasteringVoice(1, 48000);
+                var masteringVoice = xaudio2.CreateMasteringVoice(2, 48000);
                 xaudio2.StartEngine();
 
                 // Set Pitchshifter                                
@@ -173,17 +173,17 @@ namespace Yaml_AudioTool_Rebuilt
                 }
 
                 // Set Effects
-                if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
+                // Set Room                              
+                if (f1.RoomenableButton.BackColor == Color.LightGreen)
                 {
-                    Effects.SetRoomFilter(sourceVoice);
-                    Effects.SetRoomReverb(sourceVoice);
-                    //MessageBox.Show(submixVoice.GetEffectState(0).ToString());
-                    /*MessageBox.Show(
-                        submixVoice.GetFilterParameters().Frequency.ToString() + "\n" +
-                        submixVoice.GetFilterParameters().OneOverQ.ToString() + "\n" +
-                        submixVoice.GetFilterParameters().Type.ToString());*/
-                    //  Effects.SetRoomReverb(submixVoice);
-                }                
+                    if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
+                    {
+                        //MessageBox.Show("Reverb Active");
+                        Effects.SetRoomFilter(sourceVoice);
+                        Effects.SetRoomReverb(sourceVoice);
+                    }
+
+                }
 
                 // Set VolumeMeter
                 ///DO IT HERE!
@@ -193,19 +193,20 @@ namespace Yaml_AudioTool_Rebuilt
 
                 sourceVoice.SubmitSourceBuffer(audioBuffer);
                 sourceVoice.Start();
-                /*
-                VoiceSendDescriptor vs = new()
-                {
-                    OutputVoice = submixVoice,
-                };
-                sourceVoice.SetOutputVoices(vs);
-                sourceVoice.Start();*/
+
                 f1.PlayButton.Text = "| |";
                 playbackStop = false;
             }
+
+            // Change values while playback
             SetVolume(f1.VolumetrackBar.Value, f1.filelistView.SelectedItems.Count);
-            SetFilterFreq(f1.filelistView.SelectedItems.Count);
-            SetReverbWetDry(f1.filelistView.SelectedItems.Count);
+
+            if (f1.RoomenableButton.BackColor == Color.LightGreen && 
+                f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
+            {
+                SetFilterFreq(f1.filelistView.SelectedItems.Count);
+                SetReverbWetDry(f1.filelistView.SelectedItems.Count);
+            }            
         }
 
         public void StopPlayback()
