@@ -174,11 +174,10 @@ namespace Yaml_AudioTool_Rebuilt
 
                 // Set Effects
                 // Set Room                              
-                if (f1.RoomenableButton.BackColor == Color.LightGreen)
+                if (f1. RoomenableButton.BackColor == Color.LightGreen)
                 {
                     if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
                     {
-                        //MessageBox.Show("Reverb Active");
                         Effects.SetRoomFilter(sourceVoice);
                         Effects.SetRoomReverb(sourceVoice);
                     }
@@ -196,17 +195,7 @@ namespace Yaml_AudioTool_Rebuilt
 
                 f1.PlayButton.Text = "| |";
                 playbackStop = false;
-            }
-
-            // Change values while playback
-            SetVolume(f1.VolumetrackBar.Value, f1.filelistView.SelectedItems.Count);
-
-            if (f1.RoomenableButton.BackColor == Color.LightGreen && 
-                f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
-            {
-                SetFilterFreq(f1.filelistView.SelectedItems.Count);
-                SetReverbWetDry(f1.filelistView.SelectedItems.Count);
-            }            
+            }     
         }
 
         public void StopPlayback()
@@ -240,24 +229,6 @@ namespace Yaml_AudioTool_Rebuilt
                 sourceVoice.SetVolume(Convert.ToSingle(value));
             }
             return value;
-        }
-
-        public void SetFilterFreq(int filelistValue)
-        {
-            if (xaudio2 != null &&
-                filelistValue == 1)
-            {
-                sourceVoice = Effects.SetRoomFilter(sourceVoice);
-            }
-        }
-
-        public void SetReverbWetDry(int filelistValue)
-        {
-            if (xaudio2 != null &&
-                filelistValue == 1)
-            {
-                sourceVoice = Effects.SetRoomReverb(sourceVoice);
-            }
-        }
+        }        
     }
 }

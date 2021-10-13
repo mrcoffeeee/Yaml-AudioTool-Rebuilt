@@ -44,14 +44,14 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            PitchvalueLabel.Text = "1.00";
+            PitchvalueLabel.Text = "1,00";
             PitchPot.Value = 100;
-            PitchrandvalueLabel.Text = "0.00";
+            PitchrandvalueLabel.Text = "0,00";
             PitrandPot.Value = 0;
             if (formMain.filelistView.SelectedItems.Count == 1)
             {
-                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchHeader)].Text = "1.00";
-                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text = "0.00";
+                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchHeader)].Text = "1,00";
+                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text = "0,00";
             }
         }
 

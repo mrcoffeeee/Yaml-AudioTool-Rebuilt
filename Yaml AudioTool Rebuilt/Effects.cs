@@ -20,6 +20,7 @@ namespace Yaml_AudioTool_Rebuilt
     {
         private ISampleSource sampleSource;
 
+        public static FilterParameters voiceFilter;
         public static reverbParameters[] ReverbPresets =
             {
                 Vortice.XAudio2.Fx.Presets.Default,
@@ -86,8 +87,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         public static IXAudio2SourceVoice SetRoomFilter(IXAudio2SourceVoice sourceVoice)
         {
-            Form1 f1 = (Form1)Application.OpenForms["Form1"];
-            FilterParameters voiceFilter = new();
+            Form1 f1 = (Form1)Application.OpenForms["Form1"];            
             int roomIndex = Convert.ToInt32(f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roomidHeader)].Text);
             voiceFilter.Frequency = Convert.ToSingle(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filterfrequencyHeader)].Text);
             voiceFilter.OneOverQ = Convert.ToSingle(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filteroneoverqHeader)].Text);
@@ -96,6 +96,15 @@ namespace Yaml_AudioTool_Rebuilt
             return sourceVoice;
         }
 
+        public static void UpdateFilterSettings(int filelistValue, IXAudio2SourceVoice sourceVoice)
+        {
+            if (sourceVoice != null &&
+                filelistValue == 1)
+            {
+                SetRoomFilter(sourceVoice);
+            }
+        }
+        
         public static IXAudio2SourceVoice SetRoomReverb(IXAudio2SourceVoice sourceVoice)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
@@ -106,21 +115,29 @@ namespace Yaml_AudioTool_Rebuilt
             sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex], false));
             ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.reverbwetdryPot.Value, 1));
             sourceVoice.EnableEffect(0);
-           // MessageBox.Show(submixVoice.GetEffectState(0).ToString());
             return sourceVoice;
         }
 
-     /*   public static IXAudio2SubmixVoice SetVolumeMeter(IXAudio2SubmixVoice submixVoice)
+        public static void UpdateReverbSettings(int filelistValue, IXAudio2SourceVoice sourceVoice)
         {
-          /*  Form1 f1 = (Form1)Application.OpenForms["Form1"];
-            var volumeMeter = Vortice.XAudio2.Fx.Fx.CreateAudioVolumeMeter();
-            var effectDescriptor = new EffectDescriptor(volumeMeter, submixVoice.VoiceDetails.InputChannelCount);
-            submixVoice.SetEffectChain(effectDescriptor);
-            volumeMeterLevels volumeLevel = new(peakLevel, rmsLevel, 2);
-            volumeLevel.PeakLevels.Length.ToString();
-            submixVoice.SetEffectParameters(0, volumeLevel);
-            submixVoice.EnableEffect();
-            return submixVoice;
-        }*/
+            if (sourceVoice != null &&
+                filelistValue == 1)
+            {
+                SetRoomReverb(sourceVoice);
+            }
+        }
+
+        /*   public static IXAudio2SubmixVoice SetVolumeMeter(IXAudio2SubmixVoice submixVoice)
+           {
+             /*  Form1 f1 = (Form1)Application.OpenForms["Form1"];
+               var volumeMeter = Vortice.XAudio2.Fx.Fx.CreateAudioVolumeMeter();
+               var effectDescriptor = new EffectDescriptor(volumeMeter, submixVoice.VoiceDetails.InputChannelCount);
+               submixVoice.SetEffectChain(effectDescriptor);
+               volumeMeterLevels volumeLevel = new(peakLevel, rmsLevel, 2);
+               volumeLevel.PeakLevels.Length.ToString();
+               submixVoice.SetEffectParameters(0, volumeLevel);
+               submixVoice.EnableEffect();
+               return submixVoice;
+           }*/
     }
 }

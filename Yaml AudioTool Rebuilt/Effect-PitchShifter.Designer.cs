@@ -186,14 +186,14 @@ namespace Yaml_AudioTool_Rebuilt
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(315, 310);
+            this.ClientSize = new System.Drawing.Size(331, 316);
             this.Controls.Add(this.PitchShifterResetLayoutPanel);
             this.Controls.Add(this.PitchShifterValuesLayoutPanel);
             this.Controls.Add(this.PitchShifterPotsLayoutPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.MaximumSize = new System.Drawing.Size(339, 374);
-            this.MinimumSize = new System.Drawing.Size(339, 374);
+            this.MaximumSize = new System.Drawing.Size(355, 380);
+            this.MinimumSize = new System.Drawing.Size(355, 380);
             this.Name = "Effect_PitchShifter";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PitchShifter";

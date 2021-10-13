@@ -486,7 +486,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void RoomenableButton_Click(object sender, EventArgs e)
+        private void RoomenableButton_Click_1(object sender, EventArgs e)
         {
             if (RoomenableButton.Text == "Off")
             {
@@ -504,6 +504,10 @@ namespace Yaml_AudioTool_Rebuilt
         private void reverbpresetcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(Effects.ReverbPresets[reverbpresetcomboBox.SelectedIndex], false);
+
+            Effects.UpdateReverbSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
+            reverbwetdryPot.Value = Math.Round(actualReverbParameter.WetDryMix, 1);
+            reverbwetdryvalueLabel.Text = Math.Round(actualReverbParameter.WetDryMix, 1).ToString("0.0") + " %";
 
             if (roomlistView.SelectedItems.Count == 1)
             {
@@ -591,7 +595,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 reverbpresetcomboBox.Items.Add(item);
             }
-            reverbpresetcomboBox.Text = reverbpresetcomboBox.Items[0].ToString();
+            reverbpresetcomboBox.SelectedIndex = 1;
         }
 
         private void ResetMainFormValues()
@@ -717,7 +721,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (roomlistView.SelectedItems.Count == 1)
             {
-                ap.SetFilterFreq(filelistView.SelectedItems.Count);
+                Effects.UpdateFilterSettings(filelistView.SelectedItems.Count,ap.sourceVoice);
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filtertypeHeader)].Text = filtercomboBox.SelectedIndex.ToString();
             }
         }
@@ -750,7 +754,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void frequencyPot_ValueChanged(object sender, EventArgs e)
         {
-            ap.SetFilterFreq(filelistView.SelectedItems.Count);
+            Effects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
             float value = Convert.ToSingle(Math.Round(filterfrequencyPot.Value, 1));
             filterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(value, 48000f).ToString("0.0") + " Hz";
 
@@ -763,7 +767,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void oneoverqPot_ValueChanged(object sender, EventArgs e)
         {
-            ap.SetFilterFreq(filelistView.SelectedItems.Count);
+            Effects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
             double value = Math.Round(filteroneoverqPot.Value, 1);
             filteroneoverqvalueLabel.Text = value.ToString("0.0");
 
@@ -775,7 +779,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void reverbwetdryPot_ValueChanged(object sender, EventArgs e)
         {
-            ap.SetReverbWetDry(filelistView.SelectedItems.Count);
+            Effects.UpdateReverbSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
             reverbwetdryvalueLabel.Text = Math.Round(reverbwetdryPot.Value, 1).ToString("0.0") + " %";
 
             if (roomlistView.SelectedItems.Count == 1)
