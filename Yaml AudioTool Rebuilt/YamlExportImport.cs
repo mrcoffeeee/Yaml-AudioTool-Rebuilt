@@ -94,7 +94,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 lines.Add("  - enumName: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text);
                 lines.Add("    fileName: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text);
-                lines.Add("    filePath: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text);
+                //lines.Add("    filePath: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text);
                 lines.Add("    stream: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text);
                 lines.Add("    loop: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text);
                 lines.Add("    volume: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text);
@@ -151,7 +151,8 @@ namespace Yaml_AudioTool_Rebuilt
                 Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
                 string line = "";
-                listOffset = f1.filelistView.Items.Count;
+                string folderPath = Path.GetDirectoryName(yamlPath);
+                // listOffset = f1.filelistView.Items.Count;
                 int a = 0;
                 while (!StreamReader.ReadLine().Contains("  soundFiles:"))
                 {
@@ -190,7 +191,8 @@ namespace Yaml_AudioTool_Rebuilt
                             f1.filelistView.Items.Add(fileitem);
 
                             //Fill audiofile entry from yaml
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = StreamReader.ReadLine().Replace("    filePath: ", "");
+                            //f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = StreamReader.ReadLine().Replace("    filePath: ", "");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = folderPath + "\\" + f1.filelistView.Items[a + listOffset].Text + ".wav";
                             f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text = StreamReader.ReadLine().Replace("    stream: ", "");
                             f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text = StreamReader.ReadLine().Replace("    loop: ", "");
                             f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text = StreamReader.ReadLine().Replace("    volume: ", "");
@@ -210,14 +212,22 @@ namespace Yaml_AudioTool_Rebuilt
                             //Fill missing audiofile entries from file
                             string filePath = f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
                             IWaveSource source;
-                            source = CodecFactory.Instance.GetCodec(filePath);
+                            try
+                            {
+                                source = CodecFactory.Instance.GetCodec(filePath);
 
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (source.Length / 1000).ToString();
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = source.GetLength().ToString(@"mm\:ss");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = (source.WaveFormat.Channels).ToString();
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = (source.WaveFormat.SampleRate / 1000).ToString();
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (source.WaveFormat.BitsPerSample * source.WaveFormat.SampleRate / 1000).ToString();
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = (source.WaveFormat.BitsPerSample).ToString();
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (source.Length / 1000).ToString();
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = source.GetLength().ToString(@"mm\:ss");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = (source.WaveFormat.Channels).ToString();
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = (source.WaveFormat.SampleRate / 1000).ToString();
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (source.WaveFormat.BitsPerSample * source.WaveFormat.SampleRate / 1000).ToString();
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = (source.WaveFormat.BitsPerSample).ToString();
+                            }
+                            catch (Exception)
+                            {
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = "--> FILE IS MISSING";
+                                continue;
+                            }
                         }
                         catch (Exception)
                         {
@@ -369,7 +379,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string filePath = openFileDialog.FileName;
+                string filePath = openFileDialog.FileName;                
                 int listOffset = 0;
                 try
                 {

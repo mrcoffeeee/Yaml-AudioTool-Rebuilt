@@ -513,9 +513,9 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbpresetHeader)].Text = reverbpresetcomboBox.SelectedItem.ToString();
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text = actualReverbParameter.WetDryMix.ToString("0.0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbreflectionsdelayHeader)].Text = actualReverbParameter.ReflectionsDelay.ToString();
+                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbreflectionsdelayHeader)].Text = actualReverbParameter.ReflectionsDelay.ToString("0");
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbroomfrequencyHeader)].Text = actualReverbParameter.RoomFilterFreq.ToString("0.0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbdelayHeader)].Text = actualReverbParameter.ReverbDelay.ToString();
+                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbdelayHeader)].Text = actualReverbParameter.ReverbDelay.ToString("0");
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbroomfiltermainHeader)].Text = actualReverbParameter.RoomFilterMain.ToString("0.0");
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbroomfilterhfHeader)].Text = actualReverbParameter.RoomFilterHF.ToString("0.0");
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbreflectionsgainHeader)].Text = actualReverbParameter.ReflectionsGain.ToString("0.0");
@@ -639,15 +639,17 @@ namespace Yaml_AudioTool_Rebuilt
             ap.timerCount += playbackTimer.Interval;
             var timeSpan = TimeSpan.FromMilliseconds(ap.timerCount);
             timeLabel.Text = timeSpan.ToString(@"mm\:ss");
-          //  meterLabel.Text = ap.peakLevel.ToString();
+            //  meterLabel.Text = ap.peakLevel.ToString();
+
+            if (LoopButton.BackColor == Color.Salmon)
+            {
+                ap.sourceVoice.ExitLoop(0);                
+            }
 
             if (ap.sourceVoice.State.BuffersQueued == 0)
             {
-                if (LoopButton.BackColor == Color.Salmon)
-                {
-                    ap.StopPlayback();
-                    playbackTimer.Stop();
-                }
+                ap.StopPlayback();
+                playbackTimer.Stop();
             }
         }        
 
@@ -671,9 +673,9 @@ namespace Yaml_AudioTool_Rebuilt
                 roomitem.SubItems.Add(reverbpresetcomboBox.SelectedItem.ToString());
                 roomitem.SubItems.Add(reverbpresetcomboBox.SelectedIndex.ToString());
                 roomitem.SubItems.Add(reverbwetdryPot.Value.ToString("0.0"));
-                roomitem.SubItems.Add(actualReverbParameter.ReflectionsDelay.ToString("0.0"));
+                roomitem.SubItems.Add(actualReverbParameter.ReflectionsDelay.ToString("0"));
                 roomitem.SubItems.Add(actualReverbParameter.RoomFilterFreq.ToString("0.0"));
-                roomitem.SubItems.Add(actualReverbParameter.ReverbDelay.ToString("0.0"));
+                roomitem.SubItems.Add(actualReverbParameter.ReverbDelay.ToString("0"));
                 roomitem.SubItems.Add(actualReverbParameter.RoomFilterMain.ToString("0.0"));
                 roomitem.SubItems.Add(actualReverbParameter.RoomFilterHF.ToString("0.0"));
                 roomitem.SubItems.Add(actualReverbParameter.ReflectionsGain.ToString("0.0"));

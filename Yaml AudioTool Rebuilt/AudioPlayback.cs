@@ -52,8 +52,6 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     try
                     {
-                        //soundSource = source;
-                        //source = CodecFactory.Instance.GetCodec(file);
                         soundSource = CodecFactory.Instance.GetCodec(file);
 
                         if (soundSource.WaveFormat.SampleRate != 48000)
@@ -229,6 +227,6 @@ namespace Yaml_AudioTool_Rebuilt
                 sourceVoice.SetVolume(Convert.ToSingle(value));
             }
             return value;
-        }        
+        }
     }
 }
