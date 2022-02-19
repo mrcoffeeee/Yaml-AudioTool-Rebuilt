@@ -32,16 +32,16 @@ namespace Yaml_AudioTool_Rebuilt
 
         public IWaveSource soundSource;
 
-        private readonly Effects ef = new();
-        private readonly OpenFileDialog openfiledialog = new();
-
-        
+        private readonly Effects ef = new();        
 
         public IWaveSource OpenFile()
-        {
-            openfiledialog.Multiselect = true;
+        {            
             StopPlayback();
 
+            SettingsDialog sd = new();
+            OpenFileDialog openfiledialog = new();
+            openfiledialog.InitialDirectory = sd.audiofolderLabel.Text;
+            openfiledialog.Multiselect = true;
             openfiledialog.Filter = CodecFactory.SupportedFilesFilterEn;
 
             if (openfiledialog.ShowDialog() == DialogResult.OK)
@@ -57,15 +57,24 @@ namespace Yaml_AudioTool_Rebuilt
                         if (soundSource.WaveFormat.SampleRate != 48000)
                         {
                             MessageBox.Show(Path.GetFileNameWithoutExtension(file) + ":\n\n" +
-                                "Samplerate unsupported yet!\n" +
+                                "Samplerate unsupported!\n" +
                                 "Please convert your file to 48kHz.");
                             return soundSource = null;
                         }                        
 
                         Form1 f1 = (Form1)Application.OpenForms["Form1"];
                         ListViewItem fileInfos = new(Path.GetFileNameWithoutExtension(file));
+
                         // add general fileinfos
-                        fileInfos.SubItems.Add(file);
+                        if (file.Contains(sd.audiofolderLabel.Text))
+                        {
+                            string filepathshort = file.Replace(sd.audiofolderLabel.Text, string.Empty);
+                            fileInfos.SubItems.Add(filepathshort);
+                        }
+                        else
+                        {
+                            fileInfos.SubItems.Add(file);
+                        }                        
                         fileInfos.SubItems.Add("");
                         fileInfos.SubItems.Add("");
                         fileInfos.SubItems.Add((soundSource.Length / 1000).ToString());
@@ -103,6 +112,11 @@ namespace Yaml_AudioTool_Rebuilt
 
         public void GetSoundFromList(string listItem)
         {
+            if (listItem.StartsWith("\\"))
+            {
+                SettingsDialog sd = new SettingsDialog();
+                listItem = sd.audiofolderLabel.Text + listItem;
+            }            
             soundSource = CodecFactory.Instance.GetCodec(listItem);
         }
 
@@ -123,8 +137,13 @@ namespace Yaml_AudioTool_Rebuilt
                 playbackPause = false;
             }
             else if (soundSource != null && playbackStop == true)
-            {
+            {                
                 string soundFilepath = f1.filelistView.SelectedItems[0].SubItems[1].Text;
+                if (soundFilepath.StartsWith("\\"))
+                {
+                    SettingsDialog sd = new SettingsDialog();
+                    soundFilepath = sd.audiofolderLabel.Text + soundFilepath;
+                }
                 xaudio2 = XAudio2.XAudio2Create(ProcessorSpecifier.UseDefaultProcessor);
                 Vortice.Multimedia.WaveFormat waveFormat;
                 AudioBuffer audioBuffer;
