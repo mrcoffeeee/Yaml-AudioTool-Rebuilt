@@ -67,10 +67,24 @@ namespace Yaml_AudioTool_Rebuilt
         //######################################################
 
 
+        private void SettingstoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsDialog formSettings = new();            
+            if (filelistView.Items.Count > 0)
+            {
+                formSettings.audiofoldersetButton.Enabled = false;
+            }
+            else
+            {
+                formSettings.audiofoldersetButton.Enabled = true;
+            }
+            formSettings.ShowDialog();
+        }
+
         private void AbouttoolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            AboutDialog f2 = new();
-            f2.ShowDialog();
+            AboutDialog formAbout = new();
+            formAbout.ShowDialog();
         }
 
 
@@ -163,8 +177,18 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (filelistView.SelectedItems.Count == 1)
             {
-                filelistView.Focus();
-                ap.soundSource = CodecFactory.Instance.GetCodec(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
+                filelistView.Focus();                
+                if (filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text.StartsWith("\\"))
+                {
+                    string filepathTemp;
+                    SettingsDialog sd = new SettingsDialog();
+                    filepathTemp = sd.audiofolderLabel.Text + filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text;
+                    ap.soundSource = CodecFactory.Instance.GetCodec(filepathTemp);
+                }
+                else
+                {
+                    ap.soundSource = CodecFactory.Instance.GetCodec(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
+                }
                 ap.StartPlayback();
 
                 if (ap.xaudio2 != null && ap.playbackPause == false)

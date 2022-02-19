@@ -32,7 +32,8 @@ namespace Yaml_AudioTool_Rebuilt
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.AbouttoolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.SettingstoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AbouttoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.LoopButton = new System.Windows.Forms.Button();
             this.ForwardButton = new System.Windows.Forms.Button();
@@ -188,7 +189,8 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(28, 28);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AbouttoolStripMenuItem2});
+            this.SettingstoolStripMenuItem,
+            this.AbouttoolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
@@ -196,12 +198,19 @@ namespace Yaml_AudioTool_Rebuilt
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip1";
             // 
-            // AbouttoolStripMenuItem2
+            // SettingstoolStripMenuItem
             // 
-            this.AbouttoolStripMenuItem2.Name = "AbouttoolStripMenuItem2";
-            this.AbouttoolStripMenuItem2.Size = new System.Drawing.Size(52, 20);
-            this.AbouttoolStripMenuItem2.Text = "About";
-            this.AbouttoolStripMenuItem2.Click += new System.EventHandler(this.AbouttoolStripMenuItem2_Click);
+            this.SettingstoolStripMenuItem.Name = "SettingstoolStripMenuItem";
+            this.SettingstoolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.SettingstoolStripMenuItem.Text = "Settings";
+            this.SettingstoolStripMenuItem.Click += new System.EventHandler(this.SettingstoolStripMenuItem_Click);
+            // 
+            // AbouttoolStripMenuItem
+            // 
+            this.AbouttoolStripMenuItem.Name = "AbouttoolStripMenuItem";
+            this.AbouttoolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.AbouttoolStripMenuItem.Text = "About";
+            this.AbouttoolStripMenuItem.Click += new System.EventHandler(this.AbouttoolStripMenuItem2_Click);
             // 
             // groupBox1
             // 
@@ -306,7 +315,6 @@ namespace Yaml_AudioTool_Rebuilt
             this.falloffHeader});
             this.filelistView.FullRowSelect = true;
             this.filelistView.GridLines = true;
-            this.filelistView.HideSelection = false;
             this.filelistView.Location = new System.Drawing.Point(13, 99);
             this.filelistView.Margin = new System.Windows.Forms.Padding(4);
             this.filelistView.Name = "filelistView";
@@ -1284,7 +1292,6 @@ namespace Yaml_AudioTool_Rebuilt
             this.reverbroomsizeHeader});
             this.roomlistView.FullRowSelect = true;
             this.roomlistView.GridLines = true;
-            this.roomlistView.HideSelection = false;
             this.roomlistView.Location = new System.Drawing.Point(426, 427);
             this.roomlistView.Margin = new System.Windows.Forms.Padding(2);
             this.roomlistView.MultiSelect = false;
@@ -1718,8 +1725,9 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Label FalloffLabel;
         private System.Windows.Forms.ComboBox FalloffcomboBox;
         public System.Windows.Forms.ColumnHeader falloffHeader;
-        private System.Windows.Forms.ToolStripMenuItem AbouttoolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem AbouttoolStripMenuItem;
         public System.Windows.Forms.Button RoomenableButton;
+        private System.Windows.Forms.ToolStripMenuItem SettingstoolStripMenuItem;
     }
 }
 
