@@ -123,7 +123,7 @@ namespace Yaml_AudioTool_Rebuilt
             SaveFileDialog saveFileDialog = new();
             saveFileDialog.Title = "Save your Yaml File";
             saveFileDialog.DefaultExt = "yaml";
-            saveFileDialog.Filter = "Yaml files (*.yaml)|*.yaml|All files (*.*)|*.*";
+            saveFileDialog.Filter = "Yaml files (*.yaml; *.yml)|*.yaml; *.yml|All files (*.*)|*.*";
             saveFileDialog.RestoreDirectory = true;
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -374,7 +374,7 @@ namespace Yaml_AudioTool_Rebuilt
             OpenFileDialog openFileDialog = new();
             openFileDialog.Title = "Open your Yaml File";
             openFileDialog.DefaultExt = "yaml";
-            openFileDialog.Filter = "Yaml files (*.yaml)|*.yaml|All files (*.*)|*.*";
+            openFileDialog.Filter = "Yaml files (*.yaml; *.yml)|*.yaml; *.yml|All files (*.*)|*.*";
             openFileDialog.RestoreDirectory = true;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
