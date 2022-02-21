@@ -105,7 +105,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 
                 
-                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
+                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text, filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 selectedsoundLabel.Text = "Selection: " + filelistView.SelectedItems[0].Text;
                 double volumeValue = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text) * 100;
@@ -152,7 +152,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 int a = filelistView.Items.IndexOf(filelistView.SelectedItems[0]);
                 filelistView.Items[a - 1].Selected = true;
-                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
+                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text, filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 removeButtonEnabled(true);
             }
@@ -182,7 +182,10 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     string filepathTemp;
                     SettingsDialog sd = new SettingsDialog();
-                    filepathTemp = sd.audiofolderLabel.Text + filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text;
+                    filepathTemp = sd.audiofolderLabel.Text +
+                        filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text +
+                        filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text +
+                        ".wav";
                     ap.soundSource = CodecFactory.Instance.GetCodec(filepathTemp);
                 }
                 else
@@ -213,7 +216,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 int a = filelistView.Items.IndexOf(filelistView.SelectedItems[0]);
                 filelistView.Items[a + 1].Selected = true;
-                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
+                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text, filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 removeButtonEnabled(true);
             }
@@ -270,6 +273,13 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void openyamlButton_Click(object sender, EventArgs e)
         {
+            SettingsDialog sd = new SettingsDialog();
+            if (sd.audiofolderLabel.Text == "NONE")
+            {
+                MessageBox.Show("No Audio folder in \"Settings\" selected.");
+                sd.ShowDialog();
+                return;
+            }
             YamlExportImport.ImportYAML();
             if (roomlistView.Items.Count > 0)
             {

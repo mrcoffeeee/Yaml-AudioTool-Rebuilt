@@ -110,14 +110,14 @@ namespace Yaml_AudioTool_Rebuilt
             return soundSource;
         }
 
-        public void GetSoundFromList(string listItem)
+        public void GetSoundFromList(string filePath, string fileName)
         {
-            if (listItem.StartsWith("\\"))
+            if (filePath.StartsWith("\\"))
             {
                 SettingsDialog sd = new SettingsDialog();
-                listItem = sd.audiofolderLabel.Text + listItem;
+                filePath = sd.audiofolderLabel.Text + filePath + fileName + ".wav";
             }            
-            soundSource = CodecFactory.Instance.GetCodec(listItem);
+            soundSource = CodecFactory.Instance.GetCodec(filePath);
         }
 
         public void StartPlayback()
@@ -142,7 +142,7 @@ namespace Yaml_AudioTool_Rebuilt
                 if (soundFilepath.StartsWith("\\"))
                 {
                     SettingsDialog sd = new SettingsDialog();
-                    soundFilepath = sd.audiofolderLabel.Text + soundFilepath;
+                    soundFilepath = sd.audiofolderLabel.Text + soundFilepath + f1.filelistView.SelectedItems[0].SubItems[0].Text + ".wav";
                 }
                 xaudio2 = XAudio2.XAudio2Create(ProcessorSpecifier.UseDefaultProcessor);
                 Vortice.Multimedia.WaveFormat waveFormat;

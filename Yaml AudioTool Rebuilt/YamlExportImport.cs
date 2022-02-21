@@ -14,6 +14,12 @@ namespace Yaml_AudioTool_Rebuilt
 {
     class YamlExportImport
     {
+        //######################################################
+        //###                                                ###
+        //### Export Functions                               ###
+        //###                                                ###
+        //######################################################
+
         private static string CreateStringCRC32(string name)
         {
             byte[] data = Encoding.ASCII.GetBytes(name);
@@ -32,8 +38,8 @@ namespace Yaml_AudioTool_Rebuilt
                 lines.Add("  - enumName: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.filternameHeader)].Text);
                 lines.Add("    crc: " + CreateStringCRC32(f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.filternameHeader)].Text));
                 lines.Add("    eFilter: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.filtertypeHeader)].Text);
-                lines.Add("    fFrequency: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.filterfrequencyHeader)].Text);
-                lines.Add("    fOneOverQ: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.filteroneoverqHeader)].Text);
+                lines.Add("    fFrequency: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.filterfrequencyHeader)].Text.Replace(",", "."));
+                lines.Add("    fOneOverQ: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.filteroneoverqHeader)].Text.Replace(",", "."));
                 a++;
             }
             return lines;
@@ -51,17 +57,17 @@ namespace Yaml_AudioTool_Rebuilt
                 lines.Add("      effectType: " + "0");
                 lines.Add("      enumName: " + "Reverb-" + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbpresetHeader)].Text);
                 lines.Add("      crc: " + CreateStringCRC32("Reverb-" + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbpresetHeader)].Text));
-                lines.Add("  wetDryMix: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbwetdryHeader)].Text);
-                lines.Add("  reflectionsDelay: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbreflectionsdelayHeader)].Text);
-                lines.Add("  reverbDelay: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdelayHeader)].Text);
-                lines.Add("  roomFilterFreq: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfrequencyHeader)].Text);
-                lines.Add("  roomFilterMain: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfiltermainHeader)].Text);
-                lines.Add("  roomFilterHF: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfilterhfHeader)].Text);
-                lines.Add("  reflectionsGain: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbreflectionsgainHeader)].Text);
-                lines.Add("  reverbGain: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbgainHeader)].Text);
-                lines.Add("  decayTime: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdecaytimeHeader)].Text);
-                lines.Add("  density: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdensityHeader)].Text);
-                lines.Add("  roomSize: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomsizeHeader)].Text);
+                lines.Add("  wetDryMix: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbwetdryHeader)].Text.Replace(",", "."));
+                lines.Add("  reflectionsDelay: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbreflectionsdelayHeader)].Text.Replace(",", "."));
+                lines.Add("  reverbDelay: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdelayHeader)].Text.Replace(",", "."));
+                lines.Add("  roomFilterFreq: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfrequencyHeader)].Text.Replace(",", "."));
+                lines.Add("  roomFilterMain: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfiltermainHeader)].Text.Replace(",", "."));
+                lines.Add("  roomFilterHF: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfilterhfHeader)].Text.Replace(",", "."));
+                lines.Add("  reflectionsGain: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbreflectionsgainHeader)].Text.Replace(",", "."));
+                lines.Add("  reverbGain: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbgainHeader)].Text.Replace(",", "."));
+                lines.Add("  decayTime: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdecaytimeHeader)].Text.Replace(",", "."));
+                lines.Add("  density: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdensityHeader)].Text.Replace(",", "."));
+                lines.Add("  roomSize: " + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomsizeHeader)].Text.Replace(",", "."));
                 a++;
             }
             return lines;
@@ -93,20 +99,19 @@ namespace Yaml_AudioTool_Rebuilt
             foreach (var item in f1.filelistView.Items)
             {
                 lines.Add("  - enumName: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text);
-                lines.Add("    fileName: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text);
-                //lines.Add("    filePath: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text);
+                lines.Add("    filename: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text);
                 lines.Add("    stream: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text);
                 lines.Add("    loop: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text);
-                lines.Add("    volume: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text);
+                lines.Add("    volume: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text.Replace(",", "."));
                 lines.Add("    minDistance: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.mindistanceHeader)].Text);
                 lines.Add("    maxDistance: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.maxdistanceHeader)].Text);
                 lines.Add("    eType: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.typeHeader)].Text);
                 lines.Add("    eFalloff: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.falloffHeader)].Text);
-                lines.Add("    pitchRandomisation: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchrandHeader)].Text);
+                lines.Add("    pitchRandomisation: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchrandHeader)].Text.Replace(",", "."));
                 lines.Add("    priority: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.priorityHeader)].Text);
                 lines.Add("    crossfade: ");
-                lines.Add("    basePitch: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text);
-                lines.Add("    dopplerFactor: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.dopplerHeader)].Text);
+                lines.Add("    basePitch: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text.Replace(",", "."));
+                lines.Add("    dopplerFactor: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.dopplerHeader)].Text.Replace(",", "."));
                 lines.Add("    localized: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.localizeHeader)].Text);
                 lines.Add("    crc: " + CreateStringCRC32(f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text));
                 if (f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
@@ -123,7 +128,7 @@ namespace Yaml_AudioTool_Rebuilt
             SaveFileDialog saveFileDialog = new();
             saveFileDialog.Title = "Save your Yaml File";
             saveFileDialog.DefaultExt = "yaml";
-            saveFileDialog.Filter = "Yaml files (*.yaml; *.yml)|*.yaml; *.yml|All files (*.*)|*.*";
+            saveFileDialog.Filter = "Yaml files (*.yml)|*.yml|All files (*.*)|*.*";
             saveFileDialog.RestoreDirectory = true;
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -142,6 +147,11 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
+        //######################################################
+        //###                                                ###
+        //### Import Functions                               ###
+        //###                                                ###
+        //######################################################
 
         private static void ReadSoundfileEntries(string yamlPath, int listOffset)
         {
@@ -151,22 +161,36 @@ namespace Yaml_AudioTool_Rebuilt
                 Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
                 string line = "";
-                string folderPath = Path.GetDirectoryName(yamlPath);
+                SettingsDialog sd = new SettingsDialog();
+                string folderPath = sd.audiofolderLabel.Text;
+                //string folderPath = Path.GetDirectoryName(yamlPath);
                 // listOffset = f1.filelistView.Items.Count;
                 int a = 0;
-                while (!StreamReader.ReadLine().Contains("  soundFiles:"))
-                {
 
+                while (true)
+                {
+                    line = StreamReader.ReadLine();
+                    if (line == null)
+                    {
+                        return;
+                    }
+                    else if (line.Contains("  soundFiles:"))
+                    {
+                        break;
+                    }
                 }
 
-                while ((line = StreamReader.ReadLine()) != null)
+                line = StreamReader.ReadLine();
+
+                while (line != null)
                 {
                     if (line.Contains("  - enumName: "))
                     {
                         try
                         {
                             //Create audiofile entry
-                            ListViewItem fileitem = new(StreamReader.ReadLine().Replace("    fileName: ", ""));
+                            line = StreamReader.ReadLine().Replace("    filename: ", "");
+                            ListViewItem fileitem = new(line);
                             fileitem.SubItems.Add("");
                             fileitem.SubItems.Add("");
                             fileitem.SubItems.Add("");
@@ -190,27 +214,49 @@ namespace Yaml_AudioTool_Rebuilt
                             fileitem.SubItems.Add("");
                             f1.filelistView.Items.Add(fileitem);
 
+
                             //Fill audiofile entry from yaml
-                            //f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = StreamReader.ReadLine().Replace("    filePath: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = folderPath + "\\" + f1.filelistView.Items[a + listOffset].Text + ".wav";
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text = StreamReader.ReadLine().Replace("    stream: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text = StreamReader.ReadLine().Replace("    loop: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text = StreamReader.ReadLine().Replace("    volume: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.mindistanceHeader)].Text = StreamReader.ReadLine().Replace("    minDistance: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.maxdistanceHeader)].Text = StreamReader.ReadLine().Replace("    maxDistance: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.typeHeader)].Text = StreamReader.ReadLine().Replace("    eType: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.falloffHeader)].Text = StreamReader.ReadLine().Replace("    eFalloff: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchrandHeader)].Text = StreamReader.ReadLine().Replace("    pitchRandomisation: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.priorityHeader)].Text = StreamReader.ReadLine().Replace("    priority: ", "");
-                            StreamReader.ReadLine();
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text = StreamReader.ReadLine().Replace("    basePitch: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.dopplerHeader)].Text = StreamReader.ReadLine().Replace("    dopplerFactor: ", "");
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.localizeHeader)].Text = StreamReader.ReadLine().Replace("    localized: ", "");
-                            StreamReader.ReadLine();
-                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text = StreamReader.ReadLine().Replace("    roomNameCRC: ", "");
+                            try
+                            {
+                                line = line + ".wav";
+                                string[] filesearchPath = Directory.GetFiles(folderPath, line, SearchOption.AllDirectories);
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = filesearchPath[0].Replace(folderPath, "").Replace(line, "");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text = StreamReader.ReadLine().Replace("    stream: ", "");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text = StreamReader.ReadLine().Replace("    loop: ", "");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text = StreamReader.ReadLine().Replace("    volume: ", "").Replace(".", ",");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.mindistanceHeader)].Text = StreamReader.ReadLine().Replace("    minDistance: ", "");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.maxdistanceHeader)].Text = StreamReader.ReadLine().Replace("    maxDistance: ", "");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.typeHeader)].Text = StreamReader.ReadLine().Replace("    eType: ", "");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.falloffHeader)].Text = StreamReader.ReadLine().Replace("    eFalloff: ", "");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchrandHeader)].Text = StreamReader.ReadLine().Replace("    pitchRandomisation: ", "").Replace(".", ",");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.priorityHeader)].Text = StreamReader.ReadLine().Replace("    priority: ", "");
+                                StreamReader.ReadLine();
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text = StreamReader.ReadLine().Replace("    basePitch: ", "").Replace(".", ",");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.dopplerHeader)].Text = StreamReader.ReadLine().Replace("    dopplerFactor: ", "").Replace(".", ",");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.localizeHeader)].Text = StreamReader.ReadLine().Replace("    localized: ", "");
+                                line = StreamReader.ReadLine();// Read crc:
+                                line = StreamReader.ReadLine();// Read roomNameCRC: or enumName:
+                                if (line == null)
+                                {
+                                    return;
+                                }
+                                else if (line.Contains("    roomNameCRC: "))
+                                {
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text = line.Replace("    roomNameCRC: ", "");
+                                    line = StreamReader.ReadLine();
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = "--> FILE IS MISSING";
+                            }
+                            
 
                             //Fill missing audiofile entries from file
-                            string filePath = f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
+                            string filePath = folderPath + 
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text +
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text +
+                                ".wav";
                             IWaveSource source;
                             try
                             {
@@ -219,14 +265,13 @@ namespace Yaml_AudioTool_Rebuilt
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (source.Length / 1000).ToString();
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = source.GetLength().ToString(@"mm\:ss");
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = (source.WaveFormat.Channels).ToString();
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = (source.WaveFormat.SampleRate / 1000).ToString();
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = (source.WaveFormat.SampleRate / 1000.0).ToString();
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (source.WaveFormat.BitsPerSample * source.WaveFormat.SampleRate / 1000).ToString();
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = (source.WaveFormat.BitsPerSample).ToString();
                             }
                             catch (Exception)
                             {
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = "--> FILE IS MISSING";
-                                continue;
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = "--> FILE IS CORRUPT";
                             }
                         }
                         catch (Exception)
@@ -256,9 +301,17 @@ namespace Yaml_AudioTool_Rebuilt
                 string roomIndex = "";
                 int listOffset = f1.roomlistView.Items.Count;
 
-                while (!(StreamReader.ReadLine()).Contains("  rooms:"))
+                while (true)
                 {
-
+                    line = StreamReader.ReadLine();
+                    if (line == null)
+                    {
+                        return listOffset;
+                    }
+                    else if (line.Contains("  rooms:"))
+                    {
+                        break;
+                    }
                 }
 
                 while (!(line = StreamReader.ReadLine()).Contains("  soundFiles:"))
@@ -316,6 +369,20 @@ namespace Yaml_AudioTool_Rebuilt
 
                 string line = "";
                 int a = 0;
+
+                while (true)
+                {
+                    line = StreamReader.ReadLine();
+                    if (line == null)
+                    {
+                        return;
+                    }
+                    else if (line.Contains("  filters:"))
+                    {
+                        break;
+                    }
+                }
+
                 while (!(line = StreamReader.ReadLine()).Contains("  reverbs:"))
                 {
                     if (line.Contains("  - enumName:"))
@@ -323,8 +390,8 @@ namespace Yaml_AudioTool_Rebuilt
                         f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.filternameHeader)].Text = line.Replace("  - enumName: ", "");
                         StreamReader.ReadLine();
                         f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.filtertypeHeader)].Text = StreamReader.ReadLine().Replace("    eFilter: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.filterfrequencyHeader)].Text = StreamReader.ReadLine().Replace("    fFrequency: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.filteroneoverqHeader)].Text = StreamReader.ReadLine().Replace("    fOneOverQ: ", "");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.filterfrequencyHeader)].Text = StreamReader.ReadLine().Replace("    fFrequency: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.filteroneoverqHeader)].Text = StreamReader.ReadLine().Replace("    fOneOverQ: ", "").Replace(".", ",");
                         a++;
                     }
                 }
@@ -338,13 +405,22 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
-                string line = "";
+                string line = StreamReader.ReadLine();
                 int a = 0;
-                while (!(StreamReader.ReadLine()).Contains("  reverbs:"))
-                {
 
+                while (true)
+                {
+                    line = StreamReader.ReadLine();
+                    if (line == null)
+                    {
+                        return;
+                    }
+                    else if (line.Contains("  reverbs:"))
+                    {
+                        break;
+                    }
                 }
-                
+
                 while (!(line = StreamReader.ReadLine()).Contains("  rooms:"))
                 {
                     if (line.Contains("      enumName: "))
@@ -352,17 +428,17 @@ namespace Yaml_AudioTool_Rebuilt
                         f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbpresetHeader)].Text = line.Replace("      enumName: Reverb-", "");
                         f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbidHeader)].Text = f1.reverbpresetcomboBox.FindString(line.Replace("      enumName: Reverb-", "")).ToString();
                         StreamReader.ReadLine();
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbwetdryHeader)].Text = StreamReader.ReadLine().Replace("  wetDryMix: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbreflectionsdelayHeader)].Text = StreamReader.ReadLine().Replace("  reflectionsDelay: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdelayHeader)].Text = StreamReader.ReadLine().Replace("  reverbDelay: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfrequencyHeader)].Text = StreamReader.ReadLine().Replace("  roomFilterFreq: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfiltermainHeader)].Text = StreamReader.ReadLine().Replace("  roomFilterMain: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfilterhfHeader)].Text = StreamReader.ReadLine().Replace("  roomFilterHF: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbreflectionsgainHeader)].Text = StreamReader.ReadLine().Replace("  reflectionsGain: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbgainHeader)].Text = StreamReader.ReadLine().Replace("  reverbGain: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdecaytimeHeader)].Text = StreamReader.ReadLine().Replace("  decayTime: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdensityHeader)].Text = StreamReader.ReadLine().Replace("  density: ", "");
-                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomsizeHeader)].Text = StreamReader.ReadLine().Replace("  roomSize: ", "");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbwetdryHeader)].Text = StreamReader.ReadLine().Replace("  wetDryMix: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbreflectionsdelayHeader)].Text = StreamReader.ReadLine().Replace("  reflectionsDelay: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdelayHeader)].Text = StreamReader.ReadLine().Replace("  reverbDelay: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfrequencyHeader)].Text = StreamReader.ReadLine().Replace("  roomFilterFreq: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfiltermainHeader)].Text = StreamReader.ReadLine().Replace("  roomFilterMain: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomfilterhfHeader)].Text = StreamReader.ReadLine().Replace("  roomFilterHF: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbreflectionsgainHeader)].Text = StreamReader.ReadLine().Replace("  reflectionsGain: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbgainHeader)].Text = StreamReader.ReadLine().Replace("  reverbGain: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdecaytimeHeader)].Text = StreamReader.ReadLine().Replace("  decayTime: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbdensityHeader)].Text = StreamReader.ReadLine().Replace("  density: ", "").Replace(".", ",");
+                        f1.roomlistView.Items[a + listOffset].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbroomsizeHeader)].Text = StreamReader.ReadLine().Replace("  roomSize: ", "").Replace(".", ",");
                         a++;
                     }
                 }
@@ -391,7 +467,7 @@ namespace Yaml_AudioTool_Rebuilt
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Unable to load YAML file!");
+                    MessageBox.Show("Unable to load YAML file correct!");
                 }
             }
         }
