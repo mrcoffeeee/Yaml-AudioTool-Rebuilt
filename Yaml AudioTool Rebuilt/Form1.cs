@@ -103,11 +103,10 @@ namespace Yaml_AudioTool_Rebuilt
             }
             if (filelistView.SelectedItems.Count > 0)
             {
-                
-                
-                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text, filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text);
+                enumtextBox.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text;
+                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text, filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
-                selectedsoundLabel.Text = "Selection: " + filelistView.SelectedItems[0].Text;
+                selectedsoundLabel.Text = "Filename: " + filelistView.SelectedItems[0].Text;
                 double volumeValue = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text) * 100;
                 VolumetrackBar.Value = Convert.ToInt32(volumeValue);
                 volumevalueLabel.Text = Convert.ToString(Convert.ToInt32(volumeValue)) + " %";
@@ -130,6 +129,12 @@ namespace Yaml_AudioTool_Rebuilt
                 PitchenableButton.Enabled = true;
                 removeButtonEnabled(true);
             }
+        }
+
+        private void enumButton_Click(object sender, EventArgs e)
+        {
+            filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text = enumtextBox.Text;
+            filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         #region PlaybackSection
@@ -643,12 +648,13 @@ namespace Yaml_AudioTool_Rebuilt
             PitchenableButton.Text = "Off";
             PitchenableButton.BackColor = Color.Salmon;
             timeLabel.Text = "00:00";
+            enumtextBox.Text = "Title:";
             selectedsoundLabel.Text = "Selection: NONE";
         }
 
         private void SetWindowsSize()
         {
-            int value = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+            int value = Screen.PrimaryScreen.Bounds.Width;
 
             if (value < 1900)
             {
@@ -659,7 +665,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 this.Size = new Size(1600, 900);
                 filelistView.Size = new Size(1200, 750);
-                roomlistView.Size = new Size(350, 422);
+                roomlistView.Size = new Size(343, 389);
             }
             baseWindowWidth = this.Width;
             baseWindowHeight = this.Height;

@@ -56,20 +56,22 @@ namespace Yaml_AudioTool_Rebuilt
 
                         if (soundSource.WaveFormat.SampleRate != 48000)
                         {
-                            MessageBox.Show(Path.GetFileNameWithoutExtension(file) + ":\n\n" +
-                                "Samplerate unsupported!\n" +
-                                "Please convert your file to 48kHz.");
-                            return soundSource = null;
-                        }                        
+                            MessageBox.Show("File: " + Path.GetFileName(file) + "\n\n" +
+                                "WARNING:\n" +
+                                "Samplerate should be 48kHz!\n" +
+                                "Please provide new hq-file or convert the existing.");
+                           // return soundSource = null;
+                        }
 
                         Form1 f1 = (Form1)Application.OpenForms["Form1"];
-                        ListViewItem fileInfos = new(Path.GetFileNameWithoutExtension(file));
 
                         // add general fileinfos
+                        ListViewItem fileInfos = new(Path.GetFileNameWithoutExtension(file));
+                        fileInfos.SubItems.Add(fileInfos.SubItems[0].Text);
                         if (file.Contains(sd.audiofolderLabel.Text))
                         {
                             string filepathshort = file.Replace(sd.audiofolderLabel.Text, string.Empty);
-                            fileInfos.SubItems.Add(filepathshort);
+                            fileInfos.SubItems.Add(filepathshort.Replace(fileInfos.SubItems[0].Text + ".wav", ""));
                         }
                         else
                         {
@@ -138,7 +140,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
             else if (soundSource != null && playbackStop == true)
             {                
-                string soundFilepath = f1.filelistView.SelectedItems[0].SubItems[1].Text;
+                string soundFilepath = f1.filelistView.SelectedItems[0].SubItems[2].Text;
                 if (soundFilepath.StartsWith("\\"))
                 {
                     SettingsDialog sd = new SettingsDialog();
