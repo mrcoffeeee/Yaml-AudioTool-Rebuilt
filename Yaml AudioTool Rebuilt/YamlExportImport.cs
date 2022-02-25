@@ -219,6 +219,7 @@ namespace Yaml_AudioTool_Rebuilt
                             try
                             {
                                 line = StreamReader.ReadLine().Replace("    filename: ", "");
+                               // MessageBox.Show(line);
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text = line;
                                 line = line + ".wav";
                                 string[] filesearchPath = Directory.GetFiles(folderPath, line, SearchOption.AllDirectories);

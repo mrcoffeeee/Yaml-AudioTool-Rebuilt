@@ -189,7 +189,7 @@ namespace Yaml_AudioTool_Rebuilt
                     SettingsDialog sd = new SettingsDialog();
                     filepathTemp = sd.audiofolderLabel.Text +
                         filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text +
-                        filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text +
+                        filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text +
                         ".wav";
                     ap.soundSource = CodecFactory.Instance.GetCodec(filepathTemp);
                 }
@@ -244,6 +244,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void addfileButton_Click(object sender, EventArgs e)
         {
+            ap.StopPlayback();
+            playbackTimer.Stop();
             ap.OpenFile();
             if (filelistView.Items.Count > 0 &&
                 saveyamlButton.Enabled == false)

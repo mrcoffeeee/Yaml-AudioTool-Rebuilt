@@ -140,11 +140,14 @@ namespace Yaml_AudioTool_Rebuilt
             }
             else if (soundSource != null && playbackStop == true)
             {                
-                string soundFilepath = f1.filelistView.SelectedItems[0].SubItems[2].Text;
+                string soundFilepath = f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
                 if (soundFilepath.StartsWith("\\"))
                 {
                     SettingsDialog sd = new SettingsDialog();
-                    soundFilepath = sd.audiofolderLabel.Text + soundFilepath + f1.filelistView.SelectedItems[0].SubItems[0].Text + ".wav";
+                    soundFilepath = sd.audiofolderLabel.Text + 
+                        soundFilepath + 
+                        f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text + 
+                        ".wav";
                 }
                 xaudio2 = XAudio2.XAudio2Create(ProcessorSpecifier.UseDefaultProcessor);
                 Vortice.Multimedia.WaveFormat waveFormat;
