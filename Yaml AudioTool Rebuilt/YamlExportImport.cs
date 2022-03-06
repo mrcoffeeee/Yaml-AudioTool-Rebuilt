@@ -20,10 +20,10 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
-        private static string CreateStringCRC32(string name)
+        private static string CreateStringCRC32(string fileName)
         {
-            byte[] data = Encoding.ASCII.GetBytes(name);
-            UInt32 crcValue = Crc32Algorithm.Compute(data, 0, name.Length);
+            byte[] data = Encoding.ASCII.GetBytes(fileName);
+            UInt32 crcValue = Crc32Algorithm.Compute(data, 0, fileName.Length);
             return crcValue.ToString();
         }
 
@@ -113,11 +113,12 @@ namespace Yaml_AudioTool_Rebuilt
                 lines.Add("    basePitch: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text.Replace(",", "."));
                 lines.Add("    dopplerFactor: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.dopplerHeader)].Text.Replace(",", "."));
                 lines.Add("    localized: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.localizeHeader)].Text);
-                lines.Add("    crc: " + CreateStringCRC32(f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text));
-                if (f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
+                lines.Add("    crc: " + CreateStringCRC32(f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text));
+                // ADD ROOM CRC ENTRY
+                /*if (f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
                     lines.Add("    roomNameCRC: " + CreateStringCRC32(f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text));
                 else
-                    lines.Add("    roomNameCRC: " + "");
+                    lines.Add("    roomNameCRC: " + "");*/
                 a++;
             }
             return lines;
@@ -219,11 +220,8 @@ namespace Yaml_AudioTool_Rebuilt
                             try
                             {
                                 line = StreamReader.ReadLine().Replace("    filename: ", "");
-                               // MessageBox.Show(line);
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text = line;
-                                line = line + ".wav";
-                                string[] filesearchPath = Directory.GetFiles(folderPath, line, SearchOption.AllDirectories);
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = filesearchPath[0].Replace(folderPath, "").Replace(line, "");
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = folderPath + "\\" + line.Replace("/", "\\") + ".wav"; 
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text = StreamReader.ReadLine().Replace("    stream: ", "");
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text = StreamReader.ReadLine().Replace("    loop: ", "");
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text = StreamReader.ReadLine().Replace("    volume: ", "").Replace(".", ",");
@@ -253,13 +251,10 @@ namespace Yaml_AudioTool_Rebuilt
                             {
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = "--> FILE IS MISSING";
                             }
-                            
+
 
                             //Fill missing audiofile entries from file
-                            string filePath = folderPath + 
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text +
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text +
-                                ".wav";
+                            string filePath = f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
                             IWaveSource source;
                             try
                             {

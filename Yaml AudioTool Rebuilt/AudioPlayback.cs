@@ -67,16 +67,9 @@ namespace Yaml_AudioTool_Rebuilt
 
                         // add general fileinfos
                         ListViewItem fileInfos = new(Path.GetFileNameWithoutExtension(file));
-                        fileInfos.SubItems.Add(fileInfos.SubItems[0].Text);
-                        if (file.Contains(sd.audiofolderLabel.Text))
-                        {
-                            string filepathshort = file.Replace(sd.audiofolderLabel.Text, string.Empty);
-                            fileInfos.SubItems.Add(filepathshort.Replace(fileInfos.SubItems[0].Text + ".wav", ""));
-                        }
-                        else
-                        {
-                            fileInfos.SubItems.Add(file);
-                        }                        
+                        string tempString = sd.audiofolderLabel.Text + "\\";
+                        fileInfos.SubItems.Add(file.Replace(tempString , "").Replace("\\", "/").Replace(".wav", ""));
+                        fileInfos.SubItems.Add(file);
                         fileInfos.SubItems.Add("");
                         fileInfos.SubItems.Add("");
                         fileInfos.SubItems.Add((soundSource.Length / 1000).ToString());
@@ -112,13 +105,8 @@ namespace Yaml_AudioTool_Rebuilt
             return soundSource;
         }
 
-        public void GetSoundFromList(string filePath, string fileName)
-        {
-            if (filePath.StartsWith("\\"))
-            {
-                SettingsDialog sd = new SettingsDialog();
-                filePath = sd.audiofolderLabel.Text + filePath + fileName + ".wav";
-            }            
+        public void GetSoundFromList(string filePath)
+        {          
             soundSource = CodecFactory.Instance.GetCodec(filePath);
         }
 
@@ -141,14 +129,6 @@ namespace Yaml_AudioTool_Rebuilt
             else if (soundSource != null && playbackStop == true)
             {                
                 string soundFilepath = f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
-                if (soundFilepath.StartsWith("\\"))
-                {
-                    SettingsDialog sd = new SettingsDialog();
-                    soundFilepath = sd.audiofolderLabel.Text + 
-                        soundFilepath + 
-                        f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text + 
-                        ".wav";
-                }
                 xaudio2 = XAudio2.XAudio2Create(ProcessorSpecifier.UseDefaultProcessor);
                 Vortice.Multimedia.WaveFormat waveFormat;
                 AudioBuffer audioBuffer;

@@ -104,7 +104,7 @@ namespace Yaml_AudioTool_Rebuilt
             if (filelistView.SelectedItems.Count > 0)
             {
                 enumtextBox.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text;
-                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text, filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text);
+                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 selectedsoundLabel.Text = "Filename: " + filelistView.SelectedItems[0].Text;
                 double volumeValue = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text) * 100;
@@ -157,7 +157,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 int a = filelistView.Items.IndexOf(filelistView.SelectedItems[0]);
                 filelistView.Items[a - 1].Selected = true;
-                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text, filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text);
+                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 removeButtonEnabled(true);
             }
@@ -221,7 +221,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 int a = filelistView.Items.IndexOf(filelistView.SelectedItems[0]);
                 filelistView.Items[a + 1].Selected = true;
-                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text, filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text);
+                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 removeButtonEnabled(true);
             }
@@ -299,6 +299,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 saveyamlButton.Enabled = true;
             }
+            filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void saveyamlButton_Click(object sender, EventArgs e)
