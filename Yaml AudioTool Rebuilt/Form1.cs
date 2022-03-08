@@ -106,7 +106,7 @@ namespace Yaml_AudioTool_Rebuilt
                 enumtextBox.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text;
                 ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
-                selectedsoundLabel.Text = "Filename: " + filelistView.SelectedItems[0].Text;
+                selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text);
                 double volumeValue = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text) * 100;
                 VolumetrackBar.Value = Convert.ToInt32(volumeValue);
                 volumevalueLabel.Text = Convert.ToString(Convert.ToInt32(volumeValue)) + " %";
@@ -133,8 +133,12 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void enumButton_Click(object sender, EventArgs e)
         {
-            filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text = enumtextBox.Text;
-            filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            if (filelistView.SelectedItems.Count == 1)
+            {
+                filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text = enumtextBox.Text;
+                filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            }
+            
         }
 
         #region PlaybackSection
@@ -695,6 +699,24 @@ namespace Yaml_AudioTool_Rebuilt
                 playbackTimer.Stop();
             }
         }        
+
+        private string GetFilenameFromPath(string filePath)
+        {
+            string fileName = "";
+            char[] tempArray = filePath.ToCharArray();
+            Array.Reverse(tempArray);
+            foreach (char c in tempArray)
+            {
+                if (c.ToString() == "/")
+                {
+                    break;
+                }
+                fileName = fileName + c.ToString();
+            }
+            tempArray = fileName.ToCharArray();
+            Array.Reverse(tempArray);
+            return new string(tempArray);
+        }
 
         private void roomstoreButton_Click(object sender, EventArgs e)
         {

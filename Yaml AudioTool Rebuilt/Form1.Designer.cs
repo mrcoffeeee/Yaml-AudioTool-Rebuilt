@@ -697,6 +697,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.FalloffcomboBox.Name = "FalloffcomboBox";
             this.FalloffcomboBox.Size = new System.Drawing.Size(129, 23);
             this.FalloffcomboBox.TabIndex = 25;
+            this.toolTip1.SetToolTip(this.FalloffcomboBox, "Determines the fadeout of the audio file (linear or logarithmic).");
             this.FalloffcomboBox.SelectedIndexChanged += new System.EventHandler(this.FalloffcomboBox_SelectedIndexChanged);
             // 
             // PriorityLabel
@@ -721,6 +722,9 @@ namespace Yaml_AudioTool_Rebuilt
             this.PrioritytrackBar.Name = "PrioritytrackBar";
             this.PrioritytrackBar.Size = new System.Drawing.Size(129, 22);
             this.PrioritytrackBar.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.PrioritytrackBar, "Determines the priority of this audio source among all the ones that coexist in t" +
+        "he scene. (Priority: 0 = most important. 256 = least important. Default = 128.)." +
+        "");
             this.PrioritytrackBar.Value = 128;
             this.PrioritytrackBar.Scroll += new System.EventHandler(this.PrioritytrackBar_Scroll);
             // 
@@ -817,6 +821,8 @@ namespace Yaml_AudioTool_Rebuilt
             this.DopplertrackBar.Name = "DopplertrackBar";
             this.DopplertrackBar.Size = new System.Drawing.Size(129, 22);
             this.DopplertrackBar.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.DopplertrackBar, "Determines how much doppler effect will be applied to this audio source (if is se" +
+        "t to 0, then no effect is applied).");
             this.DopplertrackBar.Value = 100;
             this.DopplertrackBar.Scroll += new System.EventHandler(this.DopplertrackBar_Scroll);
             // 
@@ -881,6 +887,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.MindistancetextBox.Size = new System.Drawing.Size(129, 23);
             this.MindistancetextBox.TabIndex = 14;
             this.MindistancetextBox.Text = "1";
+            this.toolTip1.SetToolTip(this.MindistancetextBox, resources.GetString("MindistancetextBox.ToolTip"));
             this.MindistancetextBox.TextChanged += new System.EventHandler(this.MindistancetextBox_TextChanged);
             // 
             // MaxdistancetextBox
@@ -892,6 +899,9 @@ namespace Yaml_AudioTool_Rebuilt
             this.MaxdistancetextBox.Size = new System.Drawing.Size(129, 23);
             this.MaxdistancetextBox.TabIndex = 13;
             this.MaxdistancetextBox.Text = "1000";
+            this.toolTip1.SetToolTip(this.MaxdistancetextBox, "The distance where the sound stops attenuating at. Beyond this point it will stay" +
+        " at the volume it would be at MaxDistance units from the listener and will not a" +
+        "ttenuate any more.");
             this.MaxdistancetextBox.TextChanged += new System.EventHandler(this.MaxdistancetextBox_TextChanged);
             // 
             // FalloffLabel
@@ -1607,6 +1617,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.MinimumSize = new System.Drawing.Size(600, 209);
             this.Name = "Form1";
             this.Text = "Yaml AudioTool Rebuilt";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);

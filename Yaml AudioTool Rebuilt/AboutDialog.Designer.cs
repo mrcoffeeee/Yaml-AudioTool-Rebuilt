@@ -59,6 +59,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // AboutrichTextBox
             // 
+            this.AboutrichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.AboutrichTextBox.Font = new System.Drawing.Font("Segoe UI", 9.85F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.AboutrichTextBox.Location = new System.Drawing.Point(4, 300);
             this.AboutrichTextBox.Margin = new System.Windows.Forms.Padding(2);
@@ -66,7 +67,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.AboutrichTextBox.ReadOnly = true;
             this.AboutrichTextBox.Size = new System.Drawing.Size(363, 144);
             this.AboutrichTextBox.TabIndex = 4;
-            this.AboutrichTextBox.Text = "\t\t\t\n\t\tYAML AudioTool Rebuilt\n\nVersion: 0.4 - 220306\n\nNET6 Remake of the Vitei Aud" +
+            this.AboutrichTextBox.Text = "\t\t\t\n\t\tYAML AudioTool Rebuilt\n\nVersion: 0.4 - 220308\n\nNET6 Remake of the Vitei Aud" +
     "io Tool by Alex Miyamoto\nCode: Johannes Wronka\nLogo: Owen Davis";
             // 
             // AboutDialog
