@@ -667,14 +667,14 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 //filelistView.Size = new Size(691, 836);
                 roomlistView.Size = new Size(595, 180);
-                filelistView.Size = new Size(1200, 2 + generalinfosgroupBox.Height + tabControl1.Height + roomlistView.Height);
+                filelistView.Size = new Size(691, 4 + generalinfosgroupBox.Height + tabControl1.Height + roomlistView.Height);
             }
             else if (value >= 1900)
             {
                 this.Size = new Size(1600, 900);
                 //filelistView.Size = new Size(1200, 750);
                 roomlistView.Size = new Size(343, 389);
-                filelistView.Size = new Size(1200, 2 + generalinfosgroupBox.Height + tabControl1.Height + roomlistView.Height);
+                filelistView.Size = new Size(1200, 4 + generalinfosgroupBox.Height + tabControl1.Height + roomlistView.Height);
             }
             baseWindowWidth = this.Width;
             baseWindowHeight = this.Height;
