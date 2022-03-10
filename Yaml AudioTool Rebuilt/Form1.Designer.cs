@@ -321,10 +321,10 @@ namespace Yaml_AudioTool_Rebuilt
             this.falloffHeader});
             this.filelistView.FullRowSelect = true;
             this.filelistView.GridLines = true;
-            this.filelistView.Location = new System.Drawing.Point(13, 99);
+            this.filelistView.Location = new System.Drawing.Point(13, 107);
             this.filelistView.Margin = new System.Windows.Forms.Padding(4);
             this.filelistView.Name = "filelistView";
-            this.filelistView.Size = new System.Drawing.Size(405, 449);
+            this.filelistView.Size = new System.Drawing.Size(405, 441);
             this.filelistView.TabIndex = 2;
             this.filelistView.UseCompatibleStateImageBehavior = false;
             this.filelistView.View = System.Windows.Forms.View.Details;
