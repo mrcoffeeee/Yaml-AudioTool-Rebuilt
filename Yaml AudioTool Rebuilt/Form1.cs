@@ -700,7 +700,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }        
 
-        private string GetFilenameFromPath(string filePath)
+        private static string GetFilenameFromPath(string filePath)
         {
             string fileName = "";
             char[] tempArray = filePath.ToCharArray();
