@@ -221,7 +221,20 @@ namespace Yaml_AudioTool_Rebuilt
                             {
                                 line = StreamReader.ReadLine().Replace("    filename: ", "");
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text = line;
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = folderPath + "\\" + line.Replace("/", "\\") + ".wav"; 
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = folderPath + "\\" + line.Replace("/", "\\") + ".wav";
+                                
+                                //Fill missing audiofile entries from file
+                                string filePath = f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
+                                using (IWaveSource source = CodecFactory.Instance.GetCodec(filePath))
+                                {
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (source.Length / 1000).ToString();
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = source.GetLength().ToString(@"mm\:ss");
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = (source.WaveFormat.Channels).ToString();
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = (source.WaveFormat.SampleRate / 1000.0).ToString();
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (source.WaveFormat.BitsPerSample * source.WaveFormat.SampleRate / 1000).ToString();
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = (source.WaveFormat.BitsPerSample).ToString();
+                                }
+
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text = StreamReader.ReadLine().Replace("    stream: ", "");
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text = StreamReader.ReadLine().Replace("    loop: ", "");
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text = StreamReader.ReadLine().Replace("    volume: ", "").Replace(".", ",");
@@ -249,27 +262,7 @@ namespace Yaml_AudioTool_Rebuilt
                             }
                             catch (Exception)
                             {
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = "--> FILE IS MISSING";
-                            }
-
-
-                            //Fill missing audiofile entries from file
-                            string filePath = f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
-                            IWaveSource source;
-                            try
-                            {
-                                source = CodecFactory.Instance.GetCodec(filePath);
-
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (source.Length / 1000).ToString();
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = source.GetLength().ToString(@"mm\:ss");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = (source.WaveFormat.Channels).ToString();
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = (source.WaveFormat.SampleRate / 1000.0).ToString();
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (source.WaveFormat.BitsPerSample * source.WaveFormat.SampleRate / 1000).ToString();
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = (source.WaveFormat.BitsPerSample).ToString();
-                            }
-                            catch (Exception)
-                            {
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = "--> FILE IS CORRUPT";
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = "--> FILE IS MISSING OR CORRUPT";
                             }
                         }
                         catch (Exception)

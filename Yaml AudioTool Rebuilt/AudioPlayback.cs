@@ -75,18 +75,18 @@ namespace Yaml_AudioTool_Rebuilt
                         fileInfos.SubItems.Add((soundSource.Length / 1000).ToString());
                         fileInfos.SubItems.Add(soundSource.GetLength().ToString(@"mm\:ss"));
                         fileInfos.SubItems.Add(soundSource.WaveFormat.Channels.ToString());
-                        fileInfos.SubItems.Add((soundSource.WaveFormat.SampleRate / 1000).ToString("0.0"));
+                        fileInfos.SubItems.Add(Math.Round(soundSource.WaveFormat.SampleRate / 1000.0, 3).ToString());
                         fileInfos.SubItems.Add((soundSource.WaveFormat.BitsPerSample * soundSource.WaveFormat.SampleRate / 1000).ToString());
                         fileInfos.SubItems.Add(soundSource.WaveFormat.BitsPerSample.ToString());
-                        fileInfos.SubItems.Add((f1.VolumetrackBar.Maximum / 100.0).ToString("0.0"));
+                        fileInfos.SubItems.Add((f1.VolumetrackBar.Maximum / 100.0).ToString(""));
                         fileInfos.SubItems.Add(Convert.ToString(128));
                         fileInfos.SubItems.Add("false");
                         // add effects items
                         fileInfos.SubItems.Add("1");
                         fileInfos.SubItems.Add("1000");
-                        fileInfos.SubItems.Add((f1.DopplertrackBar.Maximum / 100.0).ToString("0.0"));
-                        fileInfos.SubItems.Add("1,00");
-                        fileInfos.SubItems.Add("0,00");
+                        fileInfos.SubItems.Add(f1.DopplertrackBar.Minimum.ToString());
+                        fileInfos.SubItems.Add("1");
+                        fileInfos.SubItems.Add("0");
                         // add misc items
                         fileInfos.SubItems.Add("false");
                         fileInfos.SubItems.Add("false");

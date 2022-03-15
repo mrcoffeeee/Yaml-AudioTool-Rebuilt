@@ -22,36 +22,36 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void PitchPot_ValueChanged(object sender, EventArgs e)
         {
-            double soundPitchFactor = PitchPot.Value / 100.00;
-            PitchvalueLabel.Text = soundPitchFactor.ToString("0.00");
+            double soundPitchFactor = Math.Round(PitchPot.Value / 100.00, 2);
+            PitchvalueLabel.Text = soundPitchFactor.ToString();
 
             if (formMain.filelistView.SelectedItems.Count == 1)
             {
-                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchHeader)].Text = soundPitchFactor.ToString("0.00");
+                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchHeader)].Text = soundPitchFactor.ToString("");
             }
         }
 
         private void PitrandPot_ValueChanged(object sender, EventArgs e)
         {
-            double soundPitchRand = PitrandPot.Value / 100.00;
-            PitchrandvalueLabel.Text = soundPitchRand.ToString("0.00");
+            double soundPitchRand = Math.Round(PitrandPot.Value / 100.00, 2);
+            PitchrandvalueLabel.Text = soundPitchRand.ToString("");
 
             if (formMain.filelistView.SelectedItems.Count == 1)
             {
-                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text = soundPitchRand.ToString("0.00");
+                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text = soundPitchRand.ToString("");
             }
         }
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            PitchvalueLabel.Text = "1,00";
+            PitchvalueLabel.Text = "1";
             PitchPot.Value = 100;
-            PitchrandvalueLabel.Text = "0,00";
+            PitchrandvalueLabel.Text = "0";
             PitrandPot.Value = 0;
             if (formMain.filelistView.SelectedItems.Count == 1)
             {
-                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchHeader)].Text = "1,00";
-                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text = "0,00";
+                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchHeader)].Text = "1";
+                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text = "0";
             }
         }
 

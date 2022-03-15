@@ -279,6 +279,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void removeallButton_Click(object sender, EventArgs e)
         {
             filelistView.Items.Clear();
+            roomlistView.Items.Clear();
             ResetMainFormValues();
         }
 
