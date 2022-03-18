@@ -186,7 +186,10 @@ namespace Yaml_AudioTool_Rebuilt
 
                 }
 
-                // Set VolumeMeter
+                // Set Volume
+                double volumeValue = f1.VolumetrackBar.Value / 100.0;
+                sourceVoice.SetVolume(Convert.ToSingle(volumeValue));
+
                 ///DO IT HERE!
 
                 // Set Brickwall Limiter
