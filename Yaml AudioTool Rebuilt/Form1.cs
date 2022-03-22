@@ -109,7 +109,7 @@ namespace Yaml_AudioTool_Rebuilt
                 selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text);
                 double volumeValue = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text) * 100;
                 VolumetrackBar.Value = Convert.ToInt32(volumeValue);
-                volumevalueLabel.Text = Convert.ToString(Convert.ToInt32(volumeValue)) + " %";
+                VolumevaluenumericUpDown.Value = Convert.ToInt32(volumeValue);
                 PrioritytrackBar.Value = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(priorityHeader)].Text);
                 priorityvalueLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(priorityHeader)].Text;
                 if(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(loopHeader)].Text == "true")
@@ -180,6 +180,35 @@ namespace Yaml_AudioTool_Rebuilt
             }
             ap.StopPlayback();
             playbackTimer.Stop();
+        }
+
+        private void LoopButton_Click(object sender, EventArgs e)
+        {
+            if (LoopButton.BackColor == Color.Salmon)
+            {
+                LoopButton.BackColor = Color.LightGreen;
+
+                if (filelistView.SelectedItems.Count > 0)
+                {
+                    for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                    {
+                        filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(loopHeader)].Text = "true";
+                    }
+                }
+
+            }
+            else if (LoopButton.BackColor == Color.LightGreen)
+            {
+                LoopButton.BackColor = Color.Salmon;
+
+                if (filelistView.SelectedItems.Count > 0)
+                {
+                    for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                    {
+                        filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(loopHeader)].Text = "false";
+                    }
+                }
+            }
         }
 
         private void PlayButton_Click(object sender, EventArgs e)
@@ -326,7 +355,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void VolumetrackBar_Scroll_1(object sender, EventArgs e)
         {
             double value = ap.SetVolume(VolumetrackBar.Value, filelistView.SelectedItems.Count);
-            volumevalueLabel.Text = Convert.ToString(Convert.ToInt32(value * 100)) + " %";
+            VolumevaluenumericUpDown.Value = Convert.ToInt32(value * 100);
 
             if (filelistView.SelectedItems.Count > 0)
             {
@@ -337,33 +366,9 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void LoopButton_Click(object sender, EventArgs e)
+        private void VolumevaluenumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (LoopButton.BackColor == Color.Salmon)
-            {
-                LoopButton.BackColor = Color.LightGreen;
-
-                if (filelistView.SelectedItems.Count > 0)
-                {
-                    for (int a = 0; a < filelistView.SelectedItems.Count; a++)
-                    {
-                        filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(loopHeader)].Text = "true";
-                    }                    
-                }
-
-            }
-            else if (LoopButton.BackColor == Color.LightGreen)
-            {
-                LoopButton.BackColor = Color.Salmon;
-
-                if (filelistView.SelectedItems.Count > 0)
-                {
-                    for (int a = 0; a < filelistView.SelectedItems.Count; a++)
-                    {
-                        filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(loopHeader)].Text = "false";
-                    }                    
-                }
-            }
+            VolumetrackBar.Value = Convert.ToInt32(VolumevaluenumericUpDown.Value);
         }
 
         private void PrioritytrackBar_Scroll(object sender, EventArgs e)
@@ -888,6 +893,6 @@ namespace Yaml_AudioTool_Rebuilt
                     a++;
                 }
             }
-        }        
+        }
     }
 }
