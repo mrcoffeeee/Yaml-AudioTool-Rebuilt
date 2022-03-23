@@ -19,14 +19,13 @@ namespace Yaml_AudioTool_Rebuilt
 {
     public partial class Form1 : Form
     {
-        //###############################################################################################
-        //###############################################################################################
-        //###                                                                                         ###
-        //### Variables & Objects                                                                     ###
-        //###                                                                                         ###
-        //###############################################################################################
-        //###############################################################################################
+        #region VariablesObjects
 
+        //######################################################
+        //###                                                ###
+        //### Variables & Objects                            ###
+        //###                                                ###
+        //######################################################
 
         private int baseWindowWidth = 0;
         private int baseWindowHeight = 0;
@@ -35,17 +34,17 @@ namespace Yaml_AudioTool_Rebuilt
         private int basefilterlistviewHeight = 0;
 
         private readonly AudioPlayback ap = new();
-      //  private readonly Effect_PitchShifter formPitchshifter = new();
-        
+        //  private readonly Effect_PitchShifter formPitchshifter = new();
 
-        //###############################################################################################
-        //###############################################################################################
-        //###                                                                                         ###
-        //### MainForm events                                                                         ###
-        //###                                                                                         ###
-        //###############################################################################################
-        //###############################################################################################
+        #endregion VariablesObjects
 
+        #region Form-Related
+
+        //######################################################
+        //###                                                ###
+        //### Form related events                            ###
+        //###                                                ###
+        //######################################################
 
         public Form1()
         {
@@ -59,13 +58,140 @@ namespace Yaml_AudioTool_Rebuilt
             roomlistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
+        private void PopulateComboboxes()
+        {
+            // Filter Combobox
+            var f = typeof(FilterType);
+            List<string> filterNames = new(f.GetFields().Select(x => x.Name));
+            foreach (var item in filterNames)
+            {
+                if (item.Contains("value__"))
+                    continue;
+                filtercomboBox.Items.Add(item);
+            }
+            filtercomboBox.SelectedIndex = 0;
+
+            // Reverbpresets Combobox
+            var r = typeof(Vortice.XAudio2.Fx.Presets);
+            List<string> reverbPresetNames = new(r.GetFields().Select(x => x.Name));
+            foreach (var item in reverbPresetNames)
+            {
+                reverbpresetcomboBox.Items.Add(item);
+            }
+            reverbpresetcomboBox.SelectedIndex = 1;
+        }
+
+        private void ResetMainFormValues()
+        {
+            ap.StopPlayback();
+            playbackTimer.Stop();
+            removeButtonEnabled(false);
+            if (filelistView.Items.Count == 0)
+                saveyamlButton.Enabled = false;
+            PitchenableButton.Enabled = false;
+            PitchenableButton.Text = "Off";
+            PitchenableButton.BackColor = Color.Salmon;
+            timeLabel.Text = "00:00";
+            enumtextBox.Text = "Title:";
+            selectedsoundLabel.Text = "Selection: NONE";
+        }
+
+        private void SetWindowsSize()
+        {
+            int value = Screen.PrimaryScreen.Bounds.Width;
+
+            if (value < 1900)
+            {
+                //filelistView.Size = new Size(691, 836);
+                roomlistView.Size = new Size(595, 180);
+                filelistView.Size = new Size(691, 4 + generalinfosgroupBox.Height + tabControl1.Height + roomlistView.Height);
+            }
+            else if (value >= 1900)
+            {
+                this.Size = new Size(1600, 900);
+                //filelistView.Size = new Size(1200, 750);
+                roomlistView.Size = new Size(343, 389);
+                filelistView.Size = new Size(1200, 4 + generalinfosgroupBox.Height + tabControl1.Height + roomlistView.Height);
+            }
+            baseWindowWidth = this.Width;
+            baseWindowHeight = this.Height;
+            baseListViewWidth = filelistView.Width;
+            baseListViewHeight = filelistView.Height;
+            basefilterlistviewHeight = roomlistView.Height;
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            filelistView.Width = baseListViewWidth + this.Width - baseWindowWidth;
+            filelistView.Height = baseListViewHeight + this.Height - baseWindowHeight;
+            roomlistView.Height = basefilterlistviewHeight + this.Height - baseWindowHeight;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            ap.timerCount += playbackTimer.Interval;
+            var timeSpan = TimeSpan.FromMilliseconds(ap.timerCount);
+            timeLabel.Text = timeSpan.ToString(@"mm\:ss");
+            //  meterLabel.Text = ap.peakLevel.ToString();
+
+            if (LoopButton.BackColor == Color.Salmon)
+            {
+                ap.sourceVoice.ExitLoop(0);
+            }
+
+            if (ap.sourceVoice.State.BuffersQueued == 0)
+            {
+                ap.StopPlayback();
+                playbackTimer.Stop();
+            }
+        }
+
+        private static string GetFilenameFromPath(string filePath)
+        {
+            string fileName = "";
+            char[] tempArray = filePath.ToCharArray();
+            Array.Reverse(tempArray);
+            foreach (char c in tempArray)
+            {
+                if (c.ToString() == "/")
+                {
+                    break;
+                }
+                fileName = fileName + c.ToString();
+            }
+            tempArray = fileName.ToCharArray();
+            Array.Reverse(tempArray);
+            return new string(tempArray);
+        }
+
+        private void ExitApplication()
+        {
+            try
+            {
+                ap.StopPlayback();
+                File.Delete("Temp.wav");
+            }
+            catch
+            {
+
+            }
+            Application.Exit();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ExitApplication();
+        }
+
+        #endregion Form-Related
+
+        #region MenuestripSection
 
         //######################################################
         //###                                                ###
-        //### Elements for MenuStrip section                 ###
+        //### Elements for MenueStrip section                ###
         //###                                                ###
         //######################################################
-
 
         private void SettingstoolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -87,13 +213,15 @@ namespace Yaml_AudioTool_Rebuilt
             formAbout.ShowDialog();
         }
 
+        #endregion MenuestripSection
+
+        #region ListviewSection
 
         //######################################################
         //###                                                ###
         //### Elements for "ListView" section                ###
         //###                                                ###
         //######################################################
-
 
         private void filelistView_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -141,6 +269,8 @@ namespace Yaml_AudioTool_Rebuilt
             
         }
 
+        #endregion ListviewSection
+
         #region PlaybackSection
 
         //######################################################
@@ -148,7 +278,6 @@ namespace Yaml_AudioTool_Rebuilt
         //### Elements for "Playback" section                ###
         //###                                                ###
         //######################################################
-
 
         private void BackButton_Click(object sender, EventArgs e)
         {
@@ -266,14 +395,13 @@ namespace Yaml_AudioTool_Rebuilt
 
         #endregion PlaybackSection
 
-        #region YAMLEditor
+        #region YAMLEditorSection
 
         //######################################################
         //###                                                ###
         //### Elements for "YAML Editor" section             ###
         //###                                                ###
         //######################################################
-
 
         private void addfileButton_Click(object sender, EventArgs e)
         {
@@ -341,7 +469,7 @@ namespace Yaml_AudioTool_Rebuilt
             YamlExportImport.ExportYAML();
         }
 
-        #endregion YAMLEditor
+        #endregion YAMLEditorSection
 
         #region Property-Playback
 
@@ -350,7 +478,6 @@ namespace Yaml_AudioTool_Rebuilt
         //### Elements for property editor "Playback"        ###
         //###                                                ###
         //######################################################
-
 
         private void VolumetrackBar_Scroll_1(object sender, EventArgs e)
         {
@@ -525,6 +652,184 @@ namespace Yaml_AudioTool_Rebuilt
 
         #endregion Property-Playback
 
+        #region Property-RoomCreation
+
+        //######################################################
+        //###                                                ###
+        //### Elements for property editor "Room Creation"   ###
+        //###                                                ###
+        //######################################################
+
+        private void filtercomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (roomlistView.SelectedItems.Count == 1)
+            {
+                Effects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
+                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filtertypeHeader)].Text = filtercomboBox.SelectedIndex.ToString();
+            }
+        }
+
+        private void frequencyPot_ValueChanged(object sender, EventArgs e)
+        {
+            Effects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
+            float value = Convert.ToSingle(Math.Round(filterfrequencyPot.Value, 1));
+            filterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(value, 48000f).ToString("0.0") + " Hz";
+
+
+            if (roomlistView.SelectedItems.Count == 1)
+            {
+                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text = value.ToString("0.0");
+            }
+        }
+
+        private void oneoverqPot_ValueChanged(object sender, EventArgs e)
+        {
+            Effects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
+            double value = Math.Round(filteroneoverqPot.Value, 1);
+            filteroneoverqvalueLabel.Text = value.ToString("0.0");
+
+            if (roomlistView.SelectedItems.Count == 1)
+            {
+                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text = value.ToString("0.0");
+            }
+        }
+
+        private void filterlistView_Click(object sender, EventArgs e)
+        {
+            filternametextBox.Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filternameHeader)].Text;
+            filtercomboBox.Text = filtercomboBox.Items[Convert.ToInt32(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filtertypeHeader)].Text)].ToString();
+            filterfrequencyPot.Value = Math.Round(Convert.ToDouble(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text), 1);
+            filterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(Convert.ToSingle(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text), 48000f).ToString("0.0") + " Hz";
+            filteroneoverqPot.Value = Convert.ToDouble(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text);
+            filteroneoverqvalueLabel.Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text;
+            reverbpresetcomboBox.SelectedIndex = Convert.ToInt32(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbidHeader)].Text);
+            reverbwetdryPot.Value = Convert.ToDouble(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text);
+            reverbwetdryvalueLabel.Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text + " %";
+        }
+
+        private void roomstoreButton_Click(object sender, EventArgs e)
+        {
+            if (checkRoomDuplicates() == true)
+            {
+                MessageBox.Show("Room creation impossible!\n\n" +
+                    "Please use a unique room/filter name.");
+            }
+            else if (checkRoomDuplicates() == false)
+            {
+                var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(Effects.ReverbPresets[reverbpresetcomboBox.SelectedIndex], false);
+                ListViewItem roomitem = new(roomnametextBox.Text);
+                //Filter Items
+                roomitem.SubItems.Add(filternametextBox.Text);
+                roomitem.SubItems.Add(filtercomboBox.SelectedIndex.ToString());
+                roomitem.SubItems.Add(Math.Round(filterfrequencyPot.Value, 1).ToString("0.0"));
+                roomitem.SubItems.Add(Math.Round(filteroneoverqPot.Value, 1).ToString("0.0"));
+                //reverb Items
+                roomitem.SubItems.Add(reverbpresetcomboBox.SelectedItem.ToString());
+                roomitem.SubItems.Add(reverbpresetcomboBox.SelectedIndex.ToString());
+                roomitem.SubItems.Add(reverbwetdryPot.Value.ToString("0.0"));
+                roomitem.SubItems.Add(actualReverbParameter.ReflectionsDelay.ToString("0"));
+                roomitem.SubItems.Add(actualReverbParameter.RoomFilterFreq.ToString("0.0"));
+                roomitem.SubItems.Add(actualReverbParameter.ReverbDelay.ToString("0"));
+                roomitem.SubItems.Add(actualReverbParameter.RoomFilterMain.ToString("0.0"));
+                roomitem.SubItems.Add(actualReverbParameter.RoomFilterHF.ToString("0.0"));
+                roomitem.SubItems.Add(actualReverbParameter.ReflectionsGain.ToString("0.0"));
+                roomitem.SubItems.Add(actualReverbParameter.ReverbGain.ToString("0.0"));
+                roomitem.SubItems.Add(actualReverbParameter.DecayTime.ToString("0.0"));
+                roomitem.SubItems.Add(actualReverbParameter.Density.ToString("0.0"));
+                roomitem.SubItems.Add(actualReverbParameter.RoomSize.ToString("0.0"));
+                roomlistView.Items.Add(roomitem);
+
+                if (roomlistView.Items.Count > 0)
+                {
+                    roommapButton.Enabled = true;
+                    roomunmapButton.Enabled = true;
+                    filterremoveButton.Enabled = true;
+                }
+            }
+        }
+
+        private void roomremoveButton_Click(object sender, EventArgs e)
+        {
+            if (roomlistView.SelectedItems.Count == 1)
+            {
+                int a = 0;
+                foreach (var item in filelistView.Items)
+                {
+                    if (filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text == roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text)
+                    {
+                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text = "";
+                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roomidHeader)].Text = "";
+                    }
+                    a++;
+                }
+                roomlistView.SelectedItems[0].Remove();
+
+                if (roomlistView.Items.Count == 0)
+                {
+                    roommapButton.Enabled = false;
+                    roomunmapButton.Enabled = false;
+                    filterremoveButton.Enabled = false;
+                }
+            }
+        }        
+
+        private bool checkRoomDuplicates()
+        {
+            int a = 0;
+            foreach (var item in roomlistView.Items)
+            {
+                if (roomlistView.Items[a].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text == roomnametextBox.Text ||
+                    roomlistView.Items[a].SubItems[roomlistView.Columns.IndexOf(filternameHeader)].Text == filternametextBox.Text)
+                    return true;
+                a++;
+            }
+            return false;
+        }        
+
+        private void reverbwetdryPot_ValueChanged(object sender, EventArgs e)
+        {
+            Effects.UpdateReverbSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
+            reverbwetdryvalueLabel.Text = Math.Round(reverbwetdryPot.Value, 1).ToString("0.0") + " %";
+
+            if (roomlistView.SelectedItems.Count == 1)
+            {
+                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text = Math.Round(reverbwetdryPot.Value, 1).ToString("0.0");
+            }
+        }
+
+        private void roommapButton_Click(object sender, EventArgs e)
+        {
+            if (filelistView.SelectedItems.Count > 0 &&
+                roomlistView.SelectedItems.Count == 1)
+            {
+                int a = 0;
+                foreach (var item in filelistView.SelectedItems)
+                {
+                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text;
+                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(roomidHeader)].Text = roomlistView.SelectedItems[0].Index.ToString();
+                    a++;
+                }
+            }
+        }
+
+        private void roomunmapButton_Click(object sender, EventArgs e)
+        {
+            if (roomlistView.SelectedItems.Count == 1)
+            {
+                int a = 0;
+                foreach (var item in filelistView.Items)
+                {
+                    if (filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text == roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text)
+                    {
+                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text = "";
+                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roomidHeader)].Text = "";
+                    }
+                    a++;
+                }
+            }
+        }
+        #endregion Property-RoomCreation
+
         #region Property-Effects
 
         //######################################################
@@ -532,7 +837,6 @@ namespace Yaml_AudioTool_Rebuilt
         //### Elements for property editor "Effects"         ###
         //###                                                ###
         //######################################################
-
 
         private void PitchshifterButton_Click(object sender, EventArgs e)
         {
@@ -601,317 +905,5 @@ namespace Yaml_AudioTool_Rebuilt
 
         #endregion Property-Effects
 
-
-        //######################################################
-        //###                                                ###
-        //### Misc form events                               ###
-        //###                                                ###
-        //######################################################
-
-
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            filelistView.Width = baseListViewWidth + this.Width - baseWindowWidth;
-            filelistView.Height = baseListViewHeight + this.Height - baseWindowHeight;
-            roomlistView.Height = basefilterlistviewHeight + this.Height - baseWindowHeight;
-        }
-
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            ExitApplication();
-        }
-
-
-        //###############################################################################################
-        //###############################################################################################
-        //###                                                                                         ###
-        //### Form- related functions                                                                 ###
-        //###                                                                                         ###
-        //###############################################################################################
-        //###############################################################################################
-
-
-        private void ExitApplication()
-        {
-            try
-            {
-                ap.StopPlayback();
-                File.Delete("Temp.wav");
-            }
-            catch
-            {
-
-            }
-            Application.Exit();
-        }
-
-        private void PopulateComboboxes()
-        {
-            // Filter Combobox
-
-            var f = typeof(FilterType);
-            List<string> filterNames = new(f.GetFields().Select(x => x.Name));
-            foreach (var item in filterNames)
-            {
-                if (item.Contains("value__"))
-                    continue;
-                filtercomboBox.Items.Add(item);
-            }
-            filtercomboBox.SelectedIndex = 0;
-
-            // Reverbpresets Combobox
-            var r = typeof(Vortice.XAudio2.Fx.Presets);
-            List<string> reverbPresetNames = new(r.GetFields().Select(x => x.Name));
-            foreach (var item in reverbPresetNames)
-            {
-                reverbpresetcomboBox.Items.Add(item);
-            }
-            reverbpresetcomboBox.SelectedIndex = 1;
-        }
-
-        private void ResetMainFormValues()
-        {
-            ap.StopPlayback();
-            playbackTimer.Stop();
-            removeButtonEnabled(false);
-            if (filelistView.Items.Count == 0)
-                saveyamlButton.Enabled = false;
-            PitchenableButton.Enabled = false;
-            PitchenableButton.Text = "Off";
-            PitchenableButton.BackColor = Color.Salmon;
-            timeLabel.Text = "00:00";
-            enumtextBox.Text = "Title:";
-            selectedsoundLabel.Text = "Selection: NONE";
-        }
-
-        private void SetWindowsSize()
-        {
-            int value = Screen.PrimaryScreen.Bounds.Width;
-
-            if (value < 1900)
-            {
-                //filelistView.Size = new Size(691, 836);
-                roomlistView.Size = new Size(595, 180);
-                filelistView.Size = new Size(691, 4 + generalinfosgroupBox.Height + tabControl1.Height + roomlistView.Height);
-            }
-            else if (value >= 1900)
-            {
-                this.Size = new Size(1600, 900);
-                //filelistView.Size = new Size(1200, 750);
-                roomlistView.Size = new Size(343, 389);
-                filelistView.Size = new Size(1200, 4 + generalinfosgroupBox.Height + tabControl1.Height + roomlistView.Height);
-            }
-            baseWindowWidth = this.Width;
-            baseWindowHeight = this.Height;
-            baseListViewWidth = filelistView.Width;
-            baseListViewHeight = filelistView.Height;
-            basefilterlistviewHeight = roomlistView.Height;
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            ap.timerCount += playbackTimer.Interval;
-            var timeSpan = TimeSpan.FromMilliseconds(ap.timerCount);
-            timeLabel.Text = timeSpan.ToString(@"mm\:ss");
-            //  meterLabel.Text = ap.peakLevel.ToString();
-
-            if (LoopButton.BackColor == Color.Salmon)
-            {
-                ap.sourceVoice.ExitLoop(0);                
-            }
-
-            if (ap.sourceVoice.State.BuffersQueued == 0)
-            {
-                ap.StopPlayback();
-                playbackTimer.Stop();
-            }
-        }        
-
-        private static string GetFilenameFromPath(string filePath)
-        {
-            string fileName = "";
-            char[] tempArray = filePath.ToCharArray();
-            Array.Reverse(tempArray);
-            foreach (char c in tempArray)
-            {
-                if (c.ToString() == "/")
-                {
-                    break;
-                }
-                fileName = fileName + c.ToString();
-            }
-            tempArray = fileName.ToCharArray();
-            Array.Reverse(tempArray);
-            return new string(tempArray);
-        }
-
-        private void roomstoreButton_Click(object sender, EventArgs e)
-        {
-            if (checkRoomDuplicates() == true)
-            {
-                MessageBox.Show("Room creation impossible!\n\n" +
-                    "Please use a unique room/filter name.");
-            }
-            else if (checkRoomDuplicates() == false)
-            {
-                var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(Effects.ReverbPresets[reverbpresetcomboBox.SelectedIndex], false);
-                ListViewItem roomitem = new(roomnametextBox.Text);
-                //Filter Items
-                roomitem.SubItems.Add(filternametextBox.Text);
-                roomitem.SubItems.Add(filtercomboBox.SelectedIndex.ToString());
-                roomitem.SubItems.Add(Math.Round(filterfrequencyPot.Value, 1).ToString("0.0"));
-                roomitem.SubItems.Add(Math.Round(filteroneoverqPot.Value, 1).ToString("0.0"));
-                //reverb Items
-                roomitem.SubItems.Add(reverbpresetcomboBox.SelectedItem.ToString());
-                roomitem.SubItems.Add(reverbpresetcomboBox.SelectedIndex.ToString());
-                roomitem.SubItems.Add(reverbwetdryPot.Value.ToString("0.0"));
-                roomitem.SubItems.Add(actualReverbParameter.ReflectionsDelay.ToString("0"));
-                roomitem.SubItems.Add(actualReverbParameter.RoomFilterFreq.ToString("0.0"));
-                roomitem.SubItems.Add(actualReverbParameter.ReverbDelay.ToString("0"));
-                roomitem.SubItems.Add(actualReverbParameter.RoomFilterMain.ToString("0.0"));
-                roomitem.SubItems.Add(actualReverbParameter.RoomFilterHF.ToString("0.0"));
-                roomitem.SubItems.Add(actualReverbParameter.ReflectionsGain.ToString("0.0"));
-                roomitem.SubItems.Add(actualReverbParameter.ReverbGain.ToString("0.0"));
-                roomitem.SubItems.Add(actualReverbParameter.DecayTime.ToString("0.0"));
-                roomitem.SubItems.Add(actualReverbParameter.Density.ToString("0.0"));
-                roomitem.SubItems.Add(actualReverbParameter.RoomSize.ToString("0.0"));
-                roomlistView.Items.Add(roomitem);
-
-                if (roomlistView.Items.Count > 0)
-                {
-                    roommapButton.Enabled = true;
-                    roomunmapButton.Enabled = true;
-                    filterremoveButton.Enabled = true;
-                }
-            }            
-        }
-
-        private void roomremoveButton_Click(object sender, EventArgs e)
-        {
-            if (roomlistView.SelectedItems.Count == 1)
-            {
-                int a = 0;
-                foreach (var item in filelistView.Items)
-                {
-                    if (filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text == roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text)
-                    {
-                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text = "";
-                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roomidHeader)].Text = "";
-                    }
-                    a++;
-                }
-                roomlistView.SelectedItems[0].Remove();
-
-                if (roomlistView.Items.Count == 0)
-                {
-                    roommapButton.Enabled = false;
-                    roomunmapButton.Enabled = false;
-                    filterremoveButton.Enabled = false;
-                }
-            }
-        }
-
-        private void filtercomboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (roomlistView.SelectedItems.Count == 1)
-            {
-                Effects.UpdateFilterSettings(filelistView.SelectedItems.Count,ap.sourceVoice);
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filtertypeHeader)].Text = filtercomboBox.SelectedIndex.ToString();
-            }
-        }
-
-        private void filterlistView_Click(object sender, EventArgs e)
-        {
-            filternametextBox.Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filternameHeader)].Text;
-            filtercomboBox.Text = filtercomboBox.Items[Convert.ToInt32(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filtertypeHeader)].Text)].ToString();
-            filterfrequencyPot.Value = Math.Round(Convert.ToDouble(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text), 1);
-            filterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(Convert.ToSingle(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text), 48000f).ToString("0.0") + " Hz";
-            filteroneoverqPot.Value = Convert.ToDouble(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text);
-            filteroneoverqvalueLabel.Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text;
-            reverbpresetcomboBox.SelectedIndex = Convert.ToInt32(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbidHeader)].Text);
-            reverbwetdryPot.Value = Convert.ToDouble(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text);
-            reverbwetdryvalueLabel.Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text + " %";
-        }
-
-        private bool checkRoomDuplicates()
-        {
-            int a = 0;
-            foreach (var item in roomlistView.Items)
-            {
-                if (roomlistView.Items[a].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text == roomnametextBox.Text ||
-                    roomlistView.Items[a].SubItems[roomlistView.Columns.IndexOf(filternameHeader)].Text == filternametextBox.Text)
-                    return true;
-                a++;                
-            }
-            return false;
-        }
-
-        private void frequencyPot_ValueChanged(object sender, EventArgs e)
-        {
-            Effects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
-            float value = Convert.ToSingle(Math.Round(filterfrequencyPot.Value, 1));
-            filterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(value, 48000f).ToString("0.0") + " Hz";
-
-
-            if (roomlistView.SelectedItems.Count == 1)
-            {
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text = value.ToString("0.0");
-            }
-        }
-
-        private void oneoverqPot_ValueChanged(object sender, EventArgs e)
-        {
-            Effects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
-            double value = Math.Round(filteroneoverqPot.Value, 1);
-            filteroneoverqvalueLabel.Text = value.ToString("0.0");
-
-            if (roomlistView.SelectedItems.Count == 1)
-            {
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text = value.ToString("0.0");
-            }
-        }
-
-        private void reverbwetdryPot_ValueChanged(object sender, EventArgs e)
-        {
-            Effects.UpdateReverbSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
-            reverbwetdryvalueLabel.Text = Math.Round(reverbwetdryPot.Value, 1).ToString("0.0") + " %";
-
-            if (roomlistView.SelectedItems.Count == 1)
-            {
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text = Math.Round(reverbwetdryPot.Value, 1).ToString("0.0");
-            }
-        }
-
-        private void roommapButton_Click(object sender, EventArgs e)
-        {
-            if (filelistView.SelectedItems.Count > 0 &&
-                roomlistView.SelectedItems.Count == 1)
-            {
-                int a = 0;
-                foreach (var item in filelistView.SelectedItems)
-                {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text;
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(roomidHeader)].Text = roomlistView.SelectedItems[0].Index.ToString();
-                    a++;
-                }
-            }
-        }
-
-        private void roomunmapButton_Click(object sender, EventArgs e)
-        {
-            if (roomlistView.SelectedItems.Count == 1)
-            {
-                int a = 0;
-                foreach (var item in filelistView.Items)
-                {
-                    if (filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text == roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text)
-                    {
-                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text = "";
-                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roomidHeader)].Text = "";
-                    }
-                    a++;
-                }
-            }
-        }        
     }
 }

@@ -1612,8 +1612,9 @@ namespace Yaml_AudioTool_Rebuilt
             this.enumtextBox.Location = new System.Drawing.Point(10, 32);
             this.enumtextBox.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.enumtextBox.MaxLength = 40;
+            this.enumtextBox.Multiline = true;
             this.enumtextBox.Name = "enumtextBox";
-            this.enumtextBox.Size = new System.Drawing.Size(425, 31);
+            this.enumtextBox.Size = new System.Drawing.Size(425, 42);
             this.enumtextBox.TabIndex = 69;
             this.enumtextBox.Text = "Title:";
             // 
