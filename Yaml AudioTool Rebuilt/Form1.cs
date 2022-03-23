@@ -116,8 +116,8 @@ namespace Yaml_AudioTool_Rebuilt
                     LoopButton.BackColor = Color.LightGreen;
                 else if (filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(loopHeader)].Text == "false")
                     LoopButton.BackColor = Color.Salmon;
-                MindistancetextBox.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(mindistanceHeader)].Text;
-                MaxdistancetextBox.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(maxdistanceHeader)].Text;
+                MinDistancenumericUpDown.Value = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(mindistanceHeader)].Text);
+                MaxDistancenumericUpDown.Value = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(maxdistanceHeader)].Text);
                 double dopplerValue = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(dopplerHeader)].Text);
                 DopplertrackBar.Value = Convert.ToInt32(dopplerValue * 100);
                 dopplervalueLabel.Text = Convert.ToString(dopplerValue);
@@ -369,6 +369,15 @@ namespace Yaml_AudioTool_Rebuilt
         private void VolumevaluenumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             VolumetrackBar.Value = Convert.ToInt32(VolumevaluenumericUpDown.Value);
+            double value = ap.SetVolume(VolumetrackBar.Value, filelistView.SelectedItems.Count);
+
+            if (filelistView.SelectedItems.Count > 0)
+            {
+                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                {
+                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text = Convert.ToString(value);
+                }
+            }            
         }
 
         private void PrioritytrackBar_Scroll(object sender, EventArgs e)
@@ -481,24 +490,34 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void MaxdistancetextBox_TextChanged(object sender, EventArgs e)
+        private void MaxDistancenumericUpDown_ValueChanged(object sender, EventArgs e)
         {
+            if (MaxDistancenumericUpDown.Value <= MinDistancenumericUpDown.Value)
+            {
+                MaxDistancenumericUpDown.Value = MinDistancenumericUpDown.Value;
+            }
+
             if (filelistView.SelectedItems.Count > 0)
             {
                 for (int a = 0; a < filelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(maxdistanceHeader)].Text = MaxdistancetextBox.Text;
-                }                
+                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(maxdistanceHeader)].Text = MaxDistancenumericUpDown.Value.ToString();
+                }
             }
         }
 
-        private void MindistancetextBox_TextChanged(object sender, EventArgs e)
+        private void MinDistancenumericUpDown_ValueChanged(object sender, EventArgs e)
         {
+            if (MinDistancenumericUpDown.Value >= MaxDistancenumericUpDown.Value)
+            {
+                MinDistancenumericUpDown.Value = MaxDistancenumericUpDown.Value;
+            }
+
             if (filelistView.SelectedItems.Count > 0)
             {
                 for (int a = 0; a < filelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(mindistanceHeader)].Text = MindistancetextBox.Text;
+                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(mindistanceHeader)].Text = MinDistancenumericUpDown.Value.ToString();
                 }
             }
         }
@@ -893,6 +912,6 @@ namespace Yaml_AudioTool_Rebuilt
                     a++;
                 }
             }
-        }
+        }        
     }
 }

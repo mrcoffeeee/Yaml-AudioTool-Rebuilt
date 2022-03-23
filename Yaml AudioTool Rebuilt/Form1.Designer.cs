@@ -102,10 +102,10 @@ namespace Yaml_AudioTool_Rebuilt
             this.DopplerLabel = new System.Windows.Forms.Label();
             this.MindistanceLabel = new System.Windows.Forms.Label();
             this.MaxdistanceLabel = new System.Windows.Forms.Label();
-            this.MindistancetextBox = new System.Windows.Forms.TextBox();
-            this.MaxdistancetextBox = new System.Windows.Forms.TextBox();
             this.FalloffLabel = new System.Windows.Forms.Label();
             this.TypecomboBox = new System.Windows.Forms.ComboBox();
+            this.MinDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.MaxDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.reverbtabPage = new System.Windows.Forms.TabPage();
             this.RoomenableButton = new System.Windows.Forms.Button();
             this.roomunmapButton = new System.Windows.Forms.Button();
@@ -184,6 +184,8 @@ namespace Yaml_AudioTool_Rebuilt
             this.playbackLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PrioritytrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DopplertrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MinDistancenumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxDistancenumericUpDown)).BeginInit();
             this.reverbtabPage.SuspendLayout();
             this.effectstabPage.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -670,10 +672,10 @@ namespace Yaml_AudioTool_Rebuilt
             this.playbackLayoutPanel.Controls.Add(this.DopplerLabel, 0, 1);
             this.playbackLayoutPanel.Controls.Add(this.MindistanceLabel, 0, 7);
             this.playbackLayoutPanel.Controls.Add(this.MaxdistanceLabel, 0, 6);
-            this.playbackLayoutPanel.Controls.Add(this.MindistancetextBox, 1, 7);
-            this.playbackLayoutPanel.Controls.Add(this.MaxdistancetextBox, 1, 6);
             this.playbackLayoutPanel.Controls.Add(this.FalloffLabel, 0, 5);
             this.playbackLayoutPanel.Controls.Add(this.TypecomboBox, 1, 4);
+            this.playbackLayoutPanel.Controls.Add(this.MinDistancenumericUpDown, 1, 7);
+            this.playbackLayoutPanel.Controls.Add(this.MaxDistancenumericUpDown, 1, 6);
             this.playbackLayoutPanel.Location = new System.Drawing.Point(7, 12);
             this.playbackLayoutPanel.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             this.playbackLayoutPanel.Name = "playbackLayoutPanel";
@@ -884,32 +886,6 @@ namespace Yaml_AudioTool_Rebuilt
             this.MaxdistanceLabel.Text = "Max Distance:";
             this.MaxdistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // MindistancetextBox
-            // 
-            this.MindistancetextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.MindistancetextBox.Location = new System.Drawing.Point(145, 432);
-            this.MindistancetextBox.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
-            this.MindistancetextBox.Name = "MindistancetextBox";
-            this.MindistancetextBox.Size = new System.Drawing.Size(218, 35);
-            this.MindistancetextBox.TabIndex = 14;
-            this.MindistancetextBox.Text = "1";
-            this.toolTip1.SetToolTip(this.MindistancetextBox, resources.GetString("MindistancetextBox.ToolTip"));
-            this.MindistancetextBox.TextChanged += new System.EventHandler(this.MindistancetextBox_TextChanged);
-            // 
-            // MaxdistancetextBox
-            // 
-            this.MaxdistancetextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.MaxdistancetextBox.Location = new System.Drawing.Point(145, 372);
-            this.MaxdistancetextBox.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
-            this.MaxdistancetextBox.Name = "MaxdistancetextBox";
-            this.MaxdistancetextBox.Size = new System.Drawing.Size(218, 35);
-            this.MaxdistancetextBox.TabIndex = 13;
-            this.MaxdistancetextBox.Text = "1000";
-            this.toolTip1.SetToolTip(this.MaxdistancetextBox, "The distance where the sound stops attenuating at. Beyond this point it will stay" +
-        " at the volume it would be at MaxDistance units from the listener and will not a" +
-        "ttenuate any more.");
-            this.MaxdistancetextBox.TextChanged += new System.EventHandler(this.MaxdistancetextBox_TextChanged);
-            // 
             // FalloffLabel
             // 
             this.FalloffLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -939,6 +915,59 @@ namespace Yaml_AudioTool_Rebuilt
             this.TypecomboBox.Size = new System.Drawing.Size(218, 38);
             this.TypecomboBox.TabIndex = 23;
             this.TypecomboBox.SelectedIndexChanged += new System.EventHandler(this.TypecomboBox_SelectedIndexChanged);
+            // 
+            // MinDistancenumericUpDown
+            // 
+            this.MinDistancenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.MinDistancenumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.MinDistancenumericUpDown.Location = new System.Drawing.Point(145, 433);
+            this.MinDistancenumericUpDown.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.MinDistancenumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.MinDistancenumericUpDown.Name = "MinDistancenumericUpDown";
+            this.MinDistancenumericUpDown.Size = new System.Drawing.Size(218, 33);
+            this.MinDistancenumericUpDown.TabIndex = 26;
+            this.toolTip1.SetToolTip(this.MinDistancenumericUpDown, "Within the MinDistance, the sound will stay at loudest possible. Outside MinDista" +
+        "nce it will begin to attenuate.");
+            this.MinDistancenumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.MinDistancenumericUpDown.ValueChanged += new System.EventHandler(this.MinDistancenumericUpDown_ValueChanged);
+            // 
+            // MaxDistancenumericUpDown
+            // 
+            this.MaxDistancenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.MaxDistancenumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.MaxDistancenumericUpDown.Location = new System.Drawing.Point(145, 373);
+            this.MaxDistancenumericUpDown.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.MaxDistancenumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.MaxDistancenumericUpDown.Name = "MaxDistancenumericUpDown";
+            this.MaxDistancenumericUpDown.Size = new System.Drawing.Size(218, 33);
+            this.MaxDistancenumericUpDown.TabIndex = 27;
+            this.toolTip1.SetToolTip(this.MaxDistancenumericUpDown, "MaxDistance is the distance where the sound is completely inaudible.");
+            this.MaxDistancenumericUpDown.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.MaxDistancenumericUpDown.ValueChanged += new System.EventHandler(this.MaxDistancenumericUpDown_ValueChanged);
             // 
             // reverbtabPage
             // 
@@ -1651,6 +1680,8 @@ namespace Yaml_AudioTool_Rebuilt
             this.playbackLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PrioritytrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DopplertrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MinDistancenumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxDistancenumericUpDown)).EndInit();
             this.reverbtabPage.ResumeLayout(false);
             this.reverbtabPage.PerformLayout();
             this.effectstabPage.ResumeLayout(false);
@@ -1688,8 +1719,6 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Label DopplerLabel;
         private System.Windows.Forms.Label MaxdistanceLabel;
         private System.Windows.Forms.Label MindistanceLabel;
-        private System.Windows.Forms.TextBox MaxdistancetextBox;
-        private System.Windows.Forms.TextBox MindistancetextBox;
         private System.Windows.Forms.Label priorityvalueLabel;
         private System.Windows.Forms.Label dopplervalueLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -1809,6 +1838,8 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Button enumButton;
         public System.Windows.Forms.ColumnHeader filenameHeader;
         private System.Windows.Forms.NumericUpDown VolumevaluenumericUpDown;
+        private System.Windows.Forms.NumericUpDown MinDistancenumericUpDown;
+        private System.Windows.Forms.NumericUpDown MaxDistancenumericUpDown;
     }
 }
 
