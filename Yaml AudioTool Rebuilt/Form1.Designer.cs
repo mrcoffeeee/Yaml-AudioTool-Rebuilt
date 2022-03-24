@@ -87,7 +87,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.VolumetrackBar = new System.Windows.Forms.TrackBar();
             this.VolumevaluenumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.playbackLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.PlaybackLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FalloffcomboBox = new System.Windows.Forms.ComboBox();
             this.PriorityLabel = new System.Windows.Forms.Label();
             this.PrioritytrackBar = new System.Windows.Forms.TrackBar();
@@ -106,6 +106,14 @@ namespace Yaml_AudioTool_Rebuilt
             this.TypecomboBox = new System.Windows.Forms.ComboBox();
             this.MinDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.MaxDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.organizetabPage = new System.Windows.Forms.TabPage();
+            this.OrganizeLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.FindButton = new System.Windows.Forms.Button();
+            this.SortLabel = new System.Windows.Forms.Label();
+            this.SortcomboBox = new System.Windows.Forms.ComboBox();
+            this.EnumtextBox = new System.Windows.Forms.TextBox();
+            this.FindtextBox = new System.Windows.Forms.TextBox();
+            this.EnumButton = new System.Windows.Forms.Button();
             this.reverbtabPage = new System.Windows.Forms.TabPage();
             this.RoomenableButton = new System.Windows.Forms.Button();
             this.roomunmapButton = new System.Windows.Forms.Button();
@@ -170,9 +178,6 @@ namespace Yaml_AudioTool_Rebuilt
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.enumtextBox = new System.Windows.Forms.TextBox();
-            this.generalinfosgroupBox = new System.Windows.Forms.GroupBox();
-            this.enumButton = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -181,16 +186,17 @@ namespace Yaml_AudioTool_Rebuilt
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolumetrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VolumevaluenumericUpDown)).BeginInit();
-            this.playbackLayoutPanel.SuspendLayout();
+            this.PlaybackLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PrioritytrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DopplertrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MinDistancenumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MaxDistancenumericUpDown)).BeginInit();
+            this.organizetabPage.SuspendLayout();
+            this.OrganizeLayoutPanel.SuspendLayout();
             this.reverbtabPage.SuspendLayout();
             this.effectstabPage.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.generalinfosgroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -585,25 +591,27 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.playbacktabPage);
+            this.tabControl1.Controls.Add(this.organizetabPage);
             this.tabControl1.Controls.Add(this.reverbtabPage);
             this.tabControl1.Controls.Add(this.effectstabPage);
-            this.tabControl1.Location = new System.Drawing.Point(432, 176);
+            this.tabControl1.Location = new System.Drawing.Point(432, 135);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(344, 278);
+            this.tabControl1.Size = new System.Drawing.Size(344, 284);
             this.tabControl1.TabIndex = 4;
             // 
             // playbacktabPage
             // 
             this.playbacktabPage.Controls.Add(this.groupBox4);
-            this.playbacktabPage.Controls.Add(this.playbackLayoutPanel);
+            this.playbacktabPage.Controls.Add(this.PlaybackLayoutPanel);
+            this.playbacktabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.playbacktabPage.Location = new System.Drawing.Point(4, 24);
             this.playbacktabPage.Margin = new System.Windows.Forms.Padding(4);
             this.playbacktabPage.Name = "playbacktabPage";
             this.playbacktabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.playbacktabPage.Size = new System.Drawing.Size(336, 250);
+            this.playbacktabPage.Size = new System.Drawing.Size(336, 256);
             this.playbacktabPage.TabIndex = 0;
             this.playbacktabPage.Text = "Playback";
             this.playbacktabPage.UseVisualStyleBackColor = true;
@@ -649,46 +657,46 @@ namespace Yaml_AudioTool_Rebuilt
             0});
             this.VolumevaluenumericUpDown.ValueChanged += new System.EventHandler(this.VolumevaluenumericUpDown_ValueChanged);
             // 
-            // playbackLayoutPanel
+            // PlaybackLayoutPanel
             // 
-            this.playbackLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.playbackLayoutPanel.ColumnCount = 3;
-            this.playbackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.playbackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52F));
-            this.playbackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18F));
-            this.playbackLayoutPanel.Controls.Add(this.FalloffcomboBox, 1, 5);
-            this.playbackLayoutPanel.Controls.Add(this.PriorityLabel, 0, 0);
-            this.playbackLayoutPanel.Controls.Add(this.PrioritytrackBar, 1, 0);
-            this.playbackLayoutPanel.Controls.Add(this.priorityvalueLabel, 2, 0);
-            this.playbackLayoutPanel.Controls.Add(this.StreamcheckBox, 1, 3);
-            this.playbackLayoutPanel.Controls.Add(this.LocalizecheckBox, 1, 2);
-            this.playbackLayoutPanel.Controls.Add(this.TypeLabel, 0, 4);
-            this.playbackLayoutPanel.Controls.Add(this.StreamLabel, 0, 3);
-            this.playbackLayoutPanel.Controls.Add(this.LocalizeLabel, 0, 2);
-            this.playbackLayoutPanel.Controls.Add(this.DopplertrackBar, 1, 1);
-            this.playbackLayoutPanel.Controls.Add(this.dopplervalueLabel, 2, 1);
-            this.playbackLayoutPanel.Controls.Add(this.DopplerLabel, 0, 1);
-            this.playbackLayoutPanel.Controls.Add(this.MindistanceLabel, 0, 7);
-            this.playbackLayoutPanel.Controls.Add(this.MaxdistanceLabel, 0, 6);
-            this.playbackLayoutPanel.Controls.Add(this.FalloffLabel, 0, 5);
-            this.playbackLayoutPanel.Controls.Add(this.TypecomboBox, 1, 4);
-            this.playbackLayoutPanel.Controls.Add(this.MinDistancenumericUpDown, 1, 7);
-            this.playbackLayoutPanel.Controls.Add(this.MaxDistancenumericUpDown, 1, 6);
-            this.playbackLayoutPanel.Location = new System.Drawing.Point(4, 6);
-            this.playbackLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
-            this.playbackLayoutPanel.Name = "playbackLayoutPanel";
-            this.playbackLayoutPanel.RowCount = 9;
-            this.playbackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.playbackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.playbackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.playbackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.playbackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.playbackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.playbackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.playbackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.playbackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.playbackLayoutPanel.Size = new System.Drawing.Size(265, 244);
-            this.playbackLayoutPanel.TabIndex = 2;
+            this.PlaybackLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.PlaybackLayoutPanel.ColumnCount = 3;
+            this.PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52F));
+            this.PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18F));
+            this.PlaybackLayoutPanel.Controls.Add(this.FalloffcomboBox, 1, 5);
+            this.PlaybackLayoutPanel.Controls.Add(this.PriorityLabel, 0, 0);
+            this.PlaybackLayoutPanel.Controls.Add(this.PrioritytrackBar, 1, 0);
+            this.PlaybackLayoutPanel.Controls.Add(this.priorityvalueLabel, 2, 0);
+            this.PlaybackLayoutPanel.Controls.Add(this.StreamcheckBox, 1, 3);
+            this.PlaybackLayoutPanel.Controls.Add(this.LocalizecheckBox, 1, 2);
+            this.PlaybackLayoutPanel.Controls.Add(this.TypeLabel, 0, 4);
+            this.PlaybackLayoutPanel.Controls.Add(this.StreamLabel, 0, 3);
+            this.PlaybackLayoutPanel.Controls.Add(this.LocalizeLabel, 0, 2);
+            this.PlaybackLayoutPanel.Controls.Add(this.DopplertrackBar, 1, 1);
+            this.PlaybackLayoutPanel.Controls.Add(this.dopplervalueLabel, 2, 1);
+            this.PlaybackLayoutPanel.Controls.Add(this.DopplerLabel, 0, 1);
+            this.PlaybackLayoutPanel.Controls.Add(this.MindistanceLabel, 0, 7);
+            this.PlaybackLayoutPanel.Controls.Add(this.MaxdistanceLabel, 0, 6);
+            this.PlaybackLayoutPanel.Controls.Add(this.FalloffLabel, 0, 5);
+            this.PlaybackLayoutPanel.Controls.Add(this.TypecomboBox, 1, 4);
+            this.PlaybackLayoutPanel.Controls.Add(this.MinDistancenumericUpDown, 1, 7);
+            this.PlaybackLayoutPanel.Controls.Add(this.MaxDistancenumericUpDown, 1, 6);
+            this.PlaybackLayoutPanel.Location = new System.Drawing.Point(4, 6);
+            this.PlaybackLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
+            this.PlaybackLayoutPanel.Name = "PlaybackLayoutPanel";
+            this.PlaybackLayoutPanel.RowCount = 9;
+            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.PlaybackLayoutPanel.Size = new System.Drawing.Size(265, 244);
+            this.PlaybackLayoutPanel.TabIndex = 2;
             // 
             // FalloffcomboBox
             // 
@@ -970,6 +978,113 @@ namespace Yaml_AudioTool_Rebuilt
             0});
             this.MaxDistancenumericUpDown.ValueChanged += new System.EventHandler(this.MaxDistancenumericUpDown_ValueChanged);
             // 
+            // organizetabPage
+            // 
+            this.organizetabPage.Controls.Add(this.OrganizeLayoutPanel);
+            this.organizetabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.organizetabPage.Location = new System.Drawing.Point(4, 24);
+            this.organizetabPage.Name = "organizetabPage";
+            this.organizetabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.organizetabPage.Size = new System.Drawing.Size(336, 256);
+            this.organizetabPage.TabIndex = 3;
+            this.organizetabPage.Text = "Organize";
+            this.organizetabPage.UseVisualStyleBackColor = true;
+            // 
+            // OrganizeLayoutPanel
+            // 
+            this.OrganizeLayoutPanel.ColumnCount = 2;
+            this.OrganizeLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.OrganizeLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.OrganizeLayoutPanel.Controls.Add(this.FindButton, 0, 1);
+            this.OrganizeLayoutPanel.Controls.Add(this.SortLabel, 0, 2);
+            this.OrganizeLayoutPanel.Controls.Add(this.SortcomboBox, 1, 2);
+            this.OrganizeLayoutPanel.Controls.Add(this.EnumtextBox, 1, 0);
+            this.OrganizeLayoutPanel.Controls.Add(this.FindtextBox, 1, 1);
+            this.OrganizeLayoutPanel.Controls.Add(this.EnumButton, 0, 0);
+            this.OrganizeLayoutPanel.Location = new System.Drawing.Point(6, 6);
+            this.OrganizeLayoutPanel.Name = "OrganizeLayoutPanel";
+            this.OrganizeLayoutPanel.RowCount = 4;
+            this.OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.OrganizeLayoutPanel.Size = new System.Drawing.Size(324, 166);
+            this.OrganizeLayoutPanel.TabIndex = 71;
+            // 
+            // FindButton
+            // 
+            this.FindButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.FindButton.Location = new System.Drawing.Point(3, 33);
+            this.FindButton.Name = "FindButton";
+            this.FindButton.Size = new System.Drawing.Size(91, 23);
+            this.FindButton.TabIndex = 79;
+            this.FindButton.Text = "Find Title";
+            this.FindButton.UseVisualStyleBackColor = true;
+            this.FindButton.Click += new System.EventHandler(this.FindButton_Click);
+            // 
+            // SortLabel
+            // 
+            this.SortLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SortLabel.AutoSize = true;
+            this.SortLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.SortLabel.Location = new System.Drawing.Point(16, 67);
+            this.SortLabel.Name = "SortLabel";
+            this.SortLabel.Size = new System.Drawing.Size(64, 15);
+            this.SortLabel.TabIndex = 76;
+            this.SortLabel.Text = "Sort Titles:";
+            this.SortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // SortcomboBox
+            // 
+            this.SortcomboBox.FormattingEnabled = true;
+            this.SortcomboBox.Items.AddRange(new object[] {
+            "Title",
+            "Filename",
+            "Filepath",
+            "Room",
+            "Type"});
+            this.SortcomboBox.Location = new System.Drawing.Point(100, 63);
+            this.SortcomboBox.Name = "SortcomboBox";
+            this.SortcomboBox.Size = new System.Drawing.Size(221, 23);
+            this.SortcomboBox.TabIndex = 73;
+            this.SortcomboBox.Text = "Choose ...";
+            this.SortcomboBox.SelectedIndexChanged += new System.EventHandler(this.SortcomboBox_SelectedIndexChanged);
+            // 
+            // EnumtextBox
+            // 
+            this.EnumtextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.EnumtextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.EnumtextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.EnumtextBox.Location = new System.Drawing.Point(100, 4);
+            this.EnumtextBox.MaxLength = 40;
+            this.EnumtextBox.Multiline = true;
+            this.EnumtextBox.Name = "EnumtextBox";
+            this.EnumtextBox.Size = new System.Drawing.Size(221, 22);
+            this.EnumtextBox.TabIndex = 69;
+            this.EnumtextBox.TextChanged += new System.EventHandler(this.EnumtextBox_TextChanged);
+            // 
+            // FindtextBox
+            // 
+            this.FindtextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.FindtextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FindtextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.FindtextBox.Location = new System.Drawing.Point(100, 34);
+            this.FindtextBox.MaxLength = 40;
+            this.FindtextBox.Multiline = true;
+            this.FindtextBox.Name = "FindtextBox";
+            this.FindtextBox.Size = new System.Drawing.Size(221, 22);
+            this.FindtextBox.TabIndex = 77;
+            // 
+            // EnumButton
+            // 
+            this.EnumButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.EnumButton.Location = new System.Drawing.Point(3, 3);
+            this.EnumButton.Name = "EnumButton";
+            this.EnumButton.Size = new System.Drawing.Size(91, 23);
+            this.EnumButton.TabIndex = 78;
+            this.EnumButton.Text = "Change Title";
+            this.EnumButton.UseVisualStyleBackColor = true;
+            // 
             // reverbtabPage
             // 
             this.reverbtabPage.Controls.Add(this.RoomenableButton);
@@ -994,11 +1109,12 @@ namespace Yaml_AudioTool_Rebuilt
             this.reverbtabPage.Controls.Add(this.filterfrequencyLabel);
             this.reverbtabPage.Controls.Add(this.filteroneoverqPot);
             this.reverbtabPage.Controls.Add(this.filterfrequencyPot);
+            this.reverbtabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.reverbtabPage.Location = new System.Drawing.Point(4, 24);
             this.reverbtabPage.Margin = new System.Windows.Forms.Padding(4);
             this.reverbtabPage.Name = "reverbtabPage";
             this.reverbtabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.reverbtabPage.Size = new System.Drawing.Size(336, 250);
+            this.reverbtabPage.Size = new System.Drawing.Size(336, 256);
             this.reverbtabPage.TabIndex = 2;
             this.reverbtabPage.Text = "Room Creation";
             this.reverbtabPage.UseVisualStyleBackColor = true;
@@ -1043,7 +1159,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.roomnametextBox.Location = new System.Drawing.Point(86, 150);
             this.roomnametextBox.MaxLength = 30;
             this.roomnametextBox.Name = "roomnametextBox";
-            this.roomnametextBox.Size = new System.Drawing.Size(96, 23);
+            this.roomnametextBox.Size = new System.Drawing.Size(96, 21);
             this.roomnametextBox.TabIndex = 71;
             this.roomnametextBox.Text = "New Room";
             // 
@@ -1134,7 +1250,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.filternametextBox.Location = new System.Drawing.Point(86, 7);
             this.filternametextBox.MaxLength = 30;
             this.filternametextBox.Name = "filternametextBox";
-            this.filternametextBox.Size = new System.Drawing.Size(96, 23);
+            this.filternametextBox.Size = new System.Drawing.Size(96, 21);
             this.filternametextBox.TabIndex = 65;
             this.filternametextBox.Text = "New Filter";
             // 
@@ -1266,11 +1382,12 @@ namespace Yaml_AudioTool_Rebuilt
             // effectstabPage
             // 
             this.effectstabPage.Controls.Add(this.tableLayoutPanel2);
+            this.effectstabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.effectstabPage.Location = new System.Drawing.Point(4, 24);
             this.effectstabPage.Margin = new System.Windows.Forms.Padding(4);
             this.effectstabPage.Name = "effectstabPage";
             this.effectstabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.effectstabPage.Size = new System.Drawing.Size(336, 250);
+            this.effectstabPage.Size = new System.Drawing.Size(336, 256);
             this.effectstabPage.TabIndex = 1;
             this.effectstabPage.Text = "Effects";
             this.effectstabPage.UseVisualStyleBackColor = true;
@@ -1348,11 +1465,11 @@ namespace Yaml_AudioTool_Rebuilt
             this.reverbroomsizeHeader});
             this.roomlistView.FullRowSelect = true;
             this.roomlistView.GridLines = true;
-            this.roomlistView.Location = new System.Drawing.Point(432, 460);
+            this.roomlistView.Location = new System.Drawing.Point(432, 425);
             this.roomlistView.Margin = new System.Windows.Forms.Padding(2);
             this.roomlistView.MultiSelect = false;
             this.roomlistView.Name = "roomlistView";
-            this.roomlistView.Size = new System.Drawing.Size(344, 88);
+            this.roomlistView.Size = new System.Drawing.Size(340, 123);
             this.roomlistView.TabIndex = 67;
             this.roomlistView.UseCompatibleStateImageBehavior = false;
             this.roomlistView.View = System.Windows.Forms.View.Details;
@@ -1421,10 +1538,10 @@ namespace Yaml_AudioTool_Rebuilt
             this.selectedsoundLabel.BackColor = System.Drawing.SystemColors.Window;
             this.selectedsoundLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.selectedsoundLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.selectedsoundLabel.Location = new System.Drawing.Point(6, 40);
+            this.selectedsoundLabel.Location = new System.Drawing.Point(432, 107);
             this.selectedsoundLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.selectedsoundLabel.Name = "selectedsoundLabel";
-            this.selectedsoundLabel.Size = new System.Drawing.Size(331, 24);
+            this.selectedsoundLabel.Size = new System.Drawing.Size(340, 24);
             this.selectedsoundLabel.TabIndex = 6;
             this.selectedsoundLabel.Text = "Filename:";
             this.selectedsoundLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1598,51 +1715,14 @@ namespace Yaml_AudioTool_Rebuilt
             this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(32, 19);
             this.aboutToolStripMenuItem1.Text = "&About...";
             // 
-            // enumtextBox
-            // 
-            this.enumtextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.enumtextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.enumtextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.enumtextBox.Location = new System.Drawing.Point(6, 16);
-            this.enumtextBox.MaxLength = 40;
-            this.enumtextBox.Multiline = true;
-            this.enumtextBox.Name = "enumtextBox";
-            this.enumtextBox.Size = new System.Drawing.Size(249, 22);
-            this.enumtextBox.TabIndex = 69;
-            this.enumtextBox.Text = "Title:";
-            // 
-            // generalinfosgroupBox
-            // 
-            this.generalinfosgroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.generalinfosgroupBox.Controls.Add(this.enumButton);
-            this.generalinfosgroupBox.Controls.Add(this.enumtextBox);
-            this.generalinfosgroupBox.Controls.Add(this.selectedsoundLabel);
-            this.generalinfosgroupBox.Location = new System.Drawing.Point(433, 99);
-            this.generalinfosgroupBox.Name = "generalinfosgroupBox";
-            this.generalinfosgroupBox.Size = new System.Drawing.Size(344, 72);
-            this.generalinfosgroupBox.TabIndex = 70;
-            this.generalinfosgroupBox.TabStop = false;
-            this.generalinfosgroupBox.Text = "General Infos";
-            // 
-            // enumButton
-            // 
-            this.enumButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.enumButton.Location = new System.Drawing.Point(262, 16);
-            this.enumButton.Name = "enumButton";
-            this.enumButton.Size = new System.Drawing.Size(75, 21);
-            this.enumButton.TabIndex = 71;
-            this.enumButton.Text = "Assign";
-            this.enumButton.UseVisualStyleBackColor = true;
-            this.enumButton.Click += new System.EventHandler(this.enumButton_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(789, 561);
-            this.Controls.Add(this.generalinfosgroupBox);
             this.Controls.Add(this.roomlistView);
             this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.selectedsoundLabel);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.filelistView);
@@ -1667,20 +1747,21 @@ namespace Yaml_AudioTool_Rebuilt
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolumetrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VolumevaluenumericUpDown)).EndInit();
-            this.playbackLayoutPanel.ResumeLayout(false);
-            this.playbackLayoutPanel.PerformLayout();
+            this.PlaybackLayoutPanel.ResumeLayout(false);
+            this.PlaybackLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PrioritytrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DopplertrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MinDistancenumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MaxDistancenumericUpDown)).EndInit();
+            this.organizetabPage.ResumeLayout(false);
+            this.OrganizeLayoutPanel.ResumeLayout(false);
+            this.OrganizeLayoutPanel.PerformLayout();
             this.reverbtabPage.ResumeLayout(false);
             this.reverbtabPage.PerformLayout();
             this.effectstabPage.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.generalinfosgroupBox.ResumeLayout(false);
-            this.generalinfosgroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1703,7 +1784,7 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Button removeallButton;
         public System.Windows.Forms.ListView filelistView;
         public System.Windows.Forms.Timer playbackTimer;
-        private System.Windows.Forms.TableLayoutPanel playbackLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel PlaybackLayoutPanel;
         private System.Windows.Forms.Label PriorityLabel;
         public System.Windows.Forms.TrackBar VolumetrackBar;
         private System.Windows.Forms.TrackBar PrioritytrackBar;
@@ -1824,13 +1905,18 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.ToolStripMenuItem AbouttoolStripMenuItem;
         public System.Windows.Forms.Button RoomenableButton;
         private System.Windows.Forms.ToolStripMenuItem SettingstoolStripMenuItem;
-        public System.Windows.Forms.TextBox enumtextBox;
-        private System.Windows.Forms.GroupBox generalinfosgroupBox;
-        private System.Windows.Forms.Button enumButton;
+        public System.Windows.Forms.TextBox EnumtextBox;
         public System.Windows.Forms.ColumnHeader filenameHeader;
         private System.Windows.Forms.NumericUpDown VolumevaluenumericUpDown;
         private System.Windows.Forms.NumericUpDown MinDistancenumericUpDown;
         private System.Windows.Forms.NumericUpDown MaxDistancenumericUpDown;
+        private System.Windows.Forms.TabPage organizetabPage;
+        private System.Windows.Forms.TableLayoutPanel OrganizeLayoutPanel;
+        private System.Windows.Forms.Label SortLabel;
+        private System.Windows.Forms.ComboBox SortcomboBox;
+        private System.Windows.Forms.Button FindButton;
+        public System.Windows.Forms.TextBox FindtextBox;
+        private System.Windows.Forms.Button EnumButton;
     }
 }
 

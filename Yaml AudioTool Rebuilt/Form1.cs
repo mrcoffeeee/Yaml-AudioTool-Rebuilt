@@ -92,7 +92,7 @@ namespace Yaml_AudioTool_Rebuilt
             PitchenableButton.Text = "Off";
             PitchenableButton.BackColor = Color.Salmon;
             timeLabel.Text = "00:00";
-            enumtextBox.Text = "Title:";
+            EnumtextBox.Text = "";
             selectedsoundLabel.Text = "Selection: NONE";
         }
 
@@ -104,14 +104,14 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 //filelistView.Size = new Size(691, 836);
                 roomlistView.Size = new Size(595, 180);
-                filelistView.Size = new Size(691, 4 + generalinfosgroupBox.Height + tabControl1.Height + roomlistView.Height);
+                filelistView.Size = new Size(691, 4 + selectedsoundLabel.Height + tabControl1.Height + roomlistView.Height);
             }
             else if (value >= 1900)
             {
                 this.Size = new Size(1600, 900);
                 //filelistView.Size = new Size(1200, 750);
-                roomlistView.Size = new Size(343, 389);
-                filelistView.Size = new Size(1200, 4 + generalinfosgroupBox.Height + tabControl1.Height + roomlistView.Height);
+                roomlistView.Size = new Size(343, 420);
+                filelistView.Size = new Size(1200, 9 + selectedsoundLabel.Height + tabControl1.Height + roomlistView.Height);
             }
             baseWindowWidth = this.Width;
             baseWindowHeight = this.Height;
@@ -231,7 +231,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
             if (filelistView.SelectedItems.Count > 0)
             {
-                enumtextBox.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text;
+                EnumtextBox.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text;
                 ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text);
@@ -257,17 +257,7 @@ namespace Yaml_AudioTool_Rebuilt
                 PitchenableButton.Enabled = true;
                 removeButtonEnabled(true);
             }
-        }
-
-        private void enumButton_Click(object sender, EventArgs e)
-        {
-            if (filelistView.SelectedItems.Count == 1)
-            {
-                filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text = enumtextBox.Text;
-                filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            }
-            
-        }
+        }        
 
         #endregion ListviewSection
 
@@ -652,6 +642,60 @@ namespace Yaml_AudioTool_Rebuilt
 
         #endregion Property-Playback
 
+        #region Property-Organize
+
+        //######################################################
+        //###                                                ###
+        //### Elements for property editor "Organize"        ###
+        //###                                                ###
+        //######################################################
+
+        private void EnumtextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (filelistView.SelectedItems.Count == 1)
+            {
+                filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text = EnumtextBox.Text;
+                filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            }
+        }
+
+        private void FindButton_Click(object sender, EventArgs e)
+        {
+            if (FindButton.Text == "Find Title" && 
+                FindtextBox.Text != "" &&
+                filelistView.Items.Count > 0)
+            {
+                foreach (ListViewItem item in filelistView.Items)
+                {
+                    if (item.SubItems[filelistView.Columns.IndexOf(titleHeader)].Text.Contains(FindtextBox.Text) ||
+                        item.SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text.Contains(FindtextBox.Text))
+                    {
+                        item.BackColor = Color.Red;
+                    }
+                }
+                FindButton.Text = "Reset";
+            }
+
+            else if (FindButton.Text == "Reset")
+            {
+                foreach (ListViewItem item in filelistView.Items)
+                {
+                    item.BackColor = SystemColors.Window;
+                }
+                FindButton.Text = "Find Title";
+            }
+        }
+
+        private void SortcomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (filelistView.SelectedItems.Count > 0)
+            {
+
+            }
+        }
+
+        #endregion Property-Organize
+
         #region Property-RoomCreation
 
         //######################################################
@@ -903,7 +947,10 @@ namespace Yaml_AudioTool_Rebuilt
         }
 
 
+
+
         #endregion Property-Effects
 
+        
     }
 }
