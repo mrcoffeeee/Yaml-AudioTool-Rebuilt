@@ -711,7 +711,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.FalloffcomboBox.Items.AddRange(new object[] {
             "Linear",
             "Logarithmic"});
-            this.FalloffcomboBox.Location = new System.Drawing.Point(145, 311);
+            this.FalloffcomboBox.Location = new System.Drawing.Point(145, 313);
             this.FalloffcomboBox.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             this.FalloffcomboBox.Name = "FalloffcomboBox";
             this.FalloffcomboBox.Size = new System.Drawing.Size(218, 33);
@@ -920,7 +920,7 @@ namespace Yaml_AudioTool_Rebuilt
             "UI",
             "Speech",
             "Custom"});
-            this.TypecomboBox.Location = new System.Drawing.Point(145, 251);
+            this.TypecomboBox.Location = new System.Drawing.Point(145, 253);
             this.TypecomboBox.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             this.TypecomboBox.Name = "TypecomboBox";
             this.TypecomboBox.Size = new System.Drawing.Size(218, 33);
@@ -1048,6 +1048,7 @@ namespace Yaml_AudioTool_Rebuilt
             // SortcomboBox
             // 
             this.SortcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SortcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SortcomboBox.FormattingEnabled = true;
             this.SortcomboBox.Items.AddRange(new object[] {
             "Title",
@@ -1055,13 +1056,11 @@ namespace Yaml_AudioTool_Rebuilt
             "Filepath",
             "Room",
             "Type"});
-            this.SortcomboBox.Location = new System.Drawing.Point(172, 191);
+            this.SortcomboBox.Location = new System.Drawing.Point(172, 193);
             this.SortcomboBox.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.SortcomboBox.Name = "SortcomboBox";
-            this.SortcomboBox.Size = new System.Drawing.Size(376, 33);
+            this.SortcomboBox.Size = new System.Drawing.Size(377, 33);
             this.SortcomboBox.TabIndex = 73;
-            this.SortcomboBox.Text = "Choose ...";
-            this.SortcomboBox.Visible = false;
             this.SortcomboBox.SelectedIndexChanged += new System.EventHandler(this.SortcomboBox_SelectedIndexChanged);
             // 
             // SortLabel
@@ -1076,7 +1075,6 @@ namespace Yaml_AudioTool_Rebuilt
             this.SortLabel.TabIndex = 76;
             this.SortLabel.Text = "Sort Titles:";
             this.SortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SortLabel.Visible = false;
             // 
             // FindButton
             // 
