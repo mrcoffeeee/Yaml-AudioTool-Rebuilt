@@ -94,6 +94,7 @@ namespace Yaml_AudioTool_Rebuilt
             timeLabel.Text = "00:00";
             EnumtextBox.Text = "";
             selectedsoundLabel.Text = "Selection: NONE";
+            ChangeFilelabel.Text = "Filepath:";
         }
 
         private void SetWindowsSize()
@@ -104,7 +105,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 //filelistView.Size = new Size(691, 836);
                 roomlistView.Size = new Size(595, 180);
-                filelistView.Size = new Size(691, 4 + selectedsoundLabel.Height + tabControl1.Height + roomlistView.Height);
+                filelistView.Size = new Size(691, 21 + selectedsoundLabel.Height + tabControl1.Height + roomlistView.Height);
             }
             else if (value >= 1900)
             {
@@ -253,7 +254,7 @@ namespace Yaml_AudioTool_Rebuilt
                 StreamcheckBox.Checked = Convert.ToBoolean(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(streamHeader)].Text);
                 TypecomboBox.SelectedIndex = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(typeHeader)].Text);
                 FalloffcomboBox.SelectedIndex = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(falloffHeader)].Text);
-
+                ChangeFilelabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text;
                 PitchenableButton.Enabled = true;
                 removeButtonEnabled(true);
             }
@@ -397,7 +398,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             ap.StopPlayback();
             playbackTimer.Stop();
-            ap.OpenFile();
+            ap.OpenFile(false);
             if (filelistView.Items.Count > 0 &&
                 saveyamlButton.Enabled == false)
             {
@@ -650,13 +651,31 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
-        private void EnumtextBox_TextChanged(object sender, EventArgs e)
+        private void EnumButton_Click(object sender, EventArgs e)
         {
             if (filelistView.SelectedItems.Count == 1)
             {
                 filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text = EnumtextBox.Text;
                 filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
+        }
+
+        private void ChangeFilebutton_Click(object sender, EventArgs e)
+        {
+            if (filelistView.SelectedItems.Count == 1)
+            {
+                ap.StopPlayback();
+                playbackTimer.Stop();
+                ap.OpenFile(true);
+                if (filelistView.Items.Count > 0 &&
+                    saveyamlButton.Enabled == false)
+                {
+                    saveyamlButton.Enabled = true;
+                    filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                    filelistView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
+                    filelistView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
+                }
+            }            
         }
 
         private void FindButton_Click(object sender, EventArgs e)
@@ -670,7 +689,7 @@ namespace Yaml_AudioTool_Rebuilt
                     if (item.SubItems[filelistView.Columns.IndexOf(titleHeader)].Text.Contains(FindtextBox.Text) ||
                         item.SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text.Contains(FindtextBox.Text))
                     {
-                        item.BackColor = Color.Red;
+                        item.BackColor = Color.Salmon;
                     }
                 }
                 FindButton.Text = "Reset";
@@ -945,6 +964,8 @@ namespace Yaml_AudioTool_Rebuilt
             }
 
         }
+
+
 
 
 

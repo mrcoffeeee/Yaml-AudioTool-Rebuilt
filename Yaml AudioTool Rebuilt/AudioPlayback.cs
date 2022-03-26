@@ -34,7 +34,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private readonly Effects ef = new();        
 
-        public IWaveSource OpenFile()
+        public IWaveSource OpenFile(bool clickFlag)
         {            
             StopPlayback();
 
@@ -65,35 +65,54 @@ namespace Yaml_AudioTool_Rebuilt
 
                         Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
-                        // add general fileinfos
-                        ListViewItem fileInfos = new(Path.GetFileNameWithoutExtension(file));
-                        string tempString = sd.audiofolderLabel.Text + "\\";
-                        fileInfos.SubItems.Add(file.Replace(tempString , "").Replace("\\", "/").Replace(".wav", ""));
-                        fileInfos.SubItems.Add(file);
-                        fileInfos.SubItems.Add("");
-                        fileInfos.SubItems.Add("");
-                        fileInfos.SubItems.Add((soundSource.Length / 1000).ToString());
-                        fileInfos.SubItems.Add(soundSource.GetLength().ToString(@"mm\:ss"));
-                        fileInfos.SubItems.Add(soundSource.WaveFormat.Channels.ToString());
-                        fileInfos.SubItems.Add(Math.Round(soundSource.WaveFormat.SampleRate / 1000.0, 3).ToString());
-                        fileInfos.SubItems.Add((soundSource.WaveFormat.BitsPerSample * soundSource.WaveFormat.SampleRate / 1000).ToString());
-                        fileInfos.SubItems.Add(soundSource.WaveFormat.BitsPerSample.ToString());
-                        fileInfos.SubItems.Add((f1.VolumetrackBar.Maximum / 100.0).ToString(""));
-                        fileInfos.SubItems.Add(Convert.ToString(128));
-                        fileInfos.SubItems.Add("false");
-                        // add effects items
-                        fileInfos.SubItems.Add("1");
-                        fileInfos.SubItems.Add("1000");
-                        fileInfos.SubItems.Add(f1.DopplertrackBar.Minimum.ToString());
-                        fileInfos.SubItems.Add("1");
-                        fileInfos.SubItems.Add("0");
-                        // add misc items
-                        fileInfos.SubItems.Add("false");
-                        fileInfos.SubItems.Add("false");
-                        fileInfos.SubItems.Add("1");
-                        fileInfos.SubItems.Add("0");
-                        // add fileinfos to listview
-                        f1.filelistView.Items.Add(fileInfos);
+                        if (clickFlag == true)
+                        {
+                          //  MessageBox.Show(f1.filelistView.SelectedItems[0].Index.ToString());
+                            string tempString = sd.audiofolderLabel.Text + "\\";
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text = file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", "");
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = file;
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (soundSource.Length / 1000).ToString();
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = soundSource.GetLength().ToString(@"mm\:ss");
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = soundSource.WaveFormat.Channels.ToString();
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = Math.Round(soundSource.WaveFormat.SampleRate / 1000.0, 3).ToString();
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (soundSource.WaveFormat.BitsPerSample * soundSource.WaveFormat.SampleRate / 1000).ToString();
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = soundSource.WaveFormat.BitsPerSample.ToString();
+
+                        }
+
+                        else if  (clickFlag == false)
+                        {
+                            // add general fileinfos
+                            ListViewItem fileInfos = new(Path.GetFileNameWithoutExtension(file));
+                            string tempString = sd.audiofolderLabel.Text + "\\";
+                            fileInfos.SubItems.Add(file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", ""));
+                            fileInfos.SubItems.Add(file);
+                            fileInfos.SubItems.Add("");
+                            fileInfos.SubItems.Add("");
+                            fileInfos.SubItems.Add((soundSource.Length / 1000).ToString());
+                            fileInfos.SubItems.Add(soundSource.GetLength().ToString(@"mm\:ss"));
+                            fileInfos.SubItems.Add(soundSource.WaveFormat.Channels.ToString());
+                            fileInfos.SubItems.Add(Math.Round(soundSource.WaveFormat.SampleRate / 1000.0, 3).ToString());
+                            fileInfos.SubItems.Add((soundSource.WaveFormat.BitsPerSample * soundSource.WaveFormat.SampleRate / 1000).ToString());
+                            fileInfos.SubItems.Add(soundSource.WaveFormat.BitsPerSample.ToString());
+                            fileInfos.SubItems.Add((f1.VolumetrackBar.Maximum / 100.0).ToString(""));
+                            fileInfos.SubItems.Add(Convert.ToString(128));
+                            fileInfos.SubItems.Add("false");
+                            // add effects items
+                            fileInfos.SubItems.Add("1");
+                            fileInfos.SubItems.Add("1000");
+                            fileInfos.SubItems.Add(f1.DopplertrackBar.Minimum.ToString());
+                            fileInfos.SubItems.Add("1");
+                            fileInfos.SubItems.Add("0");
+                            // add misc items
+                            fileInfos.SubItems.Add("false");
+                            fileInfos.SubItems.Add("false");
+                            fileInfos.SubItems.Add("1");
+                            fileInfos.SubItems.Add("0");
+                            // add fileinfos to listview
+                            f1.filelistView.Items.Add(fileInfos);
+                        }
+                        
                     }
                     catch (Exception)
                     {
