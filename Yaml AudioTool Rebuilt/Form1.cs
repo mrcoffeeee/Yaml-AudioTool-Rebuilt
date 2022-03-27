@@ -704,6 +704,7 @@ namespace Yaml_AudioTool_Rebuilt
                     item.BackColor = SystemColors.Window;
                 }
                 FindButton.Text = "Find Title";
+                FindtextBox.Text = "";
             }
         }
 
