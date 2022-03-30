@@ -7,8 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Force.Crc32;
-using CSCore;
-using CSCore.Codecs;
+using NAudio.Wave;
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -225,14 +224,14 @@ namespace Yaml_AudioTool_Rebuilt
                                 
                                 //Fill missing audiofile entries from file
                                 string filePath = f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
-                                using (IWaveSource source = CodecFactory.Instance.GetCodec(filePath))
+                                using (var waveFileReader = new WaveFileReader(filePath))
                                 {
-                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (source.Length / 1000).ToString();
-                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = source.GetLength().ToString(@"mm\:ss");
-                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = (source.WaveFormat.Channels).ToString();
-                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = (source.WaveFormat.SampleRate / 1000.0).ToString();
-                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (source.WaveFormat.BitsPerSample * source.WaveFormat.SampleRate / 1000).ToString();
-                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = (source.WaveFormat.BitsPerSample).ToString();
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (waveFileReader.Length / 1000).ToString();
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = waveFileReader.TotalTime.ToString(@"mm\:ss");
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = (waveFileReader.WaveFormat.Channels).ToString();
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = (waveFileReader.WaveFormat.SampleRate / 1000.0).ToString();
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString();
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample).ToString();
                                 }
 
                                 f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text = StreamReader.ReadLine().Replace("    stream: ", "");
@@ -464,83 +463,3 @@ namespace Yaml_AudioTool_Rebuilt
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*// OLD EXPORT
-                foreach (var item in f1.filelistView.Items)
-                {
-                    lines.Add("  - enumName: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text);
-                    lines.Add("    filepath: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text);
-                    lines.Add("    size: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text);
-                    //lines.Add("    duration: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text);
-                    lines.Add("    channels: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text);
-                    lines.Add("    samplerate: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text);
-                    lines.Add("    bitrate: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text);
-                    lines.Add("    bitsize: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text);
-                    lines.Add("    volume: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text);
-                    lines.Add("    priority: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.priorityHeader)].Text);
-                    lines.Add("    loop: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text);
-                    lines.Add("    mindistance: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.mindistanceHeader)].Text);
-                    lines.Add("    maxdistance: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.maxdistanceHeader)].Text);
-                    lines.Add("    doppler: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.dopplerHeader)].Text);
-                    lines.Add("    pitch: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text);
-                    lines.Add("    pitchrandomization: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchrandHeader)].Text);
-                    lines.Add("    reverbpreset: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbpresetHeader)].Text);
-                    lines.Add("    reverbmix: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbwetdryHeader)].Text);
-                    lines.Add("    reflectionsdelay: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbreflectionsdelayHeader)].Text);
-                    lines.Add("    roomfrequency: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbroomfrequencyHeader)].Text);
-                    lines.Add("    reverbdelay: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbdelayHeader)].Text);
-                    lines.Add("    roomfiltermain: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbroomfiltermainHeader)].Text);
-                    lines.Add("    roomfilterhf: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbroomfilterhfHeader)].Text);
-                    lines.Add("    reflectionsgain: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbreflectionsgainHeader)].Text);
-                    lines.Add("    reverbgain: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbgainHeader)].Text);
-                    lines.Add("    decaytime: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbdecaytimeHeader)].Text);
-                    lines.Add("    density: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbdensityHeader)].Text);
-                    lines.Add("    roomsize: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.reverbroomsizeHeader)].Text);
-                    lines.Add("    localize: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.localizeHeader)].Text);
-                    lines.Add("    stream: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text);
-                    lines.Add("    type: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.typeHeader)].Text);
-                    lines.Add("    crc: " + CreateCRC32(f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text));
-                    a++;
-                }*/

@@ -52,7 +52,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.panel1.Controls.Add(this.AboutrichTextBox);
             this.panel1.Controls.Add(this.LogopictureBox);
             this.panel1.Location = new System.Drawing.Point(7, 6);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(368, 416);
             this.panel1.TabIndex = 6;
@@ -62,12 +62,12 @@ namespace Yaml_AudioTool_Rebuilt
             this.AboutrichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.AboutrichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.AboutrichTextBox.Location = new System.Drawing.Point(4, 300);
-            this.AboutrichTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.AboutrichTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.AboutrichTextBox.Name = "AboutrichTextBox";
             this.AboutrichTextBox.ReadOnly = true;
             this.AboutrichTextBox.Size = new System.Drawing.Size(358, 112);
             this.AboutrichTextBox.TabIndex = 4;
-            this.AboutrichTextBox.Text = "\t\t\t\nYAML AudioTool Rebuilt\n\nVersion: 0.51 - 220327\n\nNET6 Remake of the Vitei Audi" +
+            this.AboutrichTextBox.Text = "\t\t\t\nYAML AudioTool Rebuilt\n\nVersion: 0.52 - 220330\n\nNET6 Remake of the Vitei Audi" +
     "o Tool by Alex Miyamoto\nCode: Johannes Wronka\nLogo: Owen Davis";
             // 
             // AboutDialog
@@ -78,7 +78,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.ClientSize = new System.Drawing.Size(381, 442);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(397, 481);
             this.MinimizeBox = false;

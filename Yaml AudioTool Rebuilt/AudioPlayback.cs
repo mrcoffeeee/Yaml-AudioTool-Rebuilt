@@ -7,15 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
-using CSCore;
-using CSCore.Codecs;
-using CSCore.Codecs.WAV;
+using NAudio.Wave;
 
 using Vortice;
 using Vortice.XAudio2;
 using Vortice.Multimedia;
-using NAudio;
+
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -30,11 +27,11 @@ namespace Yaml_AudioTool_Rebuilt
         public IXAudio2SourceVoice sourceVoice;
       //  public IXAudio2SubmixVoice submixVoice;
 
-        public IWaveSource soundSource;
+        public WaveFileReader waveFileReader;
 
         private readonly Effects ef = new();        
 
-        public IWaveSource OpenFile(bool clickFlag)
+        public NAudio.Wave.WaveFileReader OpenFile(bool clickFlag)
         {            
             StopPlayback();
 
@@ -42,26 +39,25 @@ namespace Yaml_AudioTool_Rebuilt
             OpenFileDialog openfiledialog = new();
             openfiledialog.InitialDirectory = sd.audiofolderLabel.Text;
             openfiledialog.Multiselect = true;
-            openfiledialog.Filter = CodecFactory.SupportedFilesFilterEn;
+            openfiledialog.Filter = "|*.wav";
 
             if (openfiledialog.ShowDialog() == DialogResult.OK)
             {
-                //IWaveSource source;
-
                 foreach (string file in openfiledialog.FileNames)
                 {
                     try
                     {
-                        soundSource = CodecFactory.Instance.GetCodec(file);
+                        waveFileReader = new WaveFileReader(file);
 
-                        if (soundSource.WaveFormat.SampleRate != 48000)
+                        if (waveFileReader.WaveFormat.SampleRate != 48000)
                         {
                             MessageBox.Show("File: " + Path.GetFileName(file) + "\n\n" +
                                 "WARNING:\n" +
                                 "Samplerate should be 48kHz!\n" +
                                 "Please provide new hq-file or convert the existing.");
-                           // return soundSource = null;
                         }
+
+                        
 
                         Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
@@ -71,12 +67,12 @@ namespace Yaml_AudioTool_Rebuilt
                             string tempString = sd.audiofolderLabel.Text + "\\";
                             f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text = file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", "");
                             f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = file;
-                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (soundSource.Length / 1000).ToString();
-                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = soundSource.GetLength().ToString(@"mm\:ss");
-                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = soundSource.WaveFormat.Channels.ToString();
-                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = Math.Round(soundSource.WaveFormat.SampleRate / 1000.0, 3).ToString();
-                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (soundSource.WaveFormat.BitsPerSample * soundSource.WaveFormat.SampleRate / 1000).ToString();
-                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = soundSource.WaveFormat.BitsPerSample.ToString();
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (waveFileReader.Length / 1000).ToString(); 
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = waveFileReader.TotalTime.ToString(@"mm\:ss");
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = waveFileReader.WaveFormat.Channels.ToString();
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = Math.Round(waveFileReader.WaveFormat.SampleRate / 1000.0, 3).ToString();
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString();
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = waveFileReader.WaveFormat.BitsPerSample.ToString();
 
                         }
 
@@ -89,12 +85,12 @@ namespace Yaml_AudioTool_Rebuilt
                             fileInfos.SubItems.Add(file);
                             fileInfos.SubItems.Add("");
                             fileInfos.SubItems.Add("");
-                            fileInfos.SubItems.Add((soundSource.Length / 1000).ToString());
-                            fileInfos.SubItems.Add(soundSource.GetLength().ToString(@"mm\:ss"));
-                            fileInfos.SubItems.Add(soundSource.WaveFormat.Channels.ToString());
-                            fileInfos.SubItems.Add(Math.Round(soundSource.WaveFormat.SampleRate / 1000.0, 3).ToString());
-                            fileInfos.SubItems.Add((soundSource.WaveFormat.BitsPerSample * soundSource.WaveFormat.SampleRate / 1000).ToString());
-                            fileInfos.SubItems.Add(soundSource.WaveFormat.BitsPerSample.ToString());
+                            fileInfos.SubItems.Add((waveFileReader.Length / 1000).ToString());
+                            fileInfos.SubItems.Add(waveFileReader.TotalTime.ToString(@"mm\:ss"));
+                            fileInfos.SubItems.Add(waveFileReader.WaveFormat.Channels.ToString());
+                            fileInfos.SubItems.Add(Math.Round(waveFileReader.WaveFormat.SampleRate / 1000.0, 3).ToString());
+                            fileInfos.SubItems.Add((waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString());
+                            fileInfos.SubItems.Add(waveFileReader.WaveFormat.BitsPerSample.ToString());
                             fileInfos.SubItems.Add((f1.VolumetrackBar.Maximum / 100.0).ToString(""));
                             fileInfos.SubItems.Add(Convert.ToString(128));
                             fileInfos.SubItems.Add("false");
@@ -117,16 +113,16 @@ namespace Yaml_AudioTool_Rebuilt
                     catch (Exception)
                     {
                         MessageBox.Show("File not supported!");
-                        return soundSource = null;
+                        return waveFileReader = null;
                     }                    
                 }
             }
-            return soundSource;
+            return waveFileReader;
         }
 
         public void GetSoundFromList(string filePath)
-        {          
-            soundSource = CodecFactory.Instance.GetCodec(filePath);
+        {
+            waveFileReader = new WaveFileReader(filePath);
         }
 
         public void StartPlayback()
@@ -145,7 +141,7 @@ namespace Yaml_AudioTool_Rebuilt
                 f1.PlayButton.Text = "| |";
                 playbackPause = false;
             }
-            else if (soundSource != null && playbackStop == true)
+            else if (waveFileReader != null && playbackStop == true)
             {                
                 string soundFilepath = f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
                 xaudio2 = XAudio2.XAudio2Create(ProcessorSpecifier.UseDefaultProcessor);
@@ -157,15 +153,15 @@ namespace Yaml_AudioTool_Rebuilt
                 // Set Pitchshifter                                
                 if (f1.PitchenableButton.BackColor == Color.LightGreen)
                 {
-                    soundSource = CodecFactory.Instance.GetCodec(soundFilepath);
-                    soundSource = ef.SetPitchshift(soundSource);
-                    CSCore.Extensions.WriteToFile(soundSource, "Temp.wav");
-                    soundFilepath = "Temp.wav";
+                 //   soundSource = CodecFactory.Instance.GetCodec(soundFilepath);
+                   // soundSource = ef.SetPitchshift(soundSource);
+                   // CSCore.Extensions.WriteToFile(soundSource, "Temp.wav");
+                  //  soundFilepath = "Temp.wav";
                 }
 
-                NAudio.Wave.WaveFileReader reader;
-
                 byte[] array;
+
+                NAudio.Wave.WaveFileReader reader;
                 using (reader = new NAudio.Wave.WaveFileReader(soundFilepath))
                 {
                     array = new byte[reader.Length];

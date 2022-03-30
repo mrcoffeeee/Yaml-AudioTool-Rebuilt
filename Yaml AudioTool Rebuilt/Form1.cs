@@ -11,9 +11,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using CSCore;
-using CSCore.SoundOut;
-using CSCore.Codecs;
+//using CSCore;
+//using CSCore.SoundOut;
+//using CSCore.Codecs;
+
 using Vortice.XAudio2;
 
 namespace Yaml_AudioTool_Rebuilt
@@ -346,11 +347,11 @@ namespace Yaml_AudioTool_Rebuilt
                         filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text +
                         filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text +
                         ".wav";
-                    ap.soundSource = CodecFactory.Instance.GetCodec(filepathTemp);
+                    ap.GetSoundFromList(filepathTemp);
                 }
                 else
                 {
-                    ap.soundSource = CodecFactory.Instance.GetCodec(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
+                    ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 }
                 ap.StartPlayback();
 

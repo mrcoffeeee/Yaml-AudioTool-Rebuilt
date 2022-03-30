@@ -7,8 +7,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using CSCore;
-using CSCore.Streams.Effects;
+//using CSCore;
+//using CSCore.Streams.Effects;
 using Vortice.XAudio2;
 
 using reverbParameters = Vortice.XAudio2.Fx.ReverbI3DL2Parameters;
@@ -18,7 +18,7 @@ namespace Yaml_AudioTool_Rebuilt
 {
     public class Effects
     {
-        private ISampleSource sampleSource;
+        //private ISampleSource sampleSource;
 
         public static FilterParameters voiceFilter;
         public static reverbParameters[] ReverbPresets =
@@ -57,7 +57,7 @@ namespace Yaml_AudioTool_Rebuilt
         public static float[] peakLevel = null;
         public static float[] rmsLevel = null;
 
-        public IWaveSource SetPitchshift(IWaveSource soundSource)
+        /*public IWaveSource SetPitchshift(IWaveSource soundSource)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
@@ -83,7 +83,7 @@ namespace Yaml_AudioTool_Rebuilt
             };
             soundSource = pitchshifter.ToWaveSource(16);
             return soundSource;
-        }
+        }*/
 
         public static IXAudio2SourceVoice SetRoomFilter(IXAudio2SourceVoice sourceVoice)
         {
