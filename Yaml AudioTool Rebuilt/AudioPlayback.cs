@@ -39,7 +39,7 @@ namespace Yaml_AudioTool_Rebuilt
             OpenFileDialog openfiledialog = new();
             openfiledialog.InitialDirectory = sd.audiofolderLabel.Text;
             openfiledialog.Multiselect = true;
-            openfiledialog.Filter = "|*.wav";
+            openfiledialog.Filter = "WAV Files|*.wav";
 
             if (openfiledialog.ShowDialog() == DialogResult.OK)
             {
@@ -150,19 +150,10 @@ namespace Yaml_AudioTool_Rebuilt
                 var masteringVoice = xaudio2.CreateMasteringVoice(2, 48000);
                 xaudio2.StartEngine();
 
-                // Set Pitchshifter                                
-                if (f1.PitchenableButton.BackColor == Color.LightGreen)
-                {
-                 //   soundSource = CodecFactory.Instance.GetCodec(soundFilepath);
-                   // soundSource = ef.SetPitchshift(soundSource);
-                   // CSCore.Extensions.WriteToFile(soundSource, "Temp.wav");
-                  //  soundFilepath = "Temp.wav";
-                }
-
                 byte[] array;
 
-                NAudio.Wave.WaveFileReader reader;
-                using (reader = new NAudio.Wave.WaveFileReader(soundFilepath))
+                AudioFileReader reader;
+                using (reader = new AudioFileReader(soundFilepath))
                 {
                     array = new byte[reader.Length];
 
@@ -180,9 +171,27 @@ namespace Yaml_AudioTool_Rebuilt
                         reader.WaveFormat.BitsPerSample);
                 }
 
-                sourceVoice = xaudio2.CreateSourceVoice(waveFormat, VoiceFlags.UseFilter);
-                //submixVoice = xaudio2.CreateSubmixVoice(waveFormat.Channels, 48000, SubmixVoiceFlags.UseFilter, 0); 
+                // Effects Away From XAudio (no realtime)
+                // Set Pitchshifter
+                if (f1.PitchenableButton.BackColor == Color.LightGreen)
+                {
+                    var readers = new AudioFileReader(soundFilepath);
+                    float[] buffer = new float[readers.WaveFormat.SampleRate];
+                    readers.Read(buffer, 0, buffer.Length);
+                    PitchShifter.PitchShift(1f, buffer.Length, readers.WaveFormat.SampleRate, buffer);
+                    readers.Position = 0;
+                    NAudio.Wave.WaveFormat wwaveFormat = new NAudio.Wave.WaveFormat(48000, 24, 2);
 
+                    using (WaveFileWriter writer = new WaveFileWriter("temp.wav", wwaveFormat))
+                    {
+                        writer.WriteSamples(buffer, 0, buffer.Length);
+                    }
+                    //WaveFileWriter.CreateWaveFile(@"temp.wav", readers);
+                }
+
+
+                // Effects XAudio
+                sourceVoice = xaudio2.CreateSourceVoice(waveFormat, VoiceFlags.UseFilter);
                 // Set Loop
                 if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text == "true")
                 {
@@ -204,9 +213,7 @@ namespace Yaml_AudioTool_Rebuilt
                 // Set Volume
                 double volumeValue = f1.VolumetrackBar.Value / 100.0;
                 sourceVoice.SetVolume(Convert.ToSingle(volumeValue));
-
-                ///DO IT HERE!
-
+                sourceVoice = Effects.SetVolumeMeter(sourceVoice);
                 // Set Brickwall Limiter
                 //ef.SetBrickwallLimiter(xaudio2, waveFormat, masteringVoice);
 

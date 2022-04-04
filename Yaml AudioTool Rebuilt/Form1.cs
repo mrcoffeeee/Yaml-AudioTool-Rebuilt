@@ -136,7 +136,15 @@ namespace Yaml_AudioTool_Rebuilt
             ap.timerCount += playbackTimer.Interval;
             var timeSpan = TimeSpan.FromMilliseconds(ap.timerCount);
             timeLabel.Text = timeSpan.ToString(@"mm\:ss");
+            //ap.sourceVoice.GetEffectParameters(0);
             //  meterLabel.Text = ap.peakLevel.ToString();
+
+            float[] peakLevel = new float[2];
+            float[] rmsLevel = new float[2];
+
+            Vortice.XAudio2.Fx.VolumeMeterLevels volumeLevel = new(peakLevel, rmsLevel, 2);
+
+            //ap.sourceVoice.GetEffectParameters(0, volumeLevel, sizeof(volumeLevel));
 
             if (LoopButton.BackColor == Color.Salmon)
             {
