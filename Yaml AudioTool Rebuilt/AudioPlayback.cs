@@ -9,7 +9,6 @@ using System.Windows.Forms;
 
 using NAudio.Wave;
 
-using Vortice;
 using Vortice.XAudio2;
 using Vortice.Multimedia;
 
@@ -25,11 +24,9 @@ namespace Yaml_AudioTool_Rebuilt
 
         public IXAudio2 xaudio2;
         public IXAudio2SourceVoice sourceVoice;
-      //  public IXAudio2SubmixVoice submixVoice;
+        //public IXAudio2SubmixVoice submixVoice;
 
-        public WaveFileReader waveFileReader;
-
-        private readonly Effects ef = new();        
+        public WaveFileReader waveFileReader;      
 
         public NAudio.Wave.WaveFileReader OpenFile(bool clickFlag)
         {            
@@ -154,7 +151,7 @@ namespace Yaml_AudioTool_Rebuilt
 
                 AudioFileReader reader;
                 
-                // Effects Apart From XAudio2 (offline)
+                // Offline Effects Apart From XAudio2
                 // Set Pitchshifter
                 if (f1.PitchenableButton.BackColor == Color.LightGreen)
                 {                    
@@ -205,30 +202,30 @@ namespace Yaml_AudioTool_Rebuilt
                     reader.WaveFormat.BlockAlign,
                     reader.WaveFormat.BitsPerSample);
 
-                // Effects XAudio
+                // Effects XAudio2
                 sourceVoice = xaudio2.CreateSourceVoice(waveFormat, VoiceFlags.UseFilter);
+
                 // Set Loop
                 if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text == "true")
                 {
                     audioBuffer.LoopCount = IXAudio2.LoopInfinite;
                 }
 
-                // Set Effects
                 // Set Room                              
                 if (f1. RoomenableButton.BackColor == Color.LightGreen)
                 {
                     if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
                     {
-                        Effects.SetRoomFilter(sourceVoice);
-                        Effects.SetRoomReverb(sourceVoice);
+                        RoomCreationEffects.SetRoomFilter(sourceVoice);
+                        RoomCreationEffects.SetRoomReverb(sourceVoice);
                     }
-
                 }
 
                 // Set Volume
                 double volumeValue = f1.VolumetrackBar.Value / 100.0;
                 sourceVoice.SetVolume(Convert.ToSingle(volumeValue));
                 sourceVoice = Effects.SetVolumeMeter(sourceVoice);
+
                 // Set Brickwall Limiter
                 //ef.SetBrickwallLimiter(xaudio2, waveFormat, masteringVoice);
 

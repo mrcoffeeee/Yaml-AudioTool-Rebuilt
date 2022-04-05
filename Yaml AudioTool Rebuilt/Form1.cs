@@ -11,10 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-//using CSCore;
-//using CSCore.SoundOut;
-//using CSCore.Codecs;
-
 using Vortice.XAudio2;
 
 namespace Yaml_AudioTool_Rebuilt
@@ -286,11 +282,12 @@ namespace Yaml_AudioTool_Rebuilt
             playbackTimer.Stop();
             ap.StopPlayback();
             filelistView.Focus();
-            if (filelistView.Items.Count > 0 &&
-                filelistView.SelectedItems.Count > 0 &&
+            if (filelistView.Items.Count > 1 &&
+                filelistView.SelectedItems.Count == 1 &&
                 filelistView.Items.IndexOf(filelistView.SelectedItems[0]) > 0)
-            {
+            {                
                 int a = filelistView.Items.IndexOf(filelistView.SelectedItems[0]);
+                filelistView.Items[a].Selected = false;
                 filelistView.Items[a - 1].Selected = true;
                 ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
@@ -379,11 +376,12 @@ namespace Yaml_AudioTool_Rebuilt
             playbackTimer.Stop();
             ap.StopPlayback();
             filelistView.Focus();
-            if (filelistView.Items.Count > 0 &&
-                filelistView.SelectedItems.Count > 0 &&
+            if (filelistView.Items.Count > 1 &&
+                filelistView.SelectedItems.Count == 1 &&
                 filelistView.Items.IndexOf(filelistView.SelectedItems[0]) < filelistView.Items.Count - 1)
             {
                 int a = filelistView.Items.IndexOf(filelistView.SelectedItems[0]);
+                filelistView.Items[a].Selected = false;
                 filelistView.Items[a + 1].Selected = true;
                 ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
@@ -755,14 +753,14 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (roomlistView.SelectedItems.Count == 1)
             {
-                Effects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
+                RoomCreationEffects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filtertypeHeader)].Text = filtercomboBox.SelectedIndex.ToString();
             }
         }
 
         private void frequencyPot_ValueChanged(object sender, EventArgs e)
         {
-            Effects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
+            RoomCreationEffects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
             float value = Convert.ToSingle(Math.Round(filterfrequencyPot.Value, 1));
             filterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(value, 48000f).ToString("0.0") + " Hz";
 
@@ -775,7 +773,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void oneoverqPot_ValueChanged(object sender, EventArgs e)
         {
-            Effects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
+            RoomCreationEffects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
             double value = Math.Round(filteroneoverqPot.Value, 1);
             filteroneoverqvalueLabel.Text = value.ToString("0.0");
 
@@ -807,7 +805,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
             else if (checkRoomDuplicates() == false)
             {
-                var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(Effects.ReverbPresets[reverbpresetcomboBox.SelectedIndex], false);
+                var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(RoomCreationEffects.ReverbPresets[reverbpresetcomboBox.SelectedIndex], false);
                 ListViewItem roomitem = new(roomnametextBox.Text);
                 //Filter Items
                 roomitem.SubItems.Add(filternametextBox.Text);
@@ -879,7 +877,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void reverbwetdryPot_ValueChanged(object sender, EventArgs e)
         {
-            Effects.UpdateReverbSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
+            RoomCreationEffects.UpdateReverbSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
             reverbwetdryvalueLabel.Text = Math.Round(reverbwetdryPot.Value, 1).ToString("0.0") + " %";
 
             if (roomlistView.SelectedItems.Count == 1)
@@ -969,9 +967,9 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void reverbpresetcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(Effects.ReverbPresets[reverbpresetcomboBox.SelectedIndex], false);
+            var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(RoomCreationEffects.ReverbPresets[reverbpresetcomboBox.SelectedIndex], false);
 
-            Effects.UpdateReverbSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
+            RoomCreationEffects.UpdateReverbSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
             reverbwetdryPot.Value = Math.Round(actualReverbParameter.WetDryMix, 1);
             reverbwetdryvalueLabel.Text = Math.Round(actualReverbParameter.WetDryMix, 1).ToString("0.0") + " %";
 
