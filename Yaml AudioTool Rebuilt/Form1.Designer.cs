@@ -711,7 +711,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.FalloffcomboBox.Items.AddRange(new object[] {
             "Linear",
             "Logarithmic"});
-            this.FalloffcomboBox.Location = new System.Drawing.Point(145, 313);
+            this.FalloffcomboBox.Location = new System.Drawing.Point(145, 311);
             this.FalloffcomboBox.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             this.FalloffcomboBox.Name = "FalloffcomboBox";
             this.FalloffcomboBox.Size = new System.Drawing.Size(218, 33);
@@ -920,7 +920,7 @@ namespace Yaml_AudioTool_Rebuilt
             "UI",
             "Speech",
             "Custom"});
-            this.TypecomboBox.Location = new System.Drawing.Point(145, 253);
+            this.TypecomboBox.Location = new System.Drawing.Point(145, 251);
             this.TypecomboBox.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             this.TypecomboBox.Name = "TypecomboBox";
             this.TypecomboBox.Size = new System.Drawing.Size(218, 33);
@@ -1056,7 +1056,7 @@ namespace Yaml_AudioTool_Rebuilt
             "Filepath",
             "Room",
             "Type"});
-            this.SortcomboBox.Location = new System.Drawing.Point(172, 193);
+            this.SortcomboBox.Location = new System.Drawing.Point(172, 191);
             this.SortcomboBox.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.SortcomboBox.Name = "SortcomboBox";
             this.SortcomboBox.Size = new System.Drawing.Size(377, 33);

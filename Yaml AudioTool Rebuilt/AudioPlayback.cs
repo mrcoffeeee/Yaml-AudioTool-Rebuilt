@@ -153,42 +153,57 @@ namespace Yaml_AudioTool_Rebuilt
                 byte[] array;
 
                 AudioFileReader reader;
-                using (reader = new AudioFileReader(soundFilepath))
-                {
-                    array = new byte[reader.Length];
-
-                    reader.Read(array, 0, array.Length);
-
-                    audioBuffer = new AudioBuffer(array, BufferFlags.None);
-
-                    int encoding_ = (int)reader.WaveFormat.Encoding;
-
-                    waveFormat = Vortice.Multimedia.WaveFormat.CreateCustomFormat((Vortice.Multimedia.WaveFormatEncoding)encoding_,
-                        reader.WaveFormat.SampleRate,
-                        reader.WaveFormat.Channels,
-                        reader.WaveFormat.AverageBytesPerSecond,
-                        reader.WaveFormat.BlockAlign,
-                        reader.WaveFormat.BitsPerSample);
-                }
-
-                // Effects Away From XAudio (no realtime)
+                
+                // Effects Apart From XAudio2 (offline)
                 // Set Pitchshifter
                 if (f1.PitchenableButton.BackColor == Color.LightGreen)
-                {
-                    var readers = new AudioFileReader(soundFilepath);
-                    float[] buffer = new float[readers.WaveFormat.SampleRate];
-                    readers.Read(buffer, 0, buffer.Length);
-                    PitchShifter.PitchShift(1f, buffer.Length, readers.WaveFormat.SampleRate, buffer);
-                    readers.Position = 0;
-                    NAudio.Wave.WaveFormat wwaveFormat = new NAudio.Wave.WaveFormat(48000, 24, 2);
-
-                    using (WaveFileWriter writer = new WaveFileWriter("temp.wav", wwaveFormat))
+                {                    
+                    float pitchValue = Convert.ToSingle(f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text);
+                    float pitchrandValue = Convert.ToSingle(f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchrandHeader)].Text);
+                    using (var readers = new AudioFileReader(soundFilepath))
                     {
-                        writer.WriteSamples(buffer, 0, buffer.Length);
+                        float[] buffer = ReadAllAudioSamples(soundFilepath);
+                        buffer = NAudioEffects.LowerVolume(buffer, 0.5f);                        
+                        PitchShifter.PitchShift(
+                            PitchShifter_Helper.PitchRandomizer(pitchValue, pitchrandValue), 
+                            buffer.Length,                             
+                            readers.WaveFormat.SampleRate, 
+                            buffer);
+                        buffer = NAudioEffects.Normalize(buffer);
+
+                        NAudio.Wave.WaveFormat wwaveFormat = new NAudio.Wave.WaveFormat(48000, 24, 2);
+                        using (WaveFileWriter writer = new WaveFileWriter("temp.wav", wwaveFormat))
+                        {
+                            writer.WriteSamples(buffer, 0, buffer.Length);
+                        }                        
                     }
-                    //WaveFileWriter.CreateWaveFile(@"temp.wav", readers);
+                    using (reader = new AudioFileReader("temp.wav"))
+                    {
+                        array = new byte[reader.Length];
+
+                        reader.Read(array, 0, array.Length);
+                    }
+                }
+                else
+                {
+                    using (reader = new AudioFileReader(soundFilepath))
+                    {
+                        array = new byte[reader.Length];
+
+                        reader.Read(array, 0, array.Length);
+                    }
                 }
 
+                audioBuffer = new AudioBuffer(array, BufferFlags.None);
+
+                int encoding_ = (int)reader.WaveFormat.Encoding;
+
+                waveFormat = Vortice.Multimedia.WaveFormat.CreateCustomFormat((Vortice.Multimedia.WaveFormatEncoding)encoding_,
+                    reader.WaveFormat.SampleRate,
+                    reader.WaveFormat.Channels,
+                    reader.WaveFormat.AverageBytesPerSecond,
+                    reader.WaveFormat.BlockAlign,
+                    reader.WaveFormat.BitsPerSample);
 
                 // Effects XAudio
                 sourceVoice = xaudio2.CreateSourceVoice(waveFormat, VoiceFlags.UseFilter);
@@ -256,6 +271,47 @@ namespace Yaml_AudioTool_Rebuilt
                 sourceVoice.SetVolume(Convert.ToSingle(value));
             }
             return value;
+        }
+
+        public static float[] ReadAllAudioSamples(string filePath)
+        {
+            var readers = new AudioFileReader(filePath);
+            List<float> allSamples = new List<float>();
+            float[] samples = new float[16384];
+
+            while(readers.Read(samples, 0, samples.Length) > 0)
+            {
+                for(int a = 0; a < samples.Length; a++)
+                {
+                    allSamples.Add(samples[a]);
+                }
+            }
+
+            samples = new float[allSamples.Count];
+            for(int a = 0; a < samples.Length; a++)
+            {
+                samples[a] = allSamples[a];
+            }            
+            return samples;
+        }
+
+        public static byte[] ConvertFloatToByteArray(float[] samples, int samplesCount)
+        {
+            var pcm = new byte[samplesCount * 2];
+            int sampleIndex = 0;
+            int pcmIndex = 0;
+
+            while(sampleIndex < samplesCount)
+            {
+                var outsample = (short)(samples[sampleIndex] * short.MaxValue);
+                pcm[pcmIndex] = (byte)(outsample & 0xff);
+                pcm[pcmIndex + 1] = (byte)((outsample >> 8) & 0xff);
+
+                sampleIndex++;
+                pcmIndex += 2;
+            }
+
+            return pcm;
         }
     }
 }

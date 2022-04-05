@@ -41,9 +41,10 @@ namespace Yaml_AudioTool_Rebuilt
             this.LogopictureBox.BackgroundImage = global::Yaml_AudioTool_Rebuilt.Properties.Resources.omegaLogo;
             this.LogopictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.LogopictureBox.InitialImage = null;
-            this.LogopictureBox.Location = new System.Drawing.Point(4, 3);
+            this.LogopictureBox.Location = new System.Drawing.Point(7, 6);
+            this.LogopictureBox.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.LogopictureBox.Name = "LogopictureBox";
-            this.LogopictureBox.Size = new System.Drawing.Size(356, 322);
+            this.LogopictureBox.Size = new System.Drawing.Size(605, 641);
             this.LogopictureBox.TabIndex = 2;
             this.LogopictureBox.TabStop = false;
             // 
@@ -51,38 +52,41 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             this.panel1.Controls.Add(this.AboutrichTextBox);
             this.panel1.Controls.Add(this.LogopictureBox);
-            this.panel1.Location = new System.Drawing.Point(7, 6);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2);
+            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(368, 416);
+            this.panel1.Size = new System.Drawing.Size(631, 832);
             this.panel1.TabIndex = 6;
             // 
             // AboutrichTextBox
             // 
             this.AboutrichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.AboutrichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.AboutrichTextBox.Location = new System.Drawing.Point(4, 300);
-            this.AboutrichTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.AboutrichTextBox.Location = new System.Drawing.Point(5, 600);
+            this.AboutrichTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.AboutrichTextBox.MaximumSize = new System.Drawing.Size(605, 200);
+            this.AboutrichTextBox.MaxLength = 1000;
+            this.AboutrichTextBox.MinimumSize = new System.Drawing.Size(605, 200);
             this.AboutrichTextBox.Name = "AboutrichTextBox";
             this.AboutrichTextBox.ReadOnly = true;
-            this.AboutrichTextBox.Size = new System.Drawing.Size(358, 112);
+            this.AboutrichTextBox.Size = new System.Drawing.Size(605, 200);
             this.AboutrichTextBox.TabIndex = 4;
-            this.AboutrichTextBox.Text = "\t\t\t\nYAML AudioTool Rebuilt\n\nVersion: 0.52 - 220330\n\nNET6 Remake of the Vitei Audi" +
+            this.AboutrichTextBox.Text = "\t\t\t\nYAML AudioTool Rebuilt\n\nVersion: 0.53 - 220405\n\nNET6 Remake of the Vitei Audi" +
     "o Tool by Alex Miyamoto\nCode: Johannes Wronka\nLogo: Owen Davis";
             // 
             // AboutDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(381, 442);
+            this.ClientSize = new System.Drawing.Size(639, 834);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(397, 481);
+            this.MaximumSize = new System.Drawing.Size(663, 898);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(397, 481);
+            this.MinimumSize = new System.Drawing.Size(663, 898);
             this.Name = "AboutDialog";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
