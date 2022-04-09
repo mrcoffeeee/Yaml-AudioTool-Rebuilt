@@ -218,10 +218,7 @@ namespace Yaml_AudioTool_Rebuilt
                     audioBuffer.LoopCount = IXAudio2.LoopInfinite;
                 }
                 
-                //sourceVoice = Effects.SetVolumeMeter(sourceVoice);
-
-                sourceVoice.SubmitSourceBuffer(audioBuffer);
-                sourceVoice.Start();
+                //sourceVoice = Effects.SetVolumeMeter(sourceVoice);                
 
                 // Set Volume
                 double volumeValue = f1.VolumetrackBar.Value / 100.0;
@@ -238,11 +235,14 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
                     {
-                        sourceVoice = RoomCreationEffects.SetRoomFilter(sourceVoice);
-                        sourceVoice = RoomCreationEffects.SetRoomReverb(sourceVoice);
-                        sourceVoice.EnableEffect(0);
+                        RoomCreationEffects.SetRoomFilter(sourceVoice);
+                        RoomCreationEffects.SetRoomReverb(sourceVoice);
                     }
                 }
+
+                sourceVoice.SubmitSourceBuffer(audioBuffer);
+                sourceVoice.Start();
+                //RoomCreationEffects.UpdateReverbSettings(f1.filelistView.SelectedItems.Count, sourceVoice);
 
                 f1.PlayButton.Text = "| |";
                 playbackStop = false;
