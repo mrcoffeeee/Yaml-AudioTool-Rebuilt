@@ -98,9 +98,9 @@ namespace Yaml_AudioTool_Rebuilt
 
             var effectDescriptor = new EffectDescriptor(reverb, sourceVoice.VoiceDetails.InputChannelCount);
             sourceVoice.SetEffectChain(effectDescriptor);
-            sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex], false));
+            sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex]), 0);
             ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.reverbwetdryPot.Value, 1));
-            sourceVoice.EnableEffect(0);
+            //sourceVoice.EnableEffect(0);
             return sourceVoice;
         }
 

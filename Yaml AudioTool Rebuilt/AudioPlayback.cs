@@ -150,10 +150,10 @@ namespace Yaml_AudioTool_Rebuilt
                 byte[] array;
 
                 AudioFileReader reader;
-                
+
                 // Offline Effects Apart From XAudio2
                 // Set Pitchshifter
-                if (f1.PitchenableButton.BackColor == Color.LightGreen)
+                /*if (f1.PitchenableButton.BackColor == Color.LightGreen)
                 {                    
                     float pitchValue = Convert.ToSingle(f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text);
                     float pitchrandValue = Convert.ToSingle(f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchrandHeader)].Text);
@@ -161,7 +161,7 @@ namespace Yaml_AudioTool_Rebuilt
                     {
                         float[] buffer = ReadAllAudioSamples(soundFilepath);
                         buffer = NAudioEffects.LowerVolume(buffer, 0.5f);                        
-                        PitchShifter.PitchShift(
+                       /* PitchShifter.PitchShift(
                             PitchShifter_Helper.PitchRandomizer(pitchValue, pitchrandValue), 
                             buffer.Length,                             
                             readers.WaveFormat.SampleRate, 
@@ -189,6 +189,13 @@ namespace Yaml_AudioTool_Rebuilt
 
                         reader.Read(array, 0, array.Length);
                     }
+                }*/
+
+                using (reader = new AudioFileReader(soundFilepath))
+                {
+                    array = new byte[reader.Length];
+
+                    reader.Read(array, 0, array.Length);
                 }
 
                 audioBuffer = new AudioBuffer(array, BufferFlags.None);
@@ -203,34 +210,39 @@ namespace Yaml_AudioTool_Rebuilt
                     reader.WaveFormat.BitsPerSample);
 
                 // Effects XAudio2
-                sourceVoice = xaudio2.CreateSourceVoice(waveFormat, VoiceFlags.UseFilter);
+                sourceVoice = xaudio2.CreateSourceVoice(waveFormat, VoiceFlags.UseFilter, 10);
 
                 // Set Loop
                 if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text == "true")
                 {
                     audioBuffer.LoopCount = IXAudio2.LoopInfinite;
                 }
+                
+                //sourceVoice = Effects.SetVolumeMeter(sourceVoice);
 
-                // Set Room                              
-                if (f1. RoomenableButton.BackColor == Color.LightGreen)
-                {
-                    if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
-                    {
-                        RoomCreationEffects.SetRoomFilter(sourceVoice);
-                        RoomCreationEffects.SetRoomReverb(sourceVoice);
-                    }
-                }
+                sourceVoice.SubmitSourceBuffer(audioBuffer);
+                sourceVoice.Start();
 
                 // Set Volume
                 double volumeValue = f1.VolumetrackBar.Value / 100.0;
                 sourceVoice.SetVolume(Convert.ToSingle(volumeValue));
-                sourceVoice = Effects.SetVolumeMeter(sourceVoice);
 
-                // Set Brickwall Limiter
-                //ef.SetBrickwallLimiter(xaudio2, waveFormat, masteringVoice);
+                // Set Pitch
+                if (f1.PitchenableButton.BackColor == Color.LightGreen)
+                {
+                    sourceVoice.SetFrequencyRatio(2.0f, operationSet: 0);
+                }
 
-                sourceVoice.SubmitSourceBuffer(audioBuffer);
-                sourceVoice.Start();
+                // Set Room                              
+                if (f1.RoomenableButton.BackColor == Color.LightGreen)
+                {
+                    if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
+                    {
+                        sourceVoice = RoomCreationEffects.SetRoomFilter(sourceVoice);
+                        sourceVoice = RoomCreationEffects.SetRoomReverb(sourceVoice);
+                        sourceVoice.EnableEffect(0);
+                    }
+                }
 
                 f1.PlayButton.Text = "| |";
                 playbackStop = false;
@@ -250,8 +262,6 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 sourceVoice.Dispose();
                 sourceVoice = null;
-          //      submixVoice.Dispose();
-            //    submixVoice = null;
             }
             timerCount = 0;
             if (f1 != null)
