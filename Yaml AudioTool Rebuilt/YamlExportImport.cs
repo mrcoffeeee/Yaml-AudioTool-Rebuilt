@@ -114,10 +114,10 @@ namespace Yaml_AudioTool_Rebuilt
                 lines.Add("    localized: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.localizeHeader)].Text);
                 lines.Add("    crc: " + CreateStringCRC32(f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text));
                 // ADD ROOM CRC ENTRY
-                /*if (f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
+                if (f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
                     lines.Add("    roomNameCRC: " + CreateStringCRC32(f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text));
                 else
-                    lines.Add("    roomNameCRC: " + "");*/
+                    lines.Add("    roomNameCRC: " + "0");
                 a++;
             }
             return lines;
@@ -216,13 +216,13 @@ namespace Yaml_AudioTool_Rebuilt
 
 
                             //Fill audiofile entry from yaml
+                            line = StreamReader.ReadLine().Replace("    filename: ", "");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text = line;
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = folderPath + "\\" + line.Replace("/", "\\") + ".wav";
+
+                            //Fill missing audiofile entries from file
                             try
                             {
-                                line = StreamReader.ReadLine().Replace("    filename: ", "");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text = line;
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = folderPath + "\\" + line.Replace("/", "\\") + ".wav";
-                                
-                                //Fill missing audiofile entries from file
                                 string filePath = f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
                                 using (var waveFileReader = new WaveFileReader(filePath))
                                 {
@@ -233,40 +233,41 @@ namespace Yaml_AudioTool_Rebuilt
                                     f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString();
                                     f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample).ToString();
                                 }
-
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text = StreamReader.ReadLine().Replace("    stream: ", "");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text = StreamReader.ReadLine().Replace("    loop: ", "");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text = StreamReader.ReadLine().Replace("    volume: ", "").Replace(".", ",");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.mindistanceHeader)].Text = StreamReader.ReadLine().Replace("    minDistance: ", "");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.maxdistanceHeader)].Text = StreamReader.ReadLine().Replace("    maxDistance: ", "");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.typeHeader)].Text = StreamReader.ReadLine().Replace("    eType: ", "");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.falloffHeader)].Text = StreamReader.ReadLine().Replace("    eFalloff: ", "");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchrandHeader)].Text = StreamReader.ReadLine().Replace("    pitchRandomisation: ", "").Replace(".", ",");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.priorityHeader)].Text = StreamReader.ReadLine().Replace("    priority: ", "");
-                                StreamReader.ReadLine();
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text = StreamReader.ReadLine().Replace("    basePitch: ", "").Replace(".", ",");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.dopplerHeader)].Text = StreamReader.ReadLine().Replace("    dopplerFactor: ", "").Replace(".", ",");
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.localizeHeader)].Text = StreamReader.ReadLine().Replace("    localized: ", "");
-                                line = StreamReader.ReadLine();// Read crc:
-                                line = StreamReader.ReadLine();// Read roomNameCRC: or enumName:
-                                if (line == null)
-                                {
-                                    return;
-                                }
-                                else if (line.Contains("    roomNameCRC: "))
-                                {
-                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text = line.Replace("    roomNameCRC: ", "");
-                                    line = StreamReader.ReadLine();
-                                }
                             }
                             catch (Exception)
                             {
-                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = "--> FILE IS MISSING OR CORRUPT";
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text = "--> FILE IS MISSING OR CORRUPT";
+                            }
+
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.streamHeader)].Text = StreamReader.ReadLine().Replace("    stream: ", "");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text = StreamReader.ReadLine().Replace("    loop: ", "");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.volumeHeader)].Text = StreamReader.ReadLine().Replace("    volume: ", "").Replace(".", ",");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.mindistanceHeader)].Text = StreamReader.ReadLine().Replace("    minDistance: ", "");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.maxdistanceHeader)].Text = StreamReader.ReadLine().Replace("    maxDistance: ", "");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.typeHeader)].Text = StreamReader.ReadLine().Replace("    eType: ", "");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.falloffHeader)].Text = StreamReader.ReadLine().Replace("    eFalloff: ", "");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchrandHeader)].Text = StreamReader.ReadLine().Replace("    pitchRandomisation: ", "").Replace(".", ",");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.priorityHeader)].Text = StreamReader.ReadLine().Replace("    priority: ", "");
+                            StreamReader.ReadLine();
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text = StreamReader.ReadLine().Replace("    basePitch: ", "").Replace(".", ",");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.dopplerHeader)].Text = StreamReader.ReadLine().Replace("    dopplerFactor: ", "").Replace(".", ",");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.localizeHeader)].Text = StreamReader.ReadLine().Replace("    localized: ", "");
+                            line = StreamReader.ReadLine();// Read crc:
+                            line = StreamReader.ReadLine();// Read roomNameCRC: or enumName:
+                            if (line == null)
+                            {
+                                return;
+                            }
+                            else if (line.Contains("    roomNameCRC: "))
+                            {
+                                if (line != "    roomNameCRC: 0")
+                                    f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text = line.Replace("    roomNameCRC: ", "");
+                                line = StreamReader.ReadLine();
                             }
                         }
                         catch (Exception)
                         {
-                            MessageBox.Show("Could not read one or more audiofiles!");
+                            f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text = "--> YAML ENTRY IS CORRUPT";
                             return;
                         }
 
