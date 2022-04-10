@@ -133,14 +133,17 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
+                Form1 f1 = (Form1)Application.OpenForms["Form1"];
                 string savePath = saveFileDialog.FileName;
                 List<string> lines = new();
 
                 lines.Add("AudioBank:");
-
-                GenerateFilterEntries(lines);
-                GenerateReverbEntries(lines);
-                GenerateRoomEntries(lines);
+                if (f1.roomlistView.Items.Count > 0)
+                {
+                    GenerateFilterEntries(lines);
+                    GenerateReverbEntries(lines);
+                    GenerateRoomEntries(lines);
+                }                
                 GenerateAudioEntries(lines);
 
                 File.WriteAllLines(savePath, lines);
