@@ -103,14 +103,14 @@ namespace Yaml_AudioTool_Rebuilt
             if (value < 1900)
             {
                 //filelistView.Size = new Size(691, 836);
-                roomlistView.Size = new Size(595, 180);
+                roomlistView.Size = new Size(595, 160);
                 filelistView.Size = new Size(691, 21 + selectedsoundLabel.Height + tabControl1.Height + roomlistView.Height);
             }
             else if (value >= 1900)
             {
                 this.Size = new Size(1600, 900);
                 //filelistView.Size = new Size(1200, 750);
-                roomlistView.Size = new Size(343, 420);
+                roomlistView.Size = new Size(343, 400);
                 filelistView.Size = new Size(1200, 9 + selectedsoundLabel.Height + tabControl1.Height + roomlistView.Height);
             }
             baseWindowWidth = this.Width;
@@ -261,6 +261,7 @@ namespace Yaml_AudioTool_Rebuilt
                 StreamcheckBox.Checked = Convert.ToBoolean(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(streamHeader)].Text);
                 TypecomboBox.SelectedIndex = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(typeHeader)].Text);
                 FalloffcomboBox.SelectedIndex = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(falloffHeader)].Text);
+                StackcomboBox.SelectedIndex= Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(stackHeader)].Text);
                 ChangeFilelabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text;
                 PitchenableButton.Enabled = true;
                 removeButtonEnabled(true);
@@ -649,6 +650,17 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
+        private void StackcomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (filelistView.SelectedItems.Count > 0)
+            {
+                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                {
+                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(stackHeader)].Text = Convert.ToString(StackcomboBox.SelectedIndex);
+                }
+            }
+        }
+
 
         #endregion Property-Playback
 
@@ -990,6 +1002,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
 
         }
+
 
 
 

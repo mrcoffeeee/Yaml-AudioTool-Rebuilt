@@ -112,6 +112,7 @@ namespace Yaml_AudioTool_Rebuilt
                 lines.Add("    basePitch: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text.Replace(",", "."));
                 lines.Add("    dopplerFactor: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.dopplerHeader)].Text.Replace(",", "."));
                 lines.Add("    localized: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.localizeHeader)].Text);
+                lines.Add("    eStacking: " + f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.stackHeader)].Text);
                 lines.Add("    crc: " + CreateStringCRC32(f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.titleHeader)].Text));
                 // ADD ROOM CRC ENTRY
                 if (f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
@@ -215,6 +216,7 @@ namespace Yaml_AudioTool_Rebuilt
                             fileitem.SubItems.Add("");
                             fileitem.SubItems.Add("");
                             fileitem.SubItems.Add("");
+                            fileitem.SubItems.Add("");
                             f1.filelistView.Items.Add(fileitem);
 
 
@@ -255,6 +257,16 @@ namespace Yaml_AudioTool_Rebuilt
                             f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text = StreamReader.ReadLine().Replace("    basePitch: ", "").Replace(".", ",");
                             f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.dopplerHeader)].Text = StreamReader.ReadLine().Replace("    dopplerFactor: ", "").Replace(".", ",");
                             f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.localizeHeader)].Text = StreamReader.ReadLine().Replace("    localized: ", "");
+                            line = StreamReader.ReadLine();
+                            if (line.Contains("    eStacking: "))
+                            {
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.stackHeader)].Text = line.Replace("    eStacking: ", "");
+                            }
+                            else
+                            {
+                                f1.filelistView.Items[a + listOffset].SubItems[f1.filelistView.Columns.IndexOf(f1.stackHeader)].Text = "0";
+                            }
+                                
                             line = StreamReader.ReadLine();// Read crc:
                             line = StreamReader.ReadLine();// Read roomNameCRC: or enumName:
                             if (line == null)

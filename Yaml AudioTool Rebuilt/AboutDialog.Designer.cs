@@ -52,7 +52,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.panel1.Controls.Add(this.AboutrichTextBox);
             this.panel1.Controls.Add(this.LogopictureBox);
             this.panel1.Location = new System.Drawing.Point(7, 6);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(368, 416);
             this.panel1.TabIndex = 6;
@@ -62,7 +62,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.AboutrichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.AboutrichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.AboutrichTextBox.Location = new System.Drawing.Point(3, 300);
-            this.AboutrichTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.AboutrichTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.AboutrichTextBox.MaximumSize = new System.Drawing.Size(355, 102);
             this.AboutrichTextBox.MaxLength = 1000;
             this.AboutrichTextBox.MinimumSize = new System.Drawing.Size(355, 102);
@@ -70,8 +70,9 @@ namespace Yaml_AudioTool_Rebuilt
             this.AboutrichTextBox.ReadOnly = true;
             this.AboutrichTextBox.Size = new System.Drawing.Size(355, 102);
             this.AboutrichTextBox.TabIndex = 4;
-            this.AboutrichTextBox.Text = "YAML AudioTool Rebuilt\n\nVersion: 0.54 - 220410\n\nNET6 Remake of the Vitei Audio To" +
+            this.AboutrichTextBox.Text = "YAML AudioTool Rebuilt\n\nVersion: 0.60 - 230104\n\nNET6 Remake of the Vitei Audio To" +
     "ol by Alex Miyamoto\nCode: Johannes Wronka\nLogo: Owen Davis";
+            this.AboutrichTextBox.TextChanged += new System.EventHandler(this.AboutrichTextBox_TextChanged);
             // 
             // AboutDialog
             // 
@@ -81,7 +82,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.ClientSize = new System.Drawing.Size(377, 430);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(393, 469);
             this.MinimizeBox = false;

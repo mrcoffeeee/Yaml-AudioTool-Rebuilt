@@ -102,6 +102,7 @@ namespace Yaml_AudioTool_Rebuilt
                             fileInfos.SubItems.Add("false");
                             fileInfos.SubItems.Add("1");
                             fileInfos.SubItems.Add("0");
+                            fileInfos.SubItems.Add("0");
                             // add fileinfos to listview
                             f1.filelistView.Items.Add(fileInfos);
                         }

@@ -24,9 +24,9 @@ namespace Yaml_AudioTool_Rebuilt
         public static IXAudio2SourceVoice SetVolumeMeter(IXAudio2SourceVoice sourceVoice)
         {
             //Form1 f1 = (Form1)Application.OpenForms["Form1"];
-            var volumeMeter = Vortice.XAudio2.Fx.Fx.CreateAudioVolumeMeter();
-            var effectDescriptor = new EffectDescriptor(volumeMeter, sourceVoice.VoiceDetails.InputChannelCount);
-            sourceVoice.SetEffectChain(effectDescriptor);
+            //var volumeMeter = Vortice.XAudio2.Fx.Fx.CreateAudioVolumeMeter();
+            //var effectDescriptor = new EffectDescriptor(volumeMeter, sourceVoice.VoiceDetails.InputChannelCount);
+            //sourceVoice.SetEffectChain(effectDescriptor);
             //volumeMeterLevels volumeLevel = new(peakLevel, rmsLevel, 2);
             //sourceVoice.SetEffectParameters(0, volumeLevel);
             sourceVoice.EnableEffect(0);
