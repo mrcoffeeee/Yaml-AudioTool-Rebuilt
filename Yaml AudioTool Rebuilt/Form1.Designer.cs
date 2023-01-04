@@ -101,14 +101,14 @@ namespace Yaml_AudioTool_Rebuilt
             this.DopplertrackBar = new System.Windows.Forms.TrackBar();
             this.dopplervalueLabel = new System.Windows.Forms.Label();
             this.DopplerLabel = new System.Windows.Forms.Label();
-            this.MindistanceLabel = new System.Windows.Forms.Label();
-            this.MaxdistanceLabel = new System.Windows.Forms.Label();
             this.FalloffLabel = new System.Windows.Forms.Label();
             this.TypecomboBox = new System.Windows.Forms.ComboBox();
+            this.StackcomboBox = new System.Windows.Forms.ComboBox();
             this.MinDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.MaxDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.Stacklabel = new System.Windows.Forms.Label();
-            this.StackcomboBox = new System.Windows.Forms.ComboBox();
+            this.MindistanceLabel = new System.Windows.Forms.Label();
+            this.MaxdistanceLabel = new System.Windows.Forms.Label();
             this.organizetabPage = new System.Windows.Forms.TabPage();
             this.OrganizeLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.EnumtextBox = new System.Windows.Forms.TextBox();
@@ -146,6 +146,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.PitchshifterButton = new System.Windows.Forms.Button();
             this.PitchenableButton = new System.Windows.Forms.Button();
+            this.NormalizeButton = new System.Windows.Forms.Button();
             this.roomlistView = new System.Windows.Forms.ListView();
             this.roomnameHeader = new System.Windows.Forms.ColumnHeader();
             this.filternameHeader = new System.Windows.Forms.ColumnHeader();
@@ -687,14 +688,14 @@ namespace Yaml_AudioTool_Rebuilt
             this.PlaybackLayoutPanel.Controls.Add(this.DopplertrackBar, 1, 1);
             this.PlaybackLayoutPanel.Controls.Add(this.dopplervalueLabel, 2, 1);
             this.PlaybackLayoutPanel.Controls.Add(this.DopplerLabel, 0, 1);
-            this.PlaybackLayoutPanel.Controls.Add(this.MindistanceLabel, 0, 7);
-            this.PlaybackLayoutPanel.Controls.Add(this.MaxdistanceLabel, 0, 6);
             this.PlaybackLayoutPanel.Controls.Add(this.FalloffLabel, 0, 5);
             this.PlaybackLayoutPanel.Controls.Add(this.TypecomboBox, 1, 4);
-            this.PlaybackLayoutPanel.Controls.Add(this.MinDistancenumericUpDown, 1, 7);
-            this.PlaybackLayoutPanel.Controls.Add(this.MaxDistancenumericUpDown, 1, 6);
-            this.PlaybackLayoutPanel.Controls.Add(this.Stacklabel, 0, 8);
-            this.PlaybackLayoutPanel.Controls.Add(this.StackcomboBox, 1, 8);
+            this.PlaybackLayoutPanel.Controls.Add(this.StackcomboBox, 1, 6);
+            this.PlaybackLayoutPanel.Controls.Add(this.MinDistancenumericUpDown, 1, 8);
+            this.PlaybackLayoutPanel.Controls.Add(this.MaxDistancenumericUpDown, 1, 7);
+            this.PlaybackLayoutPanel.Controls.Add(this.Stacklabel, 0, 6);
+            this.PlaybackLayoutPanel.Controls.Add(this.MindistanceLabel, 0, 8);
+            this.PlaybackLayoutPanel.Controls.Add(this.MaxdistanceLabel, 0, 7);
             this.PlaybackLayoutPanel.Location = new System.Drawing.Point(4, 6);
             this.PlaybackLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
             this.PlaybackLayoutPanel.Name = "PlaybackLayoutPanel";
@@ -877,35 +878,6 @@ namespace Yaml_AudioTool_Rebuilt
             this.toolTip1.SetToolTip(this.DopplerLabel, "Determines how much doppler effect will be applied to this audio source (if is se" +
         "t to 0, then no effect is applied).");
             // 
-            // MindistanceLabel
-            // 
-            this.MindistanceLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.MindistanceLabel.AutoSize = true;
-            this.MindistanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MindistanceLabel.Location = new System.Drawing.Point(4, 212);
-            this.MindistanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.MindistanceLabel.Name = "MindistanceLabel";
-            this.MindistanceLabel.Size = new System.Drawing.Size(52, 26);
-            this.MindistanceLabel.TabIndex = 12;
-            this.MindistanceLabel.Text = "Min Distance:";
-            this.MindistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.MindistanceLabel, "Within the MinDistance, the sound will stay at loudest possible. Outside MinDista" +
-        "nce it will begin to attenuate.");
-            // 
-            // MaxdistanceLabel
-            // 
-            this.MaxdistanceLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.MaxdistanceLabel.AutoSize = true;
-            this.MaxdistanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MaxdistanceLabel.Location = new System.Drawing.Point(4, 182);
-            this.MaxdistanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.MaxdistanceLabel.Name = "MaxdistanceLabel";
-            this.MaxdistanceLabel.Size = new System.Drawing.Size(52, 26);
-            this.MaxdistanceLabel.TabIndex = 11;
-            this.MaxdistanceLabel.Text = "Max Distance:";
-            this.MaxdistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.MaxdistanceLabel, "MaxDistance is the distance where the sound is completely inaudible.");
-            // 
             // FalloffLabel
             // 
             this.FalloffLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -938,11 +910,27 @@ namespace Yaml_AudioTool_Rebuilt
             this.TypecomboBox.TabIndex = 23;
             this.TypecomboBox.SelectedIndexChanged += new System.EventHandler(this.TypecomboBox_SelectedIndexChanged);
             // 
+            // StackcomboBox
+            // 
+            this.StackcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.StackcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.StackcomboBox.FormattingEnabled = true;
+            this.StackcomboBox.Items.AddRange(new object[] {
+            "Many",
+            "Replace",
+            "Drop"});
+            this.StackcomboBox.Location = new System.Drawing.Point(83, 184);
+            this.StackcomboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.StackcomboBox.Name = "StackcomboBox";
+            this.StackcomboBox.Size = new System.Drawing.Size(129, 23);
+            this.StackcomboBox.TabIndex = 29;
+            this.StackcomboBox.SelectedIndexChanged += new System.EventHandler(this.StackcomboBox_SelectedIndexChanged);
+            // 
             // MinDistancenumericUpDown
             // 
             this.MinDistancenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.MinDistancenumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MinDistancenumericUpDown.Location = new System.Drawing.Point(84, 214);
+            this.MinDistancenumericUpDown.Location = new System.Drawing.Point(84, 244);
             this.MinDistancenumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             this.MinDistancenumericUpDown.Maximum = new decimal(new int[] {
             1000,
@@ -968,7 +956,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             this.MaxDistancenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.MaxDistancenumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MaxDistancenumericUpDown.Location = new System.Drawing.Point(84, 184);
+            this.MaxDistancenumericUpDown.Location = new System.Drawing.Point(84, 214);
             this.MaxDistancenumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             this.MaxDistancenumericUpDown.Maximum = new decimal(new int[] {
             1000,
@@ -995,7 +983,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.Stacklabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Stacklabel.AutoSize = true;
             this.Stacklabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Stacklabel.Location = new System.Drawing.Point(2, 247);
+            this.Stacklabel.Location = new System.Drawing.Point(2, 187);
             this.Stacklabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Stacklabel.Name = "Stacklabel";
             this.Stacklabel.Size = new System.Drawing.Size(44, 16);
@@ -1004,21 +992,34 @@ namespace Yaml_AudioTool_Rebuilt
             this.Stacklabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolTip1.SetToolTip(this.Stacklabel, resources.GetString("Stacklabel.ToolTip"));
             // 
-            // StackcomboBox
+            // MindistanceLabel
             // 
-            this.StackcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.StackcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.StackcomboBox.FormattingEnabled = true;
-            this.StackcomboBox.Items.AddRange(new object[] {
-            "Many",
-            "Replace",
-            "Drop"});
-            this.StackcomboBox.Location = new System.Drawing.Point(83, 244);
-            this.StackcomboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.StackcomboBox.Name = "StackcomboBox";
-            this.StackcomboBox.Size = new System.Drawing.Size(129, 23);
-            this.StackcomboBox.TabIndex = 29;
-            this.StackcomboBox.SelectedIndexChanged += new System.EventHandler(this.StackcomboBox_SelectedIndexChanged);
+            this.MindistanceLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.MindistanceLabel.AutoSize = true;
+            this.MindistanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.MindistanceLabel.Location = new System.Drawing.Point(4, 242);
+            this.MindistanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.MindistanceLabel.Name = "MindistanceLabel";
+            this.MindistanceLabel.Size = new System.Drawing.Size(52, 26);
+            this.MindistanceLabel.TabIndex = 12;
+            this.MindistanceLabel.Text = "Min Distance:";
+            this.MindistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.MindistanceLabel, "Within the MinDistance, the sound will stay at loudest possible. Outside MinDista" +
+        "nce it will begin to attenuate.");
+            // 
+            // MaxdistanceLabel
+            // 
+            this.MaxdistanceLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.MaxdistanceLabel.AutoSize = true;
+            this.MaxdistanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.MaxdistanceLabel.Location = new System.Drawing.Point(4, 212);
+            this.MaxdistanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.MaxdistanceLabel.Name = "MaxdistanceLabel";
+            this.MaxdistanceLabel.Size = new System.Drawing.Size(52, 26);
+            this.MaxdistanceLabel.TabIndex = 11;
+            this.MaxdistanceLabel.Text = "Max Distance:";
+            this.MaxdistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.MaxdistanceLabel, "MaxDistance is the distance where the sound is completely inaudible.");
             // 
             // organizetabPage
             // 
@@ -1469,6 +1470,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18F));
             this.tableLayoutPanel2.Controls.Add(this.PitchshifterButton, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.PitchenableButton, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.NormalizeButton, 1, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 4);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -1509,6 +1511,19 @@ namespace Yaml_AudioTool_Rebuilt
             this.PitchenableButton.Text = "Off";
             this.PitchenableButton.UseVisualStyleBackColor = false;
             this.PitchenableButton.Click += new System.EventHandler(this.PitchenableButton_Click);
+            // 
+            // NormalizeButton
+            // 
+            this.NormalizeButton.Enabled = false;
+            this.NormalizeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.NormalizeButton.Location = new System.Drawing.Point(104, 44);
+            this.NormalizeButton.Margin = new System.Windows.Forms.Padding(4);
+            this.NormalizeButton.Name = "NormalizeButton";
+            this.NormalizeButton.Size = new System.Drawing.Size(165, 32);
+            this.NormalizeButton.TabIndex = 27;
+            this.NormalizeButton.Text = "Normalize";
+            this.NormalizeButton.UseVisualStyleBackColor = true;
+            this.NormalizeButton.Visible = false;
             // 
             // roomlistView
             // 
@@ -1991,6 +2006,7 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Label Stacklabel;
         private System.Windows.Forms.ComboBox StackcomboBox;
         public System.Windows.Forms.ColumnHeader stackHeader;
+        public System.Windows.Forms.Button NormalizeButton;
     }
 }
 

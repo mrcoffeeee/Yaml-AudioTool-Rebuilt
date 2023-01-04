@@ -99,8 +99,8 @@ namespace Yaml_AudioTool_Rebuilt
         public static IXAudio2SourceVoice SetRoomReverb(IXAudio2SourceVoice sourceVoice)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
-            var reverb = Vortice.XAudio2.Fx.Fx.CreateAudioReverb();
-            var effectDescriptor = new EffectDescriptor(reverb, sourceVoice.VoiceDetails.InputChannelCount);
+            var reverb = Vortice.XAudio2.Fx.Fx.XAudio2CreateReverb();
+            var effectDescriptor = new EffectDescriptor(reverb, sourceVoice.VoiceDetails.InputChannels);
             sourceVoice.SetEffectChain(effectDescriptor);
             ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.reverbwetdryPot.Value, 1)); 
             sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex]), 0);

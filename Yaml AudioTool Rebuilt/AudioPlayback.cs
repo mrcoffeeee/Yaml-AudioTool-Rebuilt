@@ -216,7 +216,7 @@ namespace Yaml_AudioTool_Rebuilt
                 // Set Loop
                 if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text == "true")
                 {
-                    audioBuffer.LoopCount = IXAudio2.LoopInfinite;
+                    audioBuffer.LoopCount = XAudio2.LoopInfinite;
                 }
                 
                 //sourceVoice = Effects.SetVolumeMeter(sourceVoice);                
