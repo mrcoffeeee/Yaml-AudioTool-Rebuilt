@@ -150,6 +150,7 @@ namespace Yaml_AudioTool_Rebuilt
             if (ap.sourceVoice.State.BuffersQueued == 0)
             {
                 ap.StopPlayback();
+                ap.waveFileReader.Close();
                 playbackTimer.Stop();
             }
         }
@@ -240,7 +241,7 @@ namespace Yaml_AudioTool_Rebuilt
             if (filelistView.SelectedItems.Count > 0)
             {
                 EnumtextBox.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text;
-                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
+                //ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text);
                 double volumeValue = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text) * 100;
@@ -290,14 +291,13 @@ namespace Yaml_AudioTool_Rebuilt
                 int a = filelistView.Items.IndexOf(filelistView.SelectedItems[0]);
                 filelistView.Items[a].Selected = false;
                 filelistView.Items[a - 1].Selected = true;
-                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 removeButtonEnabled(true);
             }
             else if (filelistView.SelectedItems.Count > 0)
             {
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
-            }
+            }            
         }
 
         private void StopButton_Click(object sender, EventArgs e)
@@ -308,6 +308,7 @@ namespace Yaml_AudioTool_Rebuilt
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
             }
             ap.StopPlayback();
+            ap.waveFileReader.Close();
             playbackTimer.Stop();
         }
 
@@ -359,16 +360,26 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 }
-                ap.StartPlayback();
 
-                if (ap.xaudio2 != null && ap.playbackPause == false)
+                try
                 {
-                    playbackTimer.Start();
+                    ap.StartPlayback();
+
+                    if (ap.xaudio2 != null && ap.playbackPause == false)
+                    {
+                        playbackTimer.Start();
+                    }
+                    else if (ap.xaudio2 != null && ap.playbackPause == true)
+                    {
+                        playbackTimer.Stop();
+                    }                    
                 }
-                else if (ap.xaudio2 != null && ap.playbackPause == true)
+
+                catch (Exception)
                 {
-                    playbackTimer.Stop();
-                }
+                    MessageBox.Show("Please check your selected file.", "Playback impossible! ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }                
             }
         }
 
@@ -384,7 +395,6 @@ namespace Yaml_AudioTool_Rebuilt
                 int a = filelistView.Items.IndexOf(filelistView.SelectedItems[0]);
                 filelistView.Items[a].Selected = false;
                 filelistView.Items[a + 1].Selected = true;
-                ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 removeButtonEnabled(true);
             }
@@ -941,7 +951,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void PitchshifterButton_Click(object sender, EventArgs e)
         {
-            Effect_PitchShifter pitchshifterForm = new();            
+            Effect_PitchShifter pitchshifterForm = new();
+            pitchshifterForm.StartPosition = FormStartPosition.CenterScreen;
             pitchshifterForm.TopMost = true;
             pitchshifterForm.Show();
             PitchshifterButton.Enabled = false;
@@ -1000,18 +1011,20 @@ namespace Yaml_AudioTool_Rebuilt
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbdensityHeader)].Text = actualReverbParameter.Density.ToString("0.0");
                 roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbroomsizeHeader)].Text = actualReverbParameter.RoomSize.ToString("0.0");
             }
-
         }
 
-
-
-
-
+        private void NormalizeButton_Click(object sender, EventArgs e)
+        {
+            Effect_Normalize normalizeForm = new();
+            normalizeForm.StartPosition = FormStartPosition.CenterScreen;
+            normalizeForm.TopMost = true;
+            normalizeForm.Show();
+            NormalizeButton.Enabled = false;
+        }
 
 
         #endregion Property-Effects
 
-        
     }
 
     public class ListViewColumnSorter : IComparer

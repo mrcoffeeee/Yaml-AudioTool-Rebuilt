@@ -26,9 +26,9 @@ namespace Yaml_AudioTool_Rebuilt
         public IXAudio2SourceVoice sourceVoice;
         //public IXAudio2SubmixVoice submixVoice;
 
-        public WaveFileReader waveFileReader;      
+        public WaveFileReader waveFileReader;
 
-        public NAudio.Wave.WaveFileReader OpenFile(bool clickFlag)
+        public void OpenFile(bool clickFlag)
         {            
             StopPlayback();
 
@@ -54,17 +54,16 @@ namespace Yaml_AudioTool_Rebuilt
                                 "Please provide new hq-file or convert the existing.");
                         }
 
-                        
+
 
                         Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
                         if (clickFlag == true)
                         {
-                          //  MessageBox.Show(f1.filelistView.SelectedItems[0].Index.ToString());
                             string tempString = sd.audiofolderLabel.Text + "\\";
                             f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text = file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", "");
                             f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = file;
-                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (waveFileReader.Length / 1000).ToString(); 
+                            f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (waveFileReader.Length / 1000).ToString();
                             f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = waveFileReader.TotalTime.ToString(@"mm\:ss");
                             f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = waveFileReader.WaveFormat.Channels.ToString();
                             f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = Math.Round(waveFileReader.WaveFormat.SampleRate / 1000.0, 3).ToString();
@@ -73,7 +72,7 @@ namespace Yaml_AudioTool_Rebuilt
 
                         }
 
-                        else if  (clickFlag == false)
+                        else if (clickFlag == false)
                         {
                             // add general fileinfos
                             ListViewItem fileInfos = new(Path.GetFileNameWithoutExtension(file));
@@ -106,21 +105,30 @@ namespace Yaml_AudioTool_Rebuilt
                             // add fileinfos to listview
                             f1.filelistView.Items.Add(fileInfos);
                         }
-                        
+
+
                     }
                     catch (Exception)
                     {
                         MessageBox.Show("File not supported!");
-                        return waveFileReader = null;
                     }                    
                 }
             }
-            return waveFileReader;
+            waveFileReader.Close();
         }
 
         public void GetSoundFromList(string filePath)
         {
-            waveFileReader = new WaveFileReader(filePath);
+            try
+            {
+                waveFileReader = new WaveFileReader(filePath);
+            }
+
+            catch (Exception)
+            {
+                MessageBox.Show("Please check if its filepath is still correct.", "File not found! ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
         public void StartPlayback()

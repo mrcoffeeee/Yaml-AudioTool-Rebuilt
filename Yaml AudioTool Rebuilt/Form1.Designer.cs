@@ -1514,7 +1514,6 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // NormalizeButton
             // 
-            this.NormalizeButton.Enabled = false;
             this.NormalizeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.NormalizeButton.Location = new System.Drawing.Point(104, 44);
             this.NormalizeButton.Margin = new System.Windows.Forms.Padding(4);
@@ -1523,7 +1522,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.NormalizeButton.TabIndex = 27;
             this.NormalizeButton.Text = "Normalize";
             this.NormalizeButton.UseVisualStyleBackColor = true;
-            this.NormalizeButton.Visible = false;
+            this.NormalizeButton.Click += new System.EventHandler(this.NormalizeButton_Click);
             // 
             // roomlistView
             // 

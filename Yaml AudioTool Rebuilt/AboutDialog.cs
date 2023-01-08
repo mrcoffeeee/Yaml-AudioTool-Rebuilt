@@ -16,10 +16,5 @@ namespace Yaml_AudioTool_Rebuilt
         {
             InitializeComponent();
         }
-
-        private void AboutrichTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

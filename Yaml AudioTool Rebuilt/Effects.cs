@@ -138,28 +138,6 @@ namespace Yaml_AudioTool_Rebuilt
             }
             return samples;
         }
-
-        public static float[] Normalize(float[] samples)
-        {
-            float max = 0;
-            for (int a = 0; a < samples.Length; a++)
-            {
-                var abs = Math.Abs(samples[a]);
-                if (abs > max)
-                {
-                    max = abs;
-                }
-            }
-
-            if (max != 0 || max! > 1.0f)
-            {
-                for (int a = 0; a < samples.Length; a++)
-                {
-                    samples[a] = samples[a] / max;
-                }
-            }
-            return samples;
-        }
     }
 
 }
