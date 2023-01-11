@@ -9,6 +9,7 @@ namespace Yaml_AudioTool_Rebuilt
     public partial class Effect_Normalize : Form
     {
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
+        readonly DestructiveEffectsEditor formDestructiveEffectsEditor = (DestructiveEffectsEditor)Application.OpenForms["DestructiveEffectseditor"];
 
         public Effect_Normalize()
         {
@@ -76,7 +77,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void Effect_Normalize_FormClosed(object sender, FormClosedEventArgs e)
         {
-            formMain.NormalizeButton.Enabled = true;
+            formDestructiveEffectsEditor.NormalizeButton.Enabled = true;
         }
     }
 

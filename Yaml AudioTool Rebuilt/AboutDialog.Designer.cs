@@ -70,7 +70,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.AboutrichTextBox.ReadOnly = true;
             this.AboutrichTextBox.Size = new System.Drawing.Size(355, 102);
             this.AboutrichTextBox.TabIndex = 4;
-            this.AboutrichTextBox.Text = "YAML AudioTool Rebuilt\n\nVersion: 0.61 - 230108\n\nNET6 Remake of the Vitei Audio To" +
+            this.AboutrichTextBox.Text = "YAML AudioTool Rebuilt\n\nVersion: 0.62 - 230112\n\nNET6 Remake of the Vitei Audio To" +
     "ol by Alex Miyamoto\nCode: Johannes Wronka\nLogo: Owen Davis";
             // 
             // AboutDialog

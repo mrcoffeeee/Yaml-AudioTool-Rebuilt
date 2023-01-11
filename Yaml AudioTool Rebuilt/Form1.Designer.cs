@@ -146,7 +146,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.PitchshifterButton = new System.Windows.Forms.Button();
             this.PitchenableButton = new System.Windows.Forms.Button();
-            this.NormalizeButton = new System.Windows.Forms.Button();
+            this.DestructiveEffectsButton = new System.Windows.Forms.Button();
             this.roomlistView = new System.Windows.Forms.ListView();
             this.roomnameHeader = new System.Windows.Forms.ColumnHeader();
             this.filternameHeader = new System.Windows.Forms.ColumnHeader();
@@ -1470,7 +1470,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18F));
             this.tableLayoutPanel2.Controls.Add(this.PitchshifterButton, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.PitchenableButton, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.NormalizeButton, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.DestructiveEffectsButton, 1, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 4);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -1512,17 +1512,17 @@ namespace Yaml_AudioTool_Rebuilt
             this.PitchenableButton.UseVisualStyleBackColor = false;
             this.PitchenableButton.Click += new System.EventHandler(this.PitchenableButton_Click);
             // 
-            // NormalizeButton
+            // DestructiveEffectsButton
             // 
-            this.NormalizeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.NormalizeButton.Location = new System.Drawing.Point(104, 44);
-            this.NormalizeButton.Margin = new System.Windows.Forms.Padding(4);
-            this.NormalizeButton.Name = "NormalizeButton";
-            this.NormalizeButton.Size = new System.Drawing.Size(165, 32);
-            this.NormalizeButton.TabIndex = 27;
-            this.NormalizeButton.Text = "Normalize";
-            this.NormalizeButton.UseVisualStyleBackColor = true;
-            this.NormalizeButton.Click += new System.EventHandler(this.NormalizeButton_Click);
+            this.DestructiveEffectsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.DestructiveEffectsButton.Location = new System.Drawing.Point(104, 44);
+            this.DestructiveEffectsButton.Margin = new System.Windows.Forms.Padding(4);
+            this.DestructiveEffectsButton.Name = "DestructiveEffectsButton";
+            this.DestructiveEffectsButton.Size = new System.Drawing.Size(165, 32);
+            this.DestructiveEffectsButton.TabIndex = 28;
+            this.DestructiveEffectsButton.Text = "Destructive Effects";
+            this.DestructiveEffectsButton.UseVisualStyleBackColor = true;
+            this.DestructiveEffectsButton.Click += new System.EventHandler(this.DestructiveEffectsButton_Click);
             // 
             // roomlistView
             // 
@@ -2005,7 +2005,7 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Label Stacklabel;
         private System.Windows.Forms.ComboBox StackcomboBox;
         public System.Windows.Forms.ColumnHeader stackHeader;
-        public System.Windows.Forms.Button NormalizeButton;
+        public System.Windows.Forms.Button DestructiveEffectsButton;
     }
 }
 

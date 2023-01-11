@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Vortice.XAudio2;
+using NAudio.Gui;
+using NAudio.Wave;
+using System.Drawing.Text;
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -34,6 +37,8 @@ namespace Yaml_AudioTool_Rebuilt
         private readonly AudioPlayback ap = new();
         private ListViewColumnSorter lvwColumnSorter;
         //  private readonly Effect_PitchShifter formPitchshifter = new();
+
+        private static DestructiveEffectsEditor formDestructiveEffectsEditor = (DestructiveEffectsEditor)Application.OpenForms["DestructiveEffectseditor"];
 
         #endregion VariablesObjects
 
@@ -84,7 +89,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             ap.StopPlayback();
             playbackTimer.Stop();
-            removeButtonEnabled(false);
+            removeButtonsEnabled(false, false);
             if (filelistView.Items.Count == 0)
                 saveyamlButton.Enabled = false;
             PitchenableButton.Enabled = false;
@@ -187,6 +192,20 @@ namespace Yaml_AudioTool_Rebuilt
             Application.Exit();
         }
 
+        private bool GetOpenForm(string formName)
+        {
+            FormCollection formCollection = Application.OpenForms;
+
+            foreach (Form frm in formCollection)
+            {
+                if (frm.Name == formName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             ExitApplication();
@@ -234,14 +253,22 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void filelistView_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
+
             if (filelistView.SelectedItems.Count == 0)
             {
                 ResetMainFormValues();
+                removeButtonsEnabled(false, true);
+
+                if (GetOpenForm("DestructiveEffectsEditor"))
+                {
+                    formDestructiveEffectsEditor.ResetDestructiveEffectsEditorValues();
+                }
             }
+
             if (filelistView.SelectedItems.Count > 0)
             {
                 EnumtextBox.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text;
-                //ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
                 selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text);
                 double volumeValue = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text) * 100;
@@ -265,7 +292,16 @@ namespace Yaml_AudioTool_Rebuilt
                 StackcomboBox.SelectedIndex= Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(stackHeader)].Text);
                 ChangeFilelabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text;
                 PitchenableButton.Enabled = true;
-                removeButtonEnabled(true);
+                removeButtonsEnabled(true, true);
+                if (filelistView.SelectedItems.Count == 1)
+                {
+                    if (GetOpenForm("DestructiveEffectsEditor"))
+                    {
+                        formDestructiveEffectsEditor.Text = "Destructive Effects Editor -> " + filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
+                        formDestructiveEffectsEditor.LoadAudioWaveform();
+                    }
+                }
+
             }
         }        
 
@@ -292,7 +328,7 @@ namespace Yaml_AudioTool_Rebuilt
                 filelistView.Items[a].Selected = false;
                 filelistView.Items[a - 1].Selected = true;
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
-                removeButtonEnabled(true);
+                removeButtonsEnabled(true, true);
             }
             else if (filelistView.SelectedItems.Count > 0)
             {
@@ -396,7 +432,7 @@ namespace Yaml_AudioTool_Rebuilt
                 filelistView.Items[a].Selected = false;
                 filelistView.Items[a + 1].Selected = true;
                 timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
-                removeButtonEnabled(true);
+                removeButtonsEnabled(true, true);
             }
             else if (filelistView.SelectedItems.Count > 0)
             {
@@ -426,13 +462,14 @@ namespace Yaml_AudioTool_Rebuilt
                 filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 filelistView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
                 filelistView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
+                removeButtonsEnabled(false, true);
             }
         }
 
-        public void removeButtonEnabled(bool value)
+        public void removeButtonsEnabled(bool value1, bool value2)
         {
-            removeButton.Enabled = value;
-            removeallButton.Enabled = value;
+            removeButton.Enabled = value1;
+            removeallButton.Enabled = value2;
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -442,6 +479,8 @@ namespace Yaml_AudioTool_Rebuilt
                 filelistView.SelectedItems[0].Remove();
             }            
             ResetMainFormValues();
+            if (formDestructiveEffectsEditor != null)
+                formDestructiveEffectsEditor.ResetDestructiveEffectsEditorValues();
         }
 
         private void removeallButton_Click(object sender, EventArgs e)
@@ -449,6 +488,8 @@ namespace Yaml_AudioTool_Rebuilt
             filelistView.Items.Clear();
             roomlistView.Items.Clear();
             ResetMainFormValues();
+            if (formDestructiveEffectsEditor != null)
+                formDestructiveEffectsEditor.ResetDestructiveEffectsEditorValues();
         }
 
         private void openyamlButton_Click(object sender, EventArgs e)
@@ -471,6 +512,7 @@ namespace Yaml_AudioTool_Rebuilt
                 saveyamlButton.Enabled == false)
             {
                 saveyamlButton.Enabled = true;
+                removeButtonsEnabled(false, true);
             }
             filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
@@ -1013,18 +1055,19 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void NormalizeButton_Click(object sender, EventArgs e)
+        private void DestructiveEffectsButton_Click(object sender, EventArgs e)
         {
-            Effect_Normalize normalizeForm = new();
-            normalizeForm.StartPosition = FormStartPosition.CenterScreen;
-            normalizeForm.TopMost = true;
-            normalizeForm.Show();
-            NormalizeButton.Enabled = false;
+            DestructiveEffectsEditor editorForm = new();
+            editorForm.StartPosition = FormStartPosition.CenterScreen;
+            editorForm.TopMost = true;
+            editorForm.Show();
+            DestructiveEffectsButton.Enabled = false;
         }
 
 
         #endregion Property-Effects
 
+        
     }
 
     public class ListViewColumnSorter : IComparer
