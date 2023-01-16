@@ -10,6 +10,8 @@
   <ItemGroup>
     <PackageReference Include="Crc32.NET" Version="1.2.0" />
     <PackageReference Include="NAudio" Version="2.1.0" />
+    <PackageReference Include="ScottPlot" Version="4.1.60" />
+    <PackageReference Include="ScottPlot.WinForms" Version="4.1.60" />
     <PackageReference Include="Vortice.XAudio2" Version="2.2.0" />
   </ItemGroup>
 

@@ -38,7 +38,7 @@ namespace Yaml_AudioTool_Rebuilt
         private ListViewColumnSorter lvwColumnSorter;
         //  private readonly Effect_PitchShifter formPitchshifter = new();
 
-        private static DestructiveEffectsEditor formDestructiveEffectsEditor = (DestructiveEffectsEditor)Application.OpenForms["DestructiveEffectseditor"];
+        private static DestructiveEffectsEditor formDestructiveEffectsEditor;
 
         #endregion VariablesObjects
 
@@ -253,13 +253,13 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void filelistView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            formDestructiveEffectsEditor = (DestructiveEffectsEditor)Application.OpenForms["DestructiveEffectseditor"];
 
             if (filelistView.SelectedItems.Count == 0)
             {
                 ResetMainFormValues();
                 removeButtonsEnabled(false, true);
-
+                
                 if (GetOpenForm("DestructiveEffectsEditor"))
                 {
                     formDestructiveEffectsEditor.ResetDestructiveEffectsEditorValues();
@@ -295,7 +295,7 @@ namespace Yaml_AudioTool_Rebuilt
                 removeButtonsEnabled(true, true);
                 if (filelistView.SelectedItems.Count == 1)
                 {
-                    if (GetOpenForm("DestructiveEffectsEditor"))
+                    if (GetOpenForm("DestructiveEffectsEditor") && formDestructiveEffectsEditor.Visible == true)
                     {
                         formDestructiveEffectsEditor.Text = "Destructive Effects Editor -> " + filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
                         formDestructiveEffectsEditor.LoadAudioWaveform();
@@ -1057,10 +1057,17 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void DestructiveEffectsButton_Click(object sender, EventArgs e)
         {
-            DestructiveEffectsEditor editorForm = new();
-            editorForm.StartPosition = FormStartPosition.CenterScreen;
-            editorForm.TopMost = true;
-            editorForm.Show();
+            if (formDestructiveEffectsEditor != null)
+            {
+                formDestructiveEffectsEditor.Visible = true;
+            }
+            else
+            {
+                DestructiveEffectsEditor editorForm = new();
+                editorForm.StartPosition = FormStartPosition.CenterScreen;
+                editorForm.TopMost = true;
+                editorForm.Show();
+            }                        
             DestructiveEffectsButton.Enabled = false;
         }
 
