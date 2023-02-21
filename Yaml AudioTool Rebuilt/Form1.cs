@@ -35,8 +35,6 @@ namespace Yaml_AudioTool_Rebuilt
         private int basefilterlistviewHeight = 0;
 
         private readonly AudioPlayback ap = new();
-        private ListViewColumnSorter lvwColumnSorter;
-        //  private readonly Effect_PitchShifter formPitchshifter = new();
 
         private static DestructiveEffectsEditor formDestructiveEffectsEditor;
 
@@ -91,7 +89,7 @@ namespace Yaml_AudioTool_Rebuilt
             playbackTimer.Stop();
             removeButtonsEnabled(false, false);
             if (filelistView.Items.Count == 0)
-                saveyamlButton.Enabled = false;
+                SaveYamlButton.Enabled = false;
             PitchenableButton.Enabled = false;
             PitchenableButton.Text = "Off";
             PitchenableButton.BackColor = Color.Salmon;
@@ -132,7 +130,7 @@ namespace Yaml_AudioTool_Rebuilt
             roomlistView.Height = basefilterlistviewHeight + this.Height - baseWindowHeight;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             ap.timerCount += playbackTimer.Interval;
             var timeSpan = TimeSpan.FromMilliseconds(ap.timerCount);
@@ -171,7 +169,7 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     break;
                 }
-                fileName = fileName + c.ToString();
+                fileName += c.ToString();
             }
             tempArray = fileName.ToCharArray();
             Array.Reverse(tempArray);
@@ -192,7 +190,7 @@ namespace Yaml_AudioTool_Rebuilt
             Application.Exit();
         }
 
-        private bool GetOpenForm(string formName)
+        private static bool GetOpenForm(string formName)
         {
             FormCollection formCollection = Application.OpenForms;
 
@@ -385,7 +383,7 @@ namespace Yaml_AudioTool_Rebuilt
                 if (filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text.StartsWith("\\"))
                 {
                     string filepathTemp;
-                    SettingsDialog sd = new SettingsDialog();
+                    SettingsDialog sd = new();
                     filepathTemp = sd.audiofolderLabel.Text +
                         filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text +
                         filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text +
@@ -456,9 +454,9 @@ namespace Yaml_AudioTool_Rebuilt
             playbackTimer.Stop();
             ap.OpenFile(false);
             if (filelistView.Items.Count > 0 &&
-                saveyamlButton.Enabled == false)
+                SaveYamlButton.Enabled == false)
             {
-                saveyamlButton.Enabled = true;
+                SaveYamlButton.Enabled = true;
                 filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 filelistView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
                 filelistView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -479,8 +477,7 @@ namespace Yaml_AudioTool_Rebuilt
                 filelistView.SelectedItems[0].Remove();
             }            
             ResetMainFormValues();
-            if (formDestructiveEffectsEditor != null)
-                formDestructiveEffectsEditor.ResetDestructiveEffectsEditorValues();
+            formDestructiveEffectsEditor?.ResetDestructiveEffectsEditorValues();
         }
 
         private void removeallButton_Click(object sender, EventArgs e)
@@ -488,13 +485,12 @@ namespace Yaml_AudioTool_Rebuilt
             filelistView.Items.Clear();
             roomlistView.Items.Clear();
             ResetMainFormValues();
-            if (formDestructiveEffectsEditor != null)
-                formDestructiveEffectsEditor.ResetDestructiveEffectsEditorValues();
+            formDestructiveEffectsEditor?.ResetDestructiveEffectsEditorValues();
         }
 
         private void openyamlButton_Click(object sender, EventArgs e)
         {
-            SettingsDialog sd = new SettingsDialog();
+            SettingsDialog sd = new();
             if (sd.audiofolderLabel.Text == "NONE")
             {
                 MessageBox.Show("No Audio folder in \"Settings\" selected.");
@@ -509,15 +505,15 @@ namespace Yaml_AudioTool_Rebuilt
                 filterremoveButton.Enabled = true;
             }
             if (filelistView.Items.Count > 0 &&
-                saveyamlButton.Enabled == false)
+                SaveYamlButton.Enabled == false)
             {
-                saveyamlButton.Enabled = true;
+                SaveYamlButton.Enabled = true;
                 removeButtonsEnabled(false, true);
             }
             filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
-        private void saveyamlButton_Click(object sender, EventArgs e)
+        private void SaveYamlButton_Click(object sender, EventArgs e)
         {
             YamlExportImport.ExportYAML();
         }
@@ -741,9 +737,9 @@ namespace Yaml_AudioTool_Rebuilt
                 playbackTimer.Stop();
                 ap.OpenFile(true);
                 if (filelistView.Items.Count > 0 &&
-                    saveyamlButton.Enabled == false)
+                    SaveYamlButton.Enabled == false)
                 {
-                    saveyamlButton.Enabled = true;
+                    SaveYamlButton.Enabled = true;
                     filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                     filelistView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
                     filelistView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -783,7 +779,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (filelistView.Items.Count > 1)
             {
-                ListViewColumnSorter lvwColumnSorter = new ListViewColumnSorter();
+                ListViewColumnSorter lvwColumnSorter = new();
                 filelistView.ListViewItemSorter = lvwColumnSorter;
 
                 int[] Columns = new int[5]
@@ -993,9 +989,11 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void PitchshifterButton_Click(object sender, EventArgs e)
         {
-            Effect_PitchShifter pitchshifterForm = new();
-            pitchshifterForm.StartPosition = FormStartPosition.CenterScreen;
-            pitchshifterForm.TopMost = true;
+            Effect_PitchShifter pitchshifterForm = new()
+            {
+                StartPosition = FormStartPosition.CenterScreen,
+                TopMost = true
+            };
             pitchshifterForm.Show();
             PitchshifterButton.Enabled = false;
         }
@@ -1063,9 +1061,11 @@ namespace Yaml_AudioTool_Rebuilt
             }
             else
             {
-                DestructiveEffectsEditor editorForm = new();
-                editorForm.StartPosition = FormStartPosition.CenterScreen;
-                editorForm.TopMost = true;
+                DestructiveEffectsEditor editorForm = new()
+                {
+                    StartPosition = FormStartPosition.CenterScreen,
+                    TopMost = true
+                };
                 editorForm.Show();
             }                        
             DestructiveEffectsButton.Enabled = false;

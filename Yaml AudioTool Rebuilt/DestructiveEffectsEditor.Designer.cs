@@ -45,10 +45,8 @@
             this.tableLayoutPanel1.Controls.Add(this.WaveformsPlot, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(959, 337);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
@@ -64,7 +62,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(186, 279);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(186, 331);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // NormalizeButton
@@ -86,7 +84,7 @@
             this.WaveformsPlot.Location = new System.Drawing.Point(4, 3);
             this.WaveformsPlot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.WaveformsPlot.Name = "WaveformsPlot";
-            this.WaveformsPlot.Size = new System.Drawing.Size(759, 279);
+            this.WaveformsPlot.Size = new System.Drawing.Size(759, 331);
             this.WaveformsPlot.TabIndex = 5;
             // 
             // DestructiveEffectsEditor

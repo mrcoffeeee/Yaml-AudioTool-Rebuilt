@@ -78,7 +78,7 @@ namespace Yaml_AudioTool_Rebuilt
             this.reverbdensityHeader = new System.Windows.Forms.ColumnHeader();
             this.reverbroomsizeHeader = new System.Windows.Forms.ColumnHeader();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.saveyamlButton = new System.Windows.Forms.Button();
+            this.SaveYamlButton = new System.Windows.Forms.Button();
             this.openyamlButton = new System.Windows.Forms.Button();
             this.removeallButton = new System.Windows.Forms.Button();
             this.removeButton = new System.Windows.Forms.Button();
@@ -527,7 +527,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.saveyamlButton);
+            this.groupBox2.Controls.Add(this.SaveYamlButton);
             this.groupBox2.Controls.Add(this.openyamlButton);
             this.groupBox2.Controls.Add(this.removeallButton);
             this.groupBox2.Controls.Add(this.removeButton);
@@ -541,17 +541,17 @@ namespace Yaml_AudioTool_Rebuilt
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "YAML Editor";
             // 
-            // saveyamlButton
+            // SaveYamlButton
             // 
-            this.saveyamlButton.Enabled = false;
-            this.saveyamlButton.Location = new System.Drawing.Point(340, 22);
-            this.saveyamlButton.Margin = new System.Windows.Forms.Padding(4);
-            this.saveyamlButton.Name = "saveyamlButton";
-            this.saveyamlButton.Size = new System.Drawing.Size(80, 34);
-            this.saveyamlButton.TabIndex = 5;
-            this.saveyamlButton.Text = "Save YAML";
-            this.saveyamlButton.UseVisualStyleBackColor = true;
-            this.saveyamlButton.Click += new System.EventHandler(this.saveyamlButton_Click);
+            this.SaveYamlButton.Enabled = false;
+            this.SaveYamlButton.Location = new System.Drawing.Point(340, 22);
+            this.SaveYamlButton.Margin = new System.Windows.Forms.Padding(4);
+            this.SaveYamlButton.Name = "SaveYamlButton";
+            this.SaveYamlButton.Size = new System.Drawing.Size(80, 34);
+            this.SaveYamlButton.TabIndex = 5;
+            this.SaveYamlButton.Text = "Save YAML";
+            this.SaveYamlButton.UseVisualStyleBackColor = true;
+            this.SaveYamlButton.Click += new System.EventHandler(this.SaveYamlButton_Click);
             // 
             // openyamlButton
             // 
@@ -1613,7 +1613,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // playbackTimer
             // 
-            this.playbackTimer.Tick += new System.EventHandler(this.timer1_Tick);
+            this.playbackTimer.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // selectedsoundLabel
             // 
@@ -1908,7 +1908,7 @@ namespace Yaml_AudioTool_Rebuilt
         public System.Windows.Forms.ColumnHeader reverbdensityHeader;
         public System.Windows.Forms.ColumnHeader reverbroomsizeHeader;
         public System.Windows.Forms.ColumnHeader reverbpresetHeader;
-        private System.Windows.Forms.Button saveyamlButton;
+        private System.Windows.Forms.Button SaveYamlButton;
         private System.Windows.Forms.Button openyamlButton;
         public System.Windows.Forms.ColumnHeader titleHeader;
         public System.Windows.Forms.ColumnHeader filepathHeader;

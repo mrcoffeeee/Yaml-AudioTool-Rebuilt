@@ -44,50 +44,50 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void NormalizeButton_Click(object sender, EventArgs e)
         {
-            Effect_Normalize normalizeForm = new();
-            normalizeForm.StartPosition = FormStartPosition.CenterScreen;
-            normalizeForm.TopMost = true;
+            Effect_Normalize normalizeForm = new()
+            {
+                StartPosition = FormStartPosition.CenterScreen,
+                TopMost = true
+            };
             normalizeForm.Show();
             NormalizeButton.Enabled = false;
         }
 
         static (double[] audioL, double[] audioR, int sampleRate, int channelCount) ReadWavefile(string filePath)
         {
-            using (var audioFile = new WaveFileReader(filePath))
+            using var audioFile = new WaveFileReader(filePath);
+            int sampleRate = audioFile.WaveFormat.SampleRate;
+            int sampleCount = (int)(audioFile.Length / audioFile.WaveFormat.BitsPerSample / 8);
+            int channelCount = audioFile.WaveFormat.Channels;
+            var audioL = new List<double>(sampleCount);
+            var audioR = new List<double>(sampleCount);
+            float[] buffer;
+
+            if (channelCount == 1)
             {
-                int sampleRate = audioFile.WaveFormat.SampleRate;
-                int sampleCount = (int)(audioFile.Length / audioFile.WaveFormat.BitsPerSample / 8);
-                int channelCount = audioFile.WaveFormat.Channels;
-                var audioL = new List<double>(sampleCount);
-                var audioR = new List<double>(sampleCount);
-                float[] buffer;
-
-                if (channelCount == 1)
+                while ((buffer = audioFile.ReadNextSampleFrame())?.Length > 0)
                 {
-                    while ((buffer = audioFile.ReadNextSampleFrame())?.Length > 0)
+                    for (int i = 0; i < buffer.Length; i++)
                     {
-                        for (int i = 0; i < buffer.Length; i++)
-                        {
-                            // write one sample for each channel (i is the channelNumber
-                            audioL.Add(buffer[i]);
-                        }
+                        // write one sample for each channel (i is the channelNumber
+                        audioL.Add(buffer[i]);
                     }
                 }
+            }
 
-                if (channelCount == 2)
+            if (channelCount == 2)
+            {
+                while ((buffer = audioFile.ReadNextSampleFrame())?.Length > 0)
                 {
-                    while ((buffer = audioFile.ReadNextSampleFrame())?.Length > 0)
+                    for (int i = 0; i < buffer.Length - 1; i++)
                     {
-                        for (int i = 0; i < buffer.Length - 1; i++)
-                        {
-                            // write one sample for each channel (i is the channelNumber
-                            audioL.Add(buffer[i]);
-                            audioR.Add(buffer[i + 1]);
-                        }
+                        // write one sample for each channel (i is the channelNumber
+                        audioL.Add(buffer[i]);
+                        audioR.Add(buffer[i + 1]);
                     }
                 }
-                return (audioL.ToArray(), audioR.ToArray(), sampleRate, channelCount);
-            }            
+            }
+            return (audioL.ToArray(), audioR.ToArray(), sampleRate, channelCount);
         }
 
         public void PlotWaveform()
@@ -97,7 +97,9 @@ namespace Yaml_AudioTool_Rebuilt
             if (channelCount == 1)
             {
                 channels = "Mono";
-                WaveformsPlot.Plot.AddSignal(audioL, sampleRate);
+                var chM = WaveformsPlot.Plot.AddSignal(audioL, sampleRate);
+                chM.Color = Color.DarkRed;
+
                 WaveformsPlot.Plot.Title(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filenameHeader)].Text +
                     ".wav" +
                     " | Channels: " + channels);
@@ -110,11 +112,13 @@ namespace Yaml_AudioTool_Rebuilt
             else if(channelCount == 2)
             {
                 channels = "Stereo";
-                var ch1 = WaveformsPlot.Plot.AddSignal(audioL, sampleRate);
-                ch1.OffsetY = 1;
+                var chL = WaveformsPlot.Plot.AddSignal(audioL, sampleRate);
+                chL.Color = Color.DarkRed;
+                chL.OffsetY = 1;
 
-                var ch2 = WaveformsPlot.Plot.AddSignal(audioR, sampleRate);
-                ch2.OffsetY = -1;
+                var chR = WaveformsPlot.Plot.AddSignal(audioR, sampleRate);
+                chR.Color = Color.ForestGreen;
+                chR.OffsetY = -1;
 
                 WaveformsPlot.Plot.Title(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filenameHeader)].Text +
                     ".wav" +
@@ -139,9 +143,7 @@ namespace Yaml_AudioTool_Rebuilt
             WaveformsPlot.Plot.Title("Channels:");
             WaveformsPlot.Plot.XLabel("Time (seconds)");
             WaveformsPlot.Plot.YLabel("Audio level");
-            WaveformsPlot.Plot.SetAxisLimitsX(0, 1);
             WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
-            WaveformsPlot.Plot.SetOuterViewLimits(0, 1, -2, 2);
             WaveformsPlot.Configuration.Quality = ScottPlot.Control.QualityMode.High;
             WaveformsPlot.Configuration.LockVerticalAxis = true;
             WaveformsPlot.Refresh();
