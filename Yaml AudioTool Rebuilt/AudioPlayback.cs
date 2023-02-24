@@ -46,16 +46,6 @@ namespace Yaml_AudioTool_Rebuilt
                     {
                         using (waveFileReader = new WaveFileReader(file))
                         {
-                            /*if (waveFileReader.WaveFormat.SampleRate != 48000)
-                            {
-                                MessageBox.Show("File: " + Path.GetFileName(file) + "\n\n" +
-                                    "WARNING:\n" +
-                                    "Samplerate should be 48kHz!\n" +
-                                    "Please provide new hq-file or convert the existing.");
-                            }*/
-
-
-
                             Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
                             if (clickFlag == true)
@@ -158,46 +148,6 @@ namespace Yaml_AudioTool_Rebuilt
                 byte[] array;
 
                 AudioFileReader reader;
-
-                // Offline Effects Apart From XAudio2
-                // Set Pitchshifter
-                /*if (f1.PitchenableButton.BackColor == Color.LightGreen)
-                {                    
-                    float pitchValue = Convert.ToSingle(f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchHeader)].Text);
-                    float pitchrandValue = Convert.ToSingle(f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.pitchrandHeader)].Text);
-                    using (var readers = new AudioFileReader(soundFilepath))
-                    {
-                        float[] buffer = ReadAllAudioSamples(soundFilepath);
-                        buffer = NAudioEffects.LowerVolume(buffer, 0.5f);                        
-                       /* PitchShifter.PitchShift(
-                            PitchShifter_Helper.PitchRandomizer(pitchValue, pitchrandValue), 
-                            buffer.Length,                             
-                            readers.WaveFormat.SampleRate, 
-                            buffer);
-                        buffer = NAudioEffects.Normalize(buffer);
-
-                        NAudio.Wave.WaveFormat wwaveFormat = new NAudio.Wave.WaveFormat(48000, 24, 2);
-                        using (WaveFileWriter writer = new WaveFileWriter("temp.wav", wwaveFormat))
-                        {
-                            writer.WriteSamples(buffer, 0, buffer.Length);
-                        }                        
-                    }
-                    using (reader = new AudioFileReader("temp.wav"))
-                    {
-                        array = new byte[reader.Length];
-
-                        reader.Read(array, 0, array.Length);
-                    }
-                }
-                else
-                {
-                    using (reader = new AudioFileReader(soundFilepath))
-                    {
-                        array = new byte[reader.Length];
-
-                        reader.Read(array, 0, array.Length);
-                    }
-                }*/
 
                 using (reader = new AudioFileReader(soundFilepath))
                 {

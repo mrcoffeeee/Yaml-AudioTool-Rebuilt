@@ -110,18 +110,19 @@ namespace Yaml_AudioTool_Rebuilt
         *****************************************************************************/
 
         #region Private Static Memebers
-        private static int MAX_FRAME_LENGTH = 16000;
-        private static float[] gInFIFO = new float[MAX_FRAME_LENGTH];
-        private static float[] gOutFIFO = new float[MAX_FRAME_LENGTH];
-        private static float[] gFFTworksp = new float[2 * MAX_FRAME_LENGTH];
-        private static float[] gLastPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
-        private static float[] gSumPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
-        private static float[] gOutputAccum = new float[2 * MAX_FRAME_LENGTH];
-        private static float[] gAnaFreq = new float[MAX_FRAME_LENGTH];
-        private static float[] gAnaMagn = new float[MAX_FRAME_LENGTH];
-        private static float[] gSynFreq = new float[MAX_FRAME_LENGTH];
-        private static float[] gSynMagn = new float[MAX_FRAME_LENGTH];
-        private static long gRover, gInit;
+        private static readonly int MAX_FRAME_LENGTH = 16000;
+        private static readonly float[] gInFIFO = new float[MAX_FRAME_LENGTH];
+        private static readonly float[] gOutFIFO = new float[MAX_FRAME_LENGTH];
+        private static readonly float[] gFFTworksp = new float[2 * MAX_FRAME_LENGTH];
+        private static readonly float[] gLastPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
+        private static readonly float[] gSumPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
+        private static readonly float[] gOutputAccum = new float[2 * MAX_FRAME_LENGTH];
+        private static readonly float[] gAnaFreq = new float[MAX_FRAME_LENGTH];
+        private static readonly float[] gAnaMagn = new float[MAX_FRAME_LENGTH];
+        private static readonly float[] gSynFreq = new float[MAX_FRAME_LENGTH];
+        private static readonly float[] gSynMagn = new float[MAX_FRAME_LENGTH];
+        private static long gRover;
+        private static readonly long gInit;
         #endregion
 
         #region Public Static  Methods
@@ -350,7 +351,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             int min = Convert.ToInt32(pitchrandValue * -10);
             int max = -min;
-            Random rnd = new Random();
+            Random rnd = new();
             float rand = rnd.Next(min, max) / 10.0f;
 
             if (pitchValue + rand < 0.5)
@@ -358,7 +359,7 @@ namespace Yaml_AudioTool_Rebuilt
             else if (pitchValue + rand > 2)
                 pitchValue = 2;
             else
-                pitchValue = pitchValue + rand;
+                pitchValue += rand;
 
             return pitchValue;
         }

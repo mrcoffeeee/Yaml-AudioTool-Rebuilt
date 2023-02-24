@@ -1,18 +1,9 @@
 ﻿using NAudio.Wave;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
-using NAudio.CoreAudioApi;
-using ScottPlot;
-using NAudio.Gui;
-using Microsoft.VisualBasic.Devices;
-using Vortice.XAudio2;
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -26,31 +17,74 @@ namespace Yaml_AudioTool_Rebuilt
             InitialPlotSetup();
             if (formMain.filelistView.SelectedItems.Count == 1)
             {
-                LoadAudioWaveform();                
+                LoadAudioWaveform(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
             }
         }
 
-        public void LoadAudioWaveform()
+        public void LoadAudioWaveform(string filePath)
         {
-            this.Text = "Destructive Effects Editor -> " + formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filepathHeader)].Text;
-            PlotWaveform();
+            this.Text = "Destructive Effects Editor -> " + filePath;
+            FilepathLabel.Text = filePath;
+            if (formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.channelsHeader)].Text == "1")
+                ChannelsLabel.Text = "Mono";
+            else if (formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.channelsHeader)].Text == "2")
+                ChannelsLabel.Text = "Stereo";
+            else
+                ChannelsLabel.Text = "Unsupported Channels #";
+            SamplerateLabel.Text = formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.samplerateHeader)].Text + " kHz";
+            BitsizeLabel.Text = formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.bitsizeHeader)].Text + " Bit";
+            TableLayoutPanelFD.Visible = true;
+            PlotWaveform(filePath);
         }
 
         public void ResetDestructiveEffectsEditorValues()
         {
             this.Text = "Destructive Effects Editor";
             InitialPlotSetup();
+            TableLayoutPanelFD.Visible = false;
         }
 
         private void NormalizeButton_Click(object sender, EventArgs e)
         {
-            Effect_Normalize normalizeForm = new()
+            if (TableLayoutPanelFD.Visible == true)
             {
-                StartPosition = FormStartPosition.CenterScreen,
-                TopMost = true
-            };
-            normalizeForm.Show();
-            NormalizeButton.Enabled = false;
+                InitialPlotSetup();
+                string normalizedPath = DestructiveAudioTools.Normalization(FilepathLabel.Text);
+                NormalizeRevertButton.Visible = true;
+                SaveButton.Enabled = true;
+                this.Text = "Destructive Effects Editor -> " + FilepathLabel.Text + "*";
+                PlotWaveform(normalizedPath);
+            }
+        }
+
+        private void NormalizeRevertButton_Click(object sender, EventArgs e)
+        {
+            InitialPlotSetup();
+            NormalizeRevertButton.Visible = false;
+            SaveButton.Enabled = false;
+            this.Text = "Destructive Effects Editor -> " + FilepathLabel.Text;
+            PlotWaveform(FilepathLabel.Text);
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            NormalizeRevertButton.Visible = false;
+            SaveButton.Enabled = false;
+
+            DialogResult dialogResult = MessageBox.Show("Do you want to replace the current file?", "Save Changes", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                string backupFile = FilepathLabel.Text.Replace(".wav", "");
+                backupFile += "_BACKUP.wav";
+                File.Replace(@"normalized_temp.wav", FilepathLabel.Text, backupFile);
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                FilepathLabel.Text = FilepathLabel.Text.Replace(".wav", "");
+                FilepathLabel.Text += "_EDIT.wav";                
+                File.Copy(@"normalized_temp.wav", FilepathLabel.Text);
+            }
+            this.Text = "Destructive Effects Editor -> " + FilepathLabel.Text;
         }
 
         static (double[] audioL, double[] audioR, int sampleRate, int channelCount) ReadWavefile(string filePath)
@@ -90,28 +124,23 @@ namespace Yaml_AudioTool_Rebuilt
             return (audioL.ToArray(), audioR.ToArray(), sampleRate, channelCount);
         }
 
-        public void PlotWaveform()
+        public void PlotWaveform(string filePath)
         {
-            (double[] audioL, double[] audioR, int sampleRate, int channelCount) = ReadWavefile(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
-            string channels = "Unsupported Channels #";
+            (double[] audioL, double[] audioR, int sampleRate, int channelCount) = ReadWavefile(filePath);
+            WaveformsPlot.Plot.Title(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filenameHeader)].Text + ".wav");
+
             if (channelCount == 1)
             {
-                channels = "Mono";
                 var chM = WaveformsPlot.Plot.AddSignal(audioL, sampleRate);
                 chM.Color = Color.DarkRed;
-
-                WaveformsPlot.Plot.Title(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filenameHeader)].Text +
-                    ".wav" +
-                    " | Channels: " + channels);
                 WaveformsPlot.Plot.SetAxisLimitsY(-1, 1);
                 WaveformsPlot.Plot.AxisAutoX(0);
                 var limits = WaveformsPlot.Plot.GetAxisLimits();
                 WaveformsPlot.Plot.SetOuterViewLimits(0, limits.XMax, -1, 1);
             }
 
-            else if(channelCount == 2)
+            else if (channelCount == 2)
             {
-                channels = "Stereo";
                 var chL = WaveformsPlot.Plot.AddSignal(audioL, sampleRate);
                 chL.Color = Color.DarkRed;
                 chL.OffsetY = 1;
@@ -119,20 +148,10 @@ namespace Yaml_AudioTool_Rebuilt
                 var chR = WaveformsPlot.Plot.AddSignal(audioR, sampleRate);
                 chR.Color = Color.ForestGreen;
                 chR.OffsetY = -1;
-
-                WaveformsPlot.Plot.Title(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filenameHeader)].Text +
-                    ".wav" +
-                    " | Channels: " + channels);
                 WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
                 WaveformsPlot.Plot.AxisAutoX(0);
                 var limits = WaveformsPlot.Plot.GetAxisLimits();
                 WaveformsPlot.Plot.SetOuterViewLimits(0, limits.XMax, -2, 2);
-            }
-            else
-            {
-                WaveformsPlot.Plot.Title(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filenameHeader)].Text +
-                    ".wav" +
-                    " | Channels: " + channels);
             }
             WaveformsPlot.Refresh();
         }
@@ -140,7 +159,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void InitialPlotSetup()
         {
             WaveformsPlot.Reset();
-            WaveformsPlot.Plot.Title("Channels:");
+            WaveformsPlot.Plot.Title("");
             WaveformsPlot.Plot.XLabel("Time (seconds)");
             WaveformsPlot.Plot.YLabel("Audio level");
             WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
@@ -153,6 +172,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
+                InitialPlotSetup();
                 e.Cancel = true;
                 Hide();
             }
