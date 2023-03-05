@@ -33,6 +33,7 @@ namespace Yaml_AudioTool_Rebuilt
                 ChannelsLabel.Text = "Unsupported Channels #";
             SamplerateLabel.Text = formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.samplerateHeader)].Text + " kHz";
             BitsizeLabel.Text = formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.bitsizeHeader)].Text + " Bit";
+            PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(filePath);
             TableLayoutPanelFD.Visible = true;
             PlotWaveform(filePath);
         }
@@ -49,11 +50,12 @@ namespace Yaml_AudioTool_Rebuilt
             if (TableLayoutPanelFD.Visible == true)
             {
                 InitialPlotSetup();
-                string normalizedPath = DestructiveAudioTools.Normalization(FilepathLabel.Text);
+                string normalizedPath = DestructiveAudioTools.Normalize(FilepathLabel.Text, PeakLabel.Text);
                 NormalizeRevertButton.Visible = true;
                 SaveButton.Enabled = true;
                 this.Text = "Destructive Effects Editor -> " + FilepathLabel.Text + "*";
-                PlotWaveform(normalizedPath);
+                LoadAudioWaveform(normalizedPath);
+                //PlotWaveform(normalizedPath);
             }
         }
 
@@ -76,13 +78,13 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 string backupFile = FilepathLabel.Text.Replace(".wav", "");
                 backupFile += "_BACKUP.wav";
-                File.Replace(@"normalized_temp.wav", FilepathLabel.Text, backupFile);
+                File.Replace(@"edit_temp.wav", FilepathLabel.Text, backupFile);
             }
             else if (dialogResult == DialogResult.No)
             {
                 FilepathLabel.Text = FilepathLabel.Text.Replace(".wav", "");
-                FilepathLabel.Text += "_EDIT.wav";                
-                File.Copy(@"normalized_temp.wav", FilepathLabel.Text);
+                FilepathLabel.Text += "_EDIT.wav";
+                File.Copy(@"edit_temp.wav", FilepathLabel.Text);
             }
             this.Text = "Destructive Effects Editor -> " + FilepathLabel.Text;
         }

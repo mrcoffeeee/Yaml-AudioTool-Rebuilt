@@ -31,14 +31,18 @@
             TableLayoutPanelDEE = new System.Windows.Forms.TableLayoutPanel();
             SaveButton = new System.Windows.Forms.Button();
             TableLayoutPanelA = new System.Windows.Forms.TableLayoutPanel();
-            NormalizeRevertButton = new System.Windows.Forms.Button();
             NormalizeButton = new System.Windows.Forms.Button();
+            TrimButton = new System.Windows.Forms.Button();
+            VolumeButton = new System.Windows.Forms.Button();
+            FadeButton = new System.Windows.Forms.Button();
+            NormalizeRevertButton = new System.Windows.Forms.Button();
             WaveformsPlot = new ScottPlot.FormsPlot();
             TableLayoutPanelFD = new System.Windows.Forms.TableLayoutPanel();
             BitsizeLabel = new System.Windows.Forms.Label();
             SamplerateLabel = new System.Windows.Forms.Label();
             ChannelsLabel = new System.Windows.Forms.Label();
             FilepathLabel = new System.Windows.Forms.Label();
+            PeakLabel = new System.Windows.Forms.Label();
             TableLayoutPanelDEE.SuspendLayout();
             TableLayoutPanelA.SuspendLayout();
             TableLayoutPanelFD.SuspendLayout();
@@ -53,12 +57,13 @@
             TableLayoutPanelDEE.Controls.Add(TableLayoutPanelA, 1, 0);
             TableLayoutPanelDEE.Controls.Add(WaveformsPlot, 0, 0);
             TableLayoutPanelDEE.Controls.Add(TableLayoutPanelFD, 0, 1);
-            TableLayoutPanelDEE.Location = new System.Drawing.Point(12, 12);
+            TableLayoutPanelDEE.Dock = System.Windows.Forms.DockStyle.Fill;
+            TableLayoutPanelDEE.Location = new System.Drawing.Point(0, 0);
             TableLayoutPanelDEE.Name = "TableLayoutPanelDEE";
             TableLayoutPanelDEE.RowCount = 2;
             TableLayoutPanelDEE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
             TableLayoutPanelDEE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            TableLayoutPanelDEE.Size = new System.Drawing.Size(959, 337);
+            TableLayoutPanelDEE.Size = new System.Drawing.Size(984, 361);
             TableLayoutPanelDEE.TabIndex = 1;
             // 
             // SaveButton
@@ -66,10 +71,10 @@
             SaveButton.Dock = System.Windows.Forms.DockStyle.Fill;
             SaveButton.Enabled = false;
             SaveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            SaveButton.Location = new System.Drawing.Point(771, 307);
+            SaveButton.Location = new System.Drawing.Point(791, 328);
             SaveButton.Margin = new System.Windows.Forms.Padding(4);
             SaveButton.Name = "SaveButton";
-            SaveButton.Size = new System.Drawing.Size(184, 26);
+            SaveButton.Size = new System.Drawing.Size(189, 29);
             SaveButton.TabIndex = 30;
             SaveButton.Text = "Save Changes";
             SaveButton.UseVisualStyleBackColor = true;
@@ -77,36 +82,28 @@
             // 
             // TableLayoutPanelA
             // 
-            TableLayoutPanelA.ColumnCount = 2;
-            TableLayoutPanelA.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            TableLayoutPanelA.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            TableLayoutPanelA.Controls.Add(NormalizeRevertButton, 1, 0);
+            TableLayoutPanelA.ColumnCount = 1;
+            TableLayoutPanelA.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            TableLayoutPanelA.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             TableLayoutPanelA.Controls.Add(NormalizeButton, 0, 0);
+            TableLayoutPanelA.Controls.Add(TrimButton, 0, 2);
+            TableLayoutPanelA.Controls.Add(VolumeButton, 0, 1);
+            TableLayoutPanelA.Controls.Add(FadeButton, 0, 3);
+            TableLayoutPanelA.Controls.Add(NormalizeRevertButton, 0, 7);
             TableLayoutPanelA.Dock = System.Windows.Forms.DockStyle.Fill;
-            TableLayoutPanelA.Location = new System.Drawing.Point(770, 3);
+            TableLayoutPanelA.Location = new System.Drawing.Point(790, 3);
             TableLayoutPanelA.Name = "TableLayoutPanelA";
-            TableLayoutPanelA.RowCount = 3;
+            TableLayoutPanelA.RowCount = 8;
             TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            TableLayoutPanelA.Size = new System.Drawing.Size(186, 297);
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            TableLayoutPanelA.Size = new System.Drawing.Size(191, 318);
             TableLayoutPanelA.TabIndex = 4;
-            // 
-            // NormalizeRevertButton
-            // 
-            NormalizeRevertButton.BackColor = System.Drawing.SystemColors.Control;
-            NormalizeRevertButton.BackgroundImage = Properties.Resources.Undo;
-            NormalizeRevertButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            NormalizeRevertButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            NormalizeRevertButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            NormalizeRevertButton.Location = new System.Drawing.Point(152, 4);
-            NormalizeRevertButton.Margin = new System.Windows.Forms.Padding(4);
-            NormalizeRevertButton.Name = "NormalizeRevertButton";
-            NormalizeRevertButton.Size = new System.Drawing.Size(30, 32);
-            NormalizeRevertButton.TabIndex = 29;
-            NormalizeRevertButton.UseVisualStyleBackColor = false;
-            NormalizeRevertButton.Visible = false;
-            NormalizeRevertButton.Click += NormalizeRevertButton_Click;
             // 
             // NormalizeButton
             // 
@@ -115,11 +112,64 @@
             NormalizeButton.Location = new System.Drawing.Point(4, 4);
             NormalizeButton.Margin = new System.Windows.Forms.Padding(4);
             NormalizeButton.Name = "NormalizeButton";
-            NormalizeButton.Size = new System.Drawing.Size(140, 32);
+            NormalizeButton.Size = new System.Drawing.Size(183, 32);
             NormalizeButton.TabIndex = 28;
             NormalizeButton.Text = "Normalize";
             NormalizeButton.UseVisualStyleBackColor = true;
             NormalizeButton.Click += NormalizeButton_Click;
+            // 
+            // TrimButton
+            // 
+            TrimButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            TrimButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            TrimButton.Location = new System.Drawing.Point(4, 84);
+            TrimButton.Margin = new System.Windows.Forms.Padding(4);
+            TrimButton.Name = "TrimButton";
+            TrimButton.Size = new System.Drawing.Size(183, 32);
+            TrimButton.TabIndex = 30;
+            TrimButton.Text = "Trim";
+            TrimButton.UseVisualStyleBackColor = true;
+            // 
+            // VolumeButton
+            // 
+            VolumeButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            VolumeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            VolumeButton.Location = new System.Drawing.Point(4, 44);
+            VolumeButton.Margin = new System.Windows.Forms.Padding(4);
+            VolumeButton.Name = "VolumeButton";
+            VolumeButton.Size = new System.Drawing.Size(183, 32);
+            VolumeButton.TabIndex = 32;
+            VolumeButton.Text = "Volume";
+            VolumeButton.UseVisualStyleBackColor = true;
+            // 
+            // FadeButton
+            // 
+            FadeButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            FadeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            FadeButton.Location = new System.Drawing.Point(4, 124);
+            FadeButton.Margin = new System.Windows.Forms.Padding(4);
+            FadeButton.Name = "FadeButton";
+            FadeButton.Size = new System.Drawing.Size(183, 32);
+            FadeButton.TabIndex = 31;
+            FadeButton.Text = "Fade";
+            FadeButton.UseVisualStyleBackColor = true;
+            // 
+            // NormalizeRevertButton
+            // 
+            NormalizeRevertButton.BackColor = System.Drawing.SystemColors.Control;
+            NormalizeRevertButton.BackgroundImage = Properties.Resources.Undo;
+            NormalizeRevertButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            NormalizeRevertButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            NormalizeRevertButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            NormalizeRevertButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            NormalizeRevertButton.Location = new System.Drawing.Point(4, 284);
+            NormalizeRevertButton.Margin = new System.Windows.Forms.Padding(4);
+            NormalizeRevertButton.Name = "NormalizeRevertButton";
+            NormalizeRevertButton.Size = new System.Drawing.Size(183, 32);
+            NormalizeRevertButton.TabIndex = 29;
+            NormalizeRevertButton.UseVisualStyleBackColor = false;
+            NormalizeRevertButton.Visible = false;
+            NormalizeRevertButton.Click += NormalizeRevertButton_Click;
             // 
             // WaveformsPlot
             // 
@@ -127,26 +177,28 @@
             WaveformsPlot.Location = new System.Drawing.Point(4, 3);
             WaveformsPlot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             WaveformsPlot.Name = "WaveformsPlot";
-            WaveformsPlot.Size = new System.Drawing.Size(759, 297);
+            WaveformsPlot.Size = new System.Drawing.Size(779, 318);
             WaveformsPlot.TabIndex = 5;
             // 
             // TableLayoutPanelFD
             // 
-            TableLayoutPanelFD.ColumnCount = 4;
+            TableLayoutPanelFD.ColumnCount = 5;
             TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            TableLayoutPanelFD.Controls.Add(PeakLabel, 4, 0);
             TableLayoutPanelFD.Controls.Add(BitsizeLabel, 3, 0);
             TableLayoutPanelFD.Controls.Add(SamplerateLabel, 2, 0);
             TableLayoutPanelFD.Controls.Add(ChannelsLabel, 1, 0);
             TableLayoutPanelFD.Controls.Add(FilepathLabel, 0, 0);
             TableLayoutPanelFD.Dock = System.Windows.Forms.DockStyle.Fill;
-            TableLayoutPanelFD.Location = new System.Drawing.Point(3, 306);
+            TableLayoutPanelFD.Location = new System.Drawing.Point(3, 327);
             TableLayoutPanelFD.Name = "TableLayoutPanelFD";
             TableLayoutPanelFD.RowCount = 1;
             TableLayoutPanelFD.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            TableLayoutPanelFD.Size = new System.Drawing.Size(761, 28);
+            TableLayoutPanelFD.Size = new System.Drawing.Size(781, 31);
             TableLayoutPanelFD.TabIndex = 6;
             TableLayoutPanelFD.Visible = false;
             // 
@@ -154,9 +206,9 @@
             // 
             BitsizeLabel.AutoSize = true;
             BitsizeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            BitsizeLabel.Location = new System.Drawing.Point(684, 0);
+            BitsizeLabel.Location = new System.Drawing.Point(624, 0);
             BitsizeLabel.Name = "BitsizeLabel";
-            BitsizeLabel.Size = new System.Drawing.Size(74, 28);
+            BitsizeLabel.Size = new System.Drawing.Size(74, 31);
             BitsizeLabel.TabIndex = 3;
             BitsizeLabel.Text = "Bit Size";
             BitsizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -165,9 +217,9 @@
             // 
             SamplerateLabel.AutoSize = true;
             SamplerateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            SamplerateLabel.Location = new System.Drawing.Point(604, 0);
+            SamplerateLabel.Location = new System.Drawing.Point(544, 0);
             SamplerateLabel.Name = "SamplerateLabel";
-            SamplerateLabel.Size = new System.Drawing.Size(74, 28);
+            SamplerateLabel.Size = new System.Drawing.Size(74, 31);
             SamplerateLabel.TabIndex = 2;
             SamplerateLabel.Text = "Samplerate";
             SamplerateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -176,9 +228,9 @@
             // 
             ChannelsLabel.AutoSize = true;
             ChannelsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            ChannelsLabel.Location = new System.Drawing.Point(524, 0);
+            ChannelsLabel.Location = new System.Drawing.Point(464, 0);
             ChannelsLabel.Name = "ChannelsLabel";
-            ChannelsLabel.Size = new System.Drawing.Size(74, 28);
+            ChannelsLabel.Size = new System.Drawing.Size(74, 31);
             ChannelsLabel.TabIndex = 1;
             ChannelsLabel.Text = "Channels";
             ChannelsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -189,10 +241,21 @@
             FilepathLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             FilepathLabel.Location = new System.Drawing.Point(3, 0);
             FilepathLabel.Name = "FilepathLabel";
-            FilepathLabel.Size = new System.Drawing.Size(515, 28);
+            FilepathLabel.Size = new System.Drawing.Size(455, 31);
             FilepathLabel.TabIndex = 0;
             FilepathLabel.Text = "Filepath";
             FilepathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PeakLabel
+            // 
+            PeakLabel.AutoSize = true;
+            PeakLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            PeakLabel.Location = new System.Drawing.Point(704, 0);
+            PeakLabel.Name = "PeakLabel";
+            PeakLabel.Size = new System.Drawing.Size(74, 31);
+            PeakLabel.TabIndex = 4;
+            PeakLabel.Text = "Peak";
+            PeakLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DestructiveEffectsEditor
             // 
@@ -225,5 +288,9 @@
         private System.Windows.Forms.Button NormalizeButton;
         private System.Windows.Forms.Button NormalizeRevertButton;
         private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.Button TrimButton;
+        private System.Windows.Forms.Button VolumeButton;
+        private System.Windows.Forms.Button FadeButton;
+        private System.Windows.Forms.Label PeakLabel;
     }
 }
