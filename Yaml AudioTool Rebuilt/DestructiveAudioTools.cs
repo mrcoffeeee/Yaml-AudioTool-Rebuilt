@@ -10,69 +10,70 @@ namespace Yaml_AudioTool_Rebuilt
 {
     internal static class DestructiveAudioTools
     {
-        public static string GetPeakVolume(string inputFile)
+
+        public static string GetPeakVolume(float[] audioData)
         {
+            //audioStream.Position = 0;
             float max = 0;
 
-            using var reader = new AudioFileReader(inputFile);
             // find the max peak
-            float[] buffer = new float[reader.WaveFormat.SampleRate];
-            int read;
-            do
+            for (int n = 0; n < audioData.Length; n++)
             {
-                read = reader.Read(buffer, 0, buffer.Length);
-                for (int n = 0; n < read; n++)
-                {
-                    var abs = Math.Abs(buffer[n]);
-                    if (abs > max) max = abs;
-                }
-            } while (read > 0);
+                var abs = Math.Abs(audioData[n]);
+                if (abs > max) max = abs;
+            }
 
             return Math.Round(max,3).ToString();
         }
 
-        public static string Normalize(string inputFile, string peakVolume)
+        public static float[] Normalize(float[] audioData, string peakVolume)
         {
-            var outPath = @"edit_temp.wav";
             peakVolume = peakVolume.Replace("Peak: ", "");
             float max = Convert.ToSingle(peakVolume);
 
-            using var reader = new AudioFileReader(inputFile);
-
             // do normalization
             if (max != 0 || max < 1.0f)
-            {                
-                reader.Position = 0;
-                reader.Volume = 1.0f / max;
-            }
-
-            // write to a temp audio file
-            WaveFileWriter.CreateWaveFile(outPath, reader);
-            return outPath;
-        }
-    }
-
-   /* public static string Volume(string inputFile)
-    {
-        var outPath = @"edit_temp.wav";
-        float max = 0;
-
-        using var reader = new AudioFileReader(inputFile);
-        // find the max peak
-        float[] buffer = new float[reader.WaveFormat.SampleRate];
-        int read;
-        do
-        {
-            read = reader.Read(buffer, 0, buffer.Length);
-            for (int n = 0; n < read; n++)
             {
-                var abs = Math.Abs(buffer[n]);
-                if (abs > max) max = abs;
+                for (int i = 0; i < audioData.Length; i++)
+                {
+                    audioData[i] *= 1f / max;
+                    if (audioData[i] > 1)
+                        audioData[i] = 1;
+                }
             }
-        } while (read > 0);
-        Console.WriteLine($"Max sample value: {max}");
+            return audioData;
+        }
 
-        if (max == 0 || max > 1.0f)
-            return "File cannot be normalized.";
-    }*/
+        public static float[] VolumeUp(float[] audioData, string peakVolume)
+        {
+            peakVolume = peakVolume.Replace("Peak: ", "");
+            float peakValue = Convert.ToSingle(peakVolume);
+            float volumeUp = (peakValue + 0.1f) / peakValue;
+            // Do Volume Up
+            if (peakValue * volumeUp <= 1)
+            {
+                for (int i = 0; i < audioData.Length; i++)
+                {
+                    audioData[i] *= volumeUp;
+                }
+            }
+            return audioData;
+        }
+
+        public static float[] VolumeDown(float[] audioData, string peakVolume)
+        {
+            peakVolume = peakVolume.Replace("Peak: ", "");
+            float peakValue = Convert.ToSingle(peakVolume);
+            float volumeDown = (peakValue - 0.1f) / peakValue;
+            // Do Volume Down
+            if (volumeDown > 0)
+            {
+                for (int i = 0; i < audioData.Length; i++)
+                {
+                    audioData[i] *= volumeDown;
+                }
+            }
+            return audioData;
+        }
+    }   
 }

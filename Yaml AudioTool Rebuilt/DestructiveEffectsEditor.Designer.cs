@@ -33,18 +33,21 @@
             TableLayoutPanelA = new System.Windows.Forms.TableLayoutPanel();
             NormalizeButton = new System.Windows.Forms.Button();
             TrimButton = new System.Windows.Forms.Button();
-            VolumeButton = new System.Windows.Forms.Button();
             FadeButton = new System.Windows.Forms.Button();
-            NormalizeRevertButton = new System.Windows.Forms.Button();
+            TableLayoutPanelVolume = new System.Windows.Forms.TableLayoutPanel();
+            VolumeDownButton = new System.Windows.Forms.Button();
+            VolumeUpButton = new System.Windows.Forms.Button();
+            RevertButton = new System.Windows.Forms.Button();
             WaveformsPlot = new ScottPlot.FormsPlot();
             TableLayoutPanelFD = new System.Windows.Forms.TableLayoutPanel();
+            PeakLabel = new System.Windows.Forms.Label();
             BitsizeLabel = new System.Windows.Forms.Label();
             SamplerateLabel = new System.Windows.Forms.Label();
             ChannelsLabel = new System.Windows.Forms.Label();
             FilepathLabel = new System.Windows.Forms.Label();
-            PeakLabel = new System.Windows.Forms.Label();
             TableLayoutPanelDEE.SuspendLayout();
             TableLayoutPanelA.SuspendLayout();
+            TableLayoutPanelVolume.SuspendLayout();
             TableLayoutPanelFD.SuspendLayout();
             SuspendLayout();
             // 
@@ -59,11 +62,12 @@
             TableLayoutPanelDEE.Controls.Add(TableLayoutPanelFD, 0, 1);
             TableLayoutPanelDEE.Dock = System.Windows.Forms.DockStyle.Fill;
             TableLayoutPanelDEE.Location = new System.Drawing.Point(0, 0);
+            TableLayoutPanelDEE.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             TableLayoutPanelDEE.Name = "TableLayoutPanelDEE";
             TableLayoutPanelDEE.RowCount = 2;
             TableLayoutPanelDEE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
             TableLayoutPanelDEE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            TableLayoutPanelDEE.Size = new System.Drawing.Size(984, 361);
+            TableLayoutPanelDEE.Size = new System.Drawing.Size(1673, 672);
             TableLayoutPanelDEE.TabIndex = 1;
             // 
             // SaveButton
@@ -71,10 +75,10 @@
             SaveButton.Dock = System.Windows.Forms.DockStyle.Fill;
             SaveButton.Enabled = false;
             SaveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            SaveButton.Location = new System.Drawing.Point(791, 328);
-            SaveButton.Margin = new System.Windows.Forms.Padding(4);
+            SaveButton.Location = new System.Drawing.Point(1345, 612);
+            SaveButton.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             SaveButton.Name = "SaveButton";
-            SaveButton.Size = new System.Drawing.Size(189, 29);
+            SaveButton.Size = new System.Drawing.Size(321, 52);
             SaveButton.TabIndex = 30;
             SaveButton.Text = "Save Changes";
             SaveButton.UseVisualStyleBackColor = true;
@@ -84,35 +88,36 @@
             // 
             TableLayoutPanelA.ColumnCount = 1;
             TableLayoutPanelA.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            TableLayoutPanelA.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             TableLayoutPanelA.Controls.Add(NormalizeButton, 0, 0);
             TableLayoutPanelA.Controls.Add(TrimButton, 0, 2);
-            TableLayoutPanelA.Controls.Add(VolumeButton, 0, 1);
             TableLayoutPanelA.Controls.Add(FadeButton, 0, 3);
-            TableLayoutPanelA.Controls.Add(NormalizeRevertButton, 0, 7);
+            TableLayoutPanelA.Controls.Add(TableLayoutPanelVolume, 0, 1);
+            TableLayoutPanelA.Controls.Add(RevertButton, 0, 7);
             TableLayoutPanelA.Dock = System.Windows.Forms.DockStyle.Fill;
-            TableLayoutPanelA.Location = new System.Drawing.Point(790, 3);
+            TableLayoutPanelA.Location = new System.Drawing.Point(1343, 6);
+            TableLayoutPanelA.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             TableLayoutPanelA.Name = "TableLayoutPanelA";
             TableLayoutPanelA.RowCount = 8;
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            TableLayoutPanelA.Size = new System.Drawing.Size(191, 318);
+            TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            TableLayoutPanelA.Size = new System.Drawing.Size(325, 592);
             TableLayoutPanelA.TabIndex = 4;
             // 
             // NormalizeButton
             // 
             NormalizeButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            NormalizeButton.Enabled = false;
             NormalizeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            NormalizeButton.Location = new System.Drawing.Point(4, 4);
-            NormalizeButton.Margin = new System.Windows.Forms.Padding(4);
+            NormalizeButton.Location = new System.Drawing.Point(7, 8);
+            NormalizeButton.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             NormalizeButton.Name = "NormalizeButton";
-            NormalizeButton.Size = new System.Drawing.Size(183, 32);
+            NormalizeButton.Size = new System.Drawing.Size(311, 64);
             NormalizeButton.TabIndex = 28;
             NormalizeButton.Text = "Normalize";
             NormalizeButton.UseVisualStyleBackColor = true;
@@ -122,93 +127,141 @@
             // 
             TrimButton.Dock = System.Windows.Forms.DockStyle.Fill;
             TrimButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            TrimButton.Location = new System.Drawing.Point(4, 84);
-            TrimButton.Margin = new System.Windows.Forms.Padding(4);
+            TrimButton.Location = new System.Drawing.Point(7, 168);
+            TrimButton.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             TrimButton.Name = "TrimButton";
-            TrimButton.Size = new System.Drawing.Size(183, 32);
+            TrimButton.Size = new System.Drawing.Size(311, 64);
             TrimButton.TabIndex = 30;
             TrimButton.Text = "Trim";
             TrimButton.UseVisualStyleBackColor = true;
-            // 
-            // VolumeButton
-            // 
-            VolumeButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            VolumeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            VolumeButton.Location = new System.Drawing.Point(4, 44);
-            VolumeButton.Margin = new System.Windows.Forms.Padding(4);
-            VolumeButton.Name = "VolumeButton";
-            VolumeButton.Size = new System.Drawing.Size(183, 32);
-            VolumeButton.TabIndex = 32;
-            VolumeButton.Text = "Volume";
-            VolumeButton.UseVisualStyleBackColor = true;
+            TrimButton.Visible = false;
             // 
             // FadeButton
             // 
             FadeButton.Dock = System.Windows.Forms.DockStyle.Fill;
             FadeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            FadeButton.Location = new System.Drawing.Point(4, 124);
-            FadeButton.Margin = new System.Windows.Forms.Padding(4);
+            FadeButton.Location = new System.Drawing.Point(7, 248);
+            FadeButton.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
             FadeButton.Name = "FadeButton";
-            FadeButton.Size = new System.Drawing.Size(183, 32);
+            FadeButton.Size = new System.Drawing.Size(311, 64);
             FadeButton.TabIndex = 31;
             FadeButton.Text = "Fade";
             FadeButton.UseVisualStyleBackColor = true;
+            FadeButton.Visible = false;
             // 
-            // NormalizeRevertButton
+            // TableLayoutPanelVolume
             // 
-            NormalizeRevertButton.BackColor = System.Drawing.SystemColors.Control;
-            NormalizeRevertButton.BackgroundImage = Properties.Resources.Undo;
-            NormalizeRevertButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            NormalizeRevertButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            NormalizeRevertButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            NormalizeRevertButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            NormalizeRevertButton.Location = new System.Drawing.Point(4, 284);
-            NormalizeRevertButton.Margin = new System.Windows.Forms.Padding(4);
-            NormalizeRevertButton.Name = "NormalizeRevertButton";
-            NormalizeRevertButton.Size = new System.Drawing.Size(183, 32);
-            NormalizeRevertButton.TabIndex = 29;
-            NormalizeRevertButton.UseVisualStyleBackColor = false;
-            NormalizeRevertButton.Visible = false;
-            NormalizeRevertButton.Click += NormalizeRevertButton_Click;
+            TableLayoutPanelVolume.ColumnCount = 2;
+            TableLayoutPanelVolume.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            TableLayoutPanelVolume.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            TableLayoutPanelVolume.Controls.Add(VolumeDownButton, 1, 0);
+            TableLayoutPanelVolume.Controls.Add(VolumeUpButton, 0, 0);
+            TableLayoutPanelVolume.Dock = System.Windows.Forms.DockStyle.Fill;
+            TableLayoutPanelVolume.Location = new System.Drawing.Point(3, 83);
+            TableLayoutPanelVolume.Name = "TableLayoutPanelVolume";
+            TableLayoutPanelVolume.RowCount = 1;
+            TableLayoutPanelVolume.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            TableLayoutPanelVolume.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            TableLayoutPanelVolume.Size = new System.Drawing.Size(319, 74);
+            TableLayoutPanelVolume.TabIndex = 33;
+            // 
+            // VolumeDownButton
+            // 
+            VolumeDownButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            VolumeDownButton.Enabled = false;
+            VolumeDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            VolumeDownButton.Location = new System.Drawing.Point(166, 8);
+            VolumeDownButton.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
+            VolumeDownButton.Name = "VolumeDownButton";
+            VolumeDownButton.Size = new System.Drawing.Size(146, 58);
+            VolumeDownButton.TabIndex = 33;
+            VolumeDownButton.Text = "Volume  ˅";
+            VolumeDownButton.UseVisualStyleBackColor = true;
+            VolumeDownButton.Click += VolumeDownButton_Click;
+            // 
+            // VolumeUpButton
+            // 
+            VolumeUpButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            VolumeUpButton.Enabled = false;
+            VolumeUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            VolumeUpButton.Location = new System.Drawing.Point(7, 8);
+            VolumeUpButton.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
+            VolumeUpButton.Name = "VolumeUpButton";
+            VolumeUpButton.Size = new System.Drawing.Size(145, 58);
+            VolumeUpButton.TabIndex = 32;
+            VolumeUpButton.Text = "Volume  ˄";
+            VolumeUpButton.UseVisualStyleBackColor = true;
+            VolumeUpButton.Click += VolumeUpButton_Click;
+            // 
+            // RevertButton
+            // 
+            RevertButton.BackColor = System.Drawing.SystemColors.Control;
+            RevertButton.BackgroundImage = Properties.Resources.Undo;
+            RevertButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            RevertButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            RevertButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            RevertButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            RevertButton.Location = new System.Drawing.Point(7, 528);
+            RevertButton.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
+            RevertButton.Name = "RevertButton";
+            RevertButton.Size = new System.Drawing.Size(311, 56);
+            RevertButton.TabIndex = 29;
+            RevertButton.UseVisualStyleBackColor = false;
+            RevertButton.Visible = false;
+            RevertButton.Click += RevertButton_Click;
             // 
             // WaveformsPlot
             // 
             WaveformsPlot.Dock = System.Windows.Forms.DockStyle.Fill;
-            WaveformsPlot.Location = new System.Drawing.Point(4, 3);
-            WaveformsPlot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            WaveformsPlot.Location = new System.Drawing.Point(7, 6);
+            WaveformsPlot.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             WaveformsPlot.Name = "WaveformsPlot";
-            WaveformsPlot.Size = new System.Drawing.Size(779, 318);
+            WaveformsPlot.Size = new System.Drawing.Size(1324, 592);
             WaveformsPlot.TabIndex = 5;
             // 
             // TableLayoutPanelFD
             // 
             TableLayoutPanelFD.ColumnCount = 5;
             TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
+            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
+            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
+            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
             TableLayoutPanelFD.Controls.Add(PeakLabel, 4, 0);
             TableLayoutPanelFD.Controls.Add(BitsizeLabel, 3, 0);
             TableLayoutPanelFD.Controls.Add(SamplerateLabel, 2, 0);
             TableLayoutPanelFD.Controls.Add(ChannelsLabel, 1, 0);
             TableLayoutPanelFD.Controls.Add(FilepathLabel, 0, 0);
             TableLayoutPanelFD.Dock = System.Windows.Forms.DockStyle.Fill;
-            TableLayoutPanelFD.Location = new System.Drawing.Point(3, 327);
+            TableLayoutPanelFD.Location = new System.Drawing.Point(5, 610);
+            TableLayoutPanelFD.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             TableLayoutPanelFD.Name = "TableLayoutPanelFD";
             TableLayoutPanelFD.RowCount = 1;
             TableLayoutPanelFD.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            TableLayoutPanelFD.Size = new System.Drawing.Size(781, 31);
+            TableLayoutPanelFD.Size = new System.Drawing.Size(1328, 56);
             TableLayoutPanelFD.TabIndex = 6;
             TableLayoutPanelFD.Visible = false;
+            // 
+            // PeakLabel
+            // 
+            PeakLabel.AutoSize = true;
+            PeakLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            PeakLabel.Location = new System.Drawing.Point(1196, 0);
+            PeakLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            PeakLabel.Name = "PeakLabel";
+            PeakLabel.Size = new System.Drawing.Size(127, 56);
+            PeakLabel.TabIndex = 4;
+            PeakLabel.Text = "Peak";
+            PeakLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // BitsizeLabel
             // 
             BitsizeLabel.AutoSize = true;
             BitsizeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            BitsizeLabel.Location = new System.Drawing.Point(624, 0);
+            BitsizeLabel.Location = new System.Drawing.Point(1059, 0);
+            BitsizeLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             BitsizeLabel.Name = "BitsizeLabel";
-            BitsizeLabel.Size = new System.Drawing.Size(74, 31);
+            BitsizeLabel.Size = new System.Drawing.Size(127, 56);
             BitsizeLabel.TabIndex = 3;
             BitsizeLabel.Text = "Bit Size";
             BitsizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -217,9 +270,10 @@
             // 
             SamplerateLabel.AutoSize = true;
             SamplerateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            SamplerateLabel.Location = new System.Drawing.Point(544, 0);
+            SamplerateLabel.Location = new System.Drawing.Point(922, 0);
+            SamplerateLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             SamplerateLabel.Name = "SamplerateLabel";
-            SamplerateLabel.Size = new System.Drawing.Size(74, 31);
+            SamplerateLabel.Size = new System.Drawing.Size(127, 56);
             SamplerateLabel.TabIndex = 2;
             SamplerateLabel.Text = "Samplerate";
             SamplerateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -228,9 +282,10 @@
             // 
             ChannelsLabel.AutoSize = true;
             ChannelsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            ChannelsLabel.Location = new System.Drawing.Point(464, 0);
+            ChannelsLabel.Location = new System.Drawing.Point(785, 0);
+            ChannelsLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             ChannelsLabel.Name = "ChannelsLabel";
-            ChannelsLabel.Size = new System.Drawing.Size(74, 31);
+            ChannelsLabel.Size = new System.Drawing.Size(127, 56);
             ChannelsLabel.TabIndex = 1;
             ChannelsLabel.Text = "Channels";
             ChannelsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -239,38 +294,30 @@
             // 
             FilepathLabel.AutoSize = true;
             FilepathLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            FilepathLabel.Location = new System.Drawing.Point(3, 0);
+            FilepathLabel.Location = new System.Drawing.Point(5, 0);
+            FilepathLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             FilepathLabel.Name = "FilepathLabel";
-            FilepathLabel.Size = new System.Drawing.Size(455, 31);
+            FilepathLabel.Size = new System.Drawing.Size(770, 56);
             FilepathLabel.TabIndex = 0;
             FilepathLabel.Text = "Filepath";
             FilepathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // PeakLabel
-            // 
-            PeakLabel.AutoSize = true;
-            PeakLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            PeakLabel.Location = new System.Drawing.Point(704, 0);
-            PeakLabel.Name = "PeakLabel";
-            PeakLabel.Size = new System.Drawing.Size(74, 31);
-            PeakLabel.TabIndex = 4;
-            PeakLabel.Text = "Peak";
-            PeakLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // DestructiveEffectsEditor
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(984, 361);
+            ClientSize = new System.Drawing.Size(1673, 672);
             Controls.Add(TableLayoutPanelDEE);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            MaximumSize = new System.Drawing.Size(1000, 400);
-            MinimumSize = new System.Drawing.Size(1000, 400);
+            Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            MaximumSize = new System.Drawing.Size(1697, 736);
+            MinimumSize = new System.Drawing.Size(1697, 736);
             Name = "DestructiveEffectsEditor";
             Text = "Destructive Effects Editor";
             FormClosing += DestructiveEffectsEditor_FormClosing;
             TableLayoutPanelDEE.ResumeLayout(false);
             TableLayoutPanelA.ResumeLayout(false);
+            TableLayoutPanelVolume.ResumeLayout(false);
             TableLayoutPanelFD.ResumeLayout(false);
             TableLayoutPanelFD.PerformLayout();
             ResumeLayout(false);
@@ -286,11 +333,13 @@
         private System.Windows.Forms.Label ChannelsLabel;
         private System.Windows.Forms.Label FilepathLabel;
         private System.Windows.Forms.Button NormalizeButton;
-        private System.Windows.Forms.Button NormalizeRevertButton;
+        private System.Windows.Forms.Button RevertButton;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Button TrimButton;
-        private System.Windows.Forms.Button VolumeButton;
+        private System.Windows.Forms.Button VolumeUpButton;
         private System.Windows.Forms.Button FadeButton;
         private System.Windows.Forms.Label PeakLabel;
+        private System.Windows.Forms.TableLayoutPanel TableLayoutPanelVolume;
+        private System.Windows.Forms.Button VolumeDownButton;
     }
 }
