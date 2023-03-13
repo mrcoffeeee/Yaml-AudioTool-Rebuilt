@@ -15,10 +15,8 @@ namespace Yaml_AudioTool_Rebuilt
     public partial class DestructiveEffectsEditor : Form
     {
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
-       // AudioFileReader audioStream;
         float[] audioData, audioData_Backup;
         NAudio.Wave.WaveFormat WaveFormat;
-        string tempPath = @"edit_temp.wav";
 
         public DestructiveEffectsEditor()
         {
@@ -162,44 +160,6 @@ namespace Yaml_AudioTool_Rebuilt
             PeakLabel.Text = "";            
         }
 
-        /*static (double[] audioL, double[] audioR, int sampleRate, int channelCount) ReadWavefile(string filePath)
-        {
-            using var audioFile = new WaveFileReader(filePath);
-            int sampleRate = audioFile.WaveFormat.SampleRate;
-            int sampleCount = (int)(audioFile.Length / audioFile.WaveFormat.BitsPerSample / 8);
-            int channelCount = audioFile.WaveFormat.Channels;
-            var audioL = new List<double>(sampleCount);
-            var audioR = new List<double>(sampleCount);
-            float[] buffer;
-
-            if (channelCount == 1)
-            {
-                while ((buffer = audioFile.ReadNextSampleFrame())?.Length > 0)
-                {
-                    for (int i = 0; i < buffer.Length; i++)
-                    {
-                        // write one sample for each channel (i is the channelNumber
-                        audioL.Add(buffer[i]);
-                    }
-                }
-            }
-            
-
-            if (channelCount == 2)
-            {
-                while ((buffer = audioFile.ReadNextSampleFrame())?.Length > 0)
-                {
-                    for (int i = 0; i < buffer.Length - 1; i++)
-                    {
-                        // write one sample for each channel (i is the channelNumber
-                        audioL.Add(buffer[i]);
-                        audioR.Add(buffer[i + 1]);
-                    }
-                }
-            }
-            return (audioL.ToArray(), audioR.ToArray(), sampleRate, channelCount);
-        }*/
-
         public void PlotWaveform(float[] audio)
         {
             if (WaveFormat.Channels == 1)
@@ -214,11 +174,21 @@ namespace Yaml_AudioTool_Rebuilt
 
             else if (WaveFormat.Channels == 2)
             {
-                var chL = WaveformsPlot.Plot.AddSignal(audio, WaveFormat.SampleRate);
+                int length = audio.Length / 2;
+                float[] audioL = new float[length];
+                float[] audioR = new float[length];
+
+                for (int i = 0; i < length; i++)
+                {
+                    audioL[i] = audio[2 * i];
+                    audioR[i] = audio[2 * i + 1];
+                }
+
+                var chL = WaveformsPlot.Plot.AddSignal(audioL, WaveFormat.SampleRate);
                 chL.Color = Color.DarkRed;
                 chL.OffsetY = 1;
 
-                var chR = WaveformsPlot.Plot.AddSignal(audio, WaveFormat.SampleRate);
+                var chR = WaveformsPlot.Plot.AddSignal(audioR, WaveFormat.SampleRate);
                 chR.Color = Color.ForestGreen;
                 chR.OffsetY = -1;
                 WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
