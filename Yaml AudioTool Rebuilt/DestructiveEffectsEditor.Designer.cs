@@ -40,11 +40,11 @@
             RevertButton = new System.Windows.Forms.Button();
             WaveformsPlot = new ScottPlot.FormsPlot();
             TableLayoutPanelFD = new System.Windows.Forms.TableLayoutPanel();
-            PeakLabel = new System.Windows.Forms.Label();
-            BitsizeLabel = new System.Windows.Forms.Label();
+            FilenameLabel = new System.Windows.Forms.Label();
             SamplerateLabel = new System.Windows.Forms.Label();
+            PeakLabel = new System.Windows.Forms.Label();
             ChannelsLabel = new System.Windows.Forms.Label();
-            FilepathLabel = new System.Windows.Forms.Label();
+            PositionLabel = new System.Windows.Forms.Label();
             TableLayoutPanelDEE.SuspendLayout();
             TableLayoutPanelA.SuspendLayout();
             TableLayoutPanelVolume.SuspendLayout();
@@ -218,20 +218,22 @@
             WaveformsPlot.Name = "WaveformsPlot";
             WaveformsPlot.Size = new System.Drawing.Size(1324, 592);
             WaveformsPlot.TabIndex = 5;
+            WaveformsPlot.MouseDown += WaveformsPlot_MouseDown;
+            WaveformsPlot.MouseMove += WaveformsPlot_MouseMove;
             // 
             // TableLayoutPanelFD
             // 
             TableLayoutPanelFD.ColumnCount = 5;
             TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
             TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
+            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
-            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
-            TableLayoutPanelFD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
-            TableLayoutPanelFD.Controls.Add(PeakLabel, 4, 0);
-            TableLayoutPanelFD.Controls.Add(BitsizeLabel, 3, 0);
-            TableLayoutPanelFD.Controls.Add(SamplerateLabel, 2, 0);
-            TableLayoutPanelFD.Controls.Add(ChannelsLabel, 1, 0);
-            TableLayoutPanelFD.Controls.Add(FilepathLabel, 0, 0);
+            TableLayoutPanelFD.Controls.Add(FilenameLabel, 0, 0);
+            TableLayoutPanelFD.Controls.Add(SamplerateLabel, 4, 0);
+            TableLayoutPanelFD.Controls.Add(PeakLabel, 2, 0);
+            TableLayoutPanelFD.Controls.Add(ChannelsLabel, 3, 0);
+            TableLayoutPanelFD.Controls.Add(PositionLabel, 1, 0);
             TableLayoutPanelFD.Dock = System.Windows.Forms.DockStyle.Fill;
             TableLayoutPanelFD.Location = new System.Drawing.Point(5, 610);
             TableLayoutPanelFD.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -242,65 +244,65 @@
             TableLayoutPanelFD.TabIndex = 6;
             TableLayoutPanelFD.Visible = false;
             // 
-            // PeakLabel
+            // FilenameLabel
             // 
-            PeakLabel.AutoSize = true;
-            PeakLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            PeakLabel.Location = new System.Drawing.Point(1196, 0);
-            PeakLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            PeakLabel.Name = "PeakLabel";
-            PeakLabel.Size = new System.Drawing.Size(127, 56);
-            PeakLabel.TabIndex = 4;
-            PeakLabel.Text = "Peak";
-            PeakLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // BitsizeLabel
-            // 
-            BitsizeLabel.AutoSize = true;
-            BitsizeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            BitsizeLabel.Location = new System.Drawing.Point(1059, 0);
-            BitsizeLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            BitsizeLabel.Name = "BitsizeLabel";
-            BitsizeLabel.Size = new System.Drawing.Size(127, 56);
-            BitsizeLabel.TabIndex = 3;
-            BitsizeLabel.Text = "Bit Size";
-            BitsizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            FilenameLabel.AutoSize = true;
+            FilenameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            FilenameLabel.Location = new System.Drawing.Point(5, 0);
+            FilenameLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            FilenameLabel.Name = "FilenameLabel";
+            FilenameLabel.Size = new System.Drawing.Size(684, 56);
+            FilenameLabel.TabIndex = 0;
+            FilenameLabel.Text = "Filename";
+            FilenameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // SamplerateLabel
             // 
             SamplerateLabel.AutoSize = true;
             SamplerateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            SamplerateLabel.Location = new System.Drawing.Point(922, 0);
+            SamplerateLabel.Location = new System.Drawing.Point(1196, 0);
             SamplerateLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             SamplerateLabel.Name = "SamplerateLabel";
             SamplerateLabel.Size = new System.Drawing.Size(127, 56);
             SamplerateLabel.TabIndex = 2;
             SamplerateLabel.Text = "Samplerate";
-            SamplerateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            SamplerateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // PeakLabel
+            // 
+            PeakLabel.AutoSize = true;
+            PeakLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            PeakLabel.Location = new System.Drawing.Point(949, 0);
+            PeakLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            PeakLabel.Name = "PeakLabel";
+            PeakLabel.Size = new System.Drawing.Size(127, 56);
+            PeakLabel.TabIndex = 4;
+            PeakLabel.Text = "Peak: ";
+            PeakLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ChannelsLabel
             // 
             ChannelsLabel.AutoSize = true;
             ChannelsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            ChannelsLabel.Location = new System.Drawing.Point(785, 0);
+            ChannelsLabel.Location = new System.Drawing.Point(1086, 0);
             ChannelsLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             ChannelsLabel.Name = "ChannelsLabel";
-            ChannelsLabel.Size = new System.Drawing.Size(127, 56);
+            ChannelsLabel.Size = new System.Drawing.Size(100, 56);
             ChannelsLabel.TabIndex = 1;
             ChannelsLabel.Text = "Channels";
-            ChannelsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            ChannelsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // FilepathLabel
+            // PositionLabel
             // 
-            FilepathLabel.AutoSize = true;
-            FilepathLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            FilepathLabel.Location = new System.Drawing.Point(5, 0);
-            FilepathLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            FilepathLabel.Name = "FilepathLabel";
-            FilepathLabel.Size = new System.Drawing.Size(770, 56);
-            FilepathLabel.TabIndex = 0;
-            FilepathLabel.Text = "Filepath";
-            FilepathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            PositionLabel.AutoSize = true;
+            PositionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            PositionLabel.Location = new System.Drawing.Point(699, 0);
+            PositionLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            PositionLabel.Name = "PositionLabel";
+            PositionLabel.Size = new System.Drawing.Size(240, 56);
+            PositionLabel.TabIndex = 3;
+            PositionLabel.Text = "Position (sec): ";
+            PositionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DestructiveEffectsEditor
             // 
@@ -328,10 +330,10 @@
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelA;
         public ScottPlot.FormsPlot WaveformsPlot;
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelFD;
-        private System.Windows.Forms.Label BitsizeLabel;
+        private System.Windows.Forms.Label PositionLabel;
         private System.Windows.Forms.Label SamplerateLabel;
         private System.Windows.Forms.Label ChannelsLabel;
-        private System.Windows.Forms.Label FilepathLabel;
+        private System.Windows.Forms.Label FilenameLabel;
         private System.Windows.Forms.Button NormalizeButton;
         private System.Windows.Forms.Button RevertButton;
         private System.Windows.Forms.Button SaveButton;

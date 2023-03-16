@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.Devices;
 using NAudio.Wave;
+using ScottPlot;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,18 +16,26 @@ namespace Yaml_AudioTool_Rebuilt
     public partial class DestructiveEffectsEditor : Form
     {
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
+
+        bool mouseDown = false;
         float[] audioData, audioData_Backup;
+        //readonly ScottPlot.Plottable.VLine verticalLine;
+        AxisLimits limits;
+        ScottPlot.Plottable.HSpan waveformSpan;
         NAudio.Wave.WaveFormat WaveFormat;
 
         public DestructiveEffectsEditor()
         {
             InitializeComponent();
+            PlotConfiguration();
             InitialPlotSetup();
             if (formMain.filelistView.SelectedItems.Count == 1)
             {
                 LoadAudioWaveform(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
             }
+            //verticalLine = WaveformsPlot.Plot.AddVerticalLine(0, Color.Red, 2);            
         }
+
         public void CachedSound(string filePath)
         {
             using var audioReader = new AudioFileReader(filePath);
@@ -46,7 +55,8 @@ namespace Yaml_AudioTool_Rebuilt
         {
             CachedSound(filePath);
             this.Text = "Destructive Effects Editor -> " + filePath;
-            FilepathLabel.Text = filePath;
+            FilenameLabel.Text = filePath;
+            PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
             if (WaveFormat.Channels == 1)
                 ChannelsLabel.Text = "Mono";
             else if (WaveFormat.Channels == 2)
@@ -54,8 +64,6 @@ namespace Yaml_AudioTool_Rebuilt
             else
                 ChannelsLabel.Text = "Unsupported Channels #";
             SamplerateLabel.Text = WaveFormat.SampleRate + " kHz";
-            BitsizeLabel.Text = WaveFormat.BitsPerSample + " Bit";
-            PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
             PlotWaveform(audioData);
             TableLayoutPanelFD.Visible = true;
             NormalizeButton.Enabled = true;
@@ -80,7 +88,7 @@ namespace Yaml_AudioTool_Rebuilt
             if (TableLayoutPanelFD.Visible == true)
             {
                 InitialPlotSetup();
-                audioData.CopyTo(audioData_Backup,0);
+                audioData.CopyTo(audioData_Backup, 0);
                 audioData = DestructiveAudioTools.Normalize(audioData, PeakLabel.Text);
                 PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
                 RevertButton.Visible = true;
@@ -126,26 +134,26 @@ namespace Yaml_AudioTool_Rebuilt
             SaveButton.Enabled = false;
             if (this.Text.Contains(".wav*"))
                 this.Text = this.Text.Replace(".wav*", ".wav");
-             PlotWaveform(audioData);
+            PlotWaveform(audioData);
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
             RevertButton.Visible = false;
             SaveButton.Enabled = false;
-            string backupPath = FilepathLabel.Text.Replace(".wav", "");
+            string backupPath = FilenameLabel.Text.Replace(".wav", "");
 
             DialogResult dialogResult = MessageBox.Show("Do you want to replace the current file?", "Save Changes", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                File.Move(FilepathLabel.Text, backupPath + "_BACKUP.wav");
-                using (WaveFileWriter writer = new WaveFileWriter(FilepathLabel.Text, WaveFormat))
+                File.Move(FilenameLabel.Text, backupPath + "_BACKUP.wav");
+                using (WaveFileWriter writer = new WaveFileWriter(FilenameLabel.Text, WaveFormat))
                 {
                     writer.WriteSamples(audioData, 0, audioData.Length);
                 }
             }
             else if (dialogResult == DialogResult.No)
-            {                
+            {
                 using (WaveFileWriter writer = new WaveFileWriter(backupPath + "_EDIT.wav", WaveFormat))
                 {
                     writer.WriteSamples(audioData, 0, audioData.Length);
@@ -153,11 +161,11 @@ namespace Yaml_AudioTool_Rebuilt
             }
             this.Text = "Destructive Effects Editor";
             InitialPlotSetup();
-            FilepathLabel.Text = "";
+            FilenameLabel.Text = "";
+            PositionLabel.Text = "Position (sec): ";
+            PeakLabel.Text = "Peak: ";
             ChannelsLabel.Text = "";
             SamplerateLabel.Text = "";
-            BitsizeLabel.Text = "";
-            PeakLabel.Text = "";            
         }
 
         public void PlotWaveform(float[] audio)
@@ -168,7 +176,7 @@ namespace Yaml_AudioTool_Rebuilt
                 chM.Color = Color.DarkRed;
                 WaveformsPlot.Plot.SetAxisLimitsY(-1, 1);
                 WaveformsPlot.Plot.AxisAutoX(0);
-                var limits = WaveformsPlot.Plot.GetAxisLimits();
+                limits = WaveformsPlot.Plot.GetAxisLimits();
                 WaveformsPlot.Plot.SetOuterViewLimits(0, limits.XMax, -1, 1);
             }
 
@@ -193,10 +201,18 @@ namespace Yaml_AudioTool_Rebuilt
                 chR.OffsetY = -1;
                 WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
                 WaveformsPlot.Plot.AxisAutoX(0);
-                var limits = WaveformsPlot.Plot.GetAxisLimits();
+                limits = WaveformsPlot.Plot.GetAxisLimits();
                 WaveformsPlot.Plot.SetOuterViewLimits(0, limits.XMax, -2, 2);
             }
             WaveformsPlot.Refresh();
+        }
+
+        private void PlotConfiguration()
+        {
+            WaveformsPlot.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
+            WaveformsPlot.Configuration.AllowDroppedFramesWhileDragging = true;
+            WaveformsPlot.Configuration.LockVerticalAxis = true;
+            WaveformsPlot.Configuration.EnablePlotObjectEditor = false;
         }
 
         private void InitialPlotSetup()
@@ -206,9 +222,73 @@ namespace Yaml_AudioTool_Rebuilt
             WaveformsPlot.Plot.XLabel("Time (seconds)");
             WaveformsPlot.Plot.YLabel("Audio level");
             WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
-            WaveformsPlot.Configuration.Quality = ScottPlot.Control.QualityMode.High;
-            WaveformsPlot.Configuration.LockVerticalAxis = true;
+            WaveformsPlot.Plot.YAxis.Grid(false);
+            waveformSpan = WaveformsPlot.Plot.AddHorizontalSpan(0, 0, Color.LightGray);
+            waveformSpan.IsVisible = false;
             WaveformsPlot.Refresh();
+        }
+
+        private void WaveformsPlot_MouseMove(object sender, MouseEventArgs e)
+        {
+            (double x, double y) = WaveformsPlot.GetMouseCoordinates();
+            limits = WaveformsPlot.Plot.GetAxisLimits();
+            double position = 0;
+            if (x >= limits.XMin && x <= limits.XMax)
+            {
+                position = x;                
+            }
+            else if (x > limits.XMax)
+            {
+                position = limits.XMax;
+            } 
+
+            if (mouseDown)
+            {
+                waveformSpan.X2 = position;
+                WaveformsPlot.Render();
+            }
+            PositionLabel.Text = "Position (sec): " + position.ToString("0.00");
+        }
+
+        private void WaveformsPlot_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && mouseDown == false)
+            {
+                (double x, double y) = WaveformsPlot.GetMouseCoordinates();
+                limits = WaveformsPlot.Plot.GetAxisLimits();
+
+                if (x >= limits.XMin && x <= limits.XMax)
+                {
+                    waveformSpan.X1 = x;
+                    waveformSpan.X2 = x;
+                }
+
+                else if (x < limits.XMin)
+                {
+                    waveformSpan.X1 = limits.XMin;
+                    waveformSpan.X2 = limits.XMin;
+                }
+
+                else if (x > limits.XMax)
+                {
+                    waveformSpan.X1 = limits.XMax;
+                    waveformSpan.X2 = limits.XMax;
+                }
+                
+                waveformSpan.IsVisible = true;
+                mouseDown = true;
+            }
+
+            else if (e.Button == MouseButtons.Left && mouseDown == true)
+            {
+                mouseDown = false;
+            }
+
+            else if (e.Button == MouseButtons.Right && waveformSpan.IsVisible)
+            {
+                waveformSpan.IsVisible = false;
+                mouseDown = false;
+            }
         }
 
         private void DestructiveEffectsEditor_FormClosing(object sender, FormClosingEventArgs e)
@@ -220,6 +300,6 @@ namespace Yaml_AudioTool_Rebuilt
                 Hide();
             }
             formMain.DestructiveEffectsButton.Enabled = true;
-        }        
+        }
     }
 }
