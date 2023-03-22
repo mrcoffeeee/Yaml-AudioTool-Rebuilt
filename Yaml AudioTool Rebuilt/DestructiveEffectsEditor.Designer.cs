@@ -126,6 +126,7 @@
             // TrimButton
             // 
             TrimButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            TrimButton.Enabled = false;
             TrimButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             TrimButton.Location = new System.Drawing.Point(7, 168);
             TrimButton.Margin = new System.Windows.Forms.Padding(7, 8, 7, 8);
@@ -134,7 +135,7 @@
             TrimButton.TabIndex = 30;
             TrimButton.Text = "Trim";
             TrimButton.UseVisualStyleBackColor = true;
-            TrimButton.Visible = false;
+            TrimButton.Click += TrimButton_Click;
             // 
             // FadeButton
             // 

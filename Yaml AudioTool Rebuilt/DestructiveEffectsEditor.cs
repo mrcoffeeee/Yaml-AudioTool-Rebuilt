@@ -69,6 +69,7 @@ namespace Yaml_AudioTool_Rebuilt
             NormalizeButton.Enabled = true;
             VolumeUpButton.Enabled = true;
             VolumeDownButton.Enabled = true;
+            TrimButton.Enabled = true;
         }
 
         public void ResetDestructiveEffectsEditorValues()
@@ -79,6 +80,7 @@ namespace Yaml_AudioTool_Rebuilt
             NormalizeButton.Enabled = false;
             VolumeUpButton.Enabled = false;
             VolumeDownButton.Enabled = false;
+            TrimButton.Enabled = false;
             RevertButton.Visible = false;
             SaveButton.Enabled = false;
         }
@@ -87,7 +89,6 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (TableLayoutPanelFD.Visible == true)
             {
-                InitialPlotSetup();
                 audioData.CopyTo(audioData_Backup, 0);
                 audioData = DestructiveAudioTools.Normalize(audioData, PeakLabel.Text);
                 PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
@@ -95,13 +96,13 @@ namespace Yaml_AudioTool_Rebuilt
                 SaveButton.Enabled = true;
                 if (!this.Text.EndsWith("*"))
                     this.Text = this.Text + "*";
+                InitialPlotSetup();
                 PlotWaveform(audioData);
             }
         }
 
         private void VolumeUpButton_Click(object sender, EventArgs e)
         {
-            InitialPlotSetup();
             audioData.CopyTo(audioData_Backup, 0);
             audioData = DestructiveAudioTools.VolumeUp(audioData, PeakLabel.Text);
             PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
@@ -109,12 +110,12 @@ namespace Yaml_AudioTool_Rebuilt
             SaveButton.Enabled = true;
             if (!this.Text.EndsWith("*"))
                 this.Text = this.Text + "*";
+            InitialPlotSetup();
             PlotWaveform(audioData);
         }
 
         private void VolumeDownButton_Click(object sender, EventArgs e)
         {
-            InitialPlotSetup();
             audioData.CopyTo(audioData_Backup, 0);
             audioData = DestructiveAudioTools.VolumeDown(audioData, PeakLabel.Text);
             PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
@@ -122,18 +123,36 @@ namespace Yaml_AudioTool_Rebuilt
             SaveButton.Enabled = true;
             if (!this.Text.EndsWith("*"))
                 this.Text = this.Text + "*";
+            InitialPlotSetup();
             PlotWaveform(audioData);
         }
 
-        private void RevertButton_Click(object sender, EventArgs e)
+        private void TrimButton_Click(object sender, EventArgs e)
         {
-            InitialPlotSetup();
+            if (waveformSpan.X1 != waveformSpan.X2)
+            {
+                audioData.CopyTo(audioData_Backup, 0);
+                audioData = DestructiveAudioTools.Trim(audioData, waveformSpan.X1, waveformSpan.X2, WaveFormat.SampleRate,WaveFormat.Channels);
+                PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
+                RevertButton.Visible = true;
+                SaveButton.Enabled = true;
+                if (!this.Text.EndsWith("*"))
+                    this.Text = this.Text + "*";
+                InitialPlotSetup();
+                PlotWaveform(audioData);
+            }            
+        }
+
+        private void RevertButton_Click(object sender, EventArgs e)
+        {            
+            Array.Resize(ref audioData, audioData_Backup.Length);
             audioData_Backup.CopyTo(audioData, 0);
             PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
             RevertButton.Visible = false;
             SaveButton.Enabled = false;
             if (this.Text.Contains(".wav*"))
                 this.Text = this.Text.Replace(".wav*", ".wav");
+            InitialPlotSetup();
             PlotWaveform(audioData);
         }
 
@@ -235,12 +254,12 @@ namespace Yaml_AudioTool_Rebuilt
             double position = 0;
             if (x >= limits.XMin && x <= limits.XMax)
             {
-                position = x;                
+                position = x;
             }
             else if (x > limits.XMax)
             {
                 position = limits.XMax;
-            } 
+            }
 
             if (mouseDown)
             {
@@ -274,7 +293,7 @@ namespace Yaml_AudioTool_Rebuilt
                     waveformSpan.X1 = limits.XMax;
                     waveformSpan.X2 = limits.XMax;
                 }
-                
+
                 waveformSpan.IsVisible = true;
                 mouseDown = true;
             }

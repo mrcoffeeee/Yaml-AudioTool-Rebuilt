@@ -75,5 +75,37 @@ namespace Yaml_AudioTool_Rebuilt
             }
             return audioData;
         }
+
+        public static float[] Trim(float[] audioData, double start, double end, int sampleRate, int channels)
+        {
+            double startTime = start;
+            double endTime = end;
+
+            if (start > end)
+            {
+                startTime = end;
+                endTime = start;
+            }
+
+            int startSample = (int)(startTime * sampleRate * channels);
+            int endSample = (int)(endTime * sampleRate * channels);
+            //MessageBox.Show(startSample.ToString() + " : " + endSample.ToString());
+            //int tempLength = audioData.Length - (endSample - startSample);
+            //MessageBox.Show(tempLength.ToString() + " : " + audioData.Length.ToString());
+            List<float> trimmedAudioList = new();
+
+            for (int i = 0; i < audioData.Length; i++)
+            {
+                if (i >= startSample && i <= endSample)
+                {
+                    continue;
+                }
+                else
+                {
+                    trimmedAudioList.Add(audioData[i]);
+                }
+            }
+            return trimmedAudioList.ToArray();
+        }
     }   
 }
