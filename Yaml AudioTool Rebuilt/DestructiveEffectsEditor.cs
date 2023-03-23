@@ -29,6 +29,7 @@ namespace Yaml_AudioTool_Rebuilt
             InitializeComponent();
             PlotConfiguration();
             InitialPlotSetup();
+            FadeComboBox.SelectedIndex = 0;
             if (formMain.filelistView.SelectedItems.Count == 1)
             {
                 LoadAudioWaveform(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
@@ -70,6 +71,8 @@ namespace Yaml_AudioTool_Rebuilt
             VolumeUpButton.Enabled = true;
             VolumeDownButton.Enabled = true;
             TrimButton.Enabled = true;
+            FadeButton.Enabled = true;
+            FadeComboBox.Enabled = true;
         }
 
         public void ResetDestructiveEffectsEditorValues()
@@ -81,6 +84,8 @@ namespace Yaml_AudioTool_Rebuilt
             VolumeUpButton.Enabled = false;
             VolumeDownButton.Enabled = false;
             TrimButton.Enabled = false;
+            FadeButton.Enabled = false;
+            FadeComboBox.Enabled = false;
             RevertButton.Visible = false;
             SaveButton.Enabled = false;
         }
@@ -131,8 +136,9 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (waveformSpan.X1 != waveformSpan.X2)
             {
+                Array.Resize(ref audioData_Backup, audioData.Length);
                 audioData.CopyTo(audioData_Backup, 0);
-                audioData = DestructiveAudioTools.Trim(audioData, waveformSpan.X1, waveformSpan.X2, WaveFormat.SampleRate,WaveFormat.Channels);
+                audioData = DestructiveAudioTools.Trim(audioData, waveformSpan.X1, waveformSpan.X2, WaveFormat.SampleRate, WaveFormat.Channels);
                 PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
                 RevertButton.Visible = true;
                 SaveButton.Enabled = true;
@@ -140,11 +146,27 @@ namespace Yaml_AudioTool_Rebuilt
                     this.Text = this.Text + "*";
                 InitialPlotSetup();
                 PlotWaveform(audioData);
-            }            
+            }
+        }
+
+        private void FadeButton_Click(object sender, EventArgs e)
+        {
+            if (waveformSpan.X1 != waveformSpan.X2)
+            {
+                audioData.CopyTo(audioData_Backup, 0);
+                audioData = DestructiveAudioTools.Fade(audioData, waveformSpan.X1, waveformSpan.X2, WaveFormat.SampleRate, WaveFormat.Channels, FadeComboBox.SelectedIndex);
+                PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
+                RevertButton.Visible = true;
+                SaveButton.Enabled = true;
+                if (!this.Text.EndsWith("*"))
+                    this.Text = this.Text + "*";
+                InitialPlotSetup();
+                PlotWaveform(audioData);
+            }
         }
 
         private void RevertButton_Click(object sender, EventArgs e)
-        {            
+        {
             Array.Resize(ref audioData, audioData_Backup.Length);
             audioData_Backup.CopyTo(audioData, 0);
             PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);

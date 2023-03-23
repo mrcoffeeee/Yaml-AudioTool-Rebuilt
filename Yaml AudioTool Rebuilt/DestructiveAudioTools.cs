@@ -107,5 +107,61 @@ namespace Yaml_AudioTool_Rebuilt
             }
             return trimmedAudioList.ToArray();
         }
+
+        public static float[] Fade(float[] audioData, double start, double end, int sampleRate, int channels, int fadeIndex)
+        {
+            double startTime = start;
+            double endTime = end;
+
+            if (start > end)
+            {
+                startTime = end;
+                endTime = start;
+            }
+
+            int startSample = (int)(startTime * sampleRate * channels);
+            int endSample = (int)(endTime * sampleRate * channels);            
+            float fadeRatio;
+            List<float> fadeAudioList = new();
+
+            // Linear FadeIn
+            if (fadeIndex == 0)
+            {
+                int fadeIn = 0;
+                for (int i = 0; i < audioData.Length; i++)
+                {
+                    if (i >= startSample && i <= endSample)
+                    {
+                        fadeRatio = (float)fadeIn / (endSample - startSample);
+                        fadeAudioList.Add(audioData[i] *= fadeRatio);
+                        fadeIn++;
+                    }
+                    else
+                    {
+                        fadeAudioList.Add(audioData[i]);
+                    }
+                }
+            }
+
+            // Linear FadeOut
+            else if (fadeIndex == 1)
+            {
+                int fadeOut = endSample - startSample;
+                for (int i = 0; i < audioData.Length; i++)
+                {
+                    if (i >= startSample && i <= endSample)
+                    {
+                        fadeRatio = (float)fadeOut / (endSample - startSample);
+                        fadeAudioList.Add(audioData[i] *= fadeRatio);
+                        fadeOut--;
+                    }
+                    else
+                    {
+                        fadeAudioList.Add(audioData[i]);
+                    }
+                }
+            }
+            return fadeAudioList.ToArray();
+        }
     }   
 }
