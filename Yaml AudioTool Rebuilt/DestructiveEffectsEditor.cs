@@ -73,6 +73,7 @@ namespace Yaml_AudioTool_Rebuilt
             TrimButton.Enabled = true;
             FadeButton.Enabled = true;
             FadeComboBox.Enabled = true;
+            MarkerButton.Enabled = true;
         }
 
         public void ResetDestructiveEffectsEditorValues()
@@ -86,8 +87,10 @@ namespace Yaml_AudioTool_Rebuilt
             TrimButton.Enabled = false;
             FadeButton.Enabled = false;
             FadeComboBox.Enabled = false;
+            MarkerButton.Enabled = false;
             RevertButton.Visible = false;
             SaveButton.Enabled = false;
+            SaveButton.BackColor = SystemColors.Control;
         }
 
         private void NormalizeButton_Click(object sender, EventArgs e)
@@ -99,6 +102,7 @@ namespace Yaml_AudioTool_Rebuilt
                 PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
                 RevertButton.Visible = true;
                 SaveButton.Enabled = true;
+                SaveButton.BackColor = Color.LightGreen;
                 if (!this.Text.EndsWith("*"))
                     this.Text = this.Text + "*";
                 InitialPlotSetup();
@@ -113,6 +117,7 @@ namespace Yaml_AudioTool_Rebuilt
             PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
             RevertButton.Visible = true;
             SaveButton.Enabled = true;
+            SaveButton.BackColor = Color.LightGreen;
             if (!this.Text.EndsWith("*"))
                 this.Text = this.Text + "*";
             InitialPlotSetup();
@@ -126,6 +131,7 @@ namespace Yaml_AudioTool_Rebuilt
             PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
             RevertButton.Visible = true;
             SaveButton.Enabled = true;
+            SaveButton.BackColor = Color.LightGreen;
             if (!this.Text.EndsWith("*"))
                 this.Text = this.Text + "*";
             InitialPlotSetup();
@@ -142,6 +148,7 @@ namespace Yaml_AudioTool_Rebuilt
                 PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
                 RevertButton.Visible = true;
                 SaveButton.Enabled = true;
+                SaveButton.BackColor = Color.LightGreen;
                 if (!this.Text.EndsWith("*"))
                     this.Text = this.Text + "*";
                 InitialPlotSetup();
@@ -158,11 +165,17 @@ namespace Yaml_AudioTool_Rebuilt
                 PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
                 RevertButton.Visible = true;
                 SaveButton.Enabled = true;
+                SaveButton.BackColor = Color.LightGreen;
                 if (!this.Text.EndsWith("*"))
                     this.Text = this.Text + "*";
                 InitialPlotSetup();
                 PlotWaveform(audioData);
             }
+        }
+
+        private void MarkerButton_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void RevertButton_Click(object sender, EventArgs e)
@@ -172,6 +185,7 @@ namespace Yaml_AudioTool_Rebuilt
             PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioData);
             RevertButton.Visible = false;
             SaveButton.Enabled = false;
+            SaveButton.BackColor = SystemColors.Control;
             if (this.Text.Contains(".wav*"))
                 this.Text = this.Text.Replace(".wav*", ".wav");
             InitialPlotSetup();
@@ -182,6 +196,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             RevertButton.Visible = false;
             SaveButton.Enabled = false;
+            SaveButton.BackColor = SystemColors.Control;
             string backupPath = FilenameLabel.Text.Replace(".wav", "");
 
             DialogResult dialogResult = MessageBox.Show("Do you want to replace the current file?", "Save Changes", MessageBoxButtons.YesNo);
