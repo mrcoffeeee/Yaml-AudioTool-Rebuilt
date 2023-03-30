@@ -26,12 +26,8 @@ namespace Yaml_AudioTool_Rebuilt
             return Math.Round(max,3).ToString();
         }
 
-        public static float[] Normalize(float[] audioData, string peakVolume)
+        public static float[] Normalize(float[] audioData,float max)
         {
-            peakVolume = peakVolume.Replace("Peak: ", "");
-            float max = Convert.ToSingle(peakVolume);
-
-            // do normalization
             if (max != 0 || max < 1.0f)
             {
                 for (int i = 0; i < audioData.Length; i++)
@@ -44,10 +40,9 @@ namespace Yaml_AudioTool_Rebuilt
             return audioData;
         }
 
-        public static float[] VolumeUp(float[] audioData, string peakVolume)
+        public static float[] VolumeUp(float[] audioData)
         {
-            peakVolume = peakVolume.Replace("Peak: ", "");
-            float peakValue = Convert.ToSingle(peakVolume);
+            float peakValue = Convert.ToSingle(GetPeakVolume(audioData));
             float volumeUp = (peakValue + 0.1f) / peakValue;
             // Do Volume Up
             if (peakValue * volumeUp <= 1)
@@ -60,10 +55,9 @@ namespace Yaml_AudioTool_Rebuilt
             return audioData;
         }
 
-        public static float[] VolumeDown(float[] audioData, string peakVolume)
+        public static float[] VolumeDown(float[] audioData)
         {
-            peakVolume = peakVolume.Replace("Peak: ", "");
-            float peakValue = Convert.ToSingle(peakVolume);
+            float peakValue = Convert.ToSingle(GetPeakVolume(audioData));
             float volumeDown = (peakValue - 0.1f) / peakValue;
             // Do Volume Down
             if (volumeDown > 0)
@@ -89,9 +83,6 @@ namespace Yaml_AudioTool_Rebuilt
 
             int startSample = (int)(startTime * sampleRate * channels);
             int endSample = (int)(endTime * sampleRate * channels);
-            //MessageBox.Show(startSample.ToString() + " : " + endSample.ToString());
-            //int tempLength = audioData.Length - (endSample - startSample);
-            //MessageBox.Show(tempLength.ToString() + " : " + audioData.Length.ToString());
             List<float> trimmedAudioList = new();
 
             for (int i = 0; i < audioData.Length; i++)
