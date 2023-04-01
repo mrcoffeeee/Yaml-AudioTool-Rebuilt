@@ -29,1840 +29,1836 @@ namespace Yaml_AudioTool_Rebuilt
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.SettingstoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.AbouttoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.LoopButton = new System.Windows.Forms.Button();
-            this.ForwardButton = new System.Windows.Forms.Button();
-            this.PlayButton = new System.Windows.Forms.Button();
-            this.StopButton = new System.Windows.Forms.Button();
-            this.BackButton = new System.Windows.Forms.Button();
-            this.filelistView = new System.Windows.Forms.ListView();
-            this.titleHeader = new System.Windows.Forms.ColumnHeader();
-            this.filenameHeader = new System.Windows.Forms.ColumnHeader();
-            this.filepathHeader = new System.Windows.Forms.ColumnHeader();
-            this.roommapHeader = new System.Windows.Forms.ColumnHeader();
-            this.roomidHeader = new System.Windows.Forms.ColumnHeader();
-            this.sizeHeader = new System.Windows.Forms.ColumnHeader();
-            this.durationHeader = new System.Windows.Forms.ColumnHeader();
-            this.channelsHeader = new System.Windows.Forms.ColumnHeader();
-            this.samplerateHeader = new System.Windows.Forms.ColumnHeader();
-            this.bitrateHeader = new System.Windows.Forms.ColumnHeader();
-            this.bitsizeHeader = new System.Windows.Forms.ColumnHeader();
-            this.volumeHeader = new System.Windows.Forms.ColumnHeader();
-            this.priorityHeader = new System.Windows.Forms.ColumnHeader();
-            this.loopHeader = new System.Windows.Forms.ColumnHeader();
-            this.mindistanceHeader = new System.Windows.Forms.ColumnHeader();
-            this.maxdistanceHeader = new System.Windows.Forms.ColumnHeader();
-            this.dopplerHeader = new System.Windows.Forms.ColumnHeader();
-            this.pitchHeader = new System.Windows.Forms.ColumnHeader();
-            this.pitchrandHeader = new System.Windows.Forms.ColumnHeader();
-            this.localizeHeader = new System.Windows.Forms.ColumnHeader();
-            this.streamHeader = new System.Windows.Forms.ColumnHeader();
-            this.typeHeader = new System.Windows.Forms.ColumnHeader();
-            this.falloffHeader = new System.Windows.Forms.ColumnHeader();
-            this.stackHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbpresetHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbwetdryHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbreflectionsdelayHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbroomfrequencyHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbdelayHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbroomfiltermainHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbroomfilterhfHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbreflectionsgainHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbgainHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbdecaytimeHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbdensityHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbroomsizeHeader = new System.Windows.Forms.ColumnHeader();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.SaveYamlButton = new System.Windows.Forms.Button();
-            this.openyamlButton = new System.Windows.Forms.Button();
-            this.removeallButton = new System.Windows.Forms.Button();
-            this.removeButton = new System.Windows.Forms.Button();
-            this.addfileButton = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.playbacktabPage = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.VolumetrackBar = new System.Windows.Forms.TrackBar();
-            this.VolumevaluenumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.PlaybackLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.FalloffcomboBox = new System.Windows.Forms.ComboBox();
-            this.PriorityLabel = new System.Windows.Forms.Label();
-            this.PrioritytrackBar = new System.Windows.Forms.TrackBar();
-            this.priorityvalueLabel = new System.Windows.Forms.Label();
-            this.StreamcheckBox = new System.Windows.Forms.CheckBox();
-            this.LocalizecheckBox = new System.Windows.Forms.CheckBox();
-            this.TypeLabel = new System.Windows.Forms.Label();
-            this.StreamLabel = new System.Windows.Forms.Label();
-            this.LocalizeLabel = new System.Windows.Forms.Label();
-            this.DopplertrackBar = new System.Windows.Forms.TrackBar();
-            this.dopplervalueLabel = new System.Windows.Forms.Label();
-            this.DopplerLabel = new System.Windows.Forms.Label();
-            this.FalloffLabel = new System.Windows.Forms.Label();
-            this.TypecomboBox = new System.Windows.Forms.ComboBox();
-            this.StackcomboBox = new System.Windows.Forms.ComboBox();
-            this.MinDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.MaxDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.Stacklabel = new System.Windows.Forms.Label();
-            this.MindistanceLabel = new System.Windows.Forms.Label();
-            this.MaxdistanceLabel = new System.Windows.Forms.Label();
-            this.organizetabPage = new System.Windows.Forms.TabPage();
-            this.OrganizeLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.EnumtextBox = new System.Windows.Forms.TextBox();
-            this.EnumButton = new System.Windows.Forms.Button();
-            this.SortcomboBox = new System.Windows.Forms.ComboBox();
-            this.SortLabel = new System.Windows.Forms.Label();
-            this.FindButton = new System.Windows.Forms.Button();
-            this.FindtextBox = new System.Windows.Forms.TextBox();
-            this.ChangeFilebutton = new System.Windows.Forms.Button();
-            this.ChangeFilelabel = new System.Windows.Forms.Label();
-            this.reverbtabPage = new System.Windows.Forms.TabPage();
-            this.RoomenableButton = new System.Windows.Forms.Button();
-            this.roomunmapButton = new System.Windows.Forms.Button();
-            this.roommapButton = new System.Windows.Forms.Button();
-            this.roomnametextBox = new System.Windows.Forms.TextBox();
-            this.roomLabel = new System.Windows.Forms.Label();
-            this.reverbwetdryPot = new NAudio.Gui.Pot();
-            this.reverbwetdryvalueLabel = new System.Windows.Forms.Label();
-            this.wetdryLabel = new System.Windows.Forms.Label();
-            this.filterremoveButton = new System.Windows.Forms.Button();
-            this.roomstoreButton = new System.Windows.Forms.Button();
-            this.reverbpresetcomboBox = new System.Windows.Forms.ComboBox();
-            this.filternametextBox = new System.Windows.Forms.TextBox();
-            this.reverbpresetLabel = new System.Windows.Forms.Label();
-            this.filtertypeLabel = new System.Windows.Forms.Label();
-            this.filtercomboBox = new System.Windows.Forms.ComboBox();
-            this.filterLabel = new System.Windows.Forms.Label();
-            this.filteroneoverqvalueLabel = new System.Windows.Forms.Label();
-            this.filterfrequencyvalueLabel = new System.Windows.Forms.Label();
-            this.filteroneoverqLabel = new System.Windows.Forms.Label();
-            this.filterfrequencyLabel = new System.Windows.Forms.Label();
-            this.filteroneoverqPot = new NAudio.Gui.Pot();
-            this.filterfrequencyPot = new NAudio.Gui.Pot();
-            this.effectstabPage = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.PitchshifterButton = new System.Windows.Forms.Button();
-            this.PitchenableButton = new System.Windows.Forms.Button();
-            this.DestructiveEffectsButton = new System.Windows.Forms.Button();
-            this.roomlistView = new System.Windows.Forms.ListView();
-            this.roomnameHeader = new System.Windows.Forms.ColumnHeader();
-            this.filternameHeader = new System.Windows.Forms.ColumnHeader();
-            this.filtertypeHeader = new System.Windows.Forms.ColumnHeader();
-            this.filterfrequencyHeader = new System.Windows.Forms.ColumnHeader();
-            this.filteroneoverqHeader = new System.Windows.Forms.ColumnHeader();
-            this.reverbidHeader = new System.Windows.Forms.ColumnHeader();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.timeLabel = new System.Windows.Forms.Label();
-            this.playbackTimer = new System.Windows.Forms.Timer(this.components);
-            this.selectedsoundLabel = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.printPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.playbacktabPage.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VolumetrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VolumevaluenumericUpDown)).BeginInit();
-            this.PlaybackLayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PrioritytrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DopplertrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MinDistancenumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MaxDistancenumericUpDown)).BeginInit();
-            this.organizetabPage.SuspendLayout();
-            this.OrganizeLayoutPanel.SuspendLayout();
-            this.reverbtabPage.SuspendLayout();
-            this.effectstabPage.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.SuspendLayout();
+            menuStrip = new System.Windows.Forms.MenuStrip();
+            SettingstoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            AbouttoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            PlaybackGroupBox = new System.Windows.Forms.GroupBox();
+            LoopButton = new System.Windows.Forms.Button();
+            ForwardButton = new System.Windows.Forms.Button();
+            PlayButton = new System.Windows.Forms.Button();
+            StopButton = new System.Windows.Forms.Button();
+            BackButton = new System.Windows.Forms.Button();
+            filelistView = new System.Windows.Forms.ListView();
+            titleHeader = new System.Windows.Forms.ColumnHeader();
+            filenameHeader = new System.Windows.Forms.ColumnHeader();
+            filepathHeader = new System.Windows.Forms.ColumnHeader();
+            roommapHeader = new System.Windows.Forms.ColumnHeader();
+            roomidHeader = new System.Windows.Forms.ColumnHeader();
+            sizeHeader = new System.Windows.Forms.ColumnHeader();
+            durationHeader = new System.Windows.Forms.ColumnHeader();
+            channelsHeader = new System.Windows.Forms.ColumnHeader();
+            samplerateHeader = new System.Windows.Forms.ColumnHeader();
+            bitrateHeader = new System.Windows.Forms.ColumnHeader();
+            bitsizeHeader = new System.Windows.Forms.ColumnHeader();
+            volumeHeader = new System.Windows.Forms.ColumnHeader();
+            priorityHeader = new System.Windows.Forms.ColumnHeader();
+            loopHeader = new System.Windows.Forms.ColumnHeader();
+            mindistanceHeader = new System.Windows.Forms.ColumnHeader();
+            maxdistanceHeader = new System.Windows.Forms.ColumnHeader();
+            dopplerHeader = new System.Windows.Forms.ColumnHeader();
+            pitchHeader = new System.Windows.Forms.ColumnHeader();
+            pitchrandHeader = new System.Windows.Forms.ColumnHeader();
+            localizeHeader = new System.Windows.Forms.ColumnHeader();
+            streamHeader = new System.Windows.Forms.ColumnHeader();
+            typeHeader = new System.Windows.Forms.ColumnHeader();
+            falloffHeader = new System.Windows.Forms.ColumnHeader();
+            stackHeader = new System.Windows.Forms.ColumnHeader();
+            reverbpresetHeader = new System.Windows.Forms.ColumnHeader();
+            reverbwetdryHeader = new System.Windows.Forms.ColumnHeader();
+            reverbreflectionsdelayHeader = new System.Windows.Forms.ColumnHeader();
+            reverbroomfrequencyHeader = new System.Windows.Forms.ColumnHeader();
+            reverbdelayHeader = new System.Windows.Forms.ColumnHeader();
+            reverbroomfiltermainHeader = new System.Windows.Forms.ColumnHeader();
+            reverbroomfilterhfHeader = new System.Windows.Forms.ColumnHeader();
+            reverbreflectionsgainHeader = new System.Windows.Forms.ColumnHeader();
+            reverbgainHeader = new System.Windows.Forms.ColumnHeader();
+            reverbdecaytimeHeader = new System.Windows.Forms.ColumnHeader();
+            reverbdensityHeader = new System.Windows.Forms.ColumnHeader();
+            reverbroomsizeHeader = new System.Windows.Forms.ColumnHeader();
+            YamlGroupBox = new System.Windows.Forms.GroupBox();
+            SaveYamlButton = new System.Windows.Forms.Button();
+            openyamlButton = new System.Windows.Forms.Button();
+            removeallButton = new System.Windows.Forms.Button();
+            removeButton = new System.Windows.Forms.Button();
+            addfileButton = new System.Windows.Forms.Button();
+            TabControl = new System.Windows.Forms.TabControl();
+            playbacktabPage = new System.Windows.Forms.TabPage();
+            groupBox4 = new System.Windows.Forms.GroupBox();
+            VolumetrackBar = new System.Windows.Forms.TrackBar();
+            VolumevaluenumericUpDown = new System.Windows.Forms.NumericUpDown();
+            PlaybackLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            FalloffcomboBox = new System.Windows.Forms.ComboBox();
+            PriorityLabel = new System.Windows.Forms.Label();
+            PrioritytrackBar = new System.Windows.Forms.TrackBar();
+            priorityvalueLabel = new System.Windows.Forms.Label();
+            StreamcheckBox = new System.Windows.Forms.CheckBox();
+            LocalizecheckBox = new System.Windows.Forms.CheckBox();
+            TypeLabel = new System.Windows.Forms.Label();
+            StreamLabel = new System.Windows.Forms.Label();
+            LocalizeLabel = new System.Windows.Forms.Label();
+            DopplertrackBar = new System.Windows.Forms.TrackBar();
+            dopplervalueLabel = new System.Windows.Forms.Label();
+            DopplerLabel = new System.Windows.Forms.Label();
+            FalloffLabel = new System.Windows.Forms.Label();
+            TypecomboBox = new System.Windows.Forms.ComboBox();
+            StackcomboBox = new System.Windows.Forms.ComboBox();
+            MinDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
+            MaxDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
+            Stacklabel = new System.Windows.Forms.Label();
+            MindistanceLabel = new System.Windows.Forms.Label();
+            MaxdistanceLabel = new System.Windows.Forms.Label();
+            organizetabPage = new System.Windows.Forms.TabPage();
+            OrganizeLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            EnumtextBox = new System.Windows.Forms.TextBox();
+            EnumButton = new System.Windows.Forms.Button();
+            SortcomboBox = new System.Windows.Forms.ComboBox();
+            SortLabel = new System.Windows.Forms.Label();
+            FindButton = new System.Windows.Forms.Button();
+            FindtextBox = new System.Windows.Forms.TextBox();
+            ChangeFilebutton = new System.Windows.Forms.Button();
+            ChangeFilelabel = new System.Windows.Forms.Label();
+            reverbtabPage = new System.Windows.Forms.TabPage();
+            RoomenableButton = new System.Windows.Forms.Button();
+            roomunmapButton = new System.Windows.Forms.Button();
+            roommapButton = new System.Windows.Forms.Button();
+            roomnametextBox = new System.Windows.Forms.TextBox();
+            roomLabel = new System.Windows.Forms.Label();
+            reverbwetdryPot = new NAudio.Gui.Pot();
+            reverbwetdryvalueLabel = new System.Windows.Forms.Label();
+            wetdryLabel = new System.Windows.Forms.Label();
+            filterremoveButton = new System.Windows.Forms.Button();
+            roomstoreButton = new System.Windows.Forms.Button();
+            reverbpresetcomboBox = new System.Windows.Forms.ComboBox();
+            filternametextBox = new System.Windows.Forms.TextBox();
+            reverbpresetLabel = new System.Windows.Forms.Label();
+            filtertypeLabel = new System.Windows.Forms.Label();
+            filtercomboBox = new System.Windows.Forms.ComboBox();
+            filterLabel = new System.Windows.Forms.Label();
+            filteroneoverqvalueLabel = new System.Windows.Forms.Label();
+            filterfrequencyvalueLabel = new System.Windows.Forms.Label();
+            filteroneoverqLabel = new System.Windows.Forms.Label();
+            filterfrequencyLabel = new System.Windows.Forms.Label();
+            filteroneoverqPot = new NAudio.Gui.Pot();
+            filterfrequencyPot = new NAudio.Gui.Pot();
+            effectstabPage = new System.Windows.Forms.TabPage();
+            tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            PitchshifterButton = new System.Windows.Forms.Button();
+            PitchenableButton = new System.Windows.Forms.Button();
+            DestructiveEffectsButton = new System.Windows.Forms.Button();
+            roomlistView = new System.Windows.Forms.ListView();
+            roomnameHeader = new System.Windows.Forms.ColumnHeader();
+            filternameHeader = new System.Windows.Forms.ColumnHeader();
+            filtertypeHeader = new System.Windows.Forms.ColumnHeader();
+            filterfrequencyHeader = new System.Windows.Forms.ColumnHeader();
+            filteroneoverqHeader = new System.Windows.Forms.ColumnHeader();
+            reverbidHeader = new System.Windows.Forms.ColumnHeader();
+            TimeGroupBox = new System.Windows.Forms.GroupBox();
+            timeLabel = new System.Windows.Forms.Label();
+            playbackTimer = new System.Windows.Forms.Timer(components);
+            selectedsoundLabel = new System.Windows.Forms.Label();
+            toolTip1 = new System.Windows.Forms.ToolTip(components);
+            newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            printPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            TableLayoutPanelMainSubDown = new System.Windows.Forms.TableLayoutPanel();
+            TableLayoutPanelMainRight = new System.Windows.Forms.TableLayoutPanel();
+            TableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            TableLayoutPanelMainSubTop = new System.Windows.Forms.TableLayoutPanel();
+            ManipulationGroupBox = new System.Windows.Forms.GroupBox();
+            menuStrip.SuspendLayout();
+            PlaybackGroupBox.SuspendLayout();
+            YamlGroupBox.SuspendLayout();
+            TabControl.SuspendLayout();
+            playbacktabPage.SuspendLayout();
+            groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)VolumetrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)VolumevaluenumericUpDown).BeginInit();
+            PlaybackLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PrioritytrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DopplertrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)MinDistancenumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)MaxDistancenumericUpDown).BeginInit();
+            organizetabPage.SuspendLayout();
+            OrganizeLayoutPanel.SuspendLayout();
+            reverbtabPage.SuspendLayout();
+            effectstabPage.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            TimeGroupBox.SuspendLayout();
+            TableLayoutPanelMainSubDown.SuspendLayout();
+            TableLayoutPanelMainRight.SuspendLayout();
+            TableLayoutPanelMain.SuspendLayout();
+            TableLayoutPanelMainSubTop.SuspendLayout();
+            ManipulationGroupBox.SuspendLayout();
+            SuspendLayout();
             // 
             // menuStrip
             // 
-            this.menuStrip.ImageScalingSize = new System.Drawing.Size(28, 28);
-            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SettingstoolStripMenuItem,
-            this.AbouttoolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(789, 24);
-            this.menuStrip.TabIndex = 0;
-            this.menuStrip.Text = "menuStrip1";
+            menuStrip.ImageScalingSize = new System.Drawing.Size(28, 28);
+            menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { SettingstoolStripMenuItem, AbouttoolStripMenuItem });
+            menuStrip.Location = new System.Drawing.Point(0, 0);
+            menuStrip.Name = "menuStrip";
+            menuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            menuStrip.Size = new System.Drawing.Size(964, 24);
+            menuStrip.TabIndex = 0;
+            menuStrip.Text = "menuStrip1";
             // 
             // SettingstoolStripMenuItem
             // 
-            this.SettingstoolStripMenuItem.Name = "SettingstoolStripMenuItem";
-            this.SettingstoolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.SettingstoolStripMenuItem.Text = "Settings";
-            this.SettingstoolStripMenuItem.Click += new System.EventHandler(this.SettingstoolStripMenuItem_Click);
+            SettingstoolStripMenuItem.Name = "SettingstoolStripMenuItem";
+            SettingstoolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            SettingstoolStripMenuItem.Text = "Settings";
+            SettingstoolStripMenuItem.Click += SettingstoolStripMenuItem_Click;
             // 
             // AbouttoolStripMenuItem
             // 
-            this.AbouttoolStripMenuItem.Name = "AbouttoolStripMenuItem";
-            this.AbouttoolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.AbouttoolStripMenuItem.Text = "About";
-            this.AbouttoolStripMenuItem.Click += new System.EventHandler(this.AbouttoolStripMenuItem2_Click);
+            AbouttoolStripMenuItem.Name = "AbouttoolStripMenuItem";
+            AbouttoolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            AbouttoolStripMenuItem.Text = "About";
+            AbouttoolStripMenuItem.Click += AbouttoolStripMenuItem2_Click;
             // 
-            // groupBox1
+            // PlaybackGroupBox
             // 
-            this.groupBox1.Controls.Add(this.LoopButton);
-            this.groupBox1.Controls.Add(this.ForwardButton);
-            this.groupBox1.Controls.Add(this.PlayButton);
-            this.groupBox1.Controls.Add(this.StopButton);
-            this.groupBox1.Controls.Add(this.BackButton);
-            this.groupBox1.Location = new System.Drawing.Point(14, 27);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(236, 64);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Playback";
+            PlaybackGroupBox.Controls.Add(LoopButton);
+            PlaybackGroupBox.Controls.Add(ForwardButton);
+            PlaybackGroupBox.Controls.Add(PlayButton);
+            PlaybackGroupBox.Controls.Add(StopButton);
+            PlaybackGroupBox.Controls.Add(BackButton);
+            PlaybackGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            PlaybackGroupBox.Location = new System.Drawing.Point(4, 4);
+            PlaybackGroupBox.Margin = new System.Windows.Forms.Padding(4);
+            PlaybackGroupBox.Name = "PlaybackGroupBox";
+            PlaybackGroupBox.Padding = new System.Windows.Forms.Padding(4);
+            PlaybackGroupBox.Size = new System.Drawing.Size(242, 66);
+            PlaybackGroupBox.TabIndex = 1;
+            PlaybackGroupBox.TabStop = false;
+            PlaybackGroupBox.Text = "Playback";
             // 
             // LoopButton
             // 
-            this.LoopButton.BackColor = System.Drawing.Color.Salmon;
-            this.LoopButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LoopButton.Location = new System.Drawing.Point(91, 22);
-            this.LoopButton.Name = "LoopButton";
-            this.LoopButton.Size = new System.Drawing.Size(50, 34);
-            this.LoopButton.TabIndex = 29;
-            this.LoopButton.Text = "Loop";
-            this.LoopButton.UseVisualStyleBackColor = false;
-            this.LoopButton.Click += new System.EventHandler(this.LoopButton_Click);
+            LoopButton.BackColor = System.Drawing.Color.Salmon;
+            LoopButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LoopButton.Location = new System.Drawing.Point(91, 22);
+            LoopButton.Name = "LoopButton";
+            LoopButton.Size = new System.Drawing.Size(50, 34);
+            LoopButton.TabIndex = 29;
+            LoopButton.Text = "Loop";
+            LoopButton.UseVisualStyleBackColor = false;
+            LoopButton.Click += LoopButton_Click;
             // 
             // ForwardButton
             // 
-            this.ForwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.ForwardButton.Location = new System.Drawing.Point(190, 22);
-            this.ForwardButton.Margin = new System.Windows.Forms.Padding(4);
-            this.ForwardButton.Name = "ForwardButton";
-            this.ForwardButton.Size = new System.Drawing.Size(34, 34);
-            this.ForwardButton.TabIndex = 3;
-            this.ForwardButton.Text = ">>";
-            this.ForwardButton.UseVisualStyleBackColor = true;
-            this.ForwardButton.Click += new System.EventHandler(this.ForwardButton_Click);
+            ForwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            ForwardButton.Location = new System.Drawing.Point(190, 22);
+            ForwardButton.Margin = new System.Windows.Forms.Padding(4);
+            ForwardButton.Name = "ForwardButton";
+            ForwardButton.Size = new System.Drawing.Size(34, 34);
+            ForwardButton.TabIndex = 3;
+            ForwardButton.Text = ">>";
+            ForwardButton.UseVisualStyleBackColor = true;
+            ForwardButton.Click += ForwardButton_Click;
             // 
             // PlayButton
             // 
-            this.PlayButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PlayButton.Location = new System.Drawing.Point(148, 22);
-            this.PlayButton.Margin = new System.Windows.Forms.Padding(4);
-            this.PlayButton.Name = "PlayButton";
-            this.PlayButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.PlayButton.Size = new System.Drawing.Size(34, 34);
-            this.PlayButton.TabIndex = 2;
-            this.PlayButton.Text = "▶";
-            this.PlayButton.UseVisualStyleBackColor = true;
-            this.PlayButton.Click += new System.EventHandler(this.PlayButton_Click);
+            PlayButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            PlayButton.Location = new System.Drawing.Point(148, 22);
+            PlayButton.Margin = new System.Windows.Forms.Padding(4);
+            PlayButton.Name = "PlayButton";
+            PlayButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            PlayButton.Size = new System.Drawing.Size(34, 34);
+            PlayButton.TabIndex = 2;
+            PlayButton.Text = "▶";
+            PlayButton.UseVisualStyleBackColor = true;
+            PlayButton.Click += PlayButton_Click;
             // 
             // StopButton
             // 
-            this.StopButton.Location = new System.Drawing.Point(50, 22);
-            this.StopButton.Margin = new System.Windows.Forms.Padding(4);
-            this.StopButton.Name = "StopButton";
-            this.StopButton.Size = new System.Drawing.Size(34, 34);
-            this.StopButton.TabIndex = 1;
-            this.StopButton.Text = "■";
-            this.StopButton.UseVisualStyleBackColor = true;
-            this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
+            StopButton.Location = new System.Drawing.Point(50, 22);
+            StopButton.Margin = new System.Windows.Forms.Padding(4);
+            StopButton.Name = "StopButton";
+            StopButton.Size = new System.Drawing.Size(34, 34);
+            StopButton.TabIndex = 1;
+            StopButton.Text = "■";
+            StopButton.UseVisualStyleBackColor = true;
+            StopButton.Click += StopButton_Click;
             // 
             // BackButton
             // 
-            this.BackButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.BackButton.Location = new System.Drawing.Point(8, 22);
-            this.BackButton.Margin = new System.Windows.Forms.Padding(4);
-            this.BackButton.Name = "BackButton";
-            this.BackButton.Size = new System.Drawing.Size(34, 34);
-            this.BackButton.TabIndex = 0;
-            this.BackButton.Text = "<<";
-            this.BackButton.UseVisualStyleBackColor = true;
-            this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
+            BackButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            BackButton.Location = new System.Drawing.Point(8, 22);
+            BackButton.Margin = new System.Windows.Forms.Padding(4);
+            BackButton.Name = "BackButton";
+            BackButton.Size = new System.Drawing.Size(34, 34);
+            BackButton.TabIndex = 0;
+            BackButton.Text = "<<";
+            BackButton.UseVisualStyleBackColor = true;
+            BackButton.Click += BackButton_Click;
             // 
             // filelistView
             // 
-            this.filelistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.titleHeader,
-            this.filenameHeader,
-            this.filepathHeader,
-            this.roommapHeader,
-            this.roomidHeader,
-            this.sizeHeader,
-            this.durationHeader,
-            this.channelsHeader,
-            this.samplerateHeader,
-            this.bitrateHeader,
-            this.bitsizeHeader,
-            this.volumeHeader,
-            this.priorityHeader,
-            this.loopHeader,
-            this.mindistanceHeader,
-            this.maxdistanceHeader,
-            this.dopplerHeader,
-            this.pitchHeader,
-            this.pitchrandHeader,
-            this.localizeHeader,
-            this.streamHeader,
-            this.typeHeader,
-            this.falloffHeader,
-            this.stackHeader});
-            this.filelistView.FullRowSelect = true;
-            this.filelistView.GridLines = true;
-            this.filelistView.Location = new System.Drawing.Point(13, 107);
-            this.filelistView.Margin = new System.Windows.Forms.Padding(4);
-            this.filelistView.Name = "filelistView";
-            this.filelistView.Size = new System.Drawing.Size(405, 441);
-            this.filelistView.TabIndex = 2;
-            this.filelistView.UseCompatibleStateImageBehavior = false;
-            this.filelistView.View = System.Windows.Forms.View.Details;
-            this.filelistView.SelectedIndexChanged += new System.EventHandler(this.filelistView_SelectedIndexChanged);
+            filelistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { titleHeader, filenameHeader, filepathHeader, roommapHeader, roomidHeader, sizeHeader, durationHeader, channelsHeader, samplerateHeader, bitrateHeader, bitsizeHeader, volumeHeader, priorityHeader, loopHeader, mindistanceHeader, maxdistanceHeader, dopplerHeader, pitchHeader, pitchrandHeader, localizeHeader, streamHeader, typeHeader, falloffHeader, stackHeader });
+            filelistView.Dock = System.Windows.Forms.DockStyle.Fill;
+            filelistView.FullRowSelect = true;
+            filelistView.GridLines = true;
+            filelistView.Location = new System.Drawing.Point(4, 4);
+            filelistView.Margin = new System.Windows.Forms.Padding(4);
+            filelistView.Name = "filelistView";
+            filelistView.Size = new System.Drawing.Size(580, 442);
+            filelistView.TabIndex = 2;
+            filelistView.UseCompatibleStateImageBehavior = false;
+            filelistView.View = System.Windows.Forms.View.Details;
+            filelistView.SelectedIndexChanged += filelistView_SelectedIndexChanged;
             // 
             // titleHeader
             // 
-            this.titleHeader.Text = "Title";
-            this.titleHeader.Width = 150;
+            titleHeader.Text = "Title";
+            titleHeader.Width = 150;
             // 
             // filenameHeader
             // 
-            this.filenameHeader.Text = "Filename";
-            this.filenameHeader.Width = 150;
+            filenameHeader.Text = "Filename";
+            filenameHeader.Width = 150;
             // 
             // filepathHeader
             // 
-            this.filepathHeader.Text = "Filepath";
-            this.filepathHeader.Width = 180;
+            filepathHeader.Text = "Filepath";
+            filepathHeader.Width = 180;
             // 
             // roommapHeader
             // 
-            this.roommapHeader.Text = "Mapped Room";
-            this.roommapHeader.Width = 120;
+            roommapHeader.Text = "Mapped Room";
+            roommapHeader.Width = 120;
             // 
             // roomidHeader
             // 
-            this.roomidHeader.Text = "Room ID";
+            roomidHeader.Text = "Room ID";
             // 
             // sizeHeader
             // 
-            this.sizeHeader.Text = "Size (kByte)";
-            this.sizeHeader.Width = 120;
+            sizeHeader.Text = "Size (kByte)";
+            sizeHeader.Width = 120;
             // 
             // durationHeader
             // 
-            this.durationHeader.Text = "Duration (mm:ss)";
-            this.durationHeader.Width = 120;
+            durationHeader.Text = "Duration (mm:ss)";
+            durationHeader.Width = 120;
             // 
             // channelsHeader
             // 
-            this.channelsHeader.Text = "Channels";
-            this.channelsHeader.Width = 120;
+            channelsHeader.Text = "Channels";
+            channelsHeader.Width = 120;
             // 
             // samplerateHeader
             // 
-            this.samplerateHeader.Text = "Sample Rate (kHz)";
-            this.samplerateHeader.Width = 120;
+            samplerateHeader.Text = "Sample Rate (kHz)";
+            samplerateHeader.Width = 120;
             // 
             // bitrateHeader
             // 
-            this.bitrateHeader.Text = "Bit Rate (kBit/s)";
-            this.bitrateHeader.Width = 120;
+            bitrateHeader.Text = "Bit Rate (kBit/s)";
+            bitrateHeader.Width = 120;
             // 
             // bitsizeHeader
             // 
-            this.bitsizeHeader.Text = "Bit Size (Bit)";
-            this.bitsizeHeader.Width = 120;
+            bitsizeHeader.Text = "Bit Size (Bit)";
+            bitsizeHeader.Width = 120;
             // 
             // volumeHeader
             // 
-            this.volumeHeader.Text = "Volume";
-            this.volumeHeader.Width = 120;
+            volumeHeader.Text = "Volume";
+            volumeHeader.Width = 120;
             // 
             // priorityHeader
             // 
-            this.priorityHeader.Text = "Priority";
-            this.priorityHeader.Width = 120;
+            priorityHeader.Text = "Priority";
+            priorityHeader.Width = 120;
             // 
             // loopHeader
             // 
-            this.loopHeader.Text = "Loop";
-            this.loopHeader.Width = 120;
+            loopHeader.Text = "Loop";
+            loopHeader.Width = 120;
             // 
             // mindistanceHeader
             // 
-            this.mindistanceHeader.Text = "Min Distance";
-            this.mindistanceHeader.Width = 120;
+            mindistanceHeader.Text = "Min Distance";
+            mindistanceHeader.Width = 120;
             // 
             // maxdistanceHeader
             // 
-            this.maxdistanceHeader.Text = "Max Distance";
-            this.maxdistanceHeader.Width = 120;
+            maxdistanceHeader.Text = "Max Distance";
+            maxdistanceHeader.Width = 120;
             // 
             // dopplerHeader
             // 
-            this.dopplerHeader.Text = "Doppler";
-            this.dopplerHeader.Width = 120;
+            dopplerHeader.Text = "Doppler";
+            dopplerHeader.Width = 120;
             // 
             // pitchHeader
             // 
-            this.pitchHeader.Text = "Pitch";
-            this.pitchHeader.Width = 120;
+            pitchHeader.Text = "Pitch";
+            pitchHeader.Width = 120;
             // 
             // pitchrandHeader
             // 
-            this.pitchrandHeader.Text = "Pitch Rand";
-            this.pitchrandHeader.Width = 120;
+            pitchrandHeader.Text = "Pitch Rand";
+            pitchrandHeader.Width = 120;
             // 
             // localizeHeader
             // 
-            this.localizeHeader.Text = "Localize";
-            this.localizeHeader.Width = 120;
+            localizeHeader.Text = "Localize";
+            localizeHeader.Width = 120;
             // 
             // streamHeader
             // 
-            this.streamHeader.Text = "Stream";
-            this.streamHeader.Width = 120;
+            streamHeader.Text = "Stream";
+            streamHeader.Width = 120;
             // 
             // typeHeader
             // 
-            this.typeHeader.Text = "Type";
-            this.typeHeader.Width = 120;
+            typeHeader.Text = "Type";
+            typeHeader.Width = 120;
             // 
             // falloffHeader
             // 
-            this.falloffHeader.Text = "Falloff";
-            this.falloffHeader.Width = 120;
+            falloffHeader.Text = "Falloff";
+            falloffHeader.Width = 120;
             // 
             // stackHeader
             // 
-            this.stackHeader.Text = "Stack";
-            this.stackHeader.Width = 120;
+            stackHeader.Text = "Stack";
+            stackHeader.Width = 120;
             // 
             // reverbpresetHeader
             // 
-            this.reverbpresetHeader.Text = "Reverb Preset";
-            this.reverbpresetHeader.Width = 120;
+            reverbpresetHeader.Text = "Reverb Preset";
+            reverbpresetHeader.Width = 120;
             // 
             // reverbwetdryHeader
             // 
-            this.reverbwetdryHeader.Text = "Reverb Mix (%)";
-            this.reverbwetdryHeader.Width = 120;
+            reverbwetdryHeader.Text = "Reverb Mix (%)";
+            reverbwetdryHeader.Width = 120;
             // 
             // reverbreflectionsdelayHeader
             // 
-            this.reverbreflectionsdelayHeader.Text = "Reflections Delay (ms)";
-            this.reverbreflectionsdelayHeader.Width = 120;
+            reverbreflectionsdelayHeader.Text = "Reflections Delay (ms)";
+            reverbreflectionsdelayHeader.Width = 120;
             // 
             // reverbroomfrequencyHeader
             // 
-            this.reverbroomfrequencyHeader.Text = "Room Frequency (Hz)";
-            this.reverbroomfrequencyHeader.Width = 120;
+            reverbroomfrequencyHeader.Text = "Room Frequency (Hz)";
+            reverbroomfrequencyHeader.Width = 120;
             // 
             // reverbdelayHeader
             // 
-            this.reverbdelayHeader.Text = "Reverb Delay (ms)";
-            this.reverbdelayHeader.Width = 120;
+            reverbdelayHeader.Text = "Reverb Delay (ms)";
+            reverbdelayHeader.Width = 120;
             // 
             // reverbroomfiltermainHeader
             // 
-            this.reverbroomfiltermainHeader.Text = "Room Filter Main (dB)";
-            this.reverbroomfiltermainHeader.Width = 120;
+            reverbroomfiltermainHeader.Text = "Room Filter Main (dB)";
+            reverbroomfiltermainHeader.Width = 120;
             // 
             // reverbroomfilterhfHeader
             // 
-            this.reverbroomfilterhfHeader.Text = "Room Filter HF (dB)";
-            this.reverbroomfilterhfHeader.Width = 120;
+            reverbroomfilterhfHeader.Text = "Room Filter HF (dB)";
+            reverbroomfilterhfHeader.Width = 120;
             // 
             // reverbreflectionsgainHeader
             // 
-            this.reverbreflectionsgainHeader.Text = "Reflections Gain (dB)";
-            this.reverbreflectionsgainHeader.Width = 120;
+            reverbreflectionsgainHeader.Text = "Reflections Gain (dB)";
+            reverbreflectionsgainHeader.Width = 120;
             // 
             // reverbgainHeader
             // 
-            this.reverbgainHeader.Text = "Reverb Gain (dB)";
-            this.reverbgainHeader.Width = 120;
+            reverbgainHeader.Text = "Reverb Gain (dB)";
+            reverbgainHeader.Width = 120;
             // 
             // reverbdecaytimeHeader
             // 
-            this.reverbdecaytimeHeader.Text = "Decay Time (ms)";
-            this.reverbdecaytimeHeader.Width = 120;
+            reverbdecaytimeHeader.Text = "Decay Time (ms)";
+            reverbdecaytimeHeader.Width = 120;
             // 
             // reverbdensityHeader
             // 
-            this.reverbdensityHeader.Text = "Density (%)";
-            this.reverbdensityHeader.Width = 120;
+            reverbdensityHeader.Text = "Density (%)";
+            reverbdensityHeader.Width = 120;
             // 
             // reverbroomsizeHeader
             // 
-            this.reverbroomsizeHeader.Text = "Room Size (ft)";
-            this.reverbroomsizeHeader.Width = 120;
+            reverbroomsizeHeader.Text = "Room Size (ft)";
+            reverbroomsizeHeader.Width = 120;
             // 
-            // groupBox2
+            // YamlGroupBox
             // 
-            this.groupBox2.Controls.Add(this.SaveYamlButton);
-            this.groupBox2.Controls.Add(this.openyamlButton);
-            this.groupBox2.Controls.Add(this.removeallButton);
-            this.groupBox2.Controls.Add(this.removeButton);
-            this.groupBox2.Controls.Add(this.addfileButton);
-            this.groupBox2.Location = new System.Drawing.Point(348, 27);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(428, 64);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "YAML Editor";
+            YamlGroupBox.Controls.Add(SaveYamlButton);
+            YamlGroupBox.Controls.Add(openyamlButton);
+            YamlGroupBox.Controls.Add(removeallButton);
+            YamlGroupBox.Controls.Add(removeButton);
+            YamlGroupBox.Controls.Add(addfileButton);
+            YamlGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            YamlGroupBox.Location = new System.Drawing.Point(354, 4);
+            YamlGroupBox.Margin = new System.Windows.Forms.Padding(4);
+            YamlGroupBox.Name = "YamlGroupBox";
+            YamlGroupBox.Padding = new System.Windows.Forms.Padding(4);
+            YamlGroupBox.Size = new System.Drawing.Size(442, 66);
+            YamlGroupBox.TabIndex = 3;
+            YamlGroupBox.TabStop = false;
+            YamlGroupBox.Text = "YAML Editor";
             // 
             // SaveYamlButton
             // 
-            this.SaveYamlButton.Enabled = false;
-            this.SaveYamlButton.Location = new System.Drawing.Point(340, 22);
-            this.SaveYamlButton.Margin = new System.Windows.Forms.Padding(4);
-            this.SaveYamlButton.Name = "SaveYamlButton";
-            this.SaveYamlButton.Size = new System.Drawing.Size(80, 34);
-            this.SaveYamlButton.TabIndex = 5;
-            this.SaveYamlButton.Text = "Save YAML";
-            this.SaveYamlButton.UseVisualStyleBackColor = true;
-            this.SaveYamlButton.Click += new System.EventHandler(this.SaveYamlButton_Click);
+            SaveYamlButton.Enabled = false;
+            SaveYamlButton.Location = new System.Drawing.Point(340, 22);
+            SaveYamlButton.Margin = new System.Windows.Forms.Padding(4);
+            SaveYamlButton.Name = "SaveYamlButton";
+            SaveYamlButton.Size = new System.Drawing.Size(80, 34);
+            SaveYamlButton.TabIndex = 5;
+            SaveYamlButton.Text = "Save YAML";
+            SaveYamlButton.UseVisualStyleBackColor = true;
+            SaveYamlButton.Click += SaveYamlButton_Click;
             // 
             // openyamlButton
             // 
-            this.openyamlButton.Location = new System.Drawing.Point(252, 22);
-            this.openyamlButton.Margin = new System.Windows.Forms.Padding(4);
-            this.openyamlButton.Name = "openyamlButton";
-            this.openyamlButton.Size = new System.Drawing.Size(80, 34);
-            this.openyamlButton.TabIndex = 4;
-            this.openyamlButton.Text = "Open YAML";
-            this.openyamlButton.UseVisualStyleBackColor = true;
-            this.openyamlButton.Click += new System.EventHandler(this.openyamlButton_Click);
+            openyamlButton.Location = new System.Drawing.Point(252, 22);
+            openyamlButton.Margin = new System.Windows.Forms.Padding(4);
+            openyamlButton.Name = "openyamlButton";
+            openyamlButton.Size = new System.Drawing.Size(80, 34);
+            openyamlButton.TabIndex = 4;
+            openyamlButton.Text = "Open YAML";
+            openyamlButton.UseVisualStyleBackColor = true;
+            openyamlButton.Click += openyamlButton_Click;
             // 
             // removeallButton
             // 
-            this.removeallButton.Enabled = false;
-            this.removeallButton.Location = new System.Drawing.Point(164, 22);
-            this.removeallButton.Margin = new System.Windows.Forms.Padding(4);
-            this.removeallButton.Name = "removeallButton";
-            this.removeallButton.Size = new System.Drawing.Size(80, 34);
-            this.removeallButton.TabIndex = 3;
-            this.removeallButton.Text = "Remove All";
-            this.removeallButton.UseVisualStyleBackColor = true;
-            this.removeallButton.Click += new System.EventHandler(this.removeallButton_Click);
+            removeallButton.Enabled = false;
+            removeallButton.Location = new System.Drawing.Point(164, 22);
+            removeallButton.Margin = new System.Windows.Forms.Padding(4);
+            removeallButton.Name = "removeallButton";
+            removeallButton.Size = new System.Drawing.Size(80, 34);
+            removeallButton.TabIndex = 3;
+            removeallButton.Text = "Remove All";
+            removeallButton.UseVisualStyleBackColor = true;
+            removeallButton.Click += removeallButton_Click;
             // 
             // removeButton
             // 
-            this.removeButton.Enabled = false;
-            this.removeButton.Location = new System.Drawing.Point(86, 22);
-            this.removeButton.Margin = new System.Windows.Forms.Padding(4);
-            this.removeButton.Name = "removeButton";
-            this.removeButton.Size = new System.Drawing.Size(70, 34);
-            this.removeButton.TabIndex = 1;
-            this.removeButton.Text = "Remove";
-            this.removeButton.UseVisualStyleBackColor = true;
-            this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
+            removeButton.Enabled = false;
+            removeButton.Location = new System.Drawing.Point(86, 22);
+            removeButton.Margin = new System.Windows.Forms.Padding(4);
+            removeButton.Name = "removeButton";
+            removeButton.Size = new System.Drawing.Size(70, 34);
+            removeButton.TabIndex = 1;
+            removeButton.Text = "Remove";
+            removeButton.UseVisualStyleBackColor = true;
+            removeButton.Click += removeButton_Click;
             // 
             // addfileButton
             // 
-            this.addfileButton.Location = new System.Drawing.Point(8, 22);
-            this.addfileButton.Margin = new System.Windows.Forms.Padding(4);
-            this.addfileButton.Name = "addfileButton";
-            this.addfileButton.Size = new System.Drawing.Size(70, 34);
-            this.addfileButton.TabIndex = 0;
-            this.addfileButton.Text = "Add Files";
-            this.addfileButton.UseVisualStyleBackColor = true;
-            this.addfileButton.Click += new System.EventHandler(this.addfileButton_Click);
+            addfileButton.Location = new System.Drawing.Point(8, 22);
+            addfileButton.Margin = new System.Windows.Forms.Padding(4);
+            addfileButton.Name = "addfileButton";
+            addfileButton.Size = new System.Drawing.Size(70, 34);
+            addfileButton.TabIndex = 0;
+            addfileButton.Text = "Add Files";
+            addfileButton.UseVisualStyleBackColor = true;
+            addfileButton.Click += addfileButton_Click;
             // 
-            // tabControl1
+            // TabControl
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.playbacktabPage);
-            this.tabControl1.Controls.Add(this.organizetabPage);
-            this.tabControl1.Controls.Add(this.reverbtabPage);
-            this.tabControl1.Controls.Add(this.effectstabPage);
-            this.tabControl1.Location = new System.Drawing.Point(432, 135);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
-            this.tabControl1.Multiline = true;
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(344, 313);
-            this.tabControl1.TabIndex = 4;
+            TabControl.Controls.Add(playbacktabPage);
+            TabControl.Controls.Add(organizetabPage);
+            TabControl.Controls.Add(reverbtabPage);
+            TabControl.Controls.Add(effectstabPage);
+            TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            TabControl.Location = new System.Drawing.Point(4, 29);
+            TabControl.Margin = new System.Windows.Forms.Padding(4);
+            TabControl.Multiline = true;
+            TabControl.Name = "TabControl";
+            TabControl.SelectedIndex = 0;
+            TabControl.Size = new System.Drawing.Size(356, 312);
+            TabControl.TabIndex = 4;
             // 
             // playbacktabPage
             // 
-            this.playbacktabPage.Controls.Add(this.groupBox4);
-            this.playbacktabPage.Controls.Add(this.PlaybackLayoutPanel);
-            this.playbacktabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.playbacktabPage.Location = new System.Drawing.Point(4, 24);
-            this.playbacktabPage.Margin = new System.Windows.Forms.Padding(4);
-            this.playbacktabPage.Name = "playbacktabPage";
-            this.playbacktabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.playbacktabPage.Size = new System.Drawing.Size(336, 285);
-            this.playbacktabPage.TabIndex = 0;
-            this.playbacktabPage.Text = "Playback";
-            this.playbacktabPage.UseVisualStyleBackColor = true;
+            playbacktabPage.Controls.Add(groupBox4);
+            playbacktabPage.Controls.Add(PlaybackLayoutPanel);
+            playbacktabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            playbacktabPage.Location = new System.Drawing.Point(4, 24);
+            playbacktabPage.Margin = new System.Windows.Forms.Padding(4);
+            playbacktabPage.Name = "playbacktabPage";
+            playbacktabPage.Padding = new System.Windows.Forms.Padding(4);
+            playbacktabPage.Size = new System.Drawing.Size(348, 284);
+            playbacktabPage.TabIndex = 0;
+            playbacktabPage.Text = "Playback";
+            playbacktabPage.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.VolumetrackBar);
-            this.groupBox4.Controls.Add(this.VolumevaluenumericUpDown);
-            this.groupBox4.Location = new System.Drawing.Point(276, 6);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(57, 281);
-            this.groupBox4.TabIndex = 28;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Vol %";
+            groupBox4.Controls.Add(VolumetrackBar);
+            groupBox4.Controls.Add(VolumevaluenumericUpDown);
+            groupBox4.Location = new System.Drawing.Point(276, 6);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new System.Drawing.Size(57, 281);
+            groupBox4.TabIndex = 28;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Vol %";
             // 
             // VolumetrackBar
             // 
-            this.VolumetrackBar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.VolumetrackBar.LargeChange = 1;
-            this.VolumetrackBar.Location = new System.Drawing.Point(5, 21);
-            this.VolumetrackBar.Margin = new System.Windows.Forms.Padding(4);
-            this.VolumetrackBar.Maximum = 100;
-            this.VolumetrackBar.Name = "VolumetrackBar";
-            this.VolumetrackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.VolumetrackBar.Size = new System.Drawing.Size(45, 222);
-            this.VolumetrackBar.TabIndex = 1;
-            this.VolumetrackBar.Value = 100;
-            this.VolumetrackBar.Scroll += new System.EventHandler(this.VolumetrackBar_Scroll_1);
+            VolumetrackBar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            VolumetrackBar.LargeChange = 1;
+            VolumetrackBar.Location = new System.Drawing.Point(5, 21);
+            VolumetrackBar.Margin = new System.Windows.Forms.Padding(4);
+            VolumetrackBar.Maximum = 100;
+            VolumetrackBar.Name = "VolumetrackBar";
+            VolumetrackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
+            VolumetrackBar.Size = new System.Drawing.Size(45, 222);
+            VolumetrackBar.TabIndex = 1;
+            VolumetrackBar.Value = 100;
+            VolumetrackBar.Scroll += VolumetrackBar_Scroll_1;
             // 
             // VolumevaluenumericUpDown
             // 
-            this.VolumevaluenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.VolumevaluenumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.VolumevaluenumericUpDown.Location = new System.Drawing.Point(5, 249);
-            this.VolumevaluenumericUpDown.Margin = new System.Windows.Forms.Padding(2);
-            this.VolumevaluenumericUpDown.Name = "VolumevaluenumericUpDown";
-            this.VolumevaluenumericUpDown.Size = new System.Drawing.Size(47, 22);
-            this.VolumevaluenumericUpDown.TabIndex = 26;
-            this.VolumevaluenumericUpDown.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.VolumevaluenumericUpDown.ValueChanged += new System.EventHandler(this.VolumevaluenumericUpDown_ValueChanged);
+            VolumevaluenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
+            VolumevaluenumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            VolumevaluenumericUpDown.Location = new System.Drawing.Point(5, 249);
+            VolumevaluenumericUpDown.Margin = new System.Windows.Forms.Padding(2);
+            VolumevaluenumericUpDown.Name = "VolumevaluenumericUpDown";
+            VolumevaluenumericUpDown.Size = new System.Drawing.Size(47, 22);
+            VolumevaluenumericUpDown.TabIndex = 26;
+            VolumevaluenumericUpDown.Value = new decimal(new int[] { 100, 0, 0, 0 });
+            VolumevaluenumericUpDown.ValueChanged += VolumevaluenumericUpDown_ValueChanged;
             // 
             // PlaybackLayoutPanel
             // 
-            this.PlaybackLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.PlaybackLayoutPanel.ColumnCount = 3;
-            this.PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52F));
-            this.PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18F));
-            this.PlaybackLayoutPanel.Controls.Add(this.FalloffcomboBox, 1, 5);
-            this.PlaybackLayoutPanel.Controls.Add(this.PriorityLabel, 0, 0);
-            this.PlaybackLayoutPanel.Controls.Add(this.PrioritytrackBar, 1, 0);
-            this.PlaybackLayoutPanel.Controls.Add(this.priorityvalueLabel, 2, 0);
-            this.PlaybackLayoutPanel.Controls.Add(this.StreamcheckBox, 1, 3);
-            this.PlaybackLayoutPanel.Controls.Add(this.LocalizecheckBox, 1, 2);
-            this.PlaybackLayoutPanel.Controls.Add(this.TypeLabel, 0, 4);
-            this.PlaybackLayoutPanel.Controls.Add(this.StreamLabel, 0, 3);
-            this.PlaybackLayoutPanel.Controls.Add(this.LocalizeLabel, 0, 2);
-            this.PlaybackLayoutPanel.Controls.Add(this.DopplertrackBar, 1, 1);
-            this.PlaybackLayoutPanel.Controls.Add(this.dopplervalueLabel, 2, 1);
-            this.PlaybackLayoutPanel.Controls.Add(this.DopplerLabel, 0, 1);
-            this.PlaybackLayoutPanel.Controls.Add(this.FalloffLabel, 0, 5);
-            this.PlaybackLayoutPanel.Controls.Add(this.TypecomboBox, 1, 4);
-            this.PlaybackLayoutPanel.Controls.Add(this.StackcomboBox, 1, 6);
-            this.PlaybackLayoutPanel.Controls.Add(this.MinDistancenumericUpDown, 1, 8);
-            this.PlaybackLayoutPanel.Controls.Add(this.MaxDistancenumericUpDown, 1, 7);
-            this.PlaybackLayoutPanel.Controls.Add(this.Stacklabel, 0, 6);
-            this.PlaybackLayoutPanel.Controls.Add(this.MindistanceLabel, 0, 8);
-            this.PlaybackLayoutPanel.Controls.Add(this.MaxdistanceLabel, 0, 7);
-            this.PlaybackLayoutPanel.Location = new System.Drawing.Point(4, 6);
-            this.PlaybackLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
-            this.PlaybackLayoutPanel.Name = "PlaybackLayoutPanel";
-            this.PlaybackLayoutPanel.RowCount = 9;
-            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.PlaybackLayoutPanel.Size = new System.Drawing.Size(265, 271);
-            this.PlaybackLayoutPanel.TabIndex = 2;
+            PlaybackLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            PlaybackLayoutPanel.ColumnCount = 3;
+            PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52F));
+            PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18F));
+            PlaybackLayoutPanel.Controls.Add(FalloffcomboBox, 1, 5);
+            PlaybackLayoutPanel.Controls.Add(PriorityLabel, 0, 0);
+            PlaybackLayoutPanel.Controls.Add(PrioritytrackBar, 1, 0);
+            PlaybackLayoutPanel.Controls.Add(priorityvalueLabel, 2, 0);
+            PlaybackLayoutPanel.Controls.Add(StreamcheckBox, 1, 3);
+            PlaybackLayoutPanel.Controls.Add(LocalizecheckBox, 1, 2);
+            PlaybackLayoutPanel.Controls.Add(TypeLabel, 0, 4);
+            PlaybackLayoutPanel.Controls.Add(StreamLabel, 0, 3);
+            PlaybackLayoutPanel.Controls.Add(LocalizeLabel, 0, 2);
+            PlaybackLayoutPanel.Controls.Add(DopplertrackBar, 1, 1);
+            PlaybackLayoutPanel.Controls.Add(dopplervalueLabel, 2, 1);
+            PlaybackLayoutPanel.Controls.Add(DopplerLabel, 0, 1);
+            PlaybackLayoutPanel.Controls.Add(FalloffLabel, 0, 5);
+            PlaybackLayoutPanel.Controls.Add(TypecomboBox, 1, 4);
+            PlaybackLayoutPanel.Controls.Add(StackcomboBox, 1, 6);
+            PlaybackLayoutPanel.Controls.Add(MinDistancenumericUpDown, 1, 8);
+            PlaybackLayoutPanel.Controls.Add(MaxDistancenumericUpDown, 1, 7);
+            PlaybackLayoutPanel.Controls.Add(Stacklabel, 0, 6);
+            PlaybackLayoutPanel.Controls.Add(MindistanceLabel, 0, 8);
+            PlaybackLayoutPanel.Controls.Add(MaxdistanceLabel, 0, 7);
+            PlaybackLayoutPanel.Location = new System.Drawing.Point(4, 6);
+            PlaybackLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
+            PlaybackLayoutPanel.Name = "PlaybackLayoutPanel";
+            PlaybackLayoutPanel.RowCount = 9;
+            PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            PlaybackLayoutPanel.Size = new System.Drawing.Size(265, 271);
+            PlaybackLayoutPanel.TabIndex = 2;
             // 
             // FalloffcomboBox
             // 
-            this.FalloffcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.FalloffcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.FalloffcomboBox.FormattingEnabled = true;
-            this.FalloffcomboBox.Items.AddRange(new object[] {
-            "Linear",
-            "Logarithmic"});
-            this.FalloffcomboBox.Location = new System.Drawing.Point(83, 154);
-            this.FalloffcomboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.FalloffcomboBox.Name = "FalloffcomboBox";
-            this.FalloffcomboBox.Size = new System.Drawing.Size(129, 23);
-            this.FalloffcomboBox.TabIndex = 25;
-            this.FalloffcomboBox.SelectedIndexChanged += new System.EventHandler(this.FalloffcomboBox_SelectedIndexChanged);
+            FalloffcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            FalloffcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            FalloffcomboBox.FormattingEnabled = true;
+            FalloffcomboBox.Items.AddRange(new object[] { "Linear", "Logarithmic" });
+            FalloffcomboBox.Location = new System.Drawing.Point(83, 154);
+            FalloffcomboBox.Margin = new System.Windows.Forms.Padding(4);
+            FalloffcomboBox.Name = "FalloffcomboBox";
+            FalloffcomboBox.Size = new System.Drawing.Size(129, 23);
+            FalloffcomboBox.TabIndex = 25;
+            FalloffcomboBox.SelectedIndexChanged += FalloffcomboBox_SelectedIndexChanged;
             // 
             // PriorityLabel
             // 
-            this.PriorityLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.PriorityLabel.AutoSize = true;
-            this.PriorityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PriorityLabel.Location = new System.Drawing.Point(4, 7);
-            this.PriorityLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.PriorityLabel.Name = "PriorityLabel";
-            this.PriorityLabel.Size = new System.Drawing.Size(51, 16);
-            this.PriorityLabel.TabIndex = 3;
-            this.PriorityLabel.Text = "Priority:";
-            this.PriorityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.PriorityLabel, "Determines the priority of this audio source among all the ones that coexist in t" +
-        "he scene:\r\n- 0 = most important\r\n- 128 = Default\r\n- 256 = least important");
+            PriorityLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            PriorityLabel.AutoSize = true;
+            PriorityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            PriorityLabel.Location = new System.Drawing.Point(4, 7);
+            PriorityLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            PriorityLabel.Name = "PriorityLabel";
+            PriorityLabel.Size = new System.Drawing.Size(51, 16);
+            PriorityLabel.TabIndex = 3;
+            PriorityLabel.Text = "Priority:";
+            PriorityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(PriorityLabel, "Determines the priority of this audio source among all the ones that coexist in the scene:\r\n- 0 = most important\r\n- 128 = Default\r\n- 256 = least important");
             // 
             // PrioritytrackBar
             // 
-            this.PrioritytrackBar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.PrioritytrackBar.Location = new System.Drawing.Point(83, 4);
-            this.PrioritytrackBar.Margin = new System.Windows.Forms.Padding(4);
-            this.PrioritytrackBar.Maximum = 255;
-            this.PrioritytrackBar.Name = "PrioritytrackBar";
-            this.PrioritytrackBar.Size = new System.Drawing.Size(129, 22);
-            this.PrioritytrackBar.TabIndex = 4;
-            this.PrioritytrackBar.Value = 128;
-            this.PrioritytrackBar.Scroll += new System.EventHandler(this.PrioritytrackBar_Scroll);
+            PrioritytrackBar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            PrioritytrackBar.Location = new System.Drawing.Point(83, 4);
+            PrioritytrackBar.Margin = new System.Windows.Forms.Padding(4);
+            PrioritytrackBar.Maximum = 255;
+            PrioritytrackBar.Name = "PrioritytrackBar";
+            PrioritytrackBar.Size = new System.Drawing.Size(129, 22);
+            PrioritytrackBar.TabIndex = 4;
+            PrioritytrackBar.Value = 128;
+            PrioritytrackBar.Scroll += PrioritytrackBar_Scroll;
             // 
             // priorityvalueLabel
             // 
-            this.priorityvalueLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.priorityvalueLabel.AutoSize = true;
-            this.priorityvalueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.priorityvalueLabel.Location = new System.Drawing.Point(220, 7);
-            this.priorityvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.priorityvalueLabel.Name = "priorityvalueLabel";
-            this.priorityvalueLabel.Size = new System.Drawing.Size(28, 16);
-            this.priorityvalueLabel.TabIndex = 18;
-            this.priorityvalueLabel.Text = "128";
-            this.priorityvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            priorityvalueLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            priorityvalueLabel.AutoSize = true;
+            priorityvalueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            priorityvalueLabel.Location = new System.Drawing.Point(220, 7);
+            priorityvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            priorityvalueLabel.Name = "priorityvalueLabel";
+            priorityvalueLabel.Size = new System.Drawing.Size(28, 16);
+            priorityvalueLabel.TabIndex = 18;
+            priorityvalueLabel.Text = "128";
+            priorityvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // StreamcheckBox
             // 
-            this.StreamcheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.StreamcheckBox.AutoSize = true;
-            this.StreamcheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.StreamcheckBox.Location = new System.Drawing.Point(83, 95);
-            this.StreamcheckBox.Margin = new System.Windows.Forms.Padding(4);
-            this.StreamcheckBox.Name = "StreamcheckBox";
-            this.StreamcheckBox.Size = new System.Drawing.Size(75, 19);
-            this.StreamcheckBox.TabIndex = 21;
-            this.StreamcheckBox.Text = "Disabled";
-            this.StreamcheckBox.UseVisualStyleBackColor = true;
-            this.StreamcheckBox.CheckedChanged += new System.EventHandler(this.StreamcheckBox_CheckedChanged);
+            StreamcheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            StreamcheckBox.AutoSize = true;
+            StreamcheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            StreamcheckBox.Location = new System.Drawing.Point(83, 95);
+            StreamcheckBox.Margin = new System.Windows.Forms.Padding(4);
+            StreamcheckBox.Name = "StreamcheckBox";
+            StreamcheckBox.Size = new System.Drawing.Size(75, 19);
+            StreamcheckBox.TabIndex = 21;
+            StreamcheckBox.Text = "Disabled";
+            StreamcheckBox.UseVisualStyleBackColor = true;
+            StreamcheckBox.CheckedChanged += StreamcheckBox_CheckedChanged;
             // 
             // LocalizecheckBox
             // 
-            this.LocalizecheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LocalizecheckBox.AutoSize = true;
-            this.LocalizecheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LocalizecheckBox.Location = new System.Drawing.Point(83, 65);
-            this.LocalizecheckBox.Margin = new System.Windows.Forms.Padding(4);
-            this.LocalizecheckBox.Name = "LocalizecheckBox";
-            this.LocalizecheckBox.Size = new System.Drawing.Size(75, 19);
-            this.LocalizecheckBox.TabIndex = 22;
-            this.LocalizecheckBox.Text = "Disabled";
-            this.LocalizecheckBox.UseVisualStyleBackColor = true;
-            this.LocalizecheckBox.CheckedChanged += new System.EventHandler(this.LocalizecheckBox_CheckedChanged_1);
+            LocalizecheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            LocalizecheckBox.AutoSize = true;
+            LocalizecheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LocalizecheckBox.Location = new System.Drawing.Point(83, 65);
+            LocalizecheckBox.Margin = new System.Windows.Forms.Padding(4);
+            LocalizecheckBox.Name = "LocalizecheckBox";
+            LocalizecheckBox.Size = new System.Drawing.Size(75, 19);
+            LocalizecheckBox.TabIndex = 22;
+            LocalizecheckBox.Text = "Disabled";
+            LocalizecheckBox.UseVisualStyleBackColor = true;
+            LocalizecheckBox.CheckedChanged += LocalizecheckBox_CheckedChanged_1;
             // 
             // TypeLabel
             // 
-            this.TypeLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.TypeLabel.AutoSize = true;
-            this.TypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.TypeLabel.Location = new System.Drawing.Point(4, 127);
-            this.TypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.TypeLabel.Name = "TypeLabel";
-            this.TypeLabel.Size = new System.Drawing.Size(42, 16);
-            this.TypeLabel.TabIndex = 12;
-            this.TypeLabel.Text = "Type:";
-            this.TypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.TypeLabel, "Assigns the file to given group. Useful to change file parameters later for all f" +
-        "iles assigned to a group.");
+            TypeLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            TypeLabel.AutoSize = true;
+            TypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            TypeLabel.Location = new System.Drawing.Point(4, 127);
+            TypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            TypeLabel.Name = "TypeLabel";
+            TypeLabel.Size = new System.Drawing.Size(42, 16);
+            TypeLabel.TabIndex = 12;
+            TypeLabel.Text = "Type:";
+            TypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(TypeLabel, "Assigns the file to given group. Useful to change file parameters later for all files assigned to a group.");
             // 
             // StreamLabel
             // 
-            this.StreamLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.StreamLabel.AutoSize = true;
-            this.StreamLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.StreamLabel.Location = new System.Drawing.Point(4, 97);
-            this.StreamLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.StreamLabel.Name = "StreamLabel";
-            this.StreamLabel.Size = new System.Drawing.Size(53, 16);
-            this.StreamLabel.TabIndex = 11;
-            this.StreamLabel.Text = "Stream:";
-            this.StreamLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.StreamLabel, "Select \"Stream\" will mark files to be stored in the RAM for faster access.");
+            StreamLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            StreamLabel.AutoSize = true;
+            StreamLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            StreamLabel.Location = new System.Drawing.Point(4, 97);
+            StreamLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            StreamLabel.Name = "StreamLabel";
+            StreamLabel.Size = new System.Drawing.Size(53, 16);
+            StreamLabel.TabIndex = 11;
+            StreamLabel.Text = "Stream:";
+            StreamLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(StreamLabel, "Select \"Stream\" will mark files to be stored in the RAM for faster access.");
             // 
             // LocalizeLabel
             // 
-            this.LocalizeLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LocalizeLabel.AutoSize = true;
-            this.LocalizeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LocalizeLabel.Location = new System.Drawing.Point(4, 67);
-            this.LocalizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.LocalizeLabel.Name = "LocalizeLabel";
-            this.LocalizeLabel.Size = new System.Drawing.Size(60, 16);
-            this.LocalizeLabel.TabIndex = 13;
-            this.LocalizeLabel.Text = "Localize:";
-            this.LocalizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            LocalizeLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            LocalizeLabel.AutoSize = true;
+            LocalizeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LocalizeLabel.Location = new System.Drawing.Point(4, 67);
+            LocalizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LocalizeLabel.Name = "LocalizeLabel";
+            LocalizeLabel.Size = new System.Drawing.Size(60, 16);
+            LocalizeLabel.TabIndex = 13;
+            LocalizeLabel.Text = "Localize:";
+            LocalizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DopplertrackBar
             // 
-            this.DopplertrackBar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.DopplertrackBar.LargeChange = 1;
-            this.DopplertrackBar.Location = new System.Drawing.Point(83, 34);
-            this.DopplertrackBar.Margin = new System.Windows.Forms.Padding(4);
-            this.DopplertrackBar.Maximum = 100;
-            this.DopplertrackBar.Name = "DopplertrackBar";
-            this.DopplertrackBar.Size = new System.Drawing.Size(129, 22);
-            this.DopplertrackBar.TabIndex = 10;
-            this.DopplertrackBar.Value = 100;
-            this.DopplertrackBar.Scroll += new System.EventHandler(this.DopplertrackBar_Scroll);
+            DopplertrackBar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            DopplertrackBar.LargeChange = 1;
+            DopplertrackBar.Location = new System.Drawing.Point(83, 34);
+            DopplertrackBar.Margin = new System.Windows.Forms.Padding(4);
+            DopplertrackBar.Maximum = 100;
+            DopplertrackBar.Name = "DopplertrackBar";
+            DopplertrackBar.Size = new System.Drawing.Size(129, 22);
+            DopplertrackBar.TabIndex = 10;
+            DopplertrackBar.Value = 100;
+            DopplertrackBar.Scroll += DopplertrackBar_Scroll;
             // 
             // dopplervalueLabel
             // 
-            this.dopplervalueLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.dopplervalueLabel.AutoSize = true;
-            this.dopplervalueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.dopplervalueLabel.Location = new System.Drawing.Point(220, 37);
-            this.dopplervalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.dopplervalueLabel.Name = "dopplervalueLabel";
-            this.dopplervalueLabel.Size = new System.Drawing.Size(14, 16);
-            this.dopplervalueLabel.TabIndex = 20;
-            this.dopplervalueLabel.Text = "1";
-            this.dopplervalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            dopplervalueLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            dopplervalueLabel.AutoSize = true;
+            dopplervalueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dopplervalueLabel.Location = new System.Drawing.Point(220, 37);
+            dopplervalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            dopplervalueLabel.Name = "dopplervalueLabel";
+            dopplervalueLabel.Size = new System.Drawing.Size(14, 16);
+            dopplervalueLabel.TabIndex = 20;
+            dopplervalueLabel.Text = "1";
+            dopplervalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DopplerLabel
             // 
-            this.DopplerLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.DopplerLabel.AutoSize = true;
-            this.DopplerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.DopplerLabel.Location = new System.Drawing.Point(4, 37);
-            this.DopplerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.DopplerLabel.Name = "DopplerLabel";
-            this.DopplerLabel.Size = new System.Drawing.Size(59, 16);
-            this.DopplerLabel.TabIndex = 9;
-            this.DopplerLabel.Text = "Doppler:";
-            this.DopplerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.DopplerLabel, "Determines how much doppler effect will be applied to this audio source (if is se" +
-        "t to 0, then no effect is applied).");
+            DopplerLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            DopplerLabel.AutoSize = true;
+            DopplerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            DopplerLabel.Location = new System.Drawing.Point(4, 37);
+            DopplerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            DopplerLabel.Name = "DopplerLabel";
+            DopplerLabel.Size = new System.Drawing.Size(59, 16);
+            DopplerLabel.TabIndex = 9;
+            DopplerLabel.Text = "Doppler:";
+            DopplerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(DopplerLabel, "Determines how much doppler effect will be applied to this audio source (if is set to 0, then no effect is applied).");
             // 
             // FalloffLabel
             // 
-            this.FalloffLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.FalloffLabel.AutoSize = true;
-            this.FalloffLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FalloffLabel.Location = new System.Drawing.Point(2, 157);
-            this.FalloffLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.FalloffLabel.Name = "FalloffLabel";
-            this.FalloffLabel.Size = new System.Drawing.Size(46, 16);
-            this.FalloffLabel.TabIndex = 24;
-            this.FalloffLabel.Text = "Falloff:";
-            this.FalloffLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.FalloffLabel, "Determines the fadeout of the audio file (linear or logarithmic).");
+            FalloffLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            FalloffLabel.AutoSize = true;
+            FalloffLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            FalloffLabel.Location = new System.Drawing.Point(2, 157);
+            FalloffLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            FalloffLabel.Name = "FalloffLabel";
+            FalloffLabel.Size = new System.Drawing.Size(46, 16);
+            FalloffLabel.TabIndex = 24;
+            FalloffLabel.Text = "Falloff:";
+            FalloffLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(FalloffLabel, "Determines the fadeout of the audio file (linear or logarithmic).");
             // 
             // TypecomboBox
             // 
-            this.TypecomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.TypecomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.TypecomboBox.FormattingEnabled = true;
-            this.TypecomboBox.Items.AddRange(new object[] {
-            "Music",
-            "SFX",
-            "UI",
-            "Speech",
-            "Custom"});
-            this.TypecomboBox.Location = new System.Drawing.Point(83, 124);
-            this.TypecomboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.TypecomboBox.Name = "TypecomboBox";
-            this.TypecomboBox.Size = new System.Drawing.Size(129, 23);
-            this.TypecomboBox.TabIndex = 23;
-            this.TypecomboBox.SelectedIndexChanged += new System.EventHandler(this.TypecomboBox_SelectedIndexChanged);
+            TypecomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            TypecomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            TypecomboBox.FormattingEnabled = true;
+            TypecomboBox.Items.AddRange(new object[] { "Music", "SFX", "UI", "Speech", "Custom" });
+            TypecomboBox.Location = new System.Drawing.Point(83, 124);
+            TypecomboBox.Margin = new System.Windows.Forms.Padding(4);
+            TypecomboBox.Name = "TypecomboBox";
+            TypecomboBox.Size = new System.Drawing.Size(129, 23);
+            TypecomboBox.TabIndex = 23;
+            TypecomboBox.SelectedIndexChanged += TypecomboBox_SelectedIndexChanged;
             // 
             // StackcomboBox
             // 
-            this.StackcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.StackcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.StackcomboBox.FormattingEnabled = true;
-            this.StackcomboBox.Items.AddRange(new object[] {
-            "Many",
-            "Replace",
-            "Drop"});
-            this.StackcomboBox.Location = new System.Drawing.Point(83, 184);
-            this.StackcomboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.StackcomboBox.Name = "StackcomboBox";
-            this.StackcomboBox.Size = new System.Drawing.Size(129, 23);
-            this.StackcomboBox.TabIndex = 29;
-            this.StackcomboBox.SelectedIndexChanged += new System.EventHandler(this.StackcomboBox_SelectedIndexChanged);
+            StackcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            StackcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            StackcomboBox.FormattingEnabled = true;
+            StackcomboBox.Items.AddRange(new object[] { "Many", "Replace", "Drop" });
+            StackcomboBox.Location = new System.Drawing.Point(83, 184);
+            StackcomboBox.Margin = new System.Windows.Forms.Padding(4);
+            StackcomboBox.Name = "StackcomboBox";
+            StackcomboBox.Size = new System.Drawing.Size(129, 23);
+            StackcomboBox.TabIndex = 29;
+            StackcomboBox.SelectedIndexChanged += StackcomboBox_SelectedIndexChanged;
             // 
             // MinDistancenumericUpDown
             // 
-            this.MinDistancenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.MinDistancenumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MinDistancenumericUpDown.Location = new System.Drawing.Point(84, 244);
-            this.MinDistancenumericUpDown.Margin = new System.Windows.Forms.Padding(2);
-            this.MinDistancenumericUpDown.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.MinDistancenumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.MinDistancenumericUpDown.Name = "MinDistancenumericUpDown";
-            this.MinDistancenumericUpDown.Size = new System.Drawing.Size(127, 22);
-            this.MinDistancenumericUpDown.TabIndex = 26;
-            this.MinDistancenumericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.MinDistancenumericUpDown.ValueChanged += new System.EventHandler(this.MinDistancenumericUpDown_ValueChanged);
+            MinDistancenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
+            MinDistancenumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            MinDistancenumericUpDown.Location = new System.Drawing.Point(84, 244);
+            MinDistancenumericUpDown.Margin = new System.Windows.Forms.Padding(2);
+            MinDistancenumericUpDown.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            MinDistancenumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            MinDistancenumericUpDown.Name = "MinDistancenumericUpDown";
+            MinDistancenumericUpDown.Size = new System.Drawing.Size(127, 22);
+            MinDistancenumericUpDown.TabIndex = 26;
+            MinDistancenumericUpDown.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            MinDistancenumericUpDown.ValueChanged += MinDistancenumericUpDown_ValueChanged;
             // 
             // MaxDistancenumericUpDown
             // 
-            this.MaxDistancenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.MaxDistancenumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MaxDistancenumericUpDown.Location = new System.Drawing.Point(84, 214);
-            this.MaxDistancenumericUpDown.Margin = new System.Windows.Forms.Padding(2);
-            this.MaxDistancenumericUpDown.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.MaxDistancenumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.MaxDistancenumericUpDown.Name = "MaxDistancenumericUpDown";
-            this.MaxDistancenumericUpDown.Size = new System.Drawing.Size(127, 22);
-            this.MaxDistancenumericUpDown.TabIndex = 27;
-            this.MaxDistancenumericUpDown.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.MaxDistancenumericUpDown.ValueChanged += new System.EventHandler(this.MaxDistancenumericUpDown_ValueChanged);
+            MaxDistancenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
+            MaxDistancenumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            MaxDistancenumericUpDown.Location = new System.Drawing.Point(84, 214);
+            MaxDistancenumericUpDown.Margin = new System.Windows.Forms.Padding(2);
+            MaxDistancenumericUpDown.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            MaxDistancenumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            MaxDistancenumericUpDown.Name = "MaxDistancenumericUpDown";
+            MaxDistancenumericUpDown.Size = new System.Drawing.Size(127, 22);
+            MaxDistancenumericUpDown.TabIndex = 27;
+            MaxDistancenumericUpDown.Value = new decimal(new int[] { 1000, 0, 0, 0 });
+            MaxDistancenumericUpDown.ValueChanged += MaxDistancenumericUpDown_ValueChanged;
             // 
             // Stacklabel
             // 
-            this.Stacklabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Stacklabel.AutoSize = true;
-            this.Stacklabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Stacklabel.Location = new System.Drawing.Point(2, 187);
-            this.Stacklabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.Stacklabel.Name = "Stacklabel";
-            this.Stacklabel.Size = new System.Drawing.Size(44, 16);
-            this.Stacklabel.TabIndex = 28;
-            this.Stacklabel.Text = "Stack:";
-            this.Stacklabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.Stacklabel, resources.GetString("Stacklabel.ToolTip"));
+            Stacklabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            Stacklabel.AutoSize = true;
+            Stacklabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            Stacklabel.Location = new System.Drawing.Point(2, 187);
+            Stacklabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            Stacklabel.Name = "Stacklabel";
+            Stacklabel.Size = new System.Drawing.Size(44, 16);
+            Stacklabel.TabIndex = 28;
+            Stacklabel.Text = "Stack:";
+            Stacklabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(Stacklabel, resources.GetString("Stacklabel.ToolTip"));
             // 
             // MindistanceLabel
             // 
-            this.MindistanceLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.MindistanceLabel.AutoSize = true;
-            this.MindistanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MindistanceLabel.Location = new System.Drawing.Point(4, 242);
-            this.MindistanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.MindistanceLabel.Name = "MindistanceLabel";
-            this.MindistanceLabel.Size = new System.Drawing.Size(52, 26);
-            this.MindistanceLabel.TabIndex = 12;
-            this.MindistanceLabel.Text = "Min Distance:";
-            this.MindistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.MindistanceLabel, "Within the MinDistance, the sound will stay at loudest possible. Outside MinDista" +
-        "nce it will begin to attenuate.");
+            MindistanceLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            MindistanceLabel.AutoSize = true;
+            MindistanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            MindistanceLabel.Location = new System.Drawing.Point(4, 242);
+            MindistanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            MindistanceLabel.Name = "MindistanceLabel";
+            MindistanceLabel.Size = new System.Drawing.Size(52, 26);
+            MindistanceLabel.TabIndex = 12;
+            MindistanceLabel.Text = "Min Distance:";
+            MindistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(MindistanceLabel, "Within the MinDistance, the sound will stay at loudest possible. Outside MinDistance it will begin to attenuate.");
             // 
             // MaxdistanceLabel
             // 
-            this.MaxdistanceLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.MaxdistanceLabel.AutoSize = true;
-            this.MaxdistanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MaxdistanceLabel.Location = new System.Drawing.Point(4, 212);
-            this.MaxdistanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.MaxdistanceLabel.Name = "MaxdistanceLabel";
-            this.MaxdistanceLabel.Size = new System.Drawing.Size(52, 26);
-            this.MaxdistanceLabel.TabIndex = 11;
-            this.MaxdistanceLabel.Text = "Max Distance:";
-            this.MaxdistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.MaxdistanceLabel, "MaxDistance is the distance where the sound is completely inaudible.");
+            MaxdistanceLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            MaxdistanceLabel.AutoSize = true;
+            MaxdistanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            MaxdistanceLabel.Location = new System.Drawing.Point(4, 212);
+            MaxdistanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            MaxdistanceLabel.Name = "MaxdistanceLabel";
+            MaxdistanceLabel.Size = new System.Drawing.Size(52, 26);
+            MaxdistanceLabel.TabIndex = 11;
+            MaxdistanceLabel.Text = "Max Distance:";
+            MaxdistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(MaxdistanceLabel, "MaxDistance is the distance where the sound is completely inaudible.");
             // 
             // organizetabPage
             // 
-            this.organizetabPage.Controls.Add(this.OrganizeLayoutPanel);
-            this.organizetabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.organizetabPage.Location = new System.Drawing.Point(4, 24);
-            this.organizetabPage.Name = "organizetabPage";
-            this.organizetabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.organizetabPage.Size = new System.Drawing.Size(336, 285);
-            this.organizetabPage.TabIndex = 3;
-            this.organizetabPage.Text = "Organize";
-            this.organizetabPage.UseVisualStyleBackColor = true;
+            organizetabPage.Controls.Add(OrganizeLayoutPanel);
+            organizetabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            organizetabPage.Location = new System.Drawing.Point(4, 24);
+            organizetabPage.Name = "organizetabPage";
+            organizetabPage.Padding = new System.Windows.Forms.Padding(3);
+            organizetabPage.Size = new System.Drawing.Size(348, 284);
+            organizetabPage.TabIndex = 3;
+            organizetabPage.Text = "Organize";
+            organizetabPage.UseVisualStyleBackColor = true;
             // 
             // OrganizeLayoutPanel
             // 
-            this.OrganizeLayoutPanel.ColumnCount = 2;
-            this.OrganizeLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.OrganizeLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.OrganizeLayoutPanel.Controls.Add(this.EnumtextBox, 1, 0);
-            this.OrganizeLayoutPanel.Controls.Add(this.EnumButton, 0, 0);
-            this.OrganizeLayoutPanel.Controls.Add(this.SortcomboBox, 1, 3);
-            this.OrganizeLayoutPanel.Controls.Add(this.SortLabel, 0, 3);
-            this.OrganizeLayoutPanel.Controls.Add(this.FindButton, 0, 2);
-            this.OrganizeLayoutPanel.Controls.Add(this.FindtextBox, 1, 2);
-            this.OrganizeLayoutPanel.Controls.Add(this.ChangeFilebutton, 0, 1);
-            this.OrganizeLayoutPanel.Controls.Add(this.ChangeFilelabel, 1, 1);
-            this.OrganizeLayoutPanel.Location = new System.Drawing.Point(6, 6);
-            this.OrganizeLayoutPanel.Name = "OrganizeLayoutPanel";
-            this.OrganizeLayoutPanel.RowCount = 5;
-            this.OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.OrganizeLayoutPanel.Size = new System.Drawing.Size(324, 166);
-            this.OrganizeLayoutPanel.TabIndex = 71;
+            OrganizeLayoutPanel.ColumnCount = 2;
+            OrganizeLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            OrganizeLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            OrganizeLayoutPanel.Controls.Add(EnumtextBox, 1, 0);
+            OrganizeLayoutPanel.Controls.Add(EnumButton, 0, 0);
+            OrganizeLayoutPanel.Controls.Add(SortcomboBox, 1, 3);
+            OrganizeLayoutPanel.Controls.Add(SortLabel, 0, 3);
+            OrganizeLayoutPanel.Controls.Add(FindButton, 0, 2);
+            OrganizeLayoutPanel.Controls.Add(FindtextBox, 1, 2);
+            OrganizeLayoutPanel.Controls.Add(ChangeFilebutton, 0, 1);
+            OrganizeLayoutPanel.Controls.Add(ChangeFilelabel, 1, 1);
+            OrganizeLayoutPanel.Location = new System.Drawing.Point(6, 6);
+            OrganizeLayoutPanel.Name = "OrganizeLayoutPanel";
+            OrganizeLayoutPanel.RowCount = 5;
+            OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            OrganizeLayoutPanel.Size = new System.Drawing.Size(324, 166);
+            OrganizeLayoutPanel.TabIndex = 71;
             // 
             // EnumtextBox
             // 
-            this.EnumtextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.EnumtextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.EnumtextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EnumtextBox.Location = new System.Drawing.Point(100, 4);
-            this.EnumtextBox.MaxLength = 40;
-            this.EnumtextBox.Multiline = true;
-            this.EnumtextBox.Name = "EnumtextBox";
-            this.EnumtextBox.Size = new System.Drawing.Size(221, 22);
-            this.EnumtextBox.TabIndex = 69;
+            EnumtextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            EnumtextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            EnumtextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            EnumtextBox.Location = new System.Drawing.Point(100, 4);
+            EnumtextBox.MaxLength = 40;
+            EnumtextBox.Multiline = true;
+            EnumtextBox.Name = "EnumtextBox";
+            EnumtextBox.Size = new System.Drawing.Size(221, 22);
+            EnumtextBox.TabIndex = 69;
             // 
             // EnumButton
             // 
-            this.EnumButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EnumButton.Location = new System.Drawing.Point(3, 3);
-            this.EnumButton.Name = "EnumButton";
-            this.EnumButton.Size = new System.Drawing.Size(91, 23);
-            this.EnumButton.TabIndex = 78;
-            this.EnumButton.Text = "Change Title";
-            this.EnumButton.UseVisualStyleBackColor = true;
-            this.EnumButton.Click += new System.EventHandler(this.EnumButton_Click);
+            EnumButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            EnumButton.Location = new System.Drawing.Point(3, 3);
+            EnumButton.Name = "EnumButton";
+            EnumButton.Size = new System.Drawing.Size(91, 23);
+            EnumButton.TabIndex = 78;
+            EnumButton.Text = "Change Title";
+            EnumButton.UseVisualStyleBackColor = true;
+            EnumButton.Click += EnumButton_Click;
             // 
             // SortcomboBox
             // 
-            this.SortcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.SortcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SortcomboBox.FormattingEnabled = true;
-            this.SortcomboBox.Items.AddRange(new object[] {
-            "Title",
-            "Filename",
-            "Filepath",
-            "Room",
-            "Type"});
-            this.SortcomboBox.Location = new System.Drawing.Point(100, 93);
-            this.SortcomboBox.Name = "SortcomboBox";
-            this.SortcomboBox.Size = new System.Drawing.Size(221, 23);
-            this.SortcomboBox.TabIndex = 73;
-            this.SortcomboBox.SelectedIndexChanged += new System.EventHandler(this.SortcomboBox_SelectedIndexChanged);
+            SortcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            SortcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            SortcomboBox.FormattingEnabled = true;
+            SortcomboBox.Items.AddRange(new object[] { "Title", "Filename", "Filepath", "Room", "Type" });
+            SortcomboBox.Location = new System.Drawing.Point(100, 93);
+            SortcomboBox.Name = "SortcomboBox";
+            SortcomboBox.Size = new System.Drawing.Size(221, 23);
+            SortcomboBox.TabIndex = 73;
+            SortcomboBox.SelectedIndexChanged += SortcomboBox_SelectedIndexChanged;
             // 
             // SortLabel
             // 
-            this.SortLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.SortLabel.AutoSize = true;
-            this.SortLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.SortLabel.Location = new System.Drawing.Point(16, 97);
-            this.SortLabel.Name = "SortLabel";
-            this.SortLabel.Size = new System.Drawing.Size(64, 15);
-            this.SortLabel.TabIndex = 76;
-            this.SortLabel.Text = "Sort Titles:";
-            this.SortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            SortLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            SortLabel.AutoSize = true;
+            SortLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            SortLabel.Location = new System.Drawing.Point(16, 97);
+            SortLabel.Name = "SortLabel";
+            SortLabel.Size = new System.Drawing.Size(64, 15);
+            SortLabel.TabIndex = 76;
+            SortLabel.Text = "Sort Titles:";
+            SortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FindButton
             // 
-            this.FindButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FindButton.Location = new System.Drawing.Point(3, 63);
-            this.FindButton.Name = "FindButton";
-            this.FindButton.Size = new System.Drawing.Size(91, 23);
-            this.FindButton.TabIndex = 79;
-            this.FindButton.Text = "Find Title";
-            this.FindButton.UseVisualStyleBackColor = true;
-            this.FindButton.Click += new System.EventHandler(this.FindButton_Click);
+            FindButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            FindButton.Location = new System.Drawing.Point(3, 63);
+            FindButton.Name = "FindButton";
+            FindButton.Size = new System.Drawing.Size(91, 23);
+            FindButton.TabIndex = 79;
+            FindButton.Text = "Find Title";
+            FindButton.UseVisualStyleBackColor = true;
+            FindButton.Click += FindButton_Click;
             // 
             // FindtextBox
             // 
-            this.FindtextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.FindtextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FindtextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FindtextBox.Location = new System.Drawing.Point(100, 64);
-            this.FindtextBox.MaxLength = 40;
-            this.FindtextBox.Multiline = true;
-            this.FindtextBox.Name = "FindtextBox";
-            this.FindtextBox.Size = new System.Drawing.Size(221, 22);
-            this.FindtextBox.TabIndex = 77;
+            FindtextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            FindtextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            FindtextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            FindtextBox.Location = new System.Drawing.Point(100, 64);
+            FindtextBox.MaxLength = 40;
+            FindtextBox.Multiline = true;
+            FindtextBox.Name = "FindtextBox";
+            FindtextBox.Size = new System.Drawing.Size(221, 22);
+            FindtextBox.TabIndex = 77;
             // 
             // ChangeFilebutton
             // 
-            this.ChangeFilebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ChangeFilebutton.Location = new System.Drawing.Point(3, 33);
-            this.ChangeFilebutton.Name = "ChangeFilebutton";
-            this.ChangeFilebutton.Size = new System.Drawing.Size(91, 23);
-            this.ChangeFilebutton.TabIndex = 80;
-            this.ChangeFilebutton.Text = "Change File";
-            this.ChangeFilebutton.UseVisualStyleBackColor = true;
-            this.ChangeFilebutton.Click += new System.EventHandler(this.ChangeFilebutton_Click);
+            ChangeFilebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            ChangeFilebutton.Location = new System.Drawing.Point(3, 33);
+            ChangeFilebutton.Name = "ChangeFilebutton";
+            ChangeFilebutton.Size = new System.Drawing.Size(91, 23);
+            ChangeFilebutton.TabIndex = 80;
+            ChangeFilebutton.Text = "Change File";
+            ChangeFilebutton.UseVisualStyleBackColor = true;
+            ChangeFilebutton.Click += ChangeFilebutton_Click;
             // 
             // ChangeFilelabel
             // 
-            this.ChangeFilelabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.ChangeFilelabel.AutoSize = true;
-            this.ChangeFilelabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ChangeFilelabel.Location = new System.Drawing.Point(100, 37);
-            this.ChangeFilelabel.Name = "ChangeFilelabel";
-            this.ChangeFilelabel.Size = new System.Drawing.Size(54, 15);
-            this.ChangeFilelabel.TabIndex = 81;
-            this.ChangeFilelabel.Text = "Filepath:";
-            this.ChangeFilelabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            ChangeFilelabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            ChangeFilelabel.AutoSize = true;
+            ChangeFilelabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            ChangeFilelabel.Location = new System.Drawing.Point(100, 37);
+            ChangeFilelabel.Name = "ChangeFilelabel";
+            ChangeFilelabel.Size = new System.Drawing.Size(54, 15);
+            ChangeFilelabel.TabIndex = 81;
+            ChangeFilelabel.Text = "Filepath:";
+            ChangeFilelabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // reverbtabPage
             // 
-            this.reverbtabPage.Controls.Add(this.RoomenableButton);
-            this.reverbtabPage.Controls.Add(this.roomunmapButton);
-            this.reverbtabPage.Controls.Add(this.roommapButton);
-            this.reverbtabPage.Controls.Add(this.roomnametextBox);
-            this.reverbtabPage.Controls.Add(this.roomLabel);
-            this.reverbtabPage.Controls.Add(this.reverbwetdryPot);
-            this.reverbtabPage.Controls.Add(this.reverbwetdryvalueLabel);
-            this.reverbtabPage.Controls.Add(this.wetdryLabel);
-            this.reverbtabPage.Controls.Add(this.filterremoveButton);
-            this.reverbtabPage.Controls.Add(this.roomstoreButton);
-            this.reverbtabPage.Controls.Add(this.reverbpresetcomboBox);
-            this.reverbtabPage.Controls.Add(this.filternametextBox);
-            this.reverbtabPage.Controls.Add(this.reverbpresetLabel);
-            this.reverbtabPage.Controls.Add(this.filtertypeLabel);
-            this.reverbtabPage.Controls.Add(this.filtercomboBox);
-            this.reverbtabPage.Controls.Add(this.filterLabel);
-            this.reverbtabPage.Controls.Add(this.filteroneoverqvalueLabel);
-            this.reverbtabPage.Controls.Add(this.filterfrequencyvalueLabel);
-            this.reverbtabPage.Controls.Add(this.filteroneoverqLabel);
-            this.reverbtabPage.Controls.Add(this.filterfrequencyLabel);
-            this.reverbtabPage.Controls.Add(this.filteroneoverqPot);
-            this.reverbtabPage.Controls.Add(this.filterfrequencyPot);
-            this.reverbtabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.reverbtabPage.Location = new System.Drawing.Point(4, 24);
-            this.reverbtabPage.Margin = new System.Windows.Forms.Padding(4);
-            this.reverbtabPage.Name = "reverbtabPage";
-            this.reverbtabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.reverbtabPage.Size = new System.Drawing.Size(336, 285);
-            this.reverbtabPage.TabIndex = 2;
-            this.reverbtabPage.Text = "Room Creation";
-            this.reverbtabPage.UseVisualStyleBackColor = true;
+            reverbtabPage.Controls.Add(RoomenableButton);
+            reverbtabPage.Controls.Add(roomunmapButton);
+            reverbtabPage.Controls.Add(roommapButton);
+            reverbtabPage.Controls.Add(roomnametextBox);
+            reverbtabPage.Controls.Add(roomLabel);
+            reverbtabPage.Controls.Add(reverbwetdryPot);
+            reverbtabPage.Controls.Add(reverbwetdryvalueLabel);
+            reverbtabPage.Controls.Add(wetdryLabel);
+            reverbtabPage.Controls.Add(filterremoveButton);
+            reverbtabPage.Controls.Add(roomstoreButton);
+            reverbtabPage.Controls.Add(reverbpresetcomboBox);
+            reverbtabPage.Controls.Add(filternametextBox);
+            reverbtabPage.Controls.Add(reverbpresetLabel);
+            reverbtabPage.Controls.Add(filtertypeLabel);
+            reverbtabPage.Controls.Add(filtercomboBox);
+            reverbtabPage.Controls.Add(filterLabel);
+            reverbtabPage.Controls.Add(filteroneoverqvalueLabel);
+            reverbtabPage.Controls.Add(filterfrequencyvalueLabel);
+            reverbtabPage.Controls.Add(filteroneoverqLabel);
+            reverbtabPage.Controls.Add(filterfrequencyLabel);
+            reverbtabPage.Controls.Add(filteroneoverqPot);
+            reverbtabPage.Controls.Add(filterfrequencyPot);
+            reverbtabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            reverbtabPage.Location = new System.Drawing.Point(4, 24);
+            reverbtabPage.Margin = new System.Windows.Forms.Padding(4);
+            reverbtabPage.Name = "reverbtabPage";
+            reverbtabPage.Padding = new System.Windows.Forms.Padding(4);
+            reverbtabPage.Size = new System.Drawing.Size(348, 284);
+            reverbtabPage.TabIndex = 2;
+            reverbtabPage.Text = "Room Creation";
+            reverbtabPage.UseVisualStyleBackColor = true;
             // 
             // RoomenableButton
             // 
-            this.RoomenableButton.BackColor = System.Drawing.Color.Salmon;
-            this.RoomenableButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RoomenableButton.Location = new System.Drawing.Point(251, 219);
-            this.RoomenableButton.Margin = new System.Windows.Forms.Padding(4);
-            this.RoomenableButton.Name = "RoomenableButton";
-            this.RoomenableButton.Size = new System.Drawing.Size(83, 28);
-            this.RoomenableButton.TabIndex = 74;
-            this.RoomenableButton.Text = "Off";
-            this.RoomenableButton.UseVisualStyleBackColor = false;
-            this.RoomenableButton.Click += new System.EventHandler(this.RoomenableButton_Click_1);
+            RoomenableButton.BackColor = System.Drawing.Color.Salmon;
+            RoomenableButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            RoomenableButton.Location = new System.Drawing.Point(251, 219);
+            RoomenableButton.Margin = new System.Windows.Forms.Padding(4);
+            RoomenableButton.Name = "RoomenableButton";
+            RoomenableButton.Size = new System.Drawing.Size(83, 28);
+            RoomenableButton.TabIndex = 74;
+            RoomenableButton.Text = "Off";
+            RoomenableButton.UseVisualStyleBackColor = false;
+            RoomenableButton.Click += RoomenableButton_Click_1;
             // 
             // roomunmapButton
             // 
-            this.roomunmapButton.Enabled = false;
-            this.roomunmapButton.Location = new System.Drawing.Point(135, 185);
-            this.roomunmapButton.Name = "roomunmapButton";
-            this.roomunmapButton.Size = new System.Drawing.Size(100, 28);
-            this.roomunmapButton.TabIndex = 73;
-            this.roomunmapButton.Text = "Delete Mapping";
-            this.roomunmapButton.UseVisualStyleBackColor = true;
-            this.roomunmapButton.Click += new System.EventHandler(this.roomunmapButton_Click);
+            roomunmapButton.Enabled = false;
+            roomunmapButton.Location = new System.Drawing.Point(135, 185);
+            roomunmapButton.Name = "roomunmapButton";
+            roomunmapButton.Size = new System.Drawing.Size(100, 28);
+            roomunmapButton.TabIndex = 73;
+            roomunmapButton.Text = "Delete Mapping";
+            roomunmapButton.UseVisualStyleBackColor = true;
+            roomunmapButton.Click += roomunmapButton_Click;
             // 
             // roommapButton
             // 
-            this.roommapButton.Enabled = false;
-            this.roommapButton.Location = new System.Drawing.Point(12, 219);
-            this.roommapButton.Name = "roommapButton";
-            this.roommapButton.Size = new System.Drawing.Size(100, 28);
-            this.roommapButton.TabIndex = 72;
-            this.roommapButton.Text = "Map Room";
-            this.roommapButton.UseVisualStyleBackColor = true;
-            this.roommapButton.Click += new System.EventHandler(this.roommapButton_Click);
+            roommapButton.Enabled = false;
+            roommapButton.Location = new System.Drawing.Point(12, 219);
+            roommapButton.Name = "roommapButton";
+            roommapButton.Size = new System.Drawing.Size(100, 28);
+            roommapButton.TabIndex = 72;
+            roommapButton.Text = "Map Room";
+            roommapButton.UseVisualStyleBackColor = true;
+            roommapButton.Click += roommapButton_Click;
             // 
             // roomnametextBox
             // 
-            this.roomnametextBox.Location = new System.Drawing.Point(86, 150);
-            this.roomnametextBox.MaxLength = 30;
-            this.roomnametextBox.Name = "roomnametextBox";
-            this.roomnametextBox.Size = new System.Drawing.Size(96, 21);
-            this.roomnametextBox.TabIndex = 71;
-            this.roomnametextBox.Text = "New Room";
+            roomnametextBox.Location = new System.Drawing.Point(86, 150);
+            roomnametextBox.MaxLength = 30;
+            roomnametextBox.Name = "roomnametextBox";
+            roomnametextBox.Size = new System.Drawing.Size(96, 21);
+            roomnametextBox.TabIndex = 71;
+            roomnametextBox.Text = "New Room";
             // 
             // roomLabel
             // 
-            this.roomLabel.AutoSize = true;
-            this.roomLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.roomLabel.Location = new System.Drawing.Point(12, 150);
-            this.roomLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.roomLabel.Name = "roomLabel";
-            this.roomLabel.Size = new System.Drawing.Size(59, 18);
-            this.roomLabel.TabIndex = 70;
-            this.roomLabel.Text = "Room:";
-            this.roomLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.roomLabel, "Selects a given reverb preset.");
+            roomLabel.AutoSize = true;
+            roomLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            roomLabel.Location = new System.Drawing.Point(12, 150);
+            roomLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            roomLabel.Name = "roomLabel";
+            roomLabel.Size = new System.Drawing.Size(59, 18);
+            roomLabel.TabIndex = 70;
+            roomLabel.Text = "Room:";
+            roomLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(roomLabel, "Selects a given reverb preset.");
             // 
             // reverbwetdryPot
             // 
-            this.reverbwetdryPot.Location = new System.Drawing.Point(203, 111);
-            this.reverbwetdryPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.reverbwetdryPot.Maximum = 100D;
-            this.reverbwetdryPot.Minimum = 0D;
-            this.reverbwetdryPot.Name = "reverbwetdryPot";
-            this.reverbwetdryPot.Size = new System.Drawing.Size(40, 40);
-            this.reverbwetdryPot.TabIndex = 69;
-            this.reverbwetdryPot.Value = 100D;
-            this.reverbwetdryPot.ValueChanged += new System.EventHandler(this.reverbwetdryPot_ValueChanged);
+            reverbwetdryPot.Location = new System.Drawing.Point(203, 111);
+            reverbwetdryPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            reverbwetdryPot.Maximum = 100D;
+            reverbwetdryPot.Minimum = 0D;
+            reverbwetdryPot.Name = "reverbwetdryPot";
+            reverbwetdryPot.Size = new System.Drawing.Size(40, 40);
+            reverbwetdryPot.TabIndex = 69;
+            reverbwetdryPot.Value = 100D;
+            reverbwetdryPot.ValueChanged += reverbwetdryPot_ValueChanged;
             // 
             // reverbwetdryvalueLabel
             // 
-            this.reverbwetdryvalueLabel.AutoSize = true;
-            this.reverbwetdryvalueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.reverbwetdryvalueLabel.Location = new System.Drawing.Point(251, 135);
-            this.reverbwetdryvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.reverbwetdryvalueLabel.Name = "reverbwetdryvalueLabel";
-            this.reverbwetdryvalueLabel.Size = new System.Drawing.Size(53, 16);
-            this.reverbwetdryvalueLabel.TabIndex = 27;
-            this.reverbwetdryvalueLabel.Text = "100,0 %";
-            this.reverbwetdryvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            reverbwetdryvalueLabel.AutoSize = true;
+            reverbwetdryvalueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            reverbwetdryvalueLabel.Location = new System.Drawing.Point(251, 135);
+            reverbwetdryvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            reverbwetdryvalueLabel.Name = "reverbwetdryvalueLabel";
+            reverbwetdryvalueLabel.Size = new System.Drawing.Size(53, 16);
+            reverbwetdryvalueLabel.TabIndex = 27;
+            reverbwetdryvalueLabel.Text = "100,0 %";
+            reverbwetdryvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // wetdryLabel
             // 
-            this.wetdryLabel.AutoSize = true;
-            this.wetdryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.wetdryLabel.Location = new System.Drawing.Point(251, 111);
-            this.wetdryLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.wetdryLabel.Name = "wetdryLabel";
-            this.wetdryLabel.Size = new System.Drawing.Size(89, 16);
-            this.wetdryLabel.TabIndex = 36;
-            this.wetdryLabel.Text = "Reverb Mix:";
-            this.wetdryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.wetdryLabel, "Sets the reverb effect amount.");
+            wetdryLabel.AutoSize = true;
+            wetdryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            wetdryLabel.Location = new System.Drawing.Point(251, 111);
+            wetdryLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            wetdryLabel.Name = "wetdryLabel";
+            wetdryLabel.Size = new System.Drawing.Size(89, 16);
+            wetdryLabel.TabIndex = 36;
+            wetdryLabel.Text = "Reverb Mix:";
+            wetdryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(wetdryLabel, "Sets the reverb effect amount.");
             // 
             // filterremoveButton
             // 
-            this.filterremoveButton.Enabled = false;
-            this.filterremoveButton.Location = new System.Drawing.Point(135, 219);
-            this.filterremoveButton.Name = "filterremoveButton";
-            this.filterremoveButton.Size = new System.Drawing.Size(100, 28);
-            this.filterremoveButton.TabIndex = 68;
-            this.filterremoveButton.Text = "Delete Room";
-            this.filterremoveButton.UseVisualStyleBackColor = true;
-            this.filterremoveButton.Click += new System.EventHandler(this.roomremoveButton_Click);
+            filterremoveButton.Enabled = false;
+            filterremoveButton.Location = new System.Drawing.Point(135, 219);
+            filterremoveButton.Name = "filterremoveButton";
+            filterremoveButton.Size = new System.Drawing.Size(100, 28);
+            filterremoveButton.TabIndex = 68;
+            filterremoveButton.Text = "Delete Room";
+            filterremoveButton.UseVisualStyleBackColor = true;
+            filterremoveButton.Click += roomremoveButton_Click;
             // 
             // roomstoreButton
             // 
-            this.roomstoreButton.Location = new System.Drawing.Point(12, 185);
-            this.roomstoreButton.Name = "roomstoreButton";
-            this.roomstoreButton.Size = new System.Drawing.Size(100, 28);
-            this.roomstoreButton.TabIndex = 66;
-            this.roomstoreButton.Text = "Create Room";
-            this.roomstoreButton.UseVisualStyleBackColor = true;
-            this.roomstoreButton.Click += new System.EventHandler(this.roomstoreButton_Click);
+            roomstoreButton.Location = new System.Drawing.Point(12, 185);
+            roomstoreButton.Name = "roomstoreButton";
+            roomstoreButton.Size = new System.Drawing.Size(100, 28);
+            roomstoreButton.TabIndex = 66;
+            roomstoreButton.Text = "Create Room";
+            roomstoreButton.UseVisualStyleBackColor = true;
+            roomstoreButton.Click += roomstoreButton_Click;
             // 
             // reverbpresetcomboBox
             // 
-            this.reverbpresetcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.reverbpresetcomboBox.FormattingEnabled = true;
-            this.reverbpresetcomboBox.Location = new System.Drawing.Point(86, 111);
-            this.reverbpresetcomboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.reverbpresetcomboBox.Name = "reverbpresetcomboBox";
-            this.reverbpresetcomboBox.Size = new System.Drawing.Size(96, 23);
-            this.reverbpresetcomboBox.TabIndex = 57;
-            this.reverbpresetcomboBox.SelectedIndexChanged += new System.EventHandler(this.reverbpresetcomboBox_SelectedIndexChanged);
+            reverbpresetcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            reverbpresetcomboBox.FormattingEnabled = true;
+            reverbpresetcomboBox.Location = new System.Drawing.Point(86, 111);
+            reverbpresetcomboBox.Margin = new System.Windows.Forms.Padding(4);
+            reverbpresetcomboBox.Name = "reverbpresetcomboBox";
+            reverbpresetcomboBox.Size = new System.Drawing.Size(96, 23);
+            reverbpresetcomboBox.TabIndex = 57;
+            reverbpresetcomboBox.SelectedIndexChanged += reverbpresetcomboBox_SelectedIndexChanged;
             // 
             // filternametextBox
             // 
-            this.filternametextBox.Location = new System.Drawing.Point(86, 7);
-            this.filternametextBox.MaxLength = 30;
-            this.filternametextBox.Name = "filternametextBox";
-            this.filternametextBox.Size = new System.Drawing.Size(96, 21);
-            this.filternametextBox.TabIndex = 65;
-            this.filternametextBox.Text = "New Filter";
+            filternametextBox.Location = new System.Drawing.Point(86, 7);
+            filternametextBox.MaxLength = 30;
+            filternametextBox.Name = "filternametextBox";
+            filternametextBox.Size = new System.Drawing.Size(96, 21);
+            filternametextBox.TabIndex = 65;
+            filternametextBox.Text = "New Filter";
             // 
             // reverbpresetLabel
             // 
-            this.reverbpresetLabel.AutoSize = true;
-            this.reverbpresetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.reverbpresetLabel.Location = new System.Drawing.Point(12, 111);
-            this.reverbpresetLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.reverbpresetLabel.Name = "reverbpresetLabel";
-            this.reverbpresetLabel.Size = new System.Drawing.Size(66, 18);
-            this.reverbpresetLabel.TabIndex = 56;
-            this.reverbpresetLabel.Text = "Reverb:";
-            this.reverbpresetLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.reverbpresetLabel, "Selects a given reverb preset.");
+            reverbpresetLabel.AutoSize = true;
+            reverbpresetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            reverbpresetLabel.Location = new System.Drawing.Point(12, 111);
+            reverbpresetLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            reverbpresetLabel.Name = "reverbpresetLabel";
+            reverbpresetLabel.Size = new System.Drawing.Size(66, 18);
+            reverbpresetLabel.TabIndex = 56;
+            reverbpresetLabel.Text = "Reverb:";
+            reverbpresetLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(reverbpresetLabel, "Selects a given reverb preset.");
             // 
             // filtertypeLabel
             // 
-            this.filtertypeLabel.AutoSize = true;
-            this.filtertypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.filtertypeLabel.Location = new System.Drawing.Point(18, 45);
-            this.filtertypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.filtertypeLabel.Name = "filtertypeLabel";
-            this.filtertypeLabel.Size = new System.Drawing.Size(42, 16);
-            this.filtertypeLabel.TabIndex = 64;
-            this.filtertypeLabel.Text = "Type:";
-            this.filtertypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.filtertypeLabel, "Selects a given reverb preset.");
+            filtertypeLabel.AutoSize = true;
+            filtertypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            filtertypeLabel.Location = new System.Drawing.Point(18, 45);
+            filtertypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            filtertypeLabel.Name = "filtertypeLabel";
+            filtertypeLabel.Size = new System.Drawing.Size(42, 16);
+            filtertypeLabel.TabIndex = 64;
+            filtertypeLabel.Text = "Type:";
+            filtertypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(filtertypeLabel, "Selects a given reverb preset.");
             // 
             // filtercomboBox
             // 
-            this.filtercomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.filtercomboBox.FormattingEnabled = true;
-            this.filtercomboBox.Location = new System.Drawing.Point(86, 43);
-            this.filtercomboBox.Name = "filtercomboBox";
-            this.filtercomboBox.Size = new System.Drawing.Size(96, 23);
-            this.filtercomboBox.TabIndex = 63;
-            this.filtercomboBox.SelectedIndexChanged += new System.EventHandler(this.filtercomboBox_SelectedIndexChanged);
+            filtercomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            filtercomboBox.FormattingEnabled = true;
+            filtercomboBox.Location = new System.Drawing.Point(86, 43);
+            filtercomboBox.Name = "filtercomboBox";
+            filtercomboBox.Size = new System.Drawing.Size(96, 23);
+            filtercomboBox.TabIndex = 63;
+            filtercomboBox.SelectedIndexChanged += filtercomboBox_SelectedIndexChanged;
             // 
             // filterLabel
             // 
-            this.filterLabel.AutoSize = true;
-            this.filterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.filterLabel.Location = new System.Drawing.Point(12, 8);
-            this.filterLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.filterLabel.Name = "filterLabel";
-            this.filterLabel.Size = new System.Drawing.Size(51, 18);
-            this.filterLabel.TabIndex = 62;
-            this.filterLabel.Text = "Filter:";
-            this.filterLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.filterLabel, "Selects a given reverb preset.");
+            filterLabel.AutoSize = true;
+            filterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            filterLabel.Location = new System.Drawing.Point(12, 8);
+            filterLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            filterLabel.Name = "filterLabel";
+            filterLabel.Size = new System.Drawing.Size(51, 18);
+            filterLabel.TabIndex = 62;
+            filterLabel.Text = "Filter:";
+            filterLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(filterLabel, "Selects a given reverb preset.");
             // 
             // filteroneoverqvalueLabel
             // 
-            this.filteroneoverqvalueLabel.AutoSize = true;
-            this.filteroneoverqvalueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.filteroneoverqvalueLabel.Location = new System.Drawing.Point(251, 80);
-            this.filteroneoverqvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.filteroneoverqvalueLabel.Name = "filteroneoverqvalueLabel";
-            this.filteroneoverqvalueLabel.Size = new System.Drawing.Size(24, 16);
-            this.filteroneoverqvalueLabel.TabIndex = 61;
-            this.filteroneoverqvalueLabel.Text = "1,0";
-            this.filteroneoverqvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.filteroneoverqvalueLabel, "Selects a given reverb preset.");
+            filteroneoverqvalueLabel.AutoSize = true;
+            filteroneoverqvalueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            filteroneoverqvalueLabel.Location = new System.Drawing.Point(251, 80);
+            filteroneoverqvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            filteroneoverqvalueLabel.Name = "filteroneoverqvalueLabel";
+            filteroneoverqvalueLabel.Size = new System.Drawing.Size(24, 16);
+            filteroneoverqvalueLabel.TabIndex = 61;
+            filteroneoverqvalueLabel.Text = "1,0";
+            filteroneoverqvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(filteroneoverqvalueLabel, "Selects a given reverb preset.");
             // 
             // filterfrequencyvalueLabel
             // 
-            this.filterfrequencyvalueLabel.AutoSize = true;
-            this.filterfrequencyvalueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.filterfrequencyvalueLabel.Location = new System.Drawing.Point(251, 31);
-            this.filterfrequencyvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.filterfrequencyvalueLabel.Name = "filterfrequencyvalueLabel";
-            this.filterfrequencyvalueLabel.Size = new System.Drawing.Size(64, 16);
-            this.filterfrequencyvalueLabel.TabIndex = 60;
-            this.filterfrequencyvalueLabel.Text = "8000,0 Hz";
-            this.filterfrequencyvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.filterfrequencyvalueLabel, "Selects a given reverb preset.");
+            filterfrequencyvalueLabel.AutoSize = true;
+            filterfrequencyvalueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            filterfrequencyvalueLabel.Location = new System.Drawing.Point(251, 31);
+            filterfrequencyvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            filterfrequencyvalueLabel.Name = "filterfrequencyvalueLabel";
+            filterfrequencyvalueLabel.Size = new System.Drawing.Size(64, 16);
+            filterfrequencyvalueLabel.TabIndex = 60;
+            filterfrequencyvalueLabel.Text = "8000,0 Hz";
+            filterfrequencyvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(filterfrequencyvalueLabel, "Selects a given reverb preset.");
             // 
             // filteroneoverqLabel
             // 
-            this.filteroneoverqLabel.AutoSize = true;
-            this.filteroneoverqLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.filteroneoverqLabel.Location = new System.Drawing.Point(251, 56);
-            this.filteroneoverqLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.filteroneoverqLabel.Name = "filteroneoverqLabel";
-            this.filteroneoverqLabel.Size = new System.Drawing.Size(74, 16);
-            this.filteroneoverqLabel.TabIndex = 59;
-            this.filteroneoverqLabel.Text = "Filter 1/Q:";
-            this.filteroneoverqLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.filteroneoverqLabel, "Selects a given reverb preset.");
+            filteroneoverqLabel.AutoSize = true;
+            filteroneoverqLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            filteroneoverqLabel.Location = new System.Drawing.Point(251, 56);
+            filteroneoverqLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            filteroneoverqLabel.Name = "filteroneoverqLabel";
+            filteroneoverqLabel.Size = new System.Drawing.Size(74, 16);
+            filteroneoverqLabel.TabIndex = 59;
+            filteroneoverqLabel.Text = "Filter 1/Q:";
+            filteroneoverqLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(filteroneoverqLabel, "Selects a given reverb preset.");
             // 
             // filterfrequencyLabel
             // 
-            this.filterfrequencyLabel.AutoSize = true;
-            this.filterfrequencyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.filterfrequencyLabel.Location = new System.Drawing.Point(251, 7);
-            this.filterfrequencyLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.filterfrequencyLabel.Name = "filterfrequencyLabel";
-            this.filterfrequencyLabel.Size = new System.Drawing.Size(82, 16);
-            this.filterfrequencyLabel.TabIndex = 58;
-            this.filterfrequencyLabel.Text = "Filter Freq:";
-            this.filterfrequencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.filterfrequencyLabel, "Selects a given reverb preset.");
+            filterfrequencyLabel.AutoSize = true;
+            filterfrequencyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            filterfrequencyLabel.Location = new System.Drawing.Point(251, 7);
+            filterfrequencyLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            filterfrequencyLabel.Name = "filterfrequencyLabel";
+            filterfrequencyLabel.Size = new System.Drawing.Size(82, 16);
+            filterfrequencyLabel.TabIndex = 58;
+            filterfrequencyLabel.Text = "Filter Freq:";
+            filterfrequencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(filterfrequencyLabel, "Selects a given reverb preset.");
             // 
             // filteroneoverqPot
             // 
-            this.filteroneoverqPot.Location = new System.Drawing.Point(203, 56);
-            this.filteroneoverqPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.filteroneoverqPot.Maximum = 1.5D;
-            this.filteroneoverqPot.Minimum = 0.1D;
-            this.filteroneoverqPot.Name = "filteroneoverqPot";
-            this.filteroneoverqPot.Size = new System.Drawing.Size(40, 40);
-            this.filteroneoverqPot.TabIndex = 26;
-            this.filteroneoverqPot.Value = 1D;
-            this.filteroneoverqPot.ValueChanged += new System.EventHandler(this.oneoverqPot_ValueChanged);
+            filteroneoverqPot.Location = new System.Drawing.Point(203, 56);
+            filteroneoverqPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            filteroneoverqPot.Maximum = 1.5D;
+            filteroneoverqPot.Minimum = 0.1D;
+            filteroneoverqPot.Name = "filteroneoverqPot";
+            filteroneoverqPot.Size = new System.Drawing.Size(40, 40);
+            filteroneoverqPot.TabIndex = 26;
+            filteroneoverqPot.Value = 1D;
+            filteroneoverqPot.ValueChanged += oneoverqPot_ValueChanged;
             // 
             // filterfrequencyPot
             // 
-            this.filterfrequencyPot.Location = new System.Drawing.Point(203, 7);
-            this.filterfrequencyPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.filterfrequencyPot.Maximum = 1D;
-            this.filterfrequencyPot.Minimum = 0D;
-            this.filterfrequencyPot.Name = "filterfrequencyPot";
-            this.filterfrequencyPot.Size = new System.Drawing.Size(40, 40);
-            this.filterfrequencyPot.TabIndex = 25;
-            this.filterfrequencyPot.Value = 1D;
-            this.filterfrequencyPot.ValueChanged += new System.EventHandler(this.frequencyPot_ValueChanged);
+            filterfrequencyPot.Location = new System.Drawing.Point(203, 7);
+            filterfrequencyPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            filterfrequencyPot.Maximum = 1D;
+            filterfrequencyPot.Minimum = 0D;
+            filterfrequencyPot.Name = "filterfrequencyPot";
+            filterfrequencyPot.Size = new System.Drawing.Size(40, 40);
+            filterfrequencyPot.TabIndex = 25;
+            filterfrequencyPot.Value = 1D;
+            filterfrequencyPot.ValueChanged += frequencyPot_ValueChanged;
             // 
             // effectstabPage
             // 
-            this.effectstabPage.Controls.Add(this.tableLayoutPanel2);
-            this.effectstabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.effectstabPage.Location = new System.Drawing.Point(4, 24);
-            this.effectstabPage.Margin = new System.Windows.Forms.Padding(4);
-            this.effectstabPage.Name = "effectstabPage";
-            this.effectstabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.effectstabPage.Size = new System.Drawing.Size(336, 285);
-            this.effectstabPage.TabIndex = 1;
-            this.effectstabPage.Text = "Effects";
-            this.effectstabPage.UseVisualStyleBackColor = true;
+            effectstabPage.Controls.Add(tableLayoutPanel2);
+            effectstabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            effectstabPage.Location = new System.Drawing.Point(4, 24);
+            effectstabPage.Margin = new System.Windows.Forms.Padding(4);
+            effectstabPage.Name = "effectstabPage";
+            effectstabPage.Padding = new System.Windows.Forms.Padding(4);
+            effectstabPage.Size = new System.Drawing.Size(348, 284);
+            effectstabPage.TabIndex = 1;
+            effectstabPage.Text = "Effects";
+            effectstabPage.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18F));
-            this.tableLayoutPanel2.Controls.Add(this.PitchshifterButton, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.PitchenableButton, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.DestructiveEffectsButton, 1, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(334, 246);
-            this.tableLayoutPanel2.TabIndex = 24;
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52F));
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18F));
+            tableLayoutPanel2.Controls.Add(PitchshifterButton, 1, 0);
+            tableLayoutPanel2.Controls.Add(PitchenableButton, 2, 0);
+            tableLayoutPanel2.Location = new System.Drawing.Point(4, 4);
+            tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 3;
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableLayoutPanel2.Size = new System.Drawing.Size(334, 246);
+            tableLayoutPanel2.TabIndex = 24;
             // 
             // PitchshifterButton
             // 
-            this.PitchshifterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PitchshifterButton.Location = new System.Drawing.Point(104, 4);
-            this.PitchshifterButton.Margin = new System.Windows.Forms.Padding(4);
-            this.PitchshifterButton.Name = "PitchshifterButton";
-            this.PitchshifterButton.Size = new System.Drawing.Size(165, 32);
-            this.PitchshifterButton.TabIndex = 26;
-            this.PitchshifterButton.Text = "Pitch Shifter";
-            this.PitchshifterButton.UseVisualStyleBackColor = true;
-            this.PitchshifterButton.Click += new System.EventHandler(this.PitchshifterButton_Click);
+            PitchshifterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            PitchshifterButton.Location = new System.Drawing.Point(104, 4);
+            PitchshifterButton.Margin = new System.Windows.Forms.Padding(4);
+            PitchshifterButton.Name = "PitchshifterButton";
+            PitchshifterButton.Size = new System.Drawing.Size(165, 32);
+            PitchshifterButton.TabIndex = 26;
+            PitchshifterButton.Text = "Pitch Shifter";
+            PitchshifterButton.UseVisualStyleBackColor = true;
+            PitchshifterButton.Click += PitchshifterButton_Click;
             // 
             // PitchenableButton
             // 
-            this.PitchenableButton.BackColor = System.Drawing.Color.Salmon;
-            this.PitchenableButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PitchenableButton.Location = new System.Drawing.Point(277, 4);
-            this.PitchenableButton.Margin = new System.Windows.Forms.Padding(4);
-            this.PitchenableButton.Name = "PitchenableButton";
-            this.PitchenableButton.Size = new System.Drawing.Size(53, 32);
-            this.PitchenableButton.TabIndex = 25;
-            this.PitchenableButton.Text = "Off";
-            this.PitchenableButton.UseVisualStyleBackColor = false;
-            this.PitchenableButton.Click += new System.EventHandler(this.PitchenableButton_Click);
+            PitchenableButton.BackColor = System.Drawing.Color.Salmon;
+            PitchenableButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            PitchenableButton.Location = new System.Drawing.Point(277, 4);
+            PitchenableButton.Margin = new System.Windows.Forms.Padding(4);
+            PitchenableButton.Name = "PitchenableButton";
+            PitchenableButton.Size = new System.Drawing.Size(53, 32);
+            PitchenableButton.TabIndex = 25;
+            PitchenableButton.Text = "Off";
+            PitchenableButton.UseVisualStyleBackColor = false;
+            PitchenableButton.Click += PitchenableButton_Click;
             // 
             // DestructiveEffectsButton
             // 
-            this.DestructiveEffectsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.DestructiveEffectsButton.Location = new System.Drawing.Point(104, 44);
-            this.DestructiveEffectsButton.Margin = new System.Windows.Forms.Padding(4);
-            this.DestructiveEffectsButton.Name = "DestructiveEffectsButton";
-            this.DestructiveEffectsButton.Size = new System.Drawing.Size(165, 32);
-            this.DestructiveEffectsButton.TabIndex = 28;
-            this.DestructiveEffectsButton.Text = "Destructive Effects";
-            this.DestructiveEffectsButton.UseVisualStyleBackColor = true;
-            this.DestructiveEffectsButton.Click += new System.EventHandler(this.DestructiveEffectsButton_Click);
+            DestructiveEffectsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            DestructiveEffectsButton.Location = new System.Drawing.Point(7, 24);
+            DestructiveEffectsButton.Margin = new System.Windows.Forms.Padding(4);
+            DestructiveEffectsButton.Name = "DestructiveEffectsButton";
+            DestructiveEffectsButton.Size = new System.Drawing.Size(137, 32);
+            DestructiveEffectsButton.TabIndex = 28;
+            DestructiveEffectsButton.Text = "Destructive Effects";
+            DestructiveEffectsButton.UseVisualStyleBackColor = true;
+            DestructiveEffectsButton.Click += DestructiveEffectsButton_Click;
             // 
             // roomlistView
             // 
-            this.roomlistView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.roomlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.roomnameHeader,
-            this.filternameHeader,
-            this.filtertypeHeader,
-            this.filterfrequencyHeader,
-            this.filteroneoverqHeader,
-            this.reverbpresetHeader,
-            this.reverbidHeader,
-            this.reverbwetdryHeader,
-            this.reverbreflectionsdelayHeader,
-            this.reverbroomfrequencyHeader,
-            this.reverbdelayHeader,
-            this.reverbroomfiltermainHeader,
-            this.reverbroomfilterhfHeader,
-            this.reverbreflectionsgainHeader,
-            this.reverbgainHeader,
-            this.reverbdecaytimeHeader,
-            this.reverbdensityHeader,
-            this.reverbroomsizeHeader});
-            this.roomlistView.FullRowSelect = true;
-            this.roomlistView.GridLines = true;
-            this.roomlistView.Location = new System.Drawing.Point(432, 454);
-            this.roomlistView.Margin = new System.Windows.Forms.Padding(2);
-            this.roomlistView.MultiSelect = false;
-            this.roomlistView.Name = "roomlistView";
-            this.roomlistView.Size = new System.Drawing.Size(340, 94);
-            this.roomlistView.TabIndex = 67;
-            this.roomlistView.UseCompatibleStateImageBehavior = false;
-            this.roomlistView.View = System.Windows.Forms.View.Details;
-            this.roomlistView.Click += new System.EventHandler(this.filterlistView_Click);
+            roomlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { roomnameHeader, filternameHeader, filtertypeHeader, filterfrequencyHeader, filteroneoverqHeader, reverbpresetHeader, reverbidHeader, reverbwetdryHeader, reverbreflectionsdelayHeader, reverbroomfrequencyHeader, reverbdelayHeader, reverbroomfiltermainHeader, reverbroomfilterhfHeader, reverbreflectionsgainHeader, reverbgainHeader, reverbdecaytimeHeader, reverbdensityHeader, reverbroomsizeHeader });
+            roomlistView.Dock = System.Windows.Forms.DockStyle.Fill;
+            roomlistView.FullRowSelect = true;
+            roomlistView.GridLines = true;
+            roomlistView.Location = new System.Drawing.Point(2, 347);
+            roomlistView.Margin = new System.Windows.Forms.Padding(2);
+            roomlistView.MultiSelect = false;
+            roomlistView.Name = "roomlistView";
+            roomlistView.Size = new System.Drawing.Size(360, 95);
+            roomlistView.TabIndex = 67;
+            roomlistView.UseCompatibleStateImageBehavior = false;
+            roomlistView.View = System.Windows.Forms.View.Details;
+            roomlistView.Click += filterlistView_Click;
             // 
             // roomnameHeader
             // 
-            this.roomnameHeader.Text = "Room Name";
-            this.roomnameHeader.Width = 120;
+            roomnameHeader.Text = "Room Name";
+            roomnameHeader.Width = 120;
             // 
             // filternameHeader
             // 
-            this.filternameHeader.Text = "Filter Name";
-            this.filternameHeader.Width = 120;
+            filternameHeader.Text = "Filter Name";
+            filternameHeader.Width = 120;
             // 
             // filtertypeHeader
             // 
-            this.filtertypeHeader.Text = "Type";
-            this.filtertypeHeader.Width = 120;
+            filtertypeHeader.Text = "Type";
+            filtertypeHeader.Width = 120;
             // 
             // filterfrequencyHeader
             // 
-            this.filterfrequencyHeader.Text = "Frequency";
-            this.filterfrequencyHeader.Width = 120;
+            filterfrequencyHeader.Text = "Frequency";
+            filterfrequencyHeader.Width = 120;
             // 
             // filteroneoverqHeader
             // 
-            this.filteroneoverqHeader.Text = "1/Q";
-            this.filteroneoverqHeader.Width = 120;
+            filteroneoverqHeader.Text = "1/Q";
+            filteroneoverqHeader.Width = 120;
             // 
             // reverbidHeader
             // 
-            this.reverbidHeader.Text = "ID";
-            this.reverbidHeader.Width = 120;
+            reverbidHeader.Text = "ID";
+            reverbidHeader.Width = 120;
             // 
-            // groupBox3
+            // TimeGroupBox
             // 
-            this.groupBox3.Controls.Add(this.timeLabel);
-            this.groupBox3.Location = new System.Drawing.Point(258, 27);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(82, 64);
-            this.groupBox3.TabIndex = 5;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Time";
+            TimeGroupBox.Controls.Add(timeLabel);
+            TimeGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            TimeGroupBox.Location = new System.Drawing.Point(254, 4);
+            TimeGroupBox.Margin = new System.Windows.Forms.Padding(4);
+            TimeGroupBox.Name = "TimeGroupBox";
+            TimeGroupBox.Padding = new System.Windows.Forms.Padding(4);
+            TimeGroupBox.Size = new System.Drawing.Size(92, 66);
+            TimeGroupBox.TabIndex = 5;
+            TimeGroupBox.TabStop = false;
+            TimeGroupBox.Text = "Time";
             // 
             // timeLabel
             // 
-            this.timeLabel.AutoSize = true;
-            this.timeLabel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.timeLabel.Location = new System.Drawing.Point(6, 22);
-            this.timeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(71, 32);
-            this.timeLabel.TabIndex = 0;
-            this.timeLabel.Text = "00:00";
+            timeLabel.AutoSize = true;
+            timeLabel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            timeLabel.Location = new System.Drawing.Point(6, 22);
+            timeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            timeLabel.Name = "timeLabel";
+            timeLabel.Size = new System.Drawing.Size(71, 32);
+            timeLabel.TabIndex = 0;
+            timeLabel.Text = "00:00";
             // 
             // playbackTimer
             // 
-            this.playbackTimer.Tick += new System.EventHandler(this.Timer1_Tick);
+            playbackTimer.Tick += Timer1_Tick;
             // 
             // selectedsoundLabel
             // 
-            this.selectedsoundLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.selectedsoundLabel.BackColor = System.Drawing.SystemColors.Window;
-            this.selectedsoundLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.selectedsoundLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.selectedsoundLabel.Location = new System.Drawing.Point(432, 107);
-            this.selectedsoundLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.selectedsoundLabel.Name = "selectedsoundLabel";
-            this.selectedsoundLabel.Size = new System.Drawing.Size(340, 24);
-            this.selectedsoundLabel.TabIndex = 6;
-            this.selectedsoundLabel.Text = "Filename:";
-            this.selectedsoundLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            selectedsoundLabel.BackColor = System.Drawing.SystemColors.Window;
+            selectedsoundLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            selectedsoundLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            selectedsoundLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            selectedsoundLabel.Location = new System.Drawing.Point(4, 0);
+            selectedsoundLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            selectedsoundLabel.Name = "selectedsoundLabel";
+            selectedsoundLabel.Size = new System.Drawing.Size(356, 25);
+            selectedsoundLabel.TabIndex = 6;
+            selectedsoundLabel.Text = "Filename:";
+            selectedsoundLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // newToolStripMenuItem
             // 
-            this.newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
-            this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.newToolStripMenuItem.Text = "&New";
+            newToolStripMenuItem.Image = (System.Drawing.Image)resources.GetObject("newToolStripMenuItem.Image");
+            newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            newToolStripMenuItem.Name = "newToolStripMenuItem";
+            newToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N;
+            newToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            newToolStripMenuItem.Text = "&New";
             // 
             // openToolStripMenuItem
             // 
-            this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
-            this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.openToolStripMenuItem.Text = "&Open";
+            openToolStripMenuItem.Image = (System.Drawing.Image)resources.GetObject("openToolStripMenuItem.Image");
+            openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            openToolStripMenuItem.Name = "openToolStripMenuItem";
+            openToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O;
+            openToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            openToolStripMenuItem.Text = "&Open";
             // 
             // toolStripSeparator
             // 
-            this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(6, 6);
+            toolStripSeparator.Name = "toolStripSeparator";
+            toolStripSeparator.Size = new System.Drawing.Size(6, 6);
             // 
             // saveToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem.Image")));
-            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.saveToolStripMenuItem.Text = "&Save";
+            saveToolStripMenuItem.Image = (System.Drawing.Image)resources.GetObject("saveToolStripMenuItem.Image");
+            saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            saveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S;
+            saveToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            saveToolStripMenuItem.Text = "&Save";
             // 
             // saveAsToolStripMenuItem
             // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.saveAsToolStripMenuItem.Text = "Save &As";
+            saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            saveAsToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            saveAsToolStripMenuItem.Text = "Save &As";
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 6);
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(6, 6);
             // 
             // printToolStripMenuItem
             // 
-            this.printToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripMenuItem.Image")));
-            this.printToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.printToolStripMenuItem.Text = "&Print";
+            printToolStripMenuItem.Image = (System.Drawing.Image)resources.GetObject("printToolStripMenuItem.Image");
+            printToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            printToolStripMenuItem.Name = "printToolStripMenuItem";
+            printToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P;
+            printToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            printToolStripMenuItem.Text = "&Print";
             // 
             // printPreviewToolStripMenuItem
             // 
-            this.printPreviewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("printPreviewToolStripMenuItem.Image")));
-            this.printPreviewToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.printPreviewToolStripMenuItem.Name = "printPreviewToolStripMenuItem";
-            this.printPreviewToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.printPreviewToolStripMenuItem.Text = "Print Pre&view";
+            printPreviewToolStripMenuItem.Image = (System.Drawing.Image)resources.GetObject("printPreviewToolStripMenuItem.Image");
+            printPreviewToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            printPreviewToolStripMenuItem.Name = "printPreviewToolStripMenuItem";
+            printPreviewToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            printPreviewToolStripMenuItem.Text = "Print Pre&view";
             // 
             // toolStripSeparator2
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 6);
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 6);
             // 
             // exitToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.exitToolStripMenuItem.Text = "E&xit";
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            exitToolStripMenuItem.Text = "E&xit";
             // 
             // undoToolStripMenuItem
             // 
-            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.undoToolStripMenuItem.Text = "&Undo";
+            undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            undoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z;
+            undoToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            undoToolStripMenuItem.Text = "&Undo";
             // 
             // redoToolStripMenuItem
             // 
-            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.redoToolStripMenuItem.Text = "&Redo";
+            redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            redoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y;
+            redoToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            redoToolStripMenuItem.Text = "&Redo";
             // 
             // toolStripSeparator3
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 6);
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new System.Drawing.Size(6, 6);
             // 
             // cutToolStripMenuItem
             // 
-            this.cutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripMenuItem.Image")));
-            this.cutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.cutToolStripMenuItem.Text = "Cu&t";
+            cutToolStripMenuItem.Image = (System.Drawing.Image)resources.GetObject("cutToolStripMenuItem.Image");
+            cutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+            cutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X;
+            cutToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            cutToolStripMenuItem.Text = "Cu&t";
             // 
             // copyToolStripMenuItem
             // 
-            this.copyToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripMenuItem.Image")));
-            this.copyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.copyToolStripMenuItem.Text = "&Copy";
+            copyToolStripMenuItem.Image = (System.Drawing.Image)resources.GetObject("copyToolStripMenuItem.Image");
+            copyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            copyToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C;
+            copyToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            copyToolStripMenuItem.Text = "&Copy";
             // 
             // pasteToolStripMenuItem
             // 
-            this.pasteToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripMenuItem.Image")));
-            this.pasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.pasteToolStripMenuItem.Text = "&Paste";
+            pasteToolStripMenuItem.Image = (System.Drawing.Image)resources.GetObject("pasteToolStripMenuItem.Image");
+            pasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            pasteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V;
+            pasteToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            pasteToolStripMenuItem.Text = "&Paste";
             // 
             // toolStripSeparator4
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 6);
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new System.Drawing.Size(6, 6);
             // 
             // selectAllToolStripMenuItem
             // 
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.selectAllToolStripMenuItem.Text = "Select &All";
+            selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            selectAllToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            selectAllToolStripMenuItem.Text = "Select &All";
             // 
             // customizeToolStripMenuItem
             // 
-            this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.customizeToolStripMenuItem.Text = "&Customize";
+            customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
+            customizeToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            customizeToolStripMenuItem.Text = "&Customize";
             // 
             // optionsToolStripMenuItem
             // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.optionsToolStripMenuItem.Text = "&Options";
+            optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            optionsToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            optionsToolStripMenuItem.Text = "&Options";
             // 
             // contentsToolStripMenuItem
             // 
-            this.contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
-            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.contentsToolStripMenuItem.Text = "&Contents";
+            contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
+            contentsToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            contentsToolStripMenuItem.Text = "&Contents";
             // 
             // indexToolStripMenuItem
             // 
-            this.indexToolStripMenuItem.Name = "indexToolStripMenuItem";
-            this.indexToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.indexToolStripMenuItem.Text = "&Index";
+            indexToolStripMenuItem.Name = "indexToolStripMenuItem";
+            indexToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            indexToolStripMenuItem.Text = "&Index";
             // 
             // searchToolStripMenuItem
             // 
-            this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            this.searchToolStripMenuItem.Text = "&Search";
+            searchToolStripMenuItem.Name = "searchToolStripMenuItem";
+            searchToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            searchToolStripMenuItem.Text = "&Search";
             // 
             // toolStripSeparator5
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 6);
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new System.Drawing.Size(6, 6);
             // 
             // aboutToolStripMenuItem1
             // 
-            this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(32, 19);
-            this.aboutToolStripMenuItem1.Text = "&About...";
+            aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
+            aboutToolStripMenuItem1.Size = new System.Drawing.Size(32, 19);
+            aboutToolStripMenuItem1.Text = "&About...";
+            // 
+            // TableLayoutPanelMainSubDown
+            // 
+            TableLayoutPanelMainSubDown.ColumnCount = 2;
+            TableLayoutPanelMainSubDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            TableLayoutPanelMainSubDown.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 370F));
+            TableLayoutPanelMainSubDown.Controls.Add(TableLayoutPanelMainRight, 1, 0);
+            TableLayoutPanelMainSubDown.Controls.Add(filelistView, 0, 0);
+            TableLayoutPanelMainSubDown.Dock = System.Windows.Forms.DockStyle.Fill;
+            TableLayoutPanelMainSubDown.Location = new System.Drawing.Point(3, 83);
+            TableLayoutPanelMainSubDown.Name = "TableLayoutPanelMainSubDown";
+            TableLayoutPanelMainSubDown.RowCount = 1;
+            TableLayoutPanelMainSubDown.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            TableLayoutPanelMainSubDown.Size = new System.Drawing.Size(958, 450);
+            TableLayoutPanelMainSubDown.TabIndex = 68;
+            // 
+            // TableLayoutPanelMainRight
+            // 
+            TableLayoutPanelMainRight.ColumnCount = 1;
+            TableLayoutPanelMainRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            TableLayoutPanelMainRight.Controls.Add(TabControl, 0, 1);
+            TableLayoutPanelMainRight.Controls.Add(roomlistView, 0, 2);
+            TableLayoutPanelMainRight.Controls.Add(selectedsoundLabel, 0, 0);
+            TableLayoutPanelMainRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            TableLayoutPanelMainRight.Location = new System.Drawing.Point(591, 3);
+            TableLayoutPanelMainRight.Name = "TableLayoutPanelMainRight";
+            TableLayoutPanelMainRight.RowCount = 3;
+            TableLayoutPanelMainRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            TableLayoutPanelMainRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 320F));
+            TableLayoutPanelMainRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            TableLayoutPanelMainRight.Size = new System.Drawing.Size(364, 444);
+            TableLayoutPanelMainRight.TabIndex = 69;
+            // 
+            // TableLayoutPanelMain
+            // 
+            TableLayoutPanelMain.ColumnCount = 1;
+            TableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            TableLayoutPanelMain.Controls.Add(TableLayoutPanelMainSubDown, 0, 1);
+            TableLayoutPanelMain.Controls.Add(TableLayoutPanelMainSubTop, 0, 0);
+            TableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            TableLayoutPanelMain.Location = new System.Drawing.Point(0, 24);
+            TableLayoutPanelMain.Name = "TableLayoutPanelMain";
+            TableLayoutPanelMain.RowCount = 2;
+            TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            TableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            TableLayoutPanelMain.Size = new System.Drawing.Size(964, 536);
+            TableLayoutPanelMain.TabIndex = 69;
+            // 
+            // TableLayoutPanelMainSubTop
+            // 
+            TableLayoutPanelMainSubTop.ColumnCount = 4;
+            TableLayoutPanelMainSubTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
+            TableLayoutPanelMainSubTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            TableLayoutPanelMainSubTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 450F));
+            TableLayoutPanelMainSubTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            TableLayoutPanelMainSubTop.Controls.Add(PlaybackGroupBox, 0, 0);
+            TableLayoutPanelMainSubTop.Controls.Add(YamlGroupBox, 2, 0);
+            TableLayoutPanelMainSubTop.Controls.Add(TimeGroupBox, 1, 0);
+            TableLayoutPanelMainSubTop.Controls.Add(ManipulationGroupBox, 3, 0);
+            TableLayoutPanelMainSubTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            TableLayoutPanelMainSubTop.Location = new System.Drawing.Point(3, 3);
+            TableLayoutPanelMainSubTop.Name = "TableLayoutPanelMainSubTop";
+            TableLayoutPanelMainSubTop.RowCount = 1;
+            TableLayoutPanelMainSubTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            TableLayoutPanelMainSubTop.Size = new System.Drawing.Size(958, 74);
+            TableLayoutPanelMainSubTop.TabIndex = 69;
+            // 
+            // ManipulationGroupBox
+            // 
+            ManipulationGroupBox.Controls.Add(DestructiveEffectsButton);
+            ManipulationGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            ManipulationGroupBox.Location = new System.Drawing.Point(803, 3);
+            ManipulationGroupBox.Name = "ManipulationGroupBox";
+            ManipulationGroupBox.Size = new System.Drawing.Size(152, 68);
+            ManipulationGroupBox.TabIndex = 6;
+            ManipulationGroupBox.TabStop = false;
+            ManipulationGroupBox.Text = "Audiofile Manipulation";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(789, 561);
-            this.Controls.Add(this.roomlistView);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.selectedsoundLabel);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.filelistView);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.menuStrip);
-            this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.MinimumSize = new System.Drawing.Size(593, 185);
-            this.Name = "Form1";
-            this.Text = "Yaml AudioTool Rebuilt";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.Resize += new System.EventHandler(this.Form1_Resize);
-            this.menuStrip.ResumeLayout(false);
-            this.menuStrip.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.playbacktabPage.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VolumetrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VolumevaluenumericUpDown)).EndInit();
-            this.PlaybackLayoutPanel.ResumeLayout(false);
-            this.PlaybackLayoutPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PrioritytrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DopplertrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MinDistancenumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MaxDistancenumericUpDown)).EndInit();
-            this.organizetabPage.ResumeLayout(false);
-            this.OrganizeLayoutPanel.ResumeLayout(false);
-            this.OrganizeLayoutPanel.PerformLayout();
-            this.reverbtabPage.ResumeLayout(false);
-            this.reverbtabPage.PerformLayout();
-            this.effectstabPage.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(964, 560);
+            Controls.Add(TableLayoutPanelMain);
+            Controls.Add(menuStrip);
+            MainMenuStrip = menuStrip;
+            Margin = new System.Windows.Forms.Padding(4);
+            MinimumSize = new System.Drawing.Size(650, 550);
+            Name = "Form1";
+            Text = "Yaml AudioTool Rebuilt";
+            toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
+            FormClosed += Form1_FormClosed;
+            Load += Form1_Load;
+            menuStrip.ResumeLayout(false);
+            menuStrip.PerformLayout();
+            PlaybackGroupBox.ResumeLayout(false);
+            YamlGroupBox.ResumeLayout(false);
+            TabControl.ResumeLayout(false);
+            playbacktabPage.ResumeLayout(false);
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)VolumetrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)VolumevaluenumericUpDown).EndInit();
+            PlaybackLayoutPanel.ResumeLayout(false);
+            PlaybackLayoutPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)PrioritytrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DopplertrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)MinDistancenumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)MaxDistancenumericUpDown).EndInit();
+            organizetabPage.ResumeLayout(false);
+            OrganizeLayoutPanel.ResumeLayout(false);
+            OrganizeLayoutPanel.PerformLayout();
+            reverbtabPage.ResumeLayout(false);
+            reverbtabPage.PerformLayout();
+            effectstabPage.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            TimeGroupBox.ResumeLayout(false);
+            TimeGroupBox.PerformLayout();
+            TableLayoutPanelMainSubDown.ResumeLayout(false);
+            TableLayoutPanelMainRight.ResumeLayout(false);
+            TableLayoutPanelMain.ResumeLayout(false);
+            TableLayoutPanelMainSubTop.ResumeLayout(false);
+            ManipulationGroupBox.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox PlaybackGroupBox;
         private System.Windows.Forms.Button ForwardButton;
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.Button BackButton;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox YamlGroupBox;
         private System.Windows.Forms.Button addfileButton;
         private System.Windows.Forms.Button removeButton;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.TabPage playbacktabPage;
         private System.Windows.Forms.TabPage effectstabPage;
         private System.Windows.Forms.TabPage reverbtabPage;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox TimeGroupBox;
         public System.Windows.Forms.Label timeLabel;
         private System.Windows.Forms.Button removeallButton;
         public System.Windows.Forms.ListView filelistView;
@@ -2006,6 +2002,11 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.ComboBox StackcomboBox;
         public System.Windows.Forms.ColumnHeader stackHeader;
         public System.Windows.Forms.Button DestructiveEffectsButton;
+        private System.Windows.Forms.TableLayoutPanel TableLayoutPanelMainSubDown;
+        private System.Windows.Forms.TableLayoutPanel TableLayoutPanelMainRight;
+        private System.Windows.Forms.TableLayoutPanel TableLayoutPanelMain;
+        private System.Windows.Forms.TableLayoutPanel TableLayoutPanelMainSubTop;
+        private System.Windows.Forms.GroupBox ManipulationGroupBox;
     }
 }
 

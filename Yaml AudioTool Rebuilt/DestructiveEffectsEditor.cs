@@ -338,7 +338,7 @@ namespace Yaml_AudioTool_Rebuilt
             markerLines[i].X = waveformSpan.X1;
             markerLabels[i].X = waveformSpan.X1;
             markerLabels[i].Text = "Marker" + (i + 1);
-            markerLabels[i].TextFont.Size = 20;
+            markerLabels[i].TextFont.Size = 14;
             markerLabels[i].Y = WaveFormat.Channels;
 
             if (!this.Text.EndsWith("*"))

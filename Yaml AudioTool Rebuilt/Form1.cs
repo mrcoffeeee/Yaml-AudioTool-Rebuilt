@@ -105,29 +105,12 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (value < 1900)
             {
-                //filelistView.Size = new Size(691, 836);
-                roomlistView.Size = new Size(595, 160);
-                filelistView.Size = new Size(691, 21 + selectedsoundLabel.Height + tabControl1.Height + roomlistView.Height);
+                this.Size = new Size(980, 599);
             }
             else if (value >= 1900)
             {
                 this.Size = new Size(1600, 900);
-                //filelistView.Size = new Size(1200, 750);
-                roomlistView.Size = new Size(343, 400);
-                filelistView.Size = new Size(1200, 9 + selectedsoundLabel.Height + tabControl1.Height + roomlistView.Height);
             }
-            baseWindowWidth = this.Width;
-            baseWindowHeight = this.Height;
-            baseListViewWidth = filelistView.Width;
-            baseListViewHeight = filelistView.Height;
-            basefilterlistviewHeight = roomlistView.Height;
-        }
-
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            filelistView.Width = baseListViewWidth + this.Width - baseWindowWidth;
-            filelistView.Height = baseListViewHeight + this.Height - baseWindowHeight;
-            roomlistView.Height = basefilterlistviewHeight + this.Height - baseWindowHeight;
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -1073,8 +1056,8 @@ namespace Yaml_AudioTool_Rebuilt
                 };
                 editorForm.Show();
             }
-            
-            
+
+
             DestructiveEffectsButton.Enabled = false;
         }
 
