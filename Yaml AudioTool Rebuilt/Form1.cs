@@ -51,10 +51,6 @@ namespace Yaml_AudioTool_Rebuilt
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
             SetWindowsSize();
             PopulateComboboxes();
             roomlistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -105,7 +101,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (value < 1900)
             {
-                this.Size = new Size(980, 599);
+                //this.Size = new Size(980, 599);
             }
             else if (value >= 1900)
             {

@@ -43,9 +43,10 @@ namespace Yaml_AudioTool_Rebuilt
             LogopictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             LogopictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             LogopictureBox.InitialImage = null;
-            LogopictureBox.Location = new System.Drawing.Point(3, 3);
+            LogopictureBox.Location = new System.Drawing.Point(4, 5);
+            LogopictureBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             LogopictureBox.Name = "LogopictureBox";
-            LogopictureBox.Size = new System.Drawing.Size(349, 269);
+            LogopictureBox.Size = new System.Drawing.Size(499, 448);
             LogopictureBox.TabIndex = 2;
             LogopictureBox.TabStop = false;
             // 
@@ -53,16 +54,15 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             TableLayoutPanelAbout.ColumnCount = 1;
             TableLayoutPanelAbout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            TableLayoutPanelAbout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 12F));
+            TableLayoutPanelAbout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 17F));
             TableLayoutPanelAbout.Controls.Add(AboutrichTextBox, 0, 1);
             TableLayoutPanelAbout.Controls.Add(LogopictureBox, 0, 0);
-            TableLayoutPanelAbout.Location = new System.Drawing.Point(7, 6);
-            TableLayoutPanelAbout.Margin = new System.Windows.Forms.Padding(2);
+            TableLayoutPanelAbout.Location = new System.Drawing.Point(10, 10);
             TableLayoutPanelAbout.Name = "TableLayoutPanelAbout";
             TableLayoutPanelAbout.RowCount = 2;
             TableLayoutPanelAbout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
             TableLayoutPanelAbout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            TableLayoutPanelAbout.Size = new System.Drawing.Size(355, 393);
+            TableLayoutPanelAbout.Size = new System.Drawing.Size(507, 655);
             TableLayoutPanelAbout.TabIndex = 7;
             // 
             // AboutrichTextBox
@@ -70,30 +70,29 @@ namespace Yaml_AudioTool_Rebuilt
             AboutrichTextBox.BackColor = System.Drawing.Color.White;
             AboutrichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             AboutrichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            AboutrichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            AboutrichTextBox.Location = new System.Drawing.Point(2, 277);
-            AboutrichTextBox.Margin = new System.Windows.Forms.Padding(2);
+            AboutrichTextBox.Font = new System.Drawing.Font("Segoe UI", 8.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            AboutrichTextBox.Location = new System.Drawing.Point(3, 461);
             AboutrichTextBox.MaxLength = 1000;
-            AboutrichTextBox.MinimumSize = new System.Drawing.Size(354, 100);
+            AboutrichTextBox.MinimumSize = new System.Drawing.Size(506, 167);
             AboutrichTextBox.Name = "AboutrichTextBox";
             AboutrichTextBox.ReadOnly = true;
-            AboutrichTextBox.Size = new System.Drawing.Size(354, 114);
+            AboutrichTextBox.Size = new System.Drawing.Size(506, 191);
             AboutrichTextBox.TabIndex = 8;
             AboutrichTextBox.Text = resources.GetString("AboutrichTextBox.Text");
             // 
             // AboutDialog
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.White;
-            ClientSize = new System.Drawing.Size(374, 418);
+            ClientSize = new System.Drawing.Size(526, 668);
             Controls.Add(TableLayoutPanelAbout);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            Margin = new System.Windows.Forms.Padding(4);
+            Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             MaximizeBox = false;
-            MaximumSize = new System.Drawing.Size(390, 457);
+            MaximumSize = new System.Drawing.Size(548, 724);
             MinimizeBox = false;
-            MinimumSize = new System.Drawing.Size(390, 457);
+            MinimumSize = new System.Drawing.Size(548, 724);
             Name = "AboutDialog";
             ShowIcon = false;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
