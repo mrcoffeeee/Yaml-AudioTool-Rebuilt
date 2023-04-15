@@ -427,6 +427,13 @@ namespace Yaml_AudioTool_Rebuilt
                 using (CueWaveFileWriter writer = new(FilenameLabel.Text, WaveFormat))
                 {
                     writer.WriteSamples(audioDataM, 0, audioDataM.Length);
+                    for (int i = 0; i < markerLines.Length; i++)
+                    {
+                        if (markerLines[i].IsVisible == true)
+                        {
+                            writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLabels[i].Text);
+                        }
+                    }
                 }
             }
             else if (dialogResult == DialogResult.No)
