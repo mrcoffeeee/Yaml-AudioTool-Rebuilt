@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DestructiveEffectsEditor));
             TableLayoutPanelDEE = new System.Windows.Forms.TableLayoutPanel();
             TableLayoutPanelA = new System.Windows.Forms.TableLayoutPanel();
             NormalizeButton = new System.Windows.Forms.Button();
@@ -119,7 +120,7 @@
             FadeComboBox.Enabled = false;
             FadeComboBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             FadeComboBox.FormattingEnabled = true;
-            FadeComboBox.Items.AddRange(new object[] { "Linear IN", "Linear OUT" });
+            FadeComboBox.Items.AddRange(new object[] { "Linear IN", "Exponential IN", "Linear OUT", "Exponential OUT" });
             FadeComboBox.Location = new System.Drawing.Point(3, 235);
             FadeComboBox.Name = "FadeComboBox";
             FadeComboBox.Size = new System.Drawing.Size(197, 33);
@@ -359,6 +360,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1401, 580);
             Controls.Add(TableLayoutPanelDEE);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             MinimumSize = new System.Drawing.Size(1415, 608);
             Name = "DestructiveEffectsEditor";

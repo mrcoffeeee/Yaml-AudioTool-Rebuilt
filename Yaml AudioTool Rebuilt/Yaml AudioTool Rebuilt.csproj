@@ -6,7 +6,12 @@
     <RootNamespace>Yaml_AudioTool_Rebuilt</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>Yaml_AudioTool_Rebuilt.Program</StartupObject>
+    <ApplicationIcon>Resources\ProgramIcon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\ProgramIcon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Crc32.NET" Version="1.2.0" />

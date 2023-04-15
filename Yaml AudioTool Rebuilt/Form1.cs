@@ -1,20 +1,12 @@
 ﻿using System;
-using System.IO;
-using System.Windows;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using Vortice.XAudio2;
-using NAudio.Gui;
-using NAudio.Wave;
-using System.Drawing.Text;
 
 namespace Yaml_AudioTool_Rebuilt
 {

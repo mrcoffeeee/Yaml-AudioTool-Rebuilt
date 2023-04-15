@@ -31,7 +31,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void audiofoldersetButton_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderBrowserDialog = new ();
+            FolderBrowserDialog folderBrowserDialog = new();
 
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {

@@ -1838,6 +1838,7 @@ namespace Yaml_AudioTool_Rebuilt
             ClientSize = new System.Drawing.Size(1377, 933);
             Controls.Add(TableLayoutPanelMain);
             Controls.Add(menuStrip);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip;
             Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             MinimumSize = new System.Drawing.Size(919, 879);

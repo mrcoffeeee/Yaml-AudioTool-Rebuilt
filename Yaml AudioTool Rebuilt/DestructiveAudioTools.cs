@@ -1,10 +1,5 @@
-﻿using NAudio.Wave;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -23,10 +18,10 @@ namespace Yaml_AudioTool_Rebuilt
                 if (abs > max) max = abs;
             }
 
-            return Math.Round(max,3).ToString();
+            return Math.Round(max, 3).ToString();
         }
 
-        public static float[] Normalize(float[] audioData,float max)
+        public static float[] Normalize(float[] audioData, float max)
         {
             if (max != 0 || max < 1.0f)
             {
@@ -111,7 +106,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
 
             int startSample = (int)(startTime * sampleRate * channels);
-            int endSample = (int)(endTime * sampleRate * channels);            
+            int endSample = (int)(endTime * sampleRate * channels);
             float fadeRatio;
             List<float> fadeAudioList = new();
 
@@ -134,8 +129,27 @@ namespace Yaml_AudioTool_Rebuilt
                 }
             }
 
+            // Exponential FadeIn
+            if (fadeIndex == 1)
+            {
+                int fadeIn = 0;
+                for (int i = 0; i < audioData.Length; i++)
+                {
+                    if (i >= startSample && i <= endSample)
+                    {
+                        fadeRatio = (float)Math.Pow(2, (float)fadeIn / (endSample - startSample)) - 1;
+                        fadeAudioList.Add(audioData[i] *= fadeRatio);
+                        fadeIn++;
+                    }
+                    else
+                    {
+                        fadeAudioList.Add(audioData[i]);
+                    }
+                }
+            }
+
             // Linear FadeOut
-            else if (fadeIndex == 1)
+            else if (fadeIndex == 2)
             {
                 int fadeOut = endSample - startSample;
                 for (int i = 0; i < audioData.Length; i++)
@@ -152,7 +166,26 @@ namespace Yaml_AudioTool_Rebuilt
                     }
                 }
             }
+
+            // Exponential FadeOut
+            else if (fadeIndex == 3)
+            {
+                int fadeOut = endSample - startSample;
+                for (int i = 0; i < audioData.Length; i++)
+                {
+                    if (i >= startSample && i <= endSample)
+                    {
+                        fadeRatio = (float)Math.Pow(2, (float)fadeOut / (endSample - startSample)) - 1;
+                        fadeAudioList.Add(audioData[i] *= fadeRatio);
+                        fadeOut--;
+                    }
+                    else
+                    {
+                        fadeAudioList.Add(audioData[i]);
+                    }
+                }
+            }
             return fadeAudioList.ToArray();
         }
-    }   
+    }
 }

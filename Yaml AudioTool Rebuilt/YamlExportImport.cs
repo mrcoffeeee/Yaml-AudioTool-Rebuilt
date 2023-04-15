@@ -1,13 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Force.Crc32;
+﻿using Force.Crc32;
 using NAudio.Wave;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -51,7 +48,7 @@ namespace Yaml_AudioTool_Rebuilt
             lines.Add("  reverbs:");
 
             foreach (var item in f1.roomlistView.Items)
-            {                
+            {
                 lines.Add("  - effectDef:");
                 lines.Add("      effectType: " + "0");
                 lines.Add("      enumName: " + "Reverb-" + f1.roomlistView.Items[a].SubItems[f1.roomlistView.Columns.IndexOf(f1.reverbpresetHeader)].Text);
@@ -144,7 +141,7 @@ namespace Yaml_AudioTool_Rebuilt
                     GenerateFilterEntries(lines);
                     GenerateReverbEntries(lines);
                     GenerateRoomEntries(lines);
-                }                
+                }
                 GenerateAudioEntries(lines);
 
                 File.WriteAllLines(savePath, lines);
@@ -266,7 +263,7 @@ namespace Yaml_AudioTool_Rebuilt
                             {
                                 f1.filelistView.Items[index].SubItems[f1.filelistView.Columns.IndexOf(f1.stackHeader)].Text = "0";
                             }
-                                
+
                             line = StreamReader.ReadLine();// Read crc:
                             line = StreamReader.ReadLine();// Read roomNameCRC: or enumName:
                             if (line == null)
@@ -292,12 +289,12 @@ namespace Yaml_AudioTool_Rebuilt
 
                 f1.filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 f1.filelistView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
-                f1.filelistView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent); 
+                f1.filelistView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
             }
         }
 
         private static int ReadRoomEntries(string yamlPath)
-        {            
+        {
             var fileStream = new FileStream(yamlPath, FileMode.Open, FileAccess.Read);
             using (var StreamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
@@ -344,7 +341,7 @@ namespace Yaml_AudioTool_Rebuilt
                         roomitem.SubItems.Add("");
                         f1.roomlistView.Items.Add(roomitem);
                         roomName = roomitem.Text.ToString();
-                        roomIndex = roomitem.Index.ToString(); 
+                        roomIndex = roomitem.Index.ToString();
                     }
 
                     if (line.Contains("    crc: "))
@@ -354,7 +351,7 @@ namespace Yaml_AudioTool_Rebuilt
                         foreach (var item in f1.filelistView.Items)
                         {
                             if (f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text.Contains(line))
-                            {                                
+                            {
                                 f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text = roomName;
                                 f1.filelistView.Items[a].SubItems[f1.filelistView.Columns.IndexOf(f1.roomidHeader)].Text = roomIndex;
                             }
@@ -401,7 +398,7 @@ namespace Yaml_AudioTool_Rebuilt
                         a++;
                     }
                 }
-            }            
+            }
         }
 
         private static void ReadReverbEntries(string yamlPath, int listOffset)
@@ -461,7 +458,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string filePath = openFileDialog.FileName;                
+                string filePath = openFileDialog.FileName;
                 int listOffset = 0;
                 try
                 {

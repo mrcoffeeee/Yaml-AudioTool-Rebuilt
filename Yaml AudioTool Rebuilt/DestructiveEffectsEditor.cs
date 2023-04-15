@@ -1,18 +1,12 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.Devices;
-using NAudio.Wave;
+﻿using NAudio.Wave;
 using ScottPlot;
-using SharpGen.Runtime.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Numerics;
-using System.Threading.Channels;
 using System.Windows.Forms;
 using Vortice.Multimedia;
-using Vortice.XAudio2;
 
 namespace Yaml_AudioTool_Rebuilt
 {

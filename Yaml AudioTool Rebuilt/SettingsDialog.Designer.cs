@@ -28,68 +28,69 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.audiofoldergroupBox = new System.Windows.Forms.GroupBox();
-            this.audiofolderLabel = new System.Windows.Forms.Label();
-            this.audiofoldersetButton = new System.Windows.Forms.Button();
-            this.audiofoldergroupBox.SuspendLayout();
-            this.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
+            audiofoldergroupBox = new System.Windows.Forms.GroupBox();
+            audiofolderLabel = new System.Windows.Forms.Label();
+            audiofoldersetButton = new System.Windows.Forms.Button();
+            audiofoldergroupBox.SuspendLayout();
+            SuspendLayout();
             // 
             // audiofoldergroupBox
             // 
-            this.audiofoldergroupBox.AutoSize = true;
-            this.audiofoldergroupBox.Controls.Add(this.audiofolderLabel);
-            this.audiofoldergroupBox.Controls.Add(this.audiofoldersetButton);
-            this.audiofoldergroupBox.Location = new System.Drawing.Point(14, 15);
-            this.audiofoldergroupBox.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.audiofoldergroupBox.Name = "audiofoldergroupBox";
-            this.audiofoldergroupBox.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.audiofoldergroupBox.Size = new System.Drawing.Size(654, 142);
-            this.audiofoldergroupBox.TabIndex = 0;
-            this.audiofoldergroupBox.TabStop = false;
-            this.audiofoldergroupBox.Text = "Audio Folder Path";
+            audiofoldergroupBox.AutoSize = true;
+            audiofoldergroupBox.Controls.Add(audiofolderLabel);
+            audiofoldergroupBox.Controls.Add(audiofoldersetButton);
+            audiofoldergroupBox.Location = new System.Drawing.Point(12, 12);
+            audiofoldergroupBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            audiofoldergroupBox.Name = "audiofoldergroupBox";
+            audiofoldergroupBox.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            audiofoldergroupBox.Size = new System.Drawing.Size(545, 119);
+            audiofoldergroupBox.TabIndex = 0;
+            audiofoldergroupBox.TabStop = false;
+            audiofoldergroupBox.Text = "Audio Folder Path";
             // 
             // audiofolderLabel
             // 
-            this.audiofolderLabel.AutoSize = true;
-            this.audiofolderLabel.Location = new System.Drawing.Point(118, 58);
-            this.audiofolderLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.audiofolderLabel.Name = "audiofolderLabel";
-            this.audiofolderLabel.Size = new System.Drawing.Size(72, 30);
-            this.audiofolderLabel.TabIndex = 1;
-            this.audiofolderLabel.Text = "NONE";
+            audiofolderLabel.AutoSize = true;
+            audiofolderLabel.Location = new System.Drawing.Point(98, 48);
+            audiofolderLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            audiofolderLabel.Name = "audiofolderLabel";
+            audiofolderLabel.Size = new System.Drawing.Size(61, 25);
+            audiofolderLabel.TabIndex = 1;
+            audiofolderLabel.Text = "NONE";
             // 
             // audiofoldersetButton
             // 
-            this.audiofoldersetButton.Location = new System.Drawing.Point(10, 44);
-            this.audiofoldersetButton.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.audiofoldersetButton.Name = "audiofoldersetButton";
-            this.audiofoldersetButton.Size = new System.Drawing.Size(98, 58);
-            this.audiofoldersetButton.TabIndex = 0;
-            this.audiofoldersetButton.Text = "Set";
-            this.audiofoldersetButton.UseVisualStyleBackColor = true;
-            this.audiofoldersetButton.Click += new System.EventHandler(this.audiofoldersetButton_Click);
+            audiofoldersetButton.Location = new System.Drawing.Point(8, 37);
+            audiofoldersetButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            audiofoldersetButton.Name = "audiofoldersetButton";
+            audiofoldersetButton.Size = new System.Drawing.Size(82, 48);
+            audiofoldersetButton.TabIndex = 0;
+            audiofoldersetButton.Text = "Set";
+            audiofoldersetButton.UseVisualStyleBackColor = true;
+            audiofoldersetButton.Click += audiofoldersetButton_Click;
             // 
             // SettingsDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(682, 171);
-            this.Controls.Add(this.audiofoldergroupBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(706, 235);
-            this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(706, 235);
-            this.Name = "SettingsDialog";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Settings";
-            this.audiofoldergroupBox.ResumeLayout(false);
-            this.audiofoldergroupBox.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
+            ClientSize = new System.Drawing.Size(570, 149);
+            Controls.Add(audiofoldergroupBox);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            MaximizeBox = false;
+            MaximumSize = new System.Drawing.Size(592, 205);
+            MinimizeBox = false;
+            MinimumSize = new System.Drawing.Size(592, 205);
+            Name = "SettingsDialog";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "Settings";
+            audiofoldergroupBox.ResumeLayout(false);
+            audiofoldergroupBox.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
