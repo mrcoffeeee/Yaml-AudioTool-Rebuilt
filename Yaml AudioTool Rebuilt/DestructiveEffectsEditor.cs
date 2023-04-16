@@ -121,19 +121,33 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (TableLayoutPanelFD.Visible == true)
             {
+                double startPoint;
+                double endPoint;
+
+                if (waveformSpan.X1 == waveformSpan.X2)
+                {
+                    var limits = WaveformsPlot.Plot.GetAxisLimits();
+                    startPoint = limits.XMin;
+                    endPoint = limits.XMax;
+                }
+
+                else
+                {
+                    startPoint = waveformSpan.X1;
+                    endPoint = waveformSpan.X2;
+                }
+
+                audioDataM.CopyTo(audioData_BackupM, 0);
+
                 if (WaveFormat.Channels == 1)
                 {
-                    audioDataM.CopyTo(audioData_BackupM, 0);
-                    float max = Convert.ToSingle(DestructiveAudioTools.GetPeakVolume(audioDataM));
-                    DestructiveAudioTools.Normalize(audioDataM, max).CopyTo(audioDataM, 0);
+                    DestructiveAudioTools.Normalize(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
                     PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
                 }
+
                 else if (WaveFormat.Channels == 2)
                 {
-                    audioDataM.CopyTo(audioData_BackupM, 0);
-                    float max = Convert.ToSingle(DestructiveAudioTools.GetPeakVolume(audioDataM));
-                    DestructiveAudioTools.Normalize(audioDataM, max).CopyTo(audioDataM, 0);
-
+                    DestructiveAudioTools.Normalize(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
                     int length = audioDataM.Length / 2;
                     for (int i = 0; i < length; i++)
                     {
@@ -160,17 +174,33 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void VolumeUpButton_Click(object sender, EventArgs e)
         {
+            double startPoint;
+            double endPoint;
+
+            if (waveformSpan.X1 == waveformSpan.X2)
+            {
+                var limits = WaveformsPlot.Plot.GetAxisLimits();
+                startPoint = limits.XMin;
+                endPoint = limits.XMax;
+            }
+
+            else
+            {
+                startPoint = waveformSpan.X1;
+                endPoint = waveformSpan.X2;
+            }
+
+            audioDataM.CopyTo(audioData_BackupM, 0);
+
             if (WaveFormat.Channels == 1)
             {
-                audioDataM.CopyTo(audioData_BackupM, 0);
-                DestructiveAudioTools.VolumeUp(audioDataM).CopyTo(audioDataM, 0);
+                DestructiveAudioTools.VolumeUp(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
                 PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
             }
+
             else if (WaveFormat.Channels == 2)
             {
-                audioDataM.CopyTo(audioData_BackupM, 0);
-                DestructiveAudioTools.VolumeUp(audioDataM).CopyTo(audioDataM, 0);
-
+                DestructiveAudioTools.VolumeUp(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
                 int length = audioDataM.Length / 2;
                 for (int i = 0; i < length; i++)
                 {
@@ -196,17 +226,33 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void VolumeDownButton_Click(object sender, EventArgs e)
         {
+            double startPoint;
+            double endPoint;
+
+            if (waveformSpan.X1 == waveformSpan.X2)
+            {
+                var limits = WaveformsPlot.Plot.GetAxisLimits();
+                startPoint = limits.XMin;
+                endPoint = limits.XMax;
+            }
+
+            else
+            {
+                startPoint = waveformSpan.X1;
+                endPoint = waveformSpan.X2;
+            }
+
+            audioDataM.CopyTo(audioData_BackupM, 0);
+
             if (WaveFormat.Channels == 1)
             {
-                audioDataM.CopyTo(audioData_BackupM, 0);
-                DestructiveAudioTools.VolumeDown(audioDataM).CopyTo(audioDataM, 0);
+                DestructiveAudioTools.VolumeDown(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
                 PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
             }
+
             else if (WaveFormat.Channels == 2)
             {
-                audioDataM.CopyTo(audioData_BackupM, 0);
-                DestructiveAudioTools.VolumeDown(audioDataM).CopyTo(audioDataM, 0);
-
+                DestructiveAudioTools.VolumeDown(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
                 int length = audioDataM.Length / 2;
                 for (int i = 0; i < length; i++)
                 {
@@ -258,7 +304,6 @@ namespace Yaml_AudioTool_Rebuilt
                 else if (WaveFormat.Channels == 2)
                 {
                     audioDataM = DestructiveAudioTools.Trim(audioDataM, waveformSpan.X1, waveformSpan.X2, WaveFormat.SampleRate, WaveFormat.Channels);
-
                     int length = audioDataM.Length / 2;
                     Array.Resize(ref audioDataL, length);
                     Array.Resize(ref audioDataR, length);
@@ -287,42 +332,55 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void FadeButton_Click(object sender, EventArgs e)
         {
-            if (waveformSpan.X1 != waveformSpan.X2)
+            double startPoint;
+            double endPoint;
+
+            if (waveformSpan.X1 == waveformSpan.X2)
             {
-                if (WaveFormat.Channels == 1)
-                {
-                    audioDataM.CopyTo(audioData_BackupM, 0);
-                    DestructiveAudioTools.Fade(audioDataM, waveformSpan.X1, waveformSpan.X2, WaveFormat.SampleRate, WaveFormat.Channels, FadeComboBox.SelectedIndex).CopyTo(audioDataM, 0);
-                    PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
-                }
-                else if (WaveFormat.Channels == 2)
-                {
-                    audioDataM.CopyTo(audioData_BackupM, 0);
-                    DestructiveAudioTools.Fade(audioDataM, waveformSpan.X1, waveformSpan.X2, WaveFormat.SampleRate, WaveFormat.Channels, FadeComboBox.SelectedIndex).CopyTo(audioDataM, 0);
-
-                    int length = audioDataM.Length / 2;
-                    for (int i = 0; i < length; i++)
-                    {
-                        audioDataL[i] = audioDataM[2 * i];
-                        audioDataR[i] = audioDataM[2 * i + 1];
-                    }
-                    PeakLabel.Text =
-                        "Peak: " +
-                        DestructiveAudioTools.GetPeakVolume(audioDataL) +
-                        " : " +
-                        DestructiveAudioTools.GetPeakVolume(audioDataR);
-                }
-
-
-                if (!this.Text.EndsWith("*"))
-                {
-                    this.Text += "*";
-                }
-                RevertButton.Visible = true;
-                SaveButton.Enabled = true;
-                SaveButton.BackColor = Color.LightGreen;
-                WaveformsPlot.Render();
+                var limits = WaveformsPlot.Plot.GetAxisLimits();
+                startPoint = limits.XMin;
+                endPoint = limits.XMax;
             }
+
+            else
+            {
+                startPoint = waveformSpan.X1;
+                endPoint = waveformSpan.X2;
+            }
+
+            audioDataM.CopyTo(audioData_BackupM, 0);
+
+
+            if (WaveFormat.Channels == 1)
+            {
+                DestructiveAudioTools.Fade(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels, FadeComboBox.SelectedIndex).CopyTo(audioDataM, 0);
+                PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
+            }
+
+            else if (WaveFormat.Channels == 2)
+            {
+                DestructiveAudioTools.Fade(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels, FadeComboBox.SelectedIndex).CopyTo(audioDataM, 0);
+                int length = audioDataM.Length / 2;
+                for (int i = 0; i < length; i++)
+                {
+                    audioDataL[i] = audioDataM[2 * i];
+                    audioDataR[i] = audioDataM[2 * i + 1];
+                }
+                PeakLabel.Text =
+                    "Peak: " +
+                    DestructiveAudioTools.GetPeakVolume(audioDataL) +
+                    " : " +
+                    DestructiveAudioTools.GetPeakVolume(audioDataR);
+            }
+
+            if (!this.Text.EndsWith("*"))
+            {
+                this.Text += "*";
+            }
+            RevertButton.Visible = true;
+            SaveButton.Enabled = true;
+            SaveButton.BackColor = Color.LightGreen;
+            WaveformsPlot.Render();
         }
 
         private void AddMarker(int i)
@@ -610,6 +668,7 @@ namespace Yaml_AudioTool_Rebuilt
             else if (e.Button == MouseButtons.Right && waveformSpan.IsVisible)
             {
                 waveformSpan.IsVisible = false;
+                waveformSpan.X1 = waveformSpan.X2;
                 mouseDown = false;
             }
         }
