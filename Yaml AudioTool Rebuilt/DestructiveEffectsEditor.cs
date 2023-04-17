@@ -35,7 +35,7 @@ namespace Yaml_AudioTool_Rebuilt
         }
 
         public void CachedSound(string filePath)
-        {
+        {            
             using var audioReader = new AudioFileReader(filePath);
             WaveFormat = audioReader.WaveFormat;
             var wholeFile = new List<float>((int)(audioReader.Length / 4));
@@ -64,6 +64,23 @@ namespace Yaml_AudioTool_Rebuilt
                 audioData_BackupR = new float[audioDataR.Length];
                 audioDataL.CopyTo(audioData_BackupL, 0);
                 audioDataR.CopyTo(audioData_BackupR, 0);
+            }
+
+            using var cueReader = new CueWaveFileReader(filePath);
+            CueList cues = cueReader.Cues;
+            for (int i = 0; i < cues.Count; i++)
+            {
+                if (i == 10)
+                {
+                    MessageBox.Show("Sorry, only 10 markers per file are supported.");
+                    break;
+                }
+                markerLines[i].X = Convert.ToDouble(cues[i].Position) / Convert.ToDouble(WaveFormat.SampleRate);
+                markerLabels[i].X = Convert.ToDouble(cues[i].Position) / Convert.ToDouble(WaveFormat.SampleRate);
+                markerLabels[i].Y = WaveFormat.Channels;
+                markerLabels[i].Text = cues[i].Label;
+                markerLines[i].IsVisible = true;
+                markerLabels[i].IsVisible = true;
             }
         }
 
