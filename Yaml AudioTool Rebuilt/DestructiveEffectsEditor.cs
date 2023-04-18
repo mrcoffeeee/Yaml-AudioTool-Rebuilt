@@ -67,20 +67,24 @@ namespace Yaml_AudioTool_Rebuilt
             }
 
             using var cueReader = new CueWaveFileReader(filePath);
-            CueList cues = cueReader.Cues;
-            for (int i = 0; i < cues.Count; i++)
+
+            if (cueReader.Cues != null)
             {
-                if (i == 10)
+                CueList cues = cueReader.Cues;
+                for (int i = 0; i < cues.Count; i++)
                 {
-                    MessageBox.Show("Sorry, only 10 markers per file are supported.");
-                    break;
+                    if (i == 10)
+                    {
+                        MessageBox.Show("Sorry, only 10 markers per file are supported.");
+                        break;
+                    }
+                    markerLines[i].X = Convert.ToDouble(cues[i].Position) / Convert.ToDouble(WaveFormat.SampleRate);
+                    markerLabels[i].X = Convert.ToDouble(cues[i].Position) / Convert.ToDouble(WaveFormat.SampleRate);
+                    markerLabels[i].Y = WaveFormat.Channels;
+                    markerLabels[i].Text = cues[i].Label;
+                    markerLines[i].IsVisible = true;
+                    markerLabels[i].IsVisible = true;
                 }
-                markerLines[i].X = Convert.ToDouble(cues[i].Position) / Convert.ToDouble(WaveFormat.SampleRate);
-                markerLabels[i].X = Convert.ToDouble(cues[i].Position) / Convert.ToDouble(WaveFormat.SampleRate);
-                markerLabels[i].Y = WaveFormat.Channels;
-                markerLabels[i].Text = cues[i].Label;
-                markerLines[i].IsVisible = true;
-                markerLabels[i].IsVisible = true;
             }
         }
 
