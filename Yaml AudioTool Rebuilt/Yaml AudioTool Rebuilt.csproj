@@ -10,7 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Yaml Audio Tool Rebuilt - Manual.pdf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Resources\ProgramIcon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Yaml Audio Tool Rebuilt - Manual.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

@@ -33,10 +33,12 @@ namespace Yaml_AudioTool_Rebuilt
             StopPlayback();
 
             SettingsDialog sd = new();
-            OpenFileDialog openfiledialog = new();
-            openfiledialog.InitialDirectory = sd.audiofolderLabel.Text;
-            openfiledialog.Multiselect = true;
-            openfiledialog.Filter = "WAV Files|*.wav";
+            OpenFileDialog openfiledialog = new()
+            {
+                InitialDirectory = sd.audiofolderLabel.Text,
+                Multiselect = true,
+                Filter = "WAV Files|*.wav"
+            };
 
             if (openfiledialog.ShowDialog() == DialogResult.OK)
             {
@@ -241,7 +243,7 @@ namespace Yaml_AudioTool_Rebuilt
         public static float[] ReadAllAudioSamples(string filePath)
         {
             var readers = new AudioFileReader(filePath);
-            List<float> allSamples = new List<float>();
+            List<float> allSamples = new();
             float[] samples = new float[16384];
 
             while(readers.Read(samples, 0, samples.Length) > 0)

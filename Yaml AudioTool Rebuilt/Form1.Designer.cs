@@ -32,8 +32,9 @@ namespace Yaml_AudioTool_Rebuilt
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             menuStrip = new System.Windows.Forms.MenuStrip();
-            SettingstoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            AbouttoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            SettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             PlaybackGroupBox = new System.Windows.Forms.GroupBox();
             LoopButton = new System.Windows.Forms.Button();
             ForwardButton = new System.Windows.Forms.Button();
@@ -218,7 +219,7 @@ namespace Yaml_AudioTool_Rebuilt
             // menuStrip
             // 
             menuStrip.ImageScalingSize = new System.Drawing.Size(28, 28);
-            menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { SettingstoolStripMenuItem, AbouttoolStripMenuItem });
+            menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { SettingsToolStripMenuItem, HelpToolStripMenuItem, AboutToolStripMenuItem });
             menuStrip.Location = new System.Drawing.Point(0, 0);
             menuStrip.Name = "menuStrip";
             menuStrip.Padding = new System.Windows.Forms.Padding(10, 3, 0, 3);
@@ -226,19 +227,26 @@ namespace Yaml_AudioTool_Rebuilt
             menuStrip.TabIndex = 0;
             menuStrip.Text = "menuStrip1";
             // 
-            // SettingstoolStripMenuItem
+            // SettingsToolStripMenuItem
             // 
-            SettingstoolStripMenuItem.Name = "SettingstoolStripMenuItem";
-            SettingstoolStripMenuItem.Size = new System.Drawing.Size(92, 29);
-            SettingstoolStripMenuItem.Text = "Settings";
-            SettingstoolStripMenuItem.Click += SettingstoolStripMenuItem_Click;
+            SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem";
+            SettingsToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
+            SettingsToolStripMenuItem.Text = "Settings";
+            SettingsToolStripMenuItem.Click += SettingsToolStripMenuItem_Click;
             // 
-            // AbouttoolStripMenuItem
+            // HelpToolStripMenuItem
             // 
-            AbouttoolStripMenuItem.Name = "AbouttoolStripMenuItem";
-            AbouttoolStripMenuItem.Size = new System.Drawing.Size(78, 29);
-            AbouttoolStripMenuItem.Text = "About";
-            AbouttoolStripMenuItem.Click += AbouttoolStripMenuItem2_Click;
+            HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
+            HelpToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
+            HelpToolStripMenuItem.Text = "Help";
+            HelpToolStripMenuItem.Click += HelpToolStripMenuItem_Click;
+            // 
+            // AboutToolStripMenuItem
+            // 
+            AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
+            AboutToolStripMenuItem.Size = new System.Drawing.Size(78, 29);
+            AboutToolStripMenuItem.Text = "About";
+            AboutToolStripMenuItem.Click += AboutToolStripMenuItem2_Click;
             // 
             // PlaybackGroupBox
             // 
@@ -819,6 +827,7 @@ namespace Yaml_AudioTool_Rebuilt
             LocalizeLabel.TabIndex = 13;
             LocalizeLabel.Text = "Localize:";
             LocalizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(LocalizeLabel, "Automatically update the audio file when the locale has been changed.");
             // 
             // DopplertrackBar
             // 
@@ -2015,9 +2024,9 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Label FalloffLabel;
         private System.Windows.Forms.ComboBox FalloffcomboBox;
         public System.Windows.Forms.ColumnHeader falloffHeader;
-        private System.Windows.Forms.ToolStripMenuItem AbouttoolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
         public System.Windows.Forms.Button RoomenableButton;
-        private System.Windows.Forms.ToolStripMenuItem SettingstoolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SettingsToolStripMenuItem;
         public System.Windows.Forms.TextBox EnumtextBox;
         public System.Windows.Forms.ColumnHeader filenameHeader;
         private System.Windows.Forms.NumericUpDown VolumevaluenumericUpDown;
@@ -2041,6 +2050,7 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelMain;
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelMainSubTop;
         private System.Windows.Forms.GroupBox ManipulationGroupBox;
+        private System.Windows.Forms.ToolStripMenuItem HelpToolStripMenuItem;
     }
 }
 

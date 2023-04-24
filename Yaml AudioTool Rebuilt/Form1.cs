@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -19,12 +20,6 @@ namespace Yaml_AudioTool_Rebuilt
         //### Variables & Objects                            ###
         //###                                                ###
         //######################################################
-
-        private int baseWindowWidth = 0;
-        private int baseWindowHeight = 0;
-        private int baseListViewWidth = 0;
-        private int baseListViewHeight = 0;
-        private int basefilterlistviewHeight = 0;
 
         private readonly AudioPlayback ap = new();
 
@@ -190,7 +185,7 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
-        private void SettingstoolStripMenuItem_Click(object sender, EventArgs e)
+        private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsDialog formSettings = new();
             if (filelistView.Items.Count > 0)
@@ -204,10 +199,26 @@ namespace Yaml_AudioTool_Rebuilt
             formSettings.ShowDialog();
         }
 
-        private void AbouttoolStripMenuItem2_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             AboutDialog formAbout = new();
             formAbout.ShowDialog();
+        }
+
+        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ProcessStartInfo processInfo = new("Yaml Audio Tool Rebuilt - Manual.pdf")
+                {
+                    UseShellExecute = true
+                };
+                Process.Start(processInfo);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Could not find the help manual.");
+            }
         }
 
         #endregion MenuestripSection
@@ -1049,9 +1060,7 @@ namespace Yaml_AudioTool_Rebuilt
             DestructiveEffectsButton.Enabled = false;
         }
 
-
         #endregion Property-Effects
-
 
     }
 

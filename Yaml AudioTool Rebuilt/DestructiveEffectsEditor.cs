@@ -17,8 +17,8 @@ namespace Yaml_AudioTool_Rebuilt
         bool mouseDown = false;
         float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
         AxisLimits limits;
-        ScottPlot.Plottable.VLine[] markerLines = new ScottPlot.Plottable.VLine[10];
-        ScottPlot.Plottable.MarkerPlot[] markerLabels = new ScottPlot.Plottable.MarkerPlot[10];
+        readonly ScottPlot.Plottable.VLine[] markerLines = new ScottPlot.Plottable.VLine[10];
+        readonly ScottPlot.Plottable.MarkerPlot[] markerLabels = new ScottPlot.Plottable.MarkerPlot[10];
         ScottPlot.Plottable.HSpan waveformSpan;
         NAudio.Wave.WaveFormat WaveFormat;
 
@@ -503,29 +503,25 @@ namespace Yaml_AudioTool_Rebuilt
             if (dialogResult == DialogResult.Yes)
             {
                 File.Move(FilenameLabel.Text, backupPath + "_BACKUP.wav");
-                using (CueWaveFileWriter writer = new(FilenameLabel.Text, WaveFormat))
+                using CueWaveFileWriter writer = new(FilenameLabel.Text, WaveFormat);
+                writer.WriteSamples(audioDataM, 0, audioDataM.Length);
+                for (int i = 0; i < markerLines.Length; i++)
                 {
-                    writer.WriteSamples(audioDataM, 0, audioDataM.Length);
-                    for (int i = 0; i < markerLines.Length; i++)
+                    if (markerLines[i].IsVisible == true)
                     {
-                        if (markerLines[i].IsVisible == true)
-                        {
-                            writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLabels[i].Text);
-                        }
+                        writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLabels[i].Text);
                     }
                 }
             }
             else if (dialogResult == DialogResult.No)
             {
-                using (CueWaveFileWriter writer = new(backupPath + "_EDIT.wav", WaveFormat))
+                using CueWaveFileWriter writer = new(backupPath + "_EDIT.wav", WaveFormat);
+                writer.WriteSamples(audioDataM, 0, audioDataM.Length);
+                for (int i = 0; i < markerLines.Length; i++)
                 {
-                    writer.WriteSamples(audioDataM, 0, audioDataM.Length);
-                    for (int i = 0; i < markerLines.Length; i++)
+                    if (markerLines[i].IsVisible == true)
                     {
-                        if (markerLines[i].IsVisible == true)
-                        {
-                            writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLabels[i].Text);
-                        }
+                        writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLabels[i].Text);
                     }
                 }
             }
@@ -599,7 +595,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void WaveformsPlot_MouseMove(object sender, MouseEventArgs e)
         {
-            (double x, double y) = WaveformsPlot.GetMouseCoordinates();
+            (double x, _) = WaveformsPlot.GetMouseCoordinates();
             limits = WaveformsPlot.Plot.GetAxisLimits();
             double position = 0;
             if (x >= limits.XMin && x <= limits.XMax)
@@ -623,7 +619,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (e.Button == MouseButtons.Left && mouseDown == false)
             {
-                (double x, double y) = WaveformsPlot.GetMouseCoordinates();
+                (double x, _) = WaveformsPlot.GetMouseCoordinates();
                 limits = WaveformsPlot.Plot.GetAxisLimits();
 
                 if (x >= limits.XMin && x <= limits.XMax)
