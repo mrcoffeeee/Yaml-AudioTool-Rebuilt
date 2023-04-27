@@ -53,14 +53,14 @@ namespace Yaml_AudioTool_Rebuilt
                             if (clickFlag == true)
                             {
                                 string tempString = sd.audiofolderLabel.Text + "\\";
-                                f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filenameHeader)].Text = file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", "");
-                                f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text = file;
-                                f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.sizeHeader)].Text = (waveFileReader.Length / 1000).ToString();
-                                f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.durationHeader)].Text = waveFileReader.TotalTime.ToString(@"mm\:ss");
-                                f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.channelsHeader)].Text = waveFileReader.WaveFormat.Channels.ToString();
-                                f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.samplerateHeader)].Text = Math.Round(waveFileReader.WaveFormat.SampleRate / 1000.0, 3).ToString();
-                                f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString();
-                                f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = waveFileReader.WaveFormat.BitsPerSample.ToString();
+                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filenameHeader)].Text = file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", "");
+                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filepathHeader)].Text = file;
+                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.sizeHeader)].Text = (waveFileReader.Length / 1000).ToString();
+                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.durationHeader)].Text = waveFileReader.TotalTime.ToString(@"mm\:ss");
+                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.channelsHeader)].Text = waveFileReader.WaveFormat.Channels.ToString();
+                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.samplerateHeader)].Text = Math.Round(waveFileReader.WaveFormat.SampleRate / 1000.0, 3).ToString();
+                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString();
+                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = waveFileReader.WaveFormat.BitsPerSample.ToString();
 
                             }
 
@@ -95,7 +95,7 @@ namespace Yaml_AudioTool_Rebuilt
                                 fileInfos.SubItems.Add("0");
                                 fileInfos.SubItems.Add("0");
                                 // add fileinfos to listview
-                                f1.filelistView.Items.Add(fileInfos);
+                                f1.FilelistView.Items.Add(fileInfos);
                             }
                         }                        
                     }
@@ -140,7 +140,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
             else if (waveFileReader != null && playbackStop == true)
             {                
-                string soundFilepath = f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.filepathHeader)].Text;
+                string soundFilepath = f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filepathHeader)].Text;
                 xaudio2 = XAudio2.XAudio2Create(ProcessorSpecifier.UseDefaultProcessor);
                 Vortice.Multimedia.WaveFormat waveFormat;
                 AudioBuffer audioBuffer;
@@ -173,7 +173,7 @@ namespace Yaml_AudioTool_Rebuilt
                 sourceVoice = xaudio2.CreateSourceVoice(waveFormat, VoiceFlags.UseFilter, 10);
 
                 // Set Loop
-                if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.loopHeader)].Text == "true")
+                if (f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.loopHeader)].Text == "true")
                 {
                     audioBuffer.LoopCount = XAudio2.LoopInfinite;
                 }
@@ -193,7 +193,7 @@ namespace Yaml_AudioTool_Rebuilt
                 // Set Room                              
                 if (f1.RoomenableButton.BackColor == Color.LightGreen)
                 {
-                    if (f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
+                    if (f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
                     {
                         RoomCreationEffects.SetRoomFilter(sourceVoice);
                         RoomCreationEffects.SetRoomReverb(sourceVoice);

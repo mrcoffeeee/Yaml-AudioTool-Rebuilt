@@ -40,7 +40,7 @@ namespace Yaml_AudioTool_Rebuilt
             InitializeComponent();
             SetWindowsSize();
             PopulateComboboxes();
-            roomlistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            RoomListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void PopulateComboboxes()
@@ -52,26 +52,26 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 if (item.Contains("value__"))
                     continue;
-                filtercomboBox.Items.Add(item);
+                FilterComboBox.Items.Add(item);
             }
-            filtercomboBox.SelectedIndex = 0;
+            FilterComboBox.SelectedIndex = 0;
 
             // Reverbpresets Combobox
             var r = typeof(Vortice.XAudio2.Fx.Presets);
             List<string> reverbPresetNames = new(r.GetFields().Select(x => x.Name));
             foreach (var item in reverbPresetNames)
             {
-                reverbpresetcomboBox.Items.Add(item);
+                ReverbpresetComboBox.Items.Add(item);
             }
-            reverbpresetcomboBox.SelectedIndex = 1;
+            ReverbpresetComboBox.SelectedIndex = 1;
         }
 
         private void ResetMainFormValues()
         {
             ap.StopPlayback();
             playbackTimer.Stop();
-            removeButtonsEnabled(false, false);
-            if (filelistView.Items.Count == 0)
+            RemoveButtonsEnabled(false, false);
+            if (FilelistView.Items.Count == 0)
                 SaveYamlButton.Enabled = false;
             PitchenableButton.Enabled = false;
             PitchenableButton.Text = "Off";
@@ -188,7 +188,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsDialog formSettings = new();
-            if (filelistView.Items.Count > 0)
+            if (FilelistView.Items.Count > 0)
             {
                 formSettings.audiofoldersetButton.Enabled = false;
             }
@@ -231,14 +231,14 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
-        private void filelistView_SelectedIndexChanged(object sender, EventArgs e)
+        private void FilelistView_SelectedIndexChanged(object sender, EventArgs e)
         {
             formDestructiveEffectsEditor = (DestructiveEffectsEditor)Application.OpenForms["DestructiveEffectseditor"];
 
-            if (filelistView.SelectedItems.Count == 0)
+            if (FilelistView.SelectedItems.Count == 0)
             {
                 ResetMainFormValues();
-                removeButtonsEnabled(false, true);
+                RemoveButtonsEnabled(false, true);
 
                 if (GetOpenForm("DestructiveEffectsEditor"))
                 {
@@ -246,39 +246,39 @@ namespace Yaml_AudioTool_Rebuilt
                 }
             }
 
-            if (filelistView.SelectedItems.Count > 0)
+            if (FilelistView.SelectedItems.Count > 0)
             {
-                EnumtextBox.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text;
-                timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
-                selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text);
-                double volumeValue = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text) * 100;
+                EnumtextBox.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text;
+                timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
+                selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text);
+                double volumeValue = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text) * 100;
                 VolumetrackBar.Value = Convert.ToInt32(volumeValue);
                 VolumevaluenumericUpDown.Value = Convert.ToInt32(volumeValue);
-                PrioritytrackBar.Value = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(priorityHeader)].Text);
-                priorityvalueLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(priorityHeader)].Text;
-                if (filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(loopHeader)].Text == "true")
+                PrioritytrackBar.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(priorityHeader)].Text);
+                priorityvalueLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(priorityHeader)].Text;
+                if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(loopHeader)].Text == "true")
                     LoopButton.BackColor = Color.LightGreen;
-                else if (filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(loopHeader)].Text == "false")
+                else if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(loopHeader)].Text == "false")
                     LoopButton.BackColor = Color.Salmon;
-                MinDistancenumericUpDown.Value = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(mindistanceHeader)].Text);
-                MaxDistancenumericUpDown.Value = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(maxdistanceHeader)].Text);
-                double dopplerValue = Convert.ToDouble(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(dopplerHeader)].Text);
+                MinDistancenumericUpDown.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(mindistanceHeader)].Text);
+                MaxDistancenumericUpDown.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(maxdistanceHeader)].Text);
+                double dopplerValue = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(dopplerHeader)].Text);
                 DopplertrackBar.Value = Convert.ToInt32(dopplerValue * 100);
                 dopplervalueLabel.Text = Convert.ToString(dopplerValue);
-                LocalizecheckBox.Checked = Convert.ToBoolean(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(localizeHeader)].Text);
-                StreamcheckBox.Checked = Convert.ToBoolean(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(streamHeader)].Text);
-                TypecomboBox.SelectedIndex = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(typeHeader)].Text);
-                FalloffcomboBox.SelectedIndex = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(falloffHeader)].Text);
-                StackcomboBox.SelectedIndex = Convert.ToInt32(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(stackHeader)].Text);
-                ChangeFilelabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text;
+                LocalizecheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(localizeHeader)].Text);
+                StreamcheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(streamHeader)].Text);
+                TypecomboBox.SelectedIndex = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text);
+                FalloffcomboBox.SelectedIndex = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text);
+                StackcomboBox.SelectedIndex = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text);
+                ChangeFilelabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
                 PitchenableButton.Enabled = true;
-                removeButtonsEnabled(true, true);
-                if (filelistView.SelectedItems.Count == 1)
+                RemoveButtonsEnabled(true, true);
+                if (FilelistView.SelectedItems.Count == 1)
                 {
                     if (GetOpenForm("DestructiveEffectsEditor") && formDestructiveEffectsEditor.Visible == true)
                     {
-                        formDestructiveEffectsEditor.Text = "Destructive Effects Editor -> " + filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
-                        formDestructiveEffectsEditor.LoadAudioWaveform(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
+                        formDestructiveEffectsEditor.Text = "Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
+                        formDestructiveEffectsEditor.LoadAudioWaveform(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
                     }
                 }
 
@@ -299,29 +299,29 @@ namespace Yaml_AudioTool_Rebuilt
         {
             playbackTimer.Stop();
             ap.StopPlayback();
-            filelistView.Focus();
-            if (filelistView.Items.Count > 1 &&
-                filelistView.SelectedItems.Count == 1 &&
-                filelistView.Items.IndexOf(filelistView.SelectedItems[0]) > 0)
+            FilelistView.Focus();
+            if (FilelistView.Items.Count > 1 &&
+                FilelistView.SelectedItems.Count == 1 &&
+                FilelistView.Items.IndexOf(FilelistView.SelectedItems[0]) > 0)
             {
-                int a = filelistView.Items.IndexOf(filelistView.SelectedItems[0]);
-                filelistView.Items[a].Selected = false;
-                filelistView.Items[a - 1].Selected = true;
-                timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
-                removeButtonsEnabled(true, true);
+                int a = FilelistView.Items.IndexOf(FilelistView.SelectedItems[0]);
+                FilelistView.Items[a].Selected = false;
+                FilelistView.Items[a - 1].Selected = true;
+                timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
+                RemoveButtonsEnabled(true, true);
             }
-            else if (filelistView.SelectedItems.Count > 0)
+            else if (FilelistView.SelectedItems.Count > 0)
             {
-                timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
+                timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
             }
         }
 
         private void StopButton_Click(object sender, EventArgs e)
         {
-            if (filelistView.SelectedItems.Count > 0 &&
-                filelistView.SelectedItems[0].SubItems[3] != null)
+            if (FilelistView.SelectedItems.Count > 0 &&
+                FilelistView.SelectedItems[0].SubItems[3] != null)
             {
-                timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
+                timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
             }
             ap.StopPlayback();
             ap.waveFileReader.Close();
@@ -334,11 +334,11 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 LoopButton.BackColor = Color.LightGreen;
 
-                if (filelistView.SelectedItems.Count > 0)
+                if (FilelistView.SelectedItems.Count > 0)
                 {
-                    for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                    for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                     {
-                        filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(loopHeader)].Text = "true";
+                        FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(loopHeader)].Text = "true";
                     }
                 }
 
@@ -347,11 +347,11 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 LoopButton.BackColor = Color.Salmon;
 
-                if (filelistView.SelectedItems.Count > 0)
+                if (FilelistView.SelectedItems.Count > 0)
                 {
-                    for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                    for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                     {
-                        filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(loopHeader)].Text = "false";
+                        FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(loopHeader)].Text = "false";
                     }
                 }
             }
@@ -359,22 +359,22 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void PlayButton_Click(object sender, EventArgs e)
         {
-            if (filelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                filelistView.Focus();
-                if (filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text.StartsWith("\\"))
+                FilelistView.Focus();
+                if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text.StartsWith("\\"))
                 {
                     string filepathTemp;
                     SettingsDialog sd = new();
                     filepathTemp = sd.audiofolderLabel.Text +
-                        filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text +
-                        filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text +
+                        FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text +
+                        FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text +
                         ".wav";
                     ap.GetSoundFromList(filepathTemp);
                 }
                 else
                 {
-                    ap.GetSoundFromList(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
+                    ap.GetSoundFromList(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
                 }
 
                 try
@@ -403,20 +403,20 @@ namespace Yaml_AudioTool_Rebuilt
         {
             playbackTimer.Stop();
             ap.StopPlayback();
-            filelistView.Focus();
-            if (filelistView.Items.Count > 1 &&
-                filelistView.SelectedItems.Count == 1 &&
-                filelistView.Items.IndexOf(filelistView.SelectedItems[0]) < filelistView.Items.Count - 1)
+            FilelistView.Focus();
+            if (FilelistView.Items.Count > 1 &&
+                FilelistView.SelectedItems.Count == 1 &&
+                FilelistView.Items.IndexOf(FilelistView.SelectedItems[0]) < FilelistView.Items.Count - 1)
             {
-                int a = filelistView.Items.IndexOf(filelistView.SelectedItems[0]);
-                filelistView.Items[a].Selected = false;
-                filelistView.Items[a + 1].Selected = true;
-                timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
-                removeButtonsEnabled(true, true);
+                int a = FilelistView.Items.IndexOf(FilelistView.SelectedItems[0]);
+                FilelistView.Items[a].Selected = false;
+                FilelistView.Items[a + 1].Selected = true;
+                timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
+                RemoveButtonsEnabled(true, true);
             }
-            else if (filelistView.SelectedItems.Count > 0)
+            else if (FilelistView.SelectedItems.Count > 0)
             {
-                timeLabel.Text = filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(durationHeader)].Text;
+                timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
             }
         }
 
@@ -430,47 +430,47 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
-        private void addfileButton_Click(object sender, EventArgs e)
+        private void AddfileButton_Click(object sender, EventArgs e)
         {
             ap.StopPlayback();
             playbackTimer.Stop();
             ap.OpenFile(false);
-            if (filelistView.Items.Count > 0 &&
+            if (FilelistView.Items.Count > 0 &&
                 SaveYamlButton.Enabled == false)
             {
                 SaveYamlButton.Enabled = true;
-                filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                filelistView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
-                filelistView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
-                removeButtonsEnabled(false, true);
+                FilelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                FilelistView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
+                FilelistView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
+                RemoveButtonsEnabled(false, true);
             }
         }
 
-        public void removeButtonsEnabled(bool value1, bool value2)
+        public void RemoveButtonsEnabled(bool value1, bool value2)
         {
-            removeButton.Enabled = value1;
-            removeallButton.Enabled = value2;
+            RemoveButton.Enabled = value1;
+            RemoveallButton.Enabled = value2;
         }
 
-        private void removeButton_Click(object sender, EventArgs e)
+        private void RemoveButton_Click(object sender, EventArgs e)
         {
-            foreach (var item in filelistView.SelectedItems)
+            foreach (var item in FilelistView.SelectedItems)
             {
-                filelistView.SelectedItems[0].Remove();
+                FilelistView.SelectedItems[0].Remove();
             }
             ResetMainFormValues();
             formDestructiveEffectsEditor?.ResetDestructiveEffectsEditorValues();
         }
 
-        private void removeallButton_Click(object sender, EventArgs e)
+        private void RemoveallButton_Click(object sender, EventArgs e)
         {
-            filelistView.Items.Clear();
-            roomlistView.Items.Clear();
+            FilelistView.Items.Clear();
+            RoomListView.Items.Clear();
             ResetMainFormValues();
             formDestructiveEffectsEditor?.ResetDestructiveEffectsEditorValues();
         }
 
-        private void openyamlButton_Click(object sender, EventArgs e)
+        private void OpenyamlButton_Click(object sender, EventArgs e)
         {
             SettingsDialog sd = new();
             if (sd.audiofolderLabel.Text == "NONE")
@@ -480,19 +480,19 @@ namespace Yaml_AudioTool_Rebuilt
                 return;
             }
             YamlExportImport.ImportYAML();
-            if (roomlistView.Items.Count > 0)
+            if (RoomListView.Items.Count > 0)
             {
-                roommapButton.Enabled = true;
-                roomunmapButton.Enabled = true;
-                filterremoveButton.Enabled = true;
+                RoommapButton.Enabled = true;
+                RoomunmapButton.Enabled = true;
+                RoomremoveButton.Enabled = true;
             }
-            if (filelistView.Items.Count > 0 &&
+            if (FilelistView.Items.Count > 0 &&
                 SaveYamlButton.Enabled == false)
             {
                 SaveYamlButton.Enabled = true;
-                removeButtonsEnabled(false, true);
+                RemoveButtonsEnabled(false, true);
             }
-            filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            FilelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void SaveYamlButton_Click(object sender, EventArgs e)
@@ -512,14 +512,14 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void VolumetrackBar_Scroll_1(object sender, EventArgs e)
         {
-            double value = ap.SetVolume(VolumetrackBar.Value, filelistView.SelectedItems.Count);
+            double value = ap.SetVolume(VolumetrackBar.Value, FilelistView.SelectedItems.Count);
             VolumevaluenumericUpDown.Value = Convert.ToInt32(value * 100);
 
-            if (filelistView.SelectedItems.Count > 0)
+            if (FilelistView.SelectedItems.Count > 0)
             {
-                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text = Convert.ToString(value);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text = Convert.ToString(value);
                 }
             }
         }
@@ -527,13 +527,13 @@ namespace Yaml_AudioTool_Rebuilt
         private void VolumevaluenumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             VolumetrackBar.Value = Convert.ToInt32(VolumevaluenumericUpDown.Value);
-            double value = ap.SetVolume(VolumetrackBar.Value, filelistView.SelectedItems.Count);
+            double value = ap.SetVolume(VolumetrackBar.Value, FilelistView.SelectedItems.Count);
 
-            if (filelistView.SelectedItems.Count > 0)
+            if (FilelistView.SelectedItems.Count > 0)
             {
-                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(volumeHeader)].Text = Convert.ToString(value);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text = Convert.ToString(value);
                 }
             }
         }
@@ -542,11 +542,11 @@ namespace Yaml_AudioTool_Rebuilt
         {
             priorityvalueLabel.Text = Convert.ToString(PrioritytrackBar.Value);
 
-            if (filelistView.SelectedItems.Count > 0)
+            if (FilelistView.SelectedItems.Count > 0)
             {
-                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(priorityHeader)].Text = Convert.ToString(PrioritytrackBar.Value);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(priorityHeader)].Text = Convert.ToString(PrioritytrackBar.Value);
                 }
             }
         }
@@ -555,11 +555,11 @@ namespace Yaml_AudioTool_Rebuilt
         {
             dopplervalueLabel.Text = Convert.ToString(DopplertrackBar.Value / 100.0);
 
-            if (filelistView.SelectedItems.Count > 0)
+            if (FilelistView.SelectedItems.Count > 0)
             {
-                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(dopplerHeader)].Text = Convert.ToString(DopplertrackBar.Value / 100.0);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(dopplerHeader)].Text = Convert.ToString(DopplertrackBar.Value / 100.0);
                 }
             }
         }
@@ -571,11 +571,11 @@ namespace Yaml_AudioTool_Rebuilt
                 LocalizecheckBox.Checked = true;
                 LocalizecheckBox.Text = "Enabled";
 
-                if (filelistView.SelectedItems.Count > 0)
+                if (FilelistView.SelectedItems.Count > 0)
                 {
-                    for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                    for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                     {
-                        filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(localizeHeader)].Text = "true";
+                        FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(localizeHeader)].Text = "true";
                     }
                 }
 
@@ -585,11 +585,11 @@ namespace Yaml_AudioTool_Rebuilt
                 LocalizecheckBox.Checked = false;
                 LocalizecheckBox.Text = "Disabled";
 
-                if (filelistView.SelectedItems.Count > 0)
+                if (FilelistView.SelectedItems.Count > 0)
                 {
-                    for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                    for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                     {
-                        filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(localizeHeader)].Text = "false";
+                        FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(localizeHeader)].Text = "false";
                     }
                 }
             }
@@ -602,11 +602,11 @@ namespace Yaml_AudioTool_Rebuilt
                 StreamcheckBox.Checked = true;
                 StreamcheckBox.Text = "Enabled";
 
-                if (filelistView.SelectedItems.Count > 0)
+                if (FilelistView.SelectedItems.Count > 0)
                 {
-                    for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                    for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                     {
-                        filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(streamHeader)].Text = "true";
+                        FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(streamHeader)].Text = "true";
                     }
                 }
 
@@ -616,11 +616,11 @@ namespace Yaml_AudioTool_Rebuilt
                 StreamcheckBox.Checked = false;
                 StreamcheckBox.Text = "Disabled";
 
-                if (filelistView.SelectedItems.Count > 0)
+                if (FilelistView.SelectedItems.Count > 0)
                 {
-                    for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                    for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                     {
-                        filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(streamHeader)].Text = "false";
+                        FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(streamHeader)].Text = "false";
                     }
                 }
             }
@@ -628,22 +628,22 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void TypecomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (filelistView.SelectedItems.Count > 0)
+            if (FilelistView.SelectedItems.Count > 0)
             {
-                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(typeHeader)].Text = Convert.ToString(TypecomboBox.SelectedIndex);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text = Convert.ToString(TypecomboBox.SelectedIndex);
                 }
             }
         }
 
         private void FalloffcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (filelistView.SelectedItems.Count > 0)
+            if (FilelistView.SelectedItems.Count > 0)
             {
-                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(falloffHeader)].Text = Convert.ToString(FalloffcomboBox.SelectedIndex);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text = Convert.ToString(FalloffcomboBox.SelectedIndex);
                 }
             }
         }
@@ -655,11 +655,11 @@ namespace Yaml_AudioTool_Rebuilt
                 MaxDistancenumericUpDown.Value = MinDistancenumericUpDown.Value;
             }
 
-            if (filelistView.SelectedItems.Count > 0)
+            if (FilelistView.SelectedItems.Count > 0)
             {
-                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(maxdistanceHeader)].Text = MaxDistancenumericUpDown.Value.ToString();
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(maxdistanceHeader)].Text = MaxDistancenumericUpDown.Value.ToString();
                 }
             }
         }
@@ -671,22 +671,22 @@ namespace Yaml_AudioTool_Rebuilt
                 MinDistancenumericUpDown.Value = MaxDistancenumericUpDown.Value;
             }
 
-            if (filelistView.SelectedItems.Count > 0)
+            if (FilelistView.SelectedItems.Count > 0)
             {
-                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(mindistanceHeader)].Text = MinDistancenumericUpDown.Value.ToString();
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(mindistanceHeader)].Text = MinDistancenumericUpDown.Value.ToString();
                 }
             }
         }
 
         private void StackcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (filelistView.SelectedItems.Count > 0)
+            if (FilelistView.SelectedItems.Count > 0)
             {
-                for (int a = 0; a < filelistView.SelectedItems.Count; a++)
+                for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(stackHeader)].Text = Convert.ToString(StackcomboBox.SelectedIndex);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text = Convert.ToString(StackcomboBox.SelectedIndex);
                 }
             }
         }
@@ -704,27 +704,27 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void EnumButton_Click(object sender, EventArgs e)
         {
-            if (filelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(titleHeader)].Text = EnumtextBox.Text;
-                filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text = EnumtextBox.Text;
+                FilelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
         }
 
         private void ChangeFilebutton_Click(object sender, EventArgs e)
         {
-            if (filelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
                 ap.StopPlayback();
                 playbackTimer.Stop();
                 ap.OpenFile(true);
-                if (filelistView.Items.Count > 0 &&
+                if (FilelistView.Items.Count > 0 &&
                     SaveYamlButton.Enabled == false)
                 {
                     SaveYamlButton.Enabled = true;
-                    filelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                    filelistView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
-                    filelistView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
+                    FilelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                    FilelistView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
+                    FilelistView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.ColumnContent);
                 }
             }
         }
@@ -733,12 +733,12 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (FindButton.Text == "Find Title" &&
                 FindtextBox.Text != "" &&
-                filelistView.Items.Count > 0)
+                FilelistView.Items.Count > 0)
             {
-                foreach (ListViewItem item in filelistView.Items)
+                foreach (ListViewItem item in FilelistView.Items)
                 {
-                    if (item.SubItems[filelistView.Columns.IndexOf(titleHeader)].Text.Contains(FindtextBox.Text) ||
-                        item.SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text.Contains(FindtextBox.Text))
+                    if (item.SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text.Contains(FindtextBox.Text) ||
+                        item.SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text.Contains(FindtextBox.Text))
                     {
                         item.BackColor = Color.Salmon;
                     }
@@ -748,7 +748,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             else if (FindButton.Text == "Reset")
             {
-                foreach (ListViewItem item in filelistView.Items)
+                foreach (ListViewItem item in FilelistView.Items)
                 {
                     item.BackColor = SystemColors.Window;
                 }
@@ -759,24 +759,24 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void SortcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (filelistView.Items.Count > 1)
+            if (FilelistView.Items.Count > 1)
             {
                 ListViewColumnSorter lvwColumnSorter = new();
-                filelistView.ListViewItemSorter = lvwColumnSorter;
+                FilelistView.ListViewItemSorter = lvwColumnSorter;
 
                 int[] Columns = new int[5]
                 {
-                    filelistView.Columns.IndexOf(titleHeader),
-                    filelistView.Columns.IndexOf(filenameHeader),
-                    filelistView.Columns.IndexOf(filepathHeader),
-                    filelistView.Columns.IndexOf(roommapHeader),
-                    filelistView.Columns.IndexOf(typeHeader)
+                    FilelistView.Columns.IndexOf(titleHeader),
+                    FilelistView.Columns.IndexOf(filenameHeader),
+                    FilelistView.Columns.IndexOf(filepathHeader),
+                    FilelistView.Columns.IndexOf(roommapHeader),
+                    FilelistView.Columns.IndexOf(typeHeader)
                 };
 
                 lvwColumnSorter.SortColumn = Columns[SortcomboBox.SelectedIndex];
                 lvwColumnSorter.Order = SortOrder.Ascending;
 
-                filelistView.Sort();
+                FilelistView.Sort();
 
             }
         }
@@ -791,73 +791,73 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
-        private void filtercomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void FiltercomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (roomlistView.SelectedItems.Count == 1)
+            if (RoomListView.SelectedItems.Count == 1)
             {
-                RoomCreationEffects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filtertypeHeader)].Text = filtercomboBox.SelectedIndex.ToString();
+                RoomCreationEffects.UpdateFilterSettings(FilelistView.SelectedItems.Count, ap.sourceVoice);
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filtertypeHeader)].Text = FilterComboBox.SelectedIndex.ToString();
             }
         }
 
-        private void frequencyPot_ValueChanged(object sender, EventArgs e)
+        private void FrequencyPot_ValueChanged(object sender, EventArgs e)
         {
-            RoomCreationEffects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
-            float value = Convert.ToSingle(Math.Round(filterfrequencyPot.Value, 1));
-            filterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(value, 48000f).ToString("0.0") + " Hz";
+            RoomCreationEffects.UpdateFilterSettings(FilelistView.SelectedItems.Count, ap.sourceVoice);
+            float value = Convert.ToSingle(Math.Round(FilterfrequencyPot.Value, 1));
+            FilterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(value, 48000f).ToString("0.0") + " Hz";
 
 
-            if (roomlistView.SelectedItems.Count == 1)
+            if (RoomListView.SelectedItems.Count == 1)
             {
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text = value.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filterfrequencyHeader)].Text = value.ToString("0.0");
             }
         }
 
-        private void oneoverqPot_ValueChanged(object sender, EventArgs e)
+        private void OneoverqPot_ValueChanged(object sender, EventArgs e)
         {
-            RoomCreationEffects.UpdateFilterSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
-            double value = Math.Round(filteroneoverqPot.Value, 1);
-            filteroneoverqvalueLabel.Text = value.ToString("0.0");
+            RoomCreationEffects.UpdateFilterSettings(FilelistView.SelectedItems.Count, ap.sourceVoice);
+            double value = Math.Round(FilteroneoverqPot.Value, 1);
+            FilteroneoverqvalueLabel.Text = value.ToString("0.0");
 
-            if (roomlistView.SelectedItems.Count == 1)
+            if (RoomListView.SelectedItems.Count == 1)
             {
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text = value.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filteroneoverqHeader)].Text = value.ToString("0.0");
             }
         }
 
-        private void filterlistView_Click(object sender, EventArgs e)
+        private void RoomListView_Click(object sender, EventArgs e)
         {
-            filternametextBox.Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filternameHeader)].Text;
-            filtercomboBox.Text = filtercomboBox.Items[Convert.ToInt32(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filtertypeHeader)].Text)].ToString();
-            filterfrequencyPot.Value = Math.Round(Convert.ToDouble(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text), 1);
-            filterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(Convert.ToSingle(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filterfrequencyHeader)].Text), 48000f).ToString("0.0") + " Hz";
-            filteroneoverqPot.Value = Convert.ToDouble(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text);
-            filteroneoverqvalueLabel.Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(filteroneoverqHeader)].Text;
-            reverbpresetcomboBox.SelectedIndex = Convert.ToInt32(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbidHeader)].Text);
-            reverbwetdryPot.Value = Convert.ToDouble(roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text);
-            reverbwetdryvalueLabel.Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text + " %";
+            FilternameTextBox.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filternameHeader)].Text;
+            FilterComboBox.Text = FilterComboBox.Items[Convert.ToInt32(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filtertypeHeader)].Text)].ToString();
+            FilterfrequencyPot.Value = Math.Round(Convert.ToDouble(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filterfrequencyHeader)].Text), 1);
+            FilterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(Convert.ToSingle(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filterfrequencyHeader)].Text), 48000f).ToString("0.0") + " Hz";
+            FilteroneoverqPot.Value = Convert.ToDouble(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filteroneoverqHeader)].Text);
+            FilteroneoverqvalueLabel.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filteroneoverqHeader)].Text;
+            ReverbpresetComboBox.SelectedIndex = Convert.ToInt32(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbidHeader)].Text);
+            ReverbwetdryPot.Value = Convert.ToDouble(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbwetdryHeader)].Text);
+            ReverbwetdryvalueLabel.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbwetdryHeader)].Text + " %";
         }
 
-        private void roomstoreButton_Click(object sender, EventArgs e)
+        private void RoomstoreButton_Click(object sender, EventArgs e)
         {
-            if (checkRoomDuplicates() == true)
+            if (CheckRoomDuplicates() == true)
             {
                 MessageBox.Show("Room creation impossible!\n\n" +
                     "Please use a unique room/filter name.");
             }
-            else if (checkRoomDuplicates() == false)
+            else if (CheckRoomDuplicates() == false)
             {
-                var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(RoomCreationEffects.ReverbPresets[reverbpresetcomboBox.SelectedIndex], false);
-                ListViewItem roomitem = new(roomnametextBox.Text);
+                var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(RoomCreationEffects.ReverbPresets[ReverbpresetComboBox.SelectedIndex], false);
+                ListViewItem roomitem = new(RoomnameTextBox.Text);
                 //Filter Items
-                roomitem.SubItems.Add(filternametextBox.Text);
-                roomitem.SubItems.Add(filtercomboBox.SelectedIndex.ToString());
-                roomitem.SubItems.Add(Math.Round(filterfrequencyPot.Value, 1).ToString("0.0"));
-                roomitem.SubItems.Add(Math.Round(filteroneoverqPot.Value, 1).ToString("0.0"));
+                roomitem.SubItems.Add(FilternameTextBox.Text);
+                roomitem.SubItems.Add(FilterComboBox.SelectedIndex.ToString());
+                roomitem.SubItems.Add(Math.Round(FilterfrequencyPot.Value, 1).ToString("0.0"));
+                roomitem.SubItems.Add(Math.Round(FilteroneoverqPot.Value, 1).ToString("0.0"));
                 //reverb Items
-                roomitem.SubItems.Add(reverbpresetcomboBox.SelectedItem.ToString());
-                roomitem.SubItems.Add(reverbpresetcomboBox.SelectedIndex.ToString());
-                roomitem.SubItems.Add(reverbwetdryPot.Value.ToString("0.0"));
+                roomitem.SubItems.Add(ReverbpresetComboBox.SelectedItem.ToString());
+                roomitem.SubItems.Add(ReverbpresetComboBox.SelectedIndex.ToString());
+                roomitem.SubItems.Add(ReverbwetdryPot.Value.ToString("0.0"));
                 roomitem.SubItems.Add(actualReverbParameter.ReflectionsDelay.ToString("0"));
                 roomitem.SubItems.Add(actualReverbParameter.RoomFilterFreq.ToString("0.0"));
                 roomitem.SubItems.Add(actualReverbParameter.ReverbDelay.ToString("0"));
@@ -868,92 +868,92 @@ namespace Yaml_AudioTool_Rebuilt
                 roomitem.SubItems.Add(actualReverbParameter.DecayTime.ToString("0.0"));
                 roomitem.SubItems.Add(actualReverbParameter.Density.ToString("0.0"));
                 roomitem.SubItems.Add(actualReverbParameter.RoomSize.ToString("0.0"));
-                roomlistView.Items.Add(roomitem);
+                RoomListView.Items.Add(roomitem);
 
-                if (roomlistView.Items.Count > 0)
+                if (RoomListView.Items.Count > 0)
                 {
-                    roommapButton.Enabled = true;
-                    roomunmapButton.Enabled = true;
-                    filterremoveButton.Enabled = true;
+                    RoommapButton.Enabled = true;
+                    RoomunmapButton.Enabled = true;
+                    RoomremoveButton.Enabled = true;
                 }
             }
         }
 
-        private void roomremoveButton_Click(object sender, EventArgs e)
+        private void RoomremoveButton_Click(object sender, EventArgs e)
         {
-            if (roomlistView.SelectedItems.Count == 1)
+            if (RoomListView.SelectedItems.Count == 1)
             {
                 int a = 0;
-                foreach (var item in filelistView.Items)
+                foreach (var item in FilelistView.Items)
                 {
-                    if (filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text == roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text)
+                    if (FilelistView.Items[a].SubItems[FilelistView.Columns.IndexOf(roommapHeader)].Text == RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(roomnameHeader)].Text)
                     {
-                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text = "";
-                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roomidHeader)].Text = "";
+                        FilelistView.Items[a].SubItems[FilelistView.Columns.IndexOf(roommapHeader)].Text = "";
+                        FilelistView.Items[a].SubItems[FilelistView.Columns.IndexOf(roomidHeader)].Text = "";
                     }
                     a++;
                 }
-                roomlistView.SelectedItems[0].Remove();
+                RoomListView.SelectedItems[0].Remove();
 
-                if (roomlistView.Items.Count == 0)
+                if (RoomListView.Items.Count == 0)
                 {
-                    roommapButton.Enabled = false;
-                    roomunmapButton.Enabled = false;
-                    filterremoveButton.Enabled = false;
+                    RoommapButton.Enabled = false;
+                    RoomunmapButton.Enabled = false;
+                    RoomremoveButton.Enabled = false;
                 }
             }
         }
 
-        private bool checkRoomDuplicates()
+        private bool CheckRoomDuplicates()
         {
             int a = 0;
-            foreach (var item in roomlistView.Items)
+            foreach (var item in RoomListView.Items)
             {
-                if (roomlistView.Items[a].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text == roomnametextBox.Text ||
-                    roomlistView.Items[a].SubItems[roomlistView.Columns.IndexOf(filternameHeader)].Text == filternametextBox.Text)
+                if (RoomListView.Items[a].SubItems[RoomListView.Columns.IndexOf(roomnameHeader)].Text == RoomnameTextBox.Text ||
+                    RoomListView.Items[a].SubItems[RoomListView.Columns.IndexOf(filternameHeader)].Text == FilternameTextBox.Text)
                     return true;
                 a++;
             }
             return false;
         }
 
-        private void reverbwetdryPot_ValueChanged(object sender, EventArgs e)
+        private void ReverbwetdryPot_ValueChanged(object sender, EventArgs e)
         {
-            RoomCreationEffects.UpdateReverbSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
-            reverbwetdryvalueLabel.Text = Math.Round(reverbwetdryPot.Value, 1).ToString("0.0") + " %";
+            RoomCreationEffects.UpdateReverbSettings(FilelistView.SelectedItems.Count, ap.sourceVoice);
+            ReverbwetdryvalueLabel.Text = Math.Round(ReverbwetdryPot.Value, 1).ToString("0.0") + " %";
 
-            if (roomlistView.SelectedItems.Count == 1)
+            if (RoomListView.SelectedItems.Count == 1)
             {
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text = Math.Round(reverbwetdryPot.Value, 1).ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbwetdryHeader)].Text = Math.Round(ReverbwetdryPot.Value, 1).ToString("0.0");
             }
         }
 
-        private void roommapButton_Click(object sender, EventArgs e)
+        private void RoommapButton_Click(object sender, EventArgs e)
         {
-            if (filelistView.SelectedItems.Count > 0 &&
-                roomlistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count > 0 &&
+                RoomListView.SelectedItems.Count == 1)
             {
                 int a = 0;
-                foreach (var item in filelistView.SelectedItems)
+                foreach (var item in FilelistView.SelectedItems)
                 {
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text = roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text;
-                    filelistView.SelectedItems[a].SubItems[filelistView.Columns.IndexOf(roomidHeader)].Text = roomlistView.SelectedItems[0].Index.ToString();
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(roommapHeader)].Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(roomnameHeader)].Text;
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(roomidHeader)].Text = RoomListView.SelectedItems[0].Index.ToString();
                     a++;
                 }
             }
         }
 
-        private void roomunmapButton_Click(object sender, EventArgs e)
+        private void RoomunmapButton_Click(object sender, EventArgs e)
         {
-            if (roomlistView.SelectedItems.Count == 1)
+            if (RoomListView.SelectedItems.Count == 1)
             {
                 int a = 0;
-                foreach (var item in filelistView.Items)
+                foreach (var item in FilelistView.Items)
                 {
-                    if (filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text == roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(roomnameHeader)].Text)
+                    if (FilelistView.Items[a].SubItems[FilelistView.Columns.IndexOf(roommapHeader)].Text == RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(roomnameHeader)].Text)
                     {
-                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roommapHeader)].Text = "";
-                        filelistView.Items[a].SubItems[filelistView.Columns.IndexOf(roomidHeader)].Text = "";
+                        FilelistView.Items[a].SubItems[FilelistView.Columns.IndexOf(roommapHeader)].Text = "";
+                        FilelistView.Items[a].SubItems[FilelistView.Columns.IndexOf(roomidHeader)].Text = "";
                     }
                     a++;
                 }
@@ -995,7 +995,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void RoomenableButton_Click_1(object sender, EventArgs e)
+        private void RoomenableButton_Click(object sender, EventArgs e)
         {
             if (RoomenableButton.Text == "Off")
             {
@@ -1010,28 +1010,28 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void reverbpresetcomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ReverbpresetComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(RoomCreationEffects.ReverbPresets[reverbpresetcomboBox.SelectedIndex], false);
+            var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(RoomCreationEffects.ReverbPresets[ReverbpresetComboBox.SelectedIndex], false);
 
-            RoomCreationEffects.UpdateReverbSettings(filelistView.SelectedItems.Count, ap.sourceVoice);
-            reverbwetdryPot.Value = Math.Round(actualReverbParameter.WetDryMix, 1);
-            reverbwetdryvalueLabel.Text = Math.Round(actualReverbParameter.WetDryMix, 1).ToString("0.0") + " %";
+            RoomCreationEffects.UpdateReverbSettings(FilelistView.SelectedItems.Count, ap.sourceVoice);
+            ReverbwetdryPot.Value = Math.Round(actualReverbParameter.WetDryMix, 1);
+            ReverbwetdryvalueLabel.Text = Math.Round(actualReverbParameter.WetDryMix, 1).ToString("0.0") + " %";
 
-            if (roomlistView.SelectedItems.Count == 1)
+            if (RoomListView.SelectedItems.Count == 1)
             {
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbpresetHeader)].Text = reverbpresetcomboBox.SelectedItem.ToString();
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbwetdryHeader)].Text = actualReverbParameter.WetDryMix.ToString("0.0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbreflectionsdelayHeader)].Text = actualReverbParameter.ReflectionsDelay.ToString("0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbroomfrequencyHeader)].Text = actualReverbParameter.RoomFilterFreq.ToString("0.0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbdelayHeader)].Text = actualReverbParameter.ReverbDelay.ToString("0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbroomfiltermainHeader)].Text = actualReverbParameter.RoomFilterMain.ToString("0.0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbroomfilterhfHeader)].Text = actualReverbParameter.RoomFilterHF.ToString("0.0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbreflectionsgainHeader)].Text = actualReverbParameter.ReflectionsGain.ToString("0.0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbgainHeader)].Text = actualReverbParameter.ReverbGain.ToString("0.0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbdecaytimeHeader)].Text = actualReverbParameter.DecayTime.ToString("0.0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbdensityHeader)].Text = actualReverbParameter.Density.ToString("0.0");
-                roomlistView.SelectedItems[0].SubItems[roomlistView.Columns.IndexOf(reverbroomsizeHeader)].Text = actualReverbParameter.RoomSize.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbpresetHeader)].Text = ReverbpresetComboBox.SelectedItem.ToString();
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbwetdryHeader)].Text = actualReverbParameter.WetDryMix.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbreflectionsdelayHeader)].Text = actualReverbParameter.ReflectionsDelay.ToString("0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbroomfrequencyHeader)].Text = actualReverbParameter.RoomFilterFreq.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbdelayHeader)].Text = actualReverbParameter.ReverbDelay.ToString("0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbroomfiltermainHeader)].Text = actualReverbParameter.RoomFilterMain.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbroomfilterhfHeader)].Text = actualReverbParameter.RoomFilterHF.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbreflectionsgainHeader)].Text = actualReverbParameter.ReflectionsGain.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbgainHeader)].Text = actualReverbParameter.ReverbGain.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbdecaytimeHeader)].Text = actualReverbParameter.DecayTime.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbdensityHeader)].Text = actualReverbParameter.Density.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbroomsizeHeader)].Text = actualReverbParameter.RoomSize.ToString("0.0");
             }
         }
 
@@ -1040,10 +1040,10 @@ namespace Yaml_AudioTool_Rebuilt
             if (formDestructiveEffectsEditor != null)
             {
                 formDestructiveEffectsEditor.Visible = true;
-                if (filelistView.SelectedItems.Count == 1)
+                if (FilelistView.SelectedItems.Count == 1)
                 {
-                    formDestructiveEffectsEditor.Text = "Destructive Effects Editor -> " + filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
-                    formDestructiveEffectsEditor.LoadAudioWaveform(filelistView.SelectedItems[0].SubItems[filelistView.Columns.IndexOf(filepathHeader)].Text);
+                    formDestructiveEffectsEditor.Text = "Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
+                    formDestructiveEffectsEditor.LoadAudioWaveform(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
                 }
             }
             else

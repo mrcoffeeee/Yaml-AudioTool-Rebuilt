@@ -28,9 +28,9 @@ namespace Yaml_AudioTool_Rebuilt
             PlotConfiguration();
             InitialPlotSetup();
             FadeComboBox.SelectedIndex = 0;
-            if (formMain.filelistView.SelectedItems.Count == 1)
+            if (formMain.FilelistView.SelectedItems.Count == 1)
             {
-                LoadAudioWaveform(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
+                LoadAudioWaveform(formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
             }
         }
 

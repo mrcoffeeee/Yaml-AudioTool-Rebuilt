@@ -74,10 +74,10 @@ namespace Yaml_AudioTool_Rebuilt
         public static IXAudio2SourceVoice SetRoomFilter(IXAudio2SourceVoice sourceVoice)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
-            int roomIndex = Convert.ToInt32(f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roomidHeader)].Text);
-            voiceFilter.Frequency = Convert.ToSingle(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filterfrequencyHeader)].Text);
-            voiceFilter.OneOverQ = Convert.ToSingle(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filteroneoverqHeader)].Text);
-            voiceFilter.Type = (FilterType)Convert.ToInt32(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filtertypeHeader)].Text);
+            int roomIndex = Convert.ToInt32(f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roomidHeader)].Text);
+            voiceFilter.Frequency = Convert.ToSingle(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filterfrequencyHeader)].Text);
+            voiceFilter.OneOverQ = Convert.ToSingle(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filteroneoverqHeader)].Text);
+            voiceFilter.Type = (FilterType)Convert.ToInt32(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filtertypeHeader)].Text);
             sourceVoice.SetFilterParameters(voiceFilter, operationSet: 0);
             return sourceVoice;
         }
@@ -88,10 +88,10 @@ namespace Yaml_AudioTool_Rebuilt
                 filelistValue == 1)
             {
                 Form1 f1 = (Form1)Application.OpenForms["Form1"];
-                int roomIndex = Convert.ToInt32(f1.filelistView.SelectedItems[0].SubItems[f1.filelistView.Columns.IndexOf(f1.roomidHeader)].Text);
-                voiceFilter.Frequency = Convert.ToSingle(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filterfrequencyHeader)].Text);
-                voiceFilter.OneOverQ = Convert.ToSingle(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filteroneoverqHeader)].Text);
-                voiceFilter.Type = (FilterType)Convert.ToInt32(f1.roomlistView.Items[roomIndex].SubItems[f1.roomlistView.Columns.IndexOf(f1.filtertypeHeader)].Text);
+                int roomIndex = Convert.ToInt32(f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roomidHeader)].Text);
+                voiceFilter.Frequency = Convert.ToSingle(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filterfrequencyHeader)].Text);
+                voiceFilter.OneOverQ = Convert.ToSingle(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filteroneoverqHeader)].Text);
+                voiceFilter.Type = (FilterType)Convert.ToInt32(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filtertypeHeader)].Text);
                 sourceVoice.SetFilterParameters(voiceFilter, operationSet: 0);
             }
         }
@@ -102,8 +102,8 @@ namespace Yaml_AudioTool_Rebuilt
             var reverb = Vortice.XAudio2.Fx.Fx.XAudio2CreateReverb();
             var effectDescriptor = new EffectDescriptor(reverb, sourceVoice.VoiceDetails.InputChannels);
             sourceVoice.SetEffectChain(effectDescriptor);
-            ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.reverbwetdryPot.Value, 1)); 
-            sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex]), 0);
+            ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.ReverbwetdryPot.Value, 1)); 
+            sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
             sourceVoice.EnableEffect(0);
             return sourceVoice;
         }
@@ -114,8 +114,8 @@ namespace Yaml_AudioTool_Rebuilt
                 filelistValue == 1)
             {
                 Form1 f1 = (Form1)Application.OpenForms["Form1"];
-                ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.reverbwetdryPot.Value, 1));
-                sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.reverbpresetcomboBox.SelectedIndex]), 0);
+                ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.ReverbwetdryPot.Value, 1));
+                sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
             }
         }
 

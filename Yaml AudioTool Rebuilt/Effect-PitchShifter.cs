@@ -11,12 +11,12 @@ namespace Yaml_AudioTool_Rebuilt
         {
             InitializeComponent();
             //Form1 formMain = (Form1)Application.OpenForms["Form1"];
-            if (formMain.filelistView.SelectedItems.Count == 1)
+            if (formMain.FilelistView.SelectedItems.Count == 1)
             {
-                PitchPot.Value = Convert.ToDouble(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchHeader)].Text) * 100;
-                PitchvalueLabel.Text = formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchHeader)].Text;
-                PitrandPot.Value = Convert.ToDouble(formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text) * 100;
-                PitchrandvalueLabel.Text = formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text;
+                PitchPot.Value = Convert.ToDouble(formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.pitchHeader)].Text) * 100;
+                PitchvalueLabel.Text = formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.pitchHeader)].Text;
+                PitrandPot.Value = Convert.ToDouble(formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text) * 100;
+                PitchrandvalueLabel.Text = formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text;
             }
         }
 
@@ -25,9 +25,9 @@ namespace Yaml_AudioTool_Rebuilt
             double soundPitchFactor = Math.Round(PitchPot.Value / 100.00, 2);
             PitchvalueLabel.Text = soundPitchFactor.ToString();
 
-            if (formMain.filelistView.SelectedItems.Count == 1)
+            if (formMain.FilelistView.SelectedItems.Count == 1)
             {
-                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchHeader)].Text = soundPitchFactor.ToString("");
+                formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.pitchHeader)].Text = soundPitchFactor.ToString("");
             }
         }
 
@@ -36,9 +36,9 @@ namespace Yaml_AudioTool_Rebuilt
             double soundPitchRand = Math.Round(PitrandPot.Value / 100.00, 2);
             PitchrandvalueLabel.Text = soundPitchRand.ToString("");
 
-            if (formMain.filelistView.SelectedItems.Count == 1)
+            if (formMain.FilelistView.SelectedItems.Count == 1)
             {
-                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text = soundPitchRand.ToString("");
+                formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text = soundPitchRand.ToString("");
             }
         }
 
@@ -48,10 +48,10 @@ namespace Yaml_AudioTool_Rebuilt
             PitchPot.Value = 100;
             PitchrandvalueLabel.Text = "0";
             PitrandPot.Value = 0;
-            if (formMain.filelistView.SelectedItems.Count == 1)
+            if (formMain.FilelistView.SelectedItems.Count == 1)
             {
-                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchHeader)].Text = "1";
-                formMain.filelistView.SelectedItems[0].SubItems[formMain.filelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text = "0";
+                formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.pitchHeader)].Text = "1";
+                formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.pitchrandHeader)].Text = "0";
             }
         }
 

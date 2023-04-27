@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Yaml Audio Tool Rebuilt - Manual.pdf">
+    <Content Include="Yaml Audio Tool Rebuilt - Manual.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +36,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="YamlExportImport.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
 
