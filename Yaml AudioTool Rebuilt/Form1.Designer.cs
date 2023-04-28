@@ -153,9 +153,16 @@ namespace Yaml_AudioTool_Rebuilt
             FilteroneoverqLabel = new System.Windows.Forms.Label();
             FilteroneoverqvalueLabel = new System.Windows.Forms.Label();
             effectstabPage = new System.Windows.Forms.TabPage();
-            tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            PitchshifterButton = new System.Windows.Forms.Button();
+            PitchShifterGroupBox = new System.Windows.Forms.GroupBox();
+            PitchShifterTableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            PitchrandLabel = new System.Windows.Forms.Label();
+            PitrandPot = new NAudio.Gui.Pot();
+            PitchPot = new NAudio.Gui.Pot();
+            PitchLabel = new System.Windows.Forms.Label();
+            PitchvalueLabel = new System.Windows.Forms.Label();
+            PitchrandvalueLabel = new System.Windows.Forms.Label();
             PitchenableButton = new System.Windows.Forms.Button();
+            ResetButton = new System.Windows.Forms.Button();
             DestructiveEffectsButton = new System.Windows.Forms.Button();
             RoomListView = new System.Windows.Forms.ListView();
             roomnameHeader = new System.Windows.Forms.ColumnHeader();
@@ -225,7 +232,8 @@ namespace Yaml_AudioTool_Rebuilt
             TableLayoutPanelFilterFreq.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             effectstabPage.SuspendLayout();
-            tableLayoutPanel2.SuspendLayout();
+            PitchShifterGroupBox.SuspendLayout();
+            PitchShifterTableLayoutPanelMain.SuspendLayout();
             TimeGroupBox.SuspendLayout();
             TableLayoutPanelMainSubDown.SuspendLayout();
             TableLayoutPanelMainRight.SuspendLayout();
@@ -1242,13 +1250,13 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // ReverbwetdryPot
             // 
-            ReverbwetdryPot.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            ReverbwetdryPot.Dock = System.Windows.Forms.DockStyle.Fill;
             ReverbwetdryPot.Location = new System.Drawing.Point(185, 3);
             ReverbwetdryPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             ReverbwetdryPot.Maximum = 100D;
             ReverbwetdryPot.Minimum = 0D;
             ReverbwetdryPot.Name = "ReverbwetdryPot";
-            ReverbwetdryPot.Size = new System.Drawing.Size(40, 30);
+            ReverbwetdryPot.Size = new System.Drawing.Size(41, 30);
             ReverbwetdryPot.TabIndex = 69;
             ReverbwetdryPot.Value = 100D;
             ReverbwetdryPot.ValueChanged += ReverbwetdryPot_ValueChanged;
@@ -1467,26 +1475,26 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // FilterfrequencyPot
             // 
-            FilterfrequencyPot.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            FilterfrequencyPot.Dock = System.Windows.Forms.DockStyle.Fill;
             FilterfrequencyPot.Location = new System.Drawing.Point(188, 3);
             FilterfrequencyPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             FilterfrequencyPot.Maximum = 1D;
             FilterfrequencyPot.Minimum = 0D;
             FilterfrequencyPot.Name = "FilterfrequencyPot";
-            FilterfrequencyPot.Size = new System.Drawing.Size(40, 36);
+            FilterfrequencyPot.Size = new System.Drawing.Size(42, 36);
             FilterfrequencyPot.TabIndex = 25;
             FilterfrequencyPot.Value = 1D;
             FilterfrequencyPot.ValueChanged += FrequencyPot_ValueChanged;
             // 
             // FilteroneoverqPot
             // 
-            FilteroneoverqPot.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            FilteroneoverqPot.Dock = System.Windows.Forms.DockStyle.Fill;
             FilteroneoverqPot.Location = new System.Drawing.Point(188, 45);
             FilteroneoverqPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             FilteroneoverqPot.Maximum = 1.5D;
             FilteroneoverqPot.Minimum = 0.1D;
             FilteroneoverqPot.Name = "FilteroneoverqPot";
-            FilteroneoverqPot.Size = new System.Drawing.Size(40, 37);
+            FilteroneoverqPot.Size = new System.Drawing.Size(42, 37);
             FilteroneoverqPot.TabIndex = 26;
             FilteroneoverqPot.Value = 1D;
             FilteroneoverqPot.ValueChanged += OneoverqPot_ValueChanged;
@@ -1579,7 +1587,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // effectstabPage
             // 
-            effectstabPage.Controls.Add(tableLayoutPanel2);
+            effectstabPage.Controls.Add(PitchShifterGroupBox);
             effectstabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             effectstabPage.Location = new System.Drawing.Point(4, 24);
             effectstabPage.Margin = new System.Windows.Forms.Padding(4);
@@ -1590,54 +1598,148 @@ namespace Yaml_AudioTool_Rebuilt
             effectstabPage.Text = "Effects";
             effectstabPage.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel2
+            // PitchShifterGroupBox
             // 
-            tableLayoutPanel2.ColumnCount = 3;
-            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52F));
-            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18F));
-            tableLayoutPanel2.Controls.Add(PitchshifterButton, 1, 0);
-            tableLayoutPanel2.Controls.Add(PitchenableButton, 2, 0);
-            tableLayoutPanel2.Location = new System.Drawing.Point(4, 4);
-            tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 3;
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel2.Size = new System.Drawing.Size(334, 246);
-            tableLayoutPanel2.TabIndex = 24;
+            PitchShifterGroupBox.Controls.Add(PitchShifterTableLayoutPanelMain);
+            PitchShifterGroupBox.Location = new System.Drawing.Point(4, 7);
+            PitchShifterGroupBox.Name = "PitchShifterGroupBox";
+            PitchShifterGroupBox.Size = new System.Drawing.Size(341, 117);
+            PitchShifterGroupBox.TabIndex = 25;
+            PitchShifterGroupBox.TabStop = false;
+            PitchShifterGroupBox.Text = "PitchShifter";
             // 
-            // PitchshifterButton
+            // PitchShifterTableLayoutPanelMain
             // 
-            PitchshifterButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            PitchshifterButton.Location = new System.Drawing.Point(104, 4);
-            PitchshifterButton.Margin = new System.Windows.Forms.Padding(4);
-            PitchshifterButton.Name = "PitchshifterButton";
-            PitchshifterButton.Size = new System.Drawing.Size(165, 32);
-            PitchshifterButton.TabIndex = 26;
-            PitchshifterButton.Text = "Pitch Shifter";
-            PitchshifterButton.UseVisualStyleBackColor = true;
-            PitchshifterButton.Click += PitchshifterButton_Click;
+            PitchShifterTableLayoutPanelMain.ColumnCount = 4;
+            PitchShifterTableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            PitchShifterTableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            PitchShifterTableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            PitchShifterTableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            PitchShifterTableLayoutPanelMain.Controls.Add(PitchrandLabel, 2, 0);
+            PitchShifterTableLayoutPanelMain.Controls.Add(PitrandPot, 3, 0);
+            PitchShifterTableLayoutPanelMain.Controls.Add(PitchPot, 1, 0);
+            PitchShifterTableLayoutPanelMain.Controls.Add(PitchLabel, 0, 0);
+            PitchShifterTableLayoutPanelMain.Controls.Add(PitchvalueLabel, 1, 1);
+            PitchShifterTableLayoutPanelMain.Controls.Add(PitchrandvalueLabel, 3, 1);
+            PitchShifterTableLayoutPanelMain.Controls.Add(PitchenableButton, 3, 2);
+            PitchShifterTableLayoutPanelMain.Controls.Add(ResetButton, 0, 2);
+            PitchShifterTableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            PitchShifterTableLayoutPanelMain.Location = new System.Drawing.Point(3, 17);
+            PitchShifterTableLayoutPanelMain.Name = "PitchShifterTableLayoutPanelMain";
+            PitchShifterTableLayoutPanelMain.RowCount = 3;
+            PitchShifterTableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            PitchShifterTableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            PitchShifterTableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            PitchShifterTableLayoutPanelMain.Size = new System.Drawing.Size(335, 97);
+            PitchShifterTableLayoutPanelMain.TabIndex = 0;
+            // 
+            // PitchrandLabel
+            // 
+            PitchrandLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            PitchrandLabel.AutoSize = true;
+            PitchrandLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            PitchrandLabel.Location = new System.Drawing.Point(201, 14);
+            PitchrandLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            PitchrandLabel.Name = "PitchrandLabel";
+            PitchrandLabel.Size = new System.Drawing.Size(79, 19);
+            PitchrandLabel.TabIndex = 60;
+            PitchrandLabel.Text = "Randomize:";
+            PitchrandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PitrandPot
+            // 
+            PitrandPot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            PitrandPot.Dock = System.Windows.Forms.DockStyle.Fill;
+            PitrandPot.Location = new System.Drawing.Point(288, 3);
+            PitrandPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            PitrandPot.Maximum = 150D;
+            PitrandPot.Minimum = 0D;
+            PitrandPot.Name = "PitrandPot";
+            PitrandPot.Size = new System.Drawing.Size(43, 42);
+            PitrandPot.TabIndex = 59;
+            PitrandPot.Value = 0D;
+            PitrandPot.ValueChanged += PitrandPot_ValueChanged;
+            // 
+            // PitchPot
+            // 
+            PitchPot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            PitchPot.Dock = System.Windows.Forms.DockStyle.Fill;
+            PitchPot.Location = new System.Drawing.Point(121, 3);
+            PitchPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            PitchPot.Maximum = 200D;
+            PitchPot.Minimum = 50D;
+            PitchPot.Name = "PitchPot";
+            PitchPot.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            PitchPot.Size = new System.Drawing.Size(42, 42);
+            PitchPot.TabIndex = 27;
+            PitchPot.Value = 100D;
+            PitchPot.ValueChanged += PitchPot_ValueChanged;
+            // 
+            // PitchLabel
+            // 
+            PitchLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            PitchLabel.AutoSize = true;
+            PitchLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            PitchLabel.Location = new System.Drawing.Point(74, 14);
+            PitchLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            PitchLabel.Name = "PitchLabel";
+            PitchLabel.Size = new System.Drawing.Size(39, 19);
+            PitchLabel.TabIndex = 58;
+            PitchLabel.Text = "Shift:";
+            PitchLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // PitchvalueLabel
+            // 
+            PitchvalueLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            PitchvalueLabel.AutoSize = true;
+            PitchvalueLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            PitchvalueLabel.Location = new System.Drawing.Point(133, 48);
+            PitchvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            PitchvalueLabel.Name = "PitchvalueLabel";
+            PitchvalueLabel.Size = new System.Drawing.Size(17, 19);
+            PitchvalueLabel.TabIndex = 61;
+            PitchvalueLabel.Text = "1";
+            PitchvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PitchrandvalueLabel
+            // 
+            PitchrandvalueLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            PitchrandvalueLabel.AutoSize = true;
+            PitchrandvalueLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            PitchrandvalueLabel.Location = new System.Drawing.Point(301, 48);
+            PitchrandvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            PitchrandvalueLabel.Name = "PitchrandvalueLabel";
+            PitchrandvalueLabel.Size = new System.Drawing.Size(17, 19);
+            PitchrandvalueLabel.TabIndex = 62;
+            PitchrandvalueLabel.Text = "0";
+            PitchrandvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PitchenableButton
             // 
             PitchenableButton.BackColor = System.Drawing.Color.Salmon;
-            PitchenableButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            PitchenableButton.Location = new System.Drawing.Point(277, 4);
+            PitchenableButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            PitchenableButton.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            PitchenableButton.Location = new System.Drawing.Point(288, 71);
             PitchenableButton.Margin = new System.Windows.Forms.Padding(4);
             PitchenableButton.Name = "PitchenableButton";
-            PitchenableButton.Size = new System.Drawing.Size(52, 32);
+            PitchenableButton.Size = new System.Drawing.Size(43, 22);
             PitchenableButton.TabIndex = 25;
             PitchenableButton.Text = "Off";
             PitchenableButton.UseVisualStyleBackColor = false;
             PitchenableButton.Click += PitchenableButton_Click;
+            // 
+            // ResetButton
+            // 
+            ResetButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            ResetButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            ResetButton.Location = new System.Drawing.Point(2, 70);
+            ResetButton.Margin = new System.Windows.Forms.Padding(2);
+            ResetButton.Name = "ResetButton";
+            ResetButton.Size = new System.Drawing.Size(62, 23);
+            ResetButton.TabIndex = 63;
+            ResetButton.Text = "Reset";
+            ResetButton.UseVisualStyleBackColor = true;
+            ResetButton.Click += ResetButton_Click;
             // 
             // DestructiveEffectsButton
             // 
@@ -2036,7 +2138,9 @@ namespace Yaml_AudioTool_Rebuilt
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             effectstabPage.ResumeLayout(false);
-            tableLayoutPanel2.ResumeLayout(false);
+            PitchShifterGroupBox.ResumeLayout(false);
+            PitchShifterTableLayoutPanelMain.ResumeLayout(false);
+            PitchShifterTableLayoutPanelMain.PerformLayout();
             TimeGroupBox.ResumeLayout(false);
             TimeGroupBox.PerformLayout();
             TableLayoutPanelMainSubDown.ResumeLayout(false);
@@ -2058,7 +2162,6 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Button RemoveButton;
         private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.TabPage playbacktabPage;
-        private System.Windows.Forms.TabPage effectstabPage;
         private System.Windows.Forms.TabPage reverbtabPage;
         private System.Windows.Forms.GroupBox TimeGroupBox;
         public System.Windows.Forms.Label timeLabel;
@@ -2074,7 +2177,6 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Label MindistanceLabel;
         private System.Windows.Forms.Label priorityvalueLabel;
         private System.Windows.Forms.Label dopplervalueLabel;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label StreamLabel;
         private System.Windows.Forms.Label TypeLabel;
         private System.Windows.Forms.Label LocalizeLabel;
@@ -2083,7 +2185,6 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.ComboBox TypecomboBox;
         private System.Windows.Forms.Label selectedsoundLabel;
         public System.Windows.Forms.Button PlayButton;
-        public System.Windows.Forms.Button PitchenableButton;
         public System.Windows.Forms.TrackBar DopplertrackBar;
         public System.Windows.Forms.ColumnHeader pitchHeader;
 
@@ -2177,7 +2278,6 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Button RoomunmapButton;
         public System.Windows.Forms.ColumnHeader roomidHeader;
         public System.Windows.Forms.ComboBox FilterComboBox;
-        public System.Windows.Forms.Button PitchshifterButton;
         private System.Windows.Forms.GroupBox VolumeGroupBox;
         private System.Windows.Forms.Button LoopButton;
         private System.Windows.Forms.Label FalloffLabel;
@@ -2219,6 +2319,17 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.TableLayoutPanel RoomTableLayoutPanelUpper;
         private System.Windows.Forms.TableLayoutPanel RoomTableLayoutPanelMix;
         private System.Windows.Forms.TableLayoutPanel RoomTableLayoutPanelLower;
+        private System.Windows.Forms.TabPage effectstabPage;
+        private System.Windows.Forms.GroupBox PitchShifterGroupBox;
+        private System.Windows.Forms.TableLayoutPanel PitchShifterTableLayoutPanelMain;
+        private System.Windows.Forms.Label PitchrandLabel;
+        public NAudio.Gui.Pot PitrandPot;
+        public NAudio.Gui.Pot PitchPot;
+        private System.Windows.Forms.Label PitchLabel;
+        public System.Windows.Forms.Label PitchvalueLabel;
+        public System.Windows.Forms.Label PitchrandvalueLabel;
+        private System.Windows.Forms.Button ResetButton;
+        public System.Windows.Forms.Button PitchenableButton;
     }
 }
 

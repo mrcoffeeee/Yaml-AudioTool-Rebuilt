@@ -16,9 +16,8 @@ using reverbParameters = Vortice.XAudio2.Fx.ReverbI3DL2Parameters;
 namespace Yaml_AudioTool_Rebuilt
 {
     public class Effects
-    {
-        
-        public static float[] peakLevel = null;
+    {        
+        /*public static float[] peakLevel = null;
         public static float[] rmsLevel = null;
 
         public static IXAudio2SourceVoice SetVolumeMeter(IXAudio2SourceVoice sourceVoice)
@@ -31,6 +30,23 @@ namespace Yaml_AudioTool_Rebuilt
             //sourceVoice.SetEffectParameters(0, volumeLevel);
             sourceVoice.EnableEffect(0);
             return sourceVoice;
+        }*/
+
+        public static float PitchRandomizer(float pitchValue, float pitchrandValue)
+        {
+            int min = Convert.ToInt32(pitchrandValue * -10);
+            int max = -min;
+            Random rnd = new();
+            float rand = rnd.Next(min, max) / 10.0f;
+
+            if (pitchValue + rand < 0.5)
+                pitchValue = 0.5f;
+            else if (pitchValue + rand > 2)
+                pitchValue = 2;
+            else
+                pitchValue += rand;
+            //MessageBox.Show(pitchValue.ToString());
+            return pitchValue;
         }
     }
 
@@ -117,27 +133,6 @@ namespace Yaml_AudioTool_Rebuilt
                 ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.ReverbwetdryPot.Value, 1));
                 sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
             }
-        }
-
+        }        
     }
-
-    public class NAudioEffects
-    {
-
-        //######################################################
-        //###                                                ###
-        //### Offline Effects Apart From XAudio              ###
-        //###                                                ###
-        //######################################################
-
-        public static float[] LowerVolume(float[] samples, float value)
-        {
-            for (int a = 0; a < samples.Length; a++)
-            {
-                samples[a] = samples[a] * value;
-            }
-            return samples;
-        }
-    }
-
 }

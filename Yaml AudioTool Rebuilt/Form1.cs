@@ -271,6 +271,11 @@ namespace Yaml_AudioTool_Rebuilt
                 FalloffcomboBox.SelectedIndex = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text);
                 StackcomboBox.SelectedIndex = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text);
                 ChangeFilelabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
+                //PitchShifterValues
+                PitchPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text) * 100;
+                PitchvalueLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text;
+                PitrandPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text) * 100;
+                PitchrandvalueLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text;
                 PitchenableButton.Enabled = true;
                 RemoveButtonsEnabled(true, true);
                 if (FilelistView.SelectedItems.Count == 1)
@@ -501,6 +506,41 @@ namespace Yaml_AudioTool_Rebuilt
         }
 
         #endregion YAMLEditorSection
+
+        #region DestructiveEffectsSection
+
+        //######################################################
+        //###                                                ###
+        //### Elements for "Destructive Effects" section     ###
+        //###                                                ###
+        //######################################################
+
+
+        private void DestructiveEffectsButton_Click(object sender, EventArgs e)
+        {
+            if (formDestructiveEffectsEditor != null)
+            {
+                formDestructiveEffectsEditor.Visible = true;
+                if (FilelistView.SelectedItems.Count == 1)
+                {
+                    formDestructiveEffectsEditor.Text = "Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
+                    formDestructiveEffectsEditor.LoadAudioWaveform(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
+                }
+            }
+            else
+            {
+                DestructiveEffectsEditor editorForm = new()
+                {
+                    StartPosition = FormStartPosition.CenterScreen,
+                    TopMost = true
+                };
+                editorForm.Show();
+            }
+
+            DestructiveEffectsButton.Enabled = false;
+        }
+
+        #endregion DestructiveEffectsSection
 
         #region Property-Playback
 
@@ -959,41 +999,6 @@ namespace Yaml_AudioTool_Rebuilt
                 }
             }
         }
-        #endregion Property-RoomCreation
-
-        #region Property-Effects
-
-        //######################################################
-        //###                                                ###
-        //### Elements for property editor "Effects"         ###
-        //###                                                ###
-        //######################################################
-
-        private void PitchshifterButton_Click(object sender, EventArgs e)
-        {
-            Effect_PitchShifter pitchshifterForm = new()
-            {
-                StartPosition = FormStartPosition.CenterScreen,
-                TopMost = true
-            };
-            pitchshifterForm.Show();
-            PitchshifterButton.Enabled = false;
-        }
-
-        private void PitchenableButton_Click(object sender, EventArgs e)
-        {
-            if (PitchenableButton.Text == "Off")
-            {
-                PitchenableButton.Text = "On";
-                PitchenableButton.BackColor = Color.LightGreen;
-            }
-
-            else if (PitchenableButton.Text == "On")
-            {
-                PitchenableButton.Text = "Off";
-                PitchenableButton.BackColor = Color.Salmon;
-            }
-        }
 
         private void RoomenableButton_Click(object sender, EventArgs e)
         {
@@ -1035,33 +1040,85 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void DestructiveEffectsButton_Click(object sender, EventArgs e)
+        #endregion Property-RoomCreation
+
+        #region Property-Effects
+
+        //######################################################
+        //###                                                ###
+        //### Elements for property editor "Effects"         ###
+        //###                                                ###
+        //######################################################
+
+
+        private void PitchenableButton_Click(object sender, EventArgs e)
         {
-            if (formDestructiveEffectsEditor != null)
+            if (PitchenableButton.Text == "Off")
             {
-                formDestructiveEffectsEditor.Visible = true;
-                if (FilelistView.SelectedItems.Count == 1)
-                {
-                    formDestructiveEffectsEditor.Text = "Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
-                    formDestructiveEffectsEditor.LoadAudioWaveform(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
-                }
-            }
-            else
-            {
-                DestructiveEffectsEditor editorForm = new()
-                {
-                    StartPosition = FormStartPosition.CenterScreen,
-                    TopMost = true
-                };
-                editorForm.Show();
+                double soundPitchFactor = Math.Round(PitchPot.Value / 100.00, 2);
+                double soundPitchRand = Math.Round(PitrandPot.Value / 100.00, 2);
+                ap.SetPitch(soundPitchFactor, soundPitchRand, FilelistView.SelectedItems.Count);
+                PitchenableButton.Text = "On";
+                PitchenableButton.BackColor = Color.LightGreen;
             }
 
-
-            DestructiveEffectsButton.Enabled = false;
+            else if (PitchenableButton.Text == "On")
+            {
+                ap.SetPitch(1, 0, FilelistView.SelectedItems.Count);
+                PitchenableButton.Text = "Off";
+                PitchenableButton.BackColor = Color.Salmon;
+            }
         }
 
-        #endregion Property-Effects
+        private void PitchPot_ValueChanged(object sender, EventArgs e)
+        {
+            double soundPitchFactor = Math.Round(PitchPot.Value / 100.00, 2);
+            double soundPitchRand = Math.Round(PitrandPot.Value / 100.00, 2);
 
+            if (PitchenableButton.BackColor == Color.LightGreen)
+            {
+                ap.SetPitch(soundPitchFactor, soundPitchRand, FilelistView.SelectedItems.Count);
+            }
+
+            PitchvalueLabel.Text = soundPitchFactor.ToString();
+
+            if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }
+        }
+
+        private void PitrandPot_ValueChanged(object sender, EventArgs e)
+        {
+            double soundPitchRand = Math.Round(PitrandPot.Value / 100.00, 2);
+            PitchrandvalueLabel.Text = soundPitchRand.ToString("");
+
+            if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text = soundPitchRand.ToString("");
+            }
+        }
+
+        private void ResetButton_Click(object sender, EventArgs e)
+        {
+            PitchvalueLabel.Text = "1";
+            PitchPot.Value = 100;
+            PitchrandvalueLabel.Text = "0";
+            PitrandPot.Value = 0;
+
+            if (PitchenableButton.BackColor == Color.LightGreen)
+            {
+                ap.SetPitch(Convert.ToSingle(PitchvalueLabel.Text), Convert.ToSingle(PitchrandvalueLabel.Text), FilelistView.SelectedItems.Count);
+            }
+
+            if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = "1";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text = "0";
+            }
+        }
+
+        #endregion Property-Effects        
     }
 
     public class ListViewColumnSorter : IComparer

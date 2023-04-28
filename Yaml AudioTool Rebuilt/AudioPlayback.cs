@@ -187,7 +187,9 @@ namespace Yaml_AudioTool_Rebuilt
                 // Set Pitch
                 if (f1.PitchenableButton.BackColor == Color.LightGreen)
                 {
-                    sourceVoice.SetFrequencyRatio(2.0f, operationSet: 0);
+                    float pitchValue = Convert.ToSingle(f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.pitchHeader)].Text);
+                    float pitchrandValue = Convert.ToSingle(f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.pitchrandHeader)].Text);
+                    sourceVoice.SetFrequencyRatio(Effects.PitchRandomizer(pitchValue, pitchrandValue), operationSet: 0);
                 }
 
                 // Set Room                              
@@ -240,45 +242,14 @@ namespace Yaml_AudioTool_Rebuilt
             return value;
         }
 
-        public static float[] ReadAllAudioSamples(string filePath)
+        public void SetPitch(double pitchValue, double pitchrandValue, int filelistValue)
         {
-            var readers = new AudioFileReader(filePath);
-            List<float> allSamples = new();
-            float[] samples = new float[16384];
-
-            while(readers.Read(samples, 0, samples.Length) > 0)
+            
+            if (xaudio2 != null &&
+                filelistValue == 1)
             {
-                for(int a = 0; a < samples.Length; a++)
-                {
-                    allSamples.Add(samples[a]);
-                }
+                sourceVoice.SetFrequencyRatio(Effects.PitchRandomizer(Convert.ToSingle(pitchValue), Convert.ToSingle(pitchrandValue)), operationSet: 0);
             }
-
-            samples = new float[allSamples.Count];
-            for(int a = 0; a < samples.Length; a++)
-            {
-                samples[a] = allSamples[a];
-            }            
-            return samples;
-        }
-
-        public static byte[] ConvertFloatToByteArray(float[] samples, int samplesCount)
-        {
-            var pcm = new byte[samplesCount * 2];
-            int sampleIndex = 0;
-            int pcmIndex = 0;
-
-            while(sampleIndex < samplesCount)
-            {
-                var outsample = (short)(samples[sampleIndex] * short.MaxValue);
-                pcm[pcmIndex] = (byte)(outsample & 0xff);
-                pcm[pcmIndex + 1] = (byte)((outsample >> 8) & 0xff);
-
-                sampleIndex++;
-                pcmIndex += 2;
-            }
-
-            return pcm;
         }
     }
 }
