@@ -21,6 +21,8 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
+        bool stopFlag = false;
+        string fileTime = "";
         private readonly AudioPlayback ap = new();
 
         private static DestructiveEffectsEditor formDestructiveEffectsEditor;
@@ -41,6 +43,8 @@ namespace Yaml_AudioTool_Rebuilt
             SetWindowsSize();
             PopulateComboboxes();
             RoomListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            SetDoubleBuffering(MainVolumeMeter, true);
+            SetDoubleBuffering(MainVolumeSlider, true);
         }
 
         private void PopulateComboboxes()
@@ -96,20 +100,14 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void Timer1_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             ap.timerCount += playbackTimer.Interval;
             var timeSpan = TimeSpan.FromMilliseconds(ap.timerCount);
             timeLabel.Text = timeSpan.ToString(@"mm\:ss");
-            //ap.sourceVoice.GetEffectParameters(0);
-            //  meterLabel.Text = ap.peakLevel.ToString();
 
-            //float[] peakLevel = new float[2];
-            //float[] rmsLevel = new float[2];
-
-            //Vortice.XAudio2.Fx.VolumeMeterLevels volumeLevel = new(peakLevel, rmsLevel, 2);
-
-            //ap.sourceVoice.GetEffectParameters(0, volumeLevel, sizeof(volumeLevel));
+            MainVolumeMeter.Amplitude = ap.device.AudioMeterInformation.MasterPeakValue;
+            MainVolumeMeter.Refresh();
 
             if (LoopButton.BackColor == Color.Salmon)
             {
@@ -118,9 +116,18 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (ap.sourceVoice.State.BuffersQueued == 0)
             {
-                ap.StopPlayback();
-                ap.waveFileReader.Close();
-                playbackTimer.Stop();
+                if (timeLabel.Text == fileTime)
+                {
+                    stopFlag = true;
+                }
+
+                if (stopFlag == true && MainVolumeMeter.Amplitude < 0.0000001)
+                {
+                    ap.StopPlayback();
+                    ap.waveFileReader.Close();
+                    playbackTimer.Stop();
+                    MainVolumeMeter.Amplitude = ap.device.AudioMeterInformation.MasterPeakValue;
+                }
             }
         }
 
@@ -140,6 +147,13 @@ namespace Yaml_AudioTool_Rebuilt
             tempArray = fileName.ToCharArray();
             Array.Reverse(tempArray);
             return new string(tempArray);
+        }
+
+        public static void SetDoubleBuffering(Control control, bool value)
+        {
+            System.Reflection.PropertyInfo controlProperty = typeof(Control)
+                .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            controlProperty.SetValue(control, value, null);
         }
 
         private void ExitApplication()
@@ -251,9 +265,7 @@ namespace Yaml_AudioTool_Rebuilt
                 EnumtextBox.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text;
                 timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
                 selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text);
-                double volumeValue = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text) * 100;
-                VolumetrackBar.Value = Convert.ToInt32(volumeValue);
-                VolumevaluenumericUpDown.Value = Convert.ToInt32(volumeValue);
+                MainVolumeSlider.Volume = Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text);
                 PrioritytrackBar.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(priorityHeader)].Text);
                 priorityvalueLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(priorityHeader)].Text;
                 if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(loopHeader)].Text == "true")
@@ -331,6 +343,7 @@ namespace Yaml_AudioTool_Rebuilt
             ap.StopPlayback();
             ap.waveFileReader.Close();
             playbackTimer.Stop();
+            MainVolumeMeter.Amplitude = 0;
         }
 
         private void LoopButton_Click(object sender, EventArgs e)
@@ -366,6 +379,8 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (FilelistView.SelectedItems.Count == 1)
             {
+                stopFlag = false;
+                fileTime = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
                 FilelistView.Focus();
                 if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text.StartsWith("\\"))
                 {
@@ -393,6 +408,7 @@ namespace Yaml_AudioTool_Rebuilt
                     else if (ap.xaudio2 != null && ap.playbackPause == true)
                     {
                         playbackTimer.Stop();
+                        MainVolumeMeter.Amplitude = 0;
                     }
                 }
 
@@ -550,24 +566,10 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
-        private void VolumetrackBar_Scroll_1(object sender, EventArgs e)
+        private void MainVolumeSlider_VolumeChanged(object sender, EventArgs e)
         {
-            double value = ap.SetVolume(VolumetrackBar.Value, FilelistView.SelectedItems.Count);
-            VolumevaluenumericUpDown.Value = Convert.ToInt32(value * 100);
-
-            if (FilelistView.SelectedItems.Count > 0)
-            {
-                for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
-                {
-                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text = Convert.ToString(value);
-                }
-            }
-        }
-
-        private void VolumevaluenumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            VolumetrackBar.Value = Convert.ToInt32(VolumevaluenumericUpDown.Value);
-            double value = ap.SetVolume(VolumetrackBar.Value, FilelistView.SelectedItems.Count);
+            double value = MainVolumeSlider.Volume;
+            ap.SetVolume(value, FilelistView.SelectedItems.Count);
 
             if (FilelistView.SelectedItems.Count > 0)
             {
@@ -1119,6 +1121,7 @@ namespace Yaml_AudioTool_Rebuilt
         }
 
         #endregion Property-Effects        
+
     }
 
     public class ListViewColumnSorter : IComparer

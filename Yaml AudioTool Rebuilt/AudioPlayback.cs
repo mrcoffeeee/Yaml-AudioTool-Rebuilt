@@ -11,7 +11,7 @@ using NAudio.Wave;
 
 using Vortice.XAudio2;
 using Vortice.Multimedia;
-
+using NAudio.CoreAudioApi;
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -22,9 +22,11 @@ namespace Yaml_AudioTool_Rebuilt
         public bool playbackPause = false;
         public bool playbackStop = true;
 
+        public MMDeviceEnumerator enumerator;
+        public MMDevice device;
+
         public IXAudio2 xaudio2;
         public IXAudio2SourceVoice sourceVoice;
-        //public IXAudio2SubmixVoice submixVoice;
 
         public WaveFileReader waveFileReader;
 
@@ -79,7 +81,7 @@ namespace Yaml_AudioTool_Rebuilt
                                 fileInfos.SubItems.Add(Math.Round(waveFileReader.WaveFormat.SampleRate / 1000.0, 3).ToString());
                                 fileInfos.SubItems.Add((waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString());
                                 fileInfos.SubItems.Add(waveFileReader.WaveFormat.BitsPerSample.ToString());
-                                fileInfos.SubItems.Add((f1.VolumetrackBar.Maximum / 100.0).ToString(""));
+                                fileInfos.SubItems.Add(f1.MainVolumeSlider.Volume.ToString(""));
                                 fileInfos.SubItems.Add(Convert.ToString(128));
                                 fileInfos.SubItems.Add("false");
                                 // add effects items
@@ -125,6 +127,10 @@ namespace Yaml_AudioTool_Rebuilt
         public void StartPlayback()
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
+
+            //Get active soundcard
+            enumerator = new();            
+            device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
 
             if (xaudio2 != null && playbackPause == false)
             {
@@ -176,13 +182,10 @@ namespace Yaml_AudioTool_Rebuilt
                 if (f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.loopHeader)].Text == "true")
                 {
                     audioBuffer.LoopCount = XAudio2.LoopInfinite;
-                }
-                
-                //sourceVoice = Effects.SetVolumeMeter(sourceVoice);                
+                }       
 
                 // Set Volume
-                double volumeValue = f1.VolumetrackBar.Value / 100.0;
-                sourceVoice.SetVolume(Convert.ToSingle(volumeValue));
+                sourceVoice.SetVolume(f1.MainVolumeSlider.Volume);
 
                 // Set Pitch
                 if (f1.PitchenableButton.BackColor == Color.LightGreen)
@@ -231,15 +234,13 @@ namespace Yaml_AudioTool_Rebuilt
             playbackStop = true;
         }
 
-        public double SetVolume(int trackbarValue, int filelistValue)
+        public void SetVolume(double sliderValue, int filelistValue)
         {
-            double value = trackbarValue / 100.0;
             if (xaudio2 != null &&
                 filelistValue == 1)
             {
-                sourceVoice.SetVolume(Convert.ToSingle(value));
+                sourceVoice.SetVolume(Convert.ToSingle(sliderValue));
             }
-            return value;
         }
 
         public void SetPitch(double pitchValue, double pitchrandValue, int filelistValue)
