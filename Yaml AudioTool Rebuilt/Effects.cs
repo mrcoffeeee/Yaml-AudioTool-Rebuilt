@@ -83,13 +83,13 @@ namespace Yaml_AudioTool_Rebuilt
             return sourceVoice;
         }
 
-        public static void UpdateFilterSettings(int filelistValue, IXAudio2SourceVoice sourceVoice)
+        public static void UpdateFilterSettings(int roomlistValue, IXAudio2SourceVoice sourceVoice)
         {
             if (sourceVoice != null &&
-                filelistValue == 1)
+                roomlistValue == 1)
             {
                 Form1 f1 = (Form1)Application.OpenForms["Form1"];
-                int roomIndex = Convert.ToInt32(f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roomidHeader)].Text);
+                int roomIndex = f1.RoomListView.SelectedItems[0].Index;
                 voiceFilter.Frequency = Convert.ToSingle(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filterfrequencyHeader)].Text);
                 voiceFilter.OneOverQ = Convert.ToSingle(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filteroneoverqHeader)].Text);
                 voiceFilter.Type = (FilterType)Convert.ToInt32(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filtertypeHeader)].Text);

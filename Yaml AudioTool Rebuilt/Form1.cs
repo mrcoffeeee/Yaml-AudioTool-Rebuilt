@@ -45,6 +45,8 @@ namespace Yaml_AudioTool_Rebuilt
             RoomListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             SetDoubleBuffering(MainVolumeMeter, true);
             SetDoubleBuffering(MainVolumeSlider, true);
+            SetDoubleBuffering(FilelistView, true);
+            SetDoubleBuffering(RoomListView, true);
         }
 
         private void PopulateComboboxes()
@@ -121,7 +123,7 @@ namespace Yaml_AudioTool_Rebuilt
                     stopFlag = true;
                 }
 
-                if (stopFlag == true && MainVolumeMeter.Amplitude < 0.0000001)
+                if (stopFlag == true && MainVolumeMeter.Amplitude < 0.00001)
                 {
                     ap.StopPlayback();
                     ap.waveFileReader.Close();
@@ -837,14 +839,14 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (RoomListView.SelectedItems.Count == 1)
             {
-                RoomCreationEffects.UpdateFilterSettings(FilelistView.SelectedItems.Count, ap.sourceVoice);
+                RoomCreationEffects.UpdateFilterSettings(RoomListView.SelectedItems.Count, ap.sourceVoice);
                 RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filtertypeHeader)].Text = FilterComboBox.SelectedIndex.ToString();
             }
         }
 
         private void FrequencyPot_ValueChanged(object sender, EventArgs e)
         {
-            RoomCreationEffects.UpdateFilterSettings(FilelistView.SelectedItems.Count, ap.sourceVoice);
+            RoomCreationEffects.UpdateFilterSettings(RoomListView.SelectedItems.Count, ap.sourceVoice);
             float value = Convert.ToSingle(Math.Round(FilterfrequencyPot.Value, 1));
             FilterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(value, 48000f).ToString("0.0") + " Hz";
 
@@ -857,7 +859,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void OneoverqPot_ValueChanged(object sender, EventArgs e)
         {
-            RoomCreationEffects.UpdateFilterSettings(FilelistView.SelectedItems.Count, ap.sourceVoice);
+            RoomCreationEffects.UpdateFilterSettings(RoomListView.SelectedItems.Count, ap.sourceVoice);
             double value = Math.Round(FilteroneoverqPot.Value, 1);
             FilteroneoverqvalueLabel.Text = value.ToString("0.0");
 
