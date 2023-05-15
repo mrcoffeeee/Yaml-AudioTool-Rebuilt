@@ -544,7 +544,8 @@ namespace Yaml_AudioTool_Rebuilt
                 WaveformsPlot.Plot.SetAxisLimitsY(-1, 1);
                 WaveformsPlot.Plot.AxisAutoX(0);
                 limits = WaveformsPlot.Plot.GetAxisLimits();
-                WaveformsPlot.Plot.SetOuterViewLimits(0, limits.XMax, -1, 1);
+                WaveformsPlot.Plot.XAxis.SetBoundary(0, limits.XMax);
+                WaveformsPlot.Plot.YAxis.SetBoundary(-1, 1);
             }
 
             else if (WaveFormat.Channels == 2)
@@ -559,7 +560,8 @@ namespace Yaml_AudioTool_Rebuilt
                 WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
                 WaveformsPlot.Plot.AxisAutoX(0);
                 limits = WaveformsPlot.Plot.GetAxisLimits();
-                WaveformsPlot.Plot.SetOuterViewLimits(0, limits.XMax, -2, 2);
+                WaveformsPlot.Plot.XAxis.SetBoundary(0, limits.XMax);
+                WaveformsPlot.Plot.YAxis.SetBoundary(-2, 2);
             }
             WaveformsPlot.Refresh();
         }

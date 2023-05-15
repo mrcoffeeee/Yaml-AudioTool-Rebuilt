@@ -109,6 +109,7 @@ namespace Yaml_AudioTool_Rebuilt
             timeLabel.Text = timeSpan.ToString(@"mm\:ss");
 
             MainVolumeMeter.Amplitude = ap.device.AudioMeterInformation.MasterPeakValue;
+
             MainVolumeMeter.Refresh();
 
             if (LoopButton.BackColor == Color.Salmon)
@@ -125,10 +126,7 @@ namespace Yaml_AudioTool_Rebuilt
 
                 if (stopFlag == true && MainVolumeMeter.Amplitude < 0.00001)
                 {
-                    ap.StopPlayback();
-                    ap.waveFileReader.Close();
-                    playbackTimer.Stop();
-                    MainVolumeMeter.Amplitude = ap.device.AudioMeterInformation.MasterPeakValue;
+                    StopPlayback();
                 }
             }
         }
@@ -251,6 +249,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             formDestructiveEffectsEditor = (DestructiveEffectsEditor)Application.OpenForms["DestructiveEffectseditor"];
 
+            StopPlayback();
             if (FilelistView.SelectedItems.Count == 0)
             {
                 ResetMainFormValues();
@@ -316,8 +315,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            playbackTimer.Stop();
-            ap.StopPlayback();
+            StopPlayback();
             FilelistView.Focus();
             if (FilelistView.Items.Count > 1 &&
                 FilelistView.SelectedItems.Count == 1 &&
@@ -342,10 +340,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
             }
-            ap.StopPlayback();
-            ap.waveFileReader.Close();
-            playbackTimer.Stop();
-            MainVolumeMeter.Amplitude = 0;
+            StopPlayback();
         }
 
         private void LoopButton_Click(object sender, EventArgs e)
@@ -424,8 +419,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void ForwardButton_Click(object sender, EventArgs e)
         {
-            playbackTimer.Stop();
-            ap.StopPlayback();
+            StopPlayback();
             FilelistView.Focus();
             if (FilelistView.Items.Count > 1 &&
                 FilelistView.SelectedItems.Count == 1 &&
@@ -441,6 +435,14 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
             }
+        }
+
+        private void StopPlayback()
+        {
+            ap.StopPlayback();
+            ap.waveFileReader?.Close();
+            playbackTimer.Stop();
+            MainVolumeMeter.Amplitude = 0;
         }
 
         #endregion PlaybackSection
