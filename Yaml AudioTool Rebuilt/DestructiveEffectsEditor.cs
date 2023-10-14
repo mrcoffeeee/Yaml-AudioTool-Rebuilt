@@ -17,7 +17,7 @@ namespace Yaml_AudioTool_Rebuilt
         bool mouseDown = false;
         float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
         AxisLimits limits;
-        readonly ScottPlot.Plottable.VLine[] markerLines = new ScottPlot.Plottable.VLine[10];
+        readonly ScottPlot. Plottable.VLine[] markerLines = new ScottPlot.Plottable.VLine[10];
         readonly ScottPlot.Plottable.MarkerPlot[] markerLabels = new ScottPlot.Plottable.MarkerPlot[10];
         ScottPlot.Plottable.HSpan waveformSpan;
         NAudio.Wave.WaveFormat WaveFormat;
@@ -539,29 +539,39 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (WaveFormat.Channels == 1)
             {
-                var chM = WaveformsPlot.Plot.AddSignal(audioDataM, WaveFormat.SampleRate);
-                chM.Color = Color.DarkRed;
-                WaveformsPlot.Plot.SetAxisLimitsY(-1, 1);
-                WaveformsPlot.Plot.AxisAutoX(0);
-                limits = WaveformsPlot.Plot.GetAxisLimits();
-                WaveformsPlot.Plot.XAxis.SetBoundary(0, limits.XMax);
-                WaveformsPlot.Plot.YAxis.SetBoundary(-1, 1);
+                //MessageBox.Show(audioDataM.Length.ToString());
+                if (audioDataM.Length > 0)
+                {
+                    var chM = WaveformsPlot.Plot.AddSignal(audioDataM, WaveFormat.SampleRate);
+                    chM.Color = Color.DarkRed;
+
+                    WaveformsPlot.Plot.SetAxisLimitsY(-1, 1);
+                    WaveformsPlot.Plot.AxisAutoX(0);
+                    limits = WaveformsPlot.Plot.GetAxisLimits();
+                    WaveformsPlot.Plot.XAxis.SetBoundary(0, limits.XMax);
+                    WaveformsPlot.Plot.YAxis.SetBoundary(-1, 1);
+                }                
             }
 
             else if (WaveFormat.Channels == 2)
             {
-                var chL = WaveformsPlot.Plot.AddSignal(audioDataL, WaveFormat.SampleRate);
-                chL.Color = Color.DarkRed;
-                chL.OffsetY = 1;
+                //MessageBox.Show(audioDataL.Length.ToString() + "--" + audioDataR.Length.ToString());
+                if (audioDataL.Length > 0 && audioDataR.Length > 0)
+                {
+                    var chL = WaveformsPlot.Plot.AddSignal(audioDataL, WaveFormat.SampleRate);
+                    chL.Color = Color.DarkRed;
+                    chL.OffsetY = 1;
 
-                var chR = WaveformsPlot.Plot.AddSignal(audioDataR, WaveFormat.SampleRate);
-                chR.Color = Color.ForestGreen;
-                chR.OffsetY = -1;
-                WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
-                WaveformsPlot.Plot.AxisAutoX(0);
-                limits = WaveformsPlot.Plot.GetAxisLimits();
-                WaveformsPlot.Plot.XAxis.SetBoundary(0, limits.XMax);
-                WaveformsPlot.Plot.YAxis.SetBoundary(-2, 2);
+                    var chR = WaveformsPlot.Plot.AddSignal(audioDataR, WaveFormat.SampleRate);
+                    chR.Color = Color.ForestGreen;
+                    chR.OffsetY = -1;
+
+                    WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
+                    WaveformsPlot.Plot.AxisAutoX(0);
+                    limits = WaveformsPlot.Plot.GetAxisLimits();
+                    WaveformsPlot.Plot.XAxis.SetBoundary(0, limits.XMax);
+                    WaveformsPlot.Plot.YAxis.SetBoundary(-2, 2);
+                }                
             }
             WaveformsPlot.Refresh();
         }
