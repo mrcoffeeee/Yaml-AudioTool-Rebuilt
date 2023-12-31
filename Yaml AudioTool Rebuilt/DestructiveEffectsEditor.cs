@@ -25,6 +25,7 @@ namespace Yaml_AudioTool_Rebuilt
         public DestructiveEffectsEditor()
         {
             InitializeComponent();
+            Text = formMain.Text + ": Destructive Effects Editor";
             PlotConfiguration();
             InitialPlotSetup();
             FadeComboBox.SelectedIndex = 0;

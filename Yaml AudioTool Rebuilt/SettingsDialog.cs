@@ -13,9 +13,12 @@ namespace Yaml_AudioTool_Rebuilt
 {
     public partial class SettingsDialog : Form
     {
+        readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
+
         public SettingsDialog()
         {
             InitializeComponent();
+            Text = formMain.Text + ": Settings";
 
             if (!File.Exists("Settings.txt"))
             {

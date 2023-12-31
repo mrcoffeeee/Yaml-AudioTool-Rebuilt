@@ -117,13 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutrichTextBox.Text" xml:space="preserve">
-    <value> YAML AudioTool Rebuilt
- -----------------------------------------------------------------------------
- Version: 1.1.3 - 231014
-
- NET7 Remake of the Vitei Audio Tool by Alex Miyamoto
- Code: Johannes Wronka
- Logo: Owen Davis</value>
-  </data>
 </root>
