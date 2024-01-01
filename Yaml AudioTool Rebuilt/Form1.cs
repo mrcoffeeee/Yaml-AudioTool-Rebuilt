@@ -295,7 +295,7 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     if (GetOpenForm("DestructiveEffectsEditor") && formDestructiveEffectsEditor.Visible == true)
                     {
-                        formDestructiveEffectsEditor.Text = "Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
+                        formDestructiveEffectsEditor.Text = Text + ": Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
                         formDestructiveEffectsEditor.LoadAudioWaveform(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
                     }
                 }
@@ -543,7 +543,7 @@ namespace Yaml_AudioTool_Rebuilt
                 formDestructiveEffectsEditor.Visible = true;
                 if (FilelistView.SelectedItems.Count == 1)
                 {
-                    formDestructiveEffectsEditor.Text = "Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
+                    formDestructiveEffectsEditor.Text = Text + ": Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
                     formDestructiveEffectsEditor.LoadAudioWaveform(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
                 }
             }
@@ -551,8 +551,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 DestructiveEffectsEditor editorForm = new()
                 {
-                    StartPosition = FormStartPosition.CenterScreen,
-                    TopMost = true
+                    StartPosition = FormStartPosition.CenterScreen
                 };
                 editorForm.Show();
             }

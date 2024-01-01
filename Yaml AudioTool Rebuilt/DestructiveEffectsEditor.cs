@@ -15,9 +15,10 @@ namespace Yaml_AudioTool_Rebuilt
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
 
         bool mouseDown = false;
+        private double scrollScaler = 100.0;
         float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
         AxisLimits limits;
-        readonly ScottPlot. Plottable.VLine[] markerLines = new ScottPlot.Plottable.VLine[10];
+        readonly ScottPlot.Plottable.VLine[] markerLines = new ScottPlot.Plottable.VLine[10];
         readonly ScottPlot.Plottable.MarkerPlot[] markerLabels = new ScottPlot.Plottable.MarkerPlot[10];
         ScottPlot.Plottable.HSpan waveformSpan;
         NAudio.Wave.WaveFormat WaveFormat;
@@ -36,7 +37,7 @@ namespace Yaml_AudioTool_Rebuilt
         }
 
         public void CachedSound(string filePath)
-        {            
+        {
             using var audioReader = new AudioFileReader(filePath);
             WaveFormat = audioReader.WaveFormat;
             var wholeFile = new List<float>((int)(audioReader.Length / 4));
@@ -92,7 +93,7 @@ namespace Yaml_AudioTool_Rebuilt
         public void LoadAudioWaveform(string filePath)
         {
             CachedSound(filePath);
-            this.Text = "Destructive Effects Editor -> " + filePath;
+            Text = formMain.Text + ": Destructive Effects Editor -> " + filePath;
             FilenameLabel.Text = filePath;
             if (WaveFormat.Channels == 1)
             {
@@ -113,27 +114,44 @@ namespace Yaml_AudioTool_Rebuilt
             SamplerateLabel.Text = WaveFormat.SampleRate + " kHz";
             WaveformsPlot.Enabled = true;
             PlotWaveform();
-            TableLayoutPanelFD.Visible = true;
-            NormalizeButton.Enabled = true;
-            VolumeUpButton.Enabled = true;
-            VolumeDownButton.Enabled = true;
-            TrimButton.Enabled = true;
-            FadeButton.Enabled = true;
-            FadeComboBox.Enabled = true;
+            PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
+            PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
+
+            EnableGuiElements(true);
+        }
+
+        private void EnableGuiElements(bool flag)
+        {
+            if (flag)
+            {
+                TableLayoutPanelFD.Visible = true;
+                NormalizeButton.Enabled = true;
+                VolumeUpButton.Enabled = true;
+                VolumeDownButton.Enabled = true;
+                TrimButton.Enabled = true;
+                FadeButton.Enabled = true;
+                ZoomResetButton.Enabled = true;
+                FadeComboBox.Enabled = true;
+            }
+            else
+            {
+                TableLayoutPanelFD.Visible = false;
+                NormalizeButton.Enabled = false;
+                VolumeUpButton.Enabled = false;
+                VolumeDownButton.Enabled = false;
+                TrimButton.Enabled = false;
+                FadeButton.Enabled = false;
+                ZoomResetButton.Enabled = false;
+                FadeComboBox.Enabled = false;
+            }
         }
 
         public void ResetDestructiveEffectsEditorValues()
         {
-            this.Text = "Destructive Effects Editor";
+            Text = formMain.Text + ": Destructive Effects Editor";
             InitialPlotSetup();
             WaveformsPlot.Enabled = false;
-            TableLayoutPanelFD.Visible = false;
-            NormalizeButton.Enabled = false;
-            VolumeUpButton.Enabled = false;
-            VolumeDownButton.Enabled = false;
-            TrimButton.Enabled = false;
-            FadeButton.Enabled = false;
-            FadeComboBox.Enabled = false;
+            EnableGuiElements(false);
             RevertButton.Visible = false;
             SaveButton.Enabled = false;
             SaveButton.BackColor = SystemColors.Control;
@@ -183,9 +201,9 @@ namespace Yaml_AudioTool_Rebuilt
                         DestructiveAudioTools.GetPeakVolume(audioDataR);
                 }
 
-                if (!this.Text.EndsWith("*"))
+                if (!Text.EndsWith("*"))
                 {
-                    this.Text += "*";
+                    Text += "*";
                 }
                 RevertButton.Visible = true;
                 SaveButton.Enabled = true;
@@ -236,9 +254,9 @@ namespace Yaml_AudioTool_Rebuilt
                     DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
 
-            if (!this.Text.EndsWith("*"))
+            if (!Text.EndsWith("*"))
             {
-                this.Text += "*";
+                Text += "*";
             }
             RevertButton.Visible = true;
             SaveButton.Enabled = true;
@@ -288,9 +306,9 @@ namespace Yaml_AudioTool_Rebuilt
                     DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
 
-            if (!this.Text.EndsWith("*"))
+            if (!Text.EndsWith("*"))
             {
-                this.Text += "*";
+                Text += "*";
             }
             RevertButton.Visible = true;
             SaveButton.Enabled = true;
@@ -340,15 +358,17 @@ namespace Yaml_AudioTool_Rebuilt
                         DestructiveAudioTools.GetPeakVolume(audioDataR);
                 }
 
-                if (!this.Text.EndsWith("*"))
+                if (!Text.EndsWith("*"))
                 {
-                    this.Text += "*";
+                    Text += "*";
                 }
                 RevertButton.Visible = true;
                 SaveButton.Enabled = true;
                 SaveButton.BackColor = Color.LightGreen;
                 InitialPlotSetup();
                 PlotWaveform();
+                PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
+                PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
             }
         }
 
@@ -395,9 +415,9 @@ namespace Yaml_AudioTool_Rebuilt
                     DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
 
-            if (!this.Text.EndsWith("*"))
+            if (!Text.EndsWith("*"))
             {
-                this.Text += "*";
+                Text += "*";
             }
             RevertButton.Visible = true;
             SaveButton.Enabled = true;
@@ -415,11 +435,11 @@ namespace Yaml_AudioTool_Rebuilt
             markerLabels[i].TextFont.Size = 14;
             markerLabels[i].Y = WaveFormat.Channels;
 
-            if (!this.Text.EndsWith("*"))
+            if (!Text.EndsWith("*"))
             {
                 SaveButton.Enabled = true;
                 SaveButton.BackColor = Color.LightGreen;
-                this.Text += "*";
+                Text += "*";
             }
             WaveformsPlot.Render();
         }
@@ -454,12 +474,19 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (count == 10)
             {
-                if (this.Text.Contains(".wav*"))
-                    this.Text = this.Text.Replace(".wav*", ".wav");
+                if (Text.Contains(".wav*"))
+                    Text = Text.Replace(".wav*", ".wav");
                 SaveButton.Enabled = false;
                 SaveButton.BackColor = SystemColors.Control;
             }
             WaveformsPlot.Refresh();
+        }
+
+        private void ZoomResetButton_Click(object sender, EventArgs e)
+        {
+            WaveformsPlot.Plot.AxisAutoX();
+            WaveformsPlot.Render();
+            PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
         }
 
         private void RevertButton_Click(object sender, EventArgs e)
@@ -487,10 +514,12 @@ namespace Yaml_AudioTool_Rebuilt
             RevertButton.Visible = false;
             SaveButton.Enabled = false;
             SaveButton.BackColor = SystemColors.Control;
-            if (this.Text.Contains(".wav*"))
-                this.Text = this.Text.Replace(".wav*", ".wav");
+            if (Text.Contains(".wav*"))
+                Text = Text.Replace(".wav*", ".wav");
             InitialPlotSetup();
             PlotWaveform();
+            PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
+            PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -526,7 +555,7 @@ namespace Yaml_AudioTool_Rebuilt
                     }
                 }
             }
-            this.Text = "Destructive Effects Editor";
+            Text = formMain.Text + ": Destructive Effects Editor";
             InitialPlotSetup();
             ResetDestructiveEffectsEditorValues();
             FilenameLabel.Text = "";
@@ -551,7 +580,7 @@ namespace Yaml_AudioTool_Rebuilt
                     limits = WaveformsPlot.Plot.GetAxisLimits();
                     WaveformsPlot.Plot.XAxis.SetBoundary(0, limits.XMax);
                     WaveformsPlot.Plot.YAxis.SetBoundary(-1, 1);
-                }                
+                }
             }
 
             else if (WaveFormat.Channels == 2)
@@ -572,7 +601,7 @@ namespace Yaml_AudioTool_Rebuilt
                     limits = WaveformsPlot.Plot.GetAxisLimits();
                     WaveformsPlot.Plot.XAxis.SetBoundary(0, limits.XMax);
                     WaveformsPlot.Plot.YAxis.SetBoundary(-2, 2);
-                }                
+                }
             }
             WaveformsPlot.Refresh();
         }
@@ -619,12 +648,16 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 position = limits.XMax;
             }
+            else if (x < limits.XMin)
+                position = limits.XMin;
 
             if (mouseDown)
             {
-                waveformSpan.X2 = position;
-                WaveformsPlot.Render();
+                waveformSpan.X2 = position;                
             }
+            PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XMax - limits.XMin));
+            PlotHScrollBar.Value = Convert.ToInt32(limits.XMin * scrollScaler);
+            WaveformsPlot.Render();
             PositionLabel.Text = "Position (sec): " + position.ToString("0.00");
         }
 
@@ -701,6 +734,16 @@ namespace Yaml_AudioTool_Rebuilt
                 waveformSpan.X1 = waveformSpan.X2;
                 mouseDown = false;
             }
+        }
+
+        private void PlotHScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            double xMin = PlotHScrollBar.Value / scrollScaler;
+            double xMax = (PlotHScrollBar.Value + PlotHScrollBar.LargeChange) / scrollScaler;
+            if (xMax > PlotHScrollBar.Maximum)
+                xMax = PlotHScrollBar.Maximum;
+            WaveformsPlot.Plot.SetAxisLimitsX(xMin, xMax);
+            WaveformsPlot.Render();
         }
 
         private void DestructiveEffectsEditor_FormClosing(object sender, FormClosingEventArgs e)
