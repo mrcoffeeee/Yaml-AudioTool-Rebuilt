@@ -653,12 +653,20 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (mouseDown)
             {
-                waveformSpan.X2 = position;                
+                waveformSpan.X2 = position;
             }
             PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XMax - limits.XMin));
             PlotHScrollBar.Value = Convert.ToInt32(limits.XMin * scrollScaler);
             WaveformsPlot.Render();
             PositionLabel.Text = "Position (sec): " + position.ToString("0.00");
+        }
+
+        private void WaveformsPlot_MouseWheel(object sender, MouseEventArgs e)
+        {
+            limits = WaveformsPlot.Plot.GetAxisLimits();
+            PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XMax - limits.XMin));
+            PlotHScrollBar.Value = Convert.ToInt32(limits.XMin * scrollScaler);
+            WaveformsPlot.Render();
         }
 
         private void WaveformsPlot_MouseDown(object sender, MouseEventArgs e)
@@ -755,6 +763,6 @@ namespace Yaml_AudioTool_Rebuilt
                 Hide();
             }
             formMain.DestructiveEffectsButton.Enabled = true;
-        }
+        }        
     }
 }
