@@ -21,8 +21,8 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
-        bool stopFlag = false;
-        string fileTime = "";
+        private bool stopFlag = false;
+        private string fileTime = "";
         private readonly AudioPlayback ap = new();
 
         private static DestructiveEffectsEditor formDestructiveEffectsEditor;

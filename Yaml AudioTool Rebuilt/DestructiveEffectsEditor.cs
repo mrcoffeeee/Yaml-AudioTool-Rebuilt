@@ -14,14 +14,14 @@ namespace Yaml_AudioTool_Rebuilt
     {
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
 
-        bool mouseDown = false;
-        private double scrollScaler = 100.0;
-        float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
-        AxisLimits limits;
-        readonly ScottPlot.Plottable.VLine[] markerLines = new ScottPlot.Plottable.VLine[10];
-        readonly ScottPlot.Plottable.MarkerPlot[] markerLabels = new ScottPlot.Plottable.MarkerPlot[10];
-        ScottPlot.Plottable.HSpan waveformSpan;
-        NAudio.Wave.WaveFormat WaveFormat;
+        private bool mouseDown = false;
+        private double scrollScaler = 1000.0;
+        private float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
+        private AxisLimits limits;
+        private readonly ScottPlot.Plottable.VLine[] markerLines = new ScottPlot.Plottable.VLine[10];
+        private readonly ScottPlot.Plottable.MarkerPlot[] markerLabels = new ScottPlot.Plottable.MarkerPlot[10];
+        private ScottPlot.Plottable.HSpan waveformSpan;
+        private NAudio.Wave.WaveFormat WaveFormat;
 
         public DestructiveEffectsEditor()
         {
@@ -603,15 +603,17 @@ namespace Yaml_AudioTool_Rebuilt
                     WaveformsPlot.Plot.YAxis.SetBoundary(-2, 2);
                 }
             }
+            WaveformsPlot.Plot.XAxis.SetZoomInLimit(.001);
             WaveformsPlot.Refresh();
         }
 
         private void PlotConfiguration()
         {
-            WaveformsPlot.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
             WaveformsPlot.Configuration.AllowDroppedFramesWhileDragging = true;
-            WaveformsPlot.Configuration.LockVerticalAxis = true;
+            WaveformsPlot.Configuration.DoubleClickBenchmark = false;
             WaveformsPlot.Configuration.EnablePlotObjectEditor = false;
+            WaveformsPlot.Configuration.LockVerticalAxis = true;
+            WaveformsPlot.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
         }
 
         private void InitialPlotSetup()
@@ -620,7 +622,8 @@ namespace Yaml_AudioTool_Rebuilt
             WaveformsPlot.Plot.Title("");
             WaveformsPlot.Plot.XLabel("Time (seconds)");
             WaveformsPlot.Plot.YLabel("Audio level");
-            WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
+            WaveformsPlot.Plot.SetAxisLimitsX(0, 1);
+            WaveformsPlot.Plot.SetAxisLimitsY(-1, 1);
             WaveformsPlot.Plot.YAxis.Grid(false);
             waveformSpan = WaveformsPlot.Plot.AddHorizontalSpan(0, 0, Color.LightGray);
             waveformSpan.IsVisible = false;
@@ -658,7 +661,7 @@ namespace Yaml_AudioTool_Rebuilt
             PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XMax - limits.XMin));
             PlotHScrollBar.Value = Convert.ToInt32(limits.XMin * scrollScaler);
             WaveformsPlot.Render();
-            PositionLabel.Text = "Position (sec): " + position.ToString("0.00");
+            PositionLabel.Text = "Position (sec): " + position.ToString("0.000");
         }
 
         private void WaveformsPlot_MouseWheel(object sender, MouseEventArgs e)
@@ -748,10 +751,13 @@ namespace Yaml_AudioTool_Rebuilt
         {
             double xMin = PlotHScrollBar.Value / scrollScaler;
             double xMax = (PlotHScrollBar.Value + PlotHScrollBar.LargeChange) / scrollScaler;
-            if (xMax > PlotHScrollBar.Maximum)
-                xMax = PlotHScrollBar.Maximum;
-            WaveformsPlot.Plot.SetAxisLimitsX(xMin, xMax);
-            WaveformsPlot.Render();
+            if (xMax > xMin)
+            {
+                if (xMax > PlotHScrollBar.Maximum)
+                    xMax = PlotHScrollBar.Maximum;
+                WaveformsPlot.Plot.SetAxisLimitsX(xMin, xMax);
+                WaveformsPlot.Render();
+            }
         }
 
         private void DestructiveEffectsEditor_FormClosing(object sender, FormClosingEventArgs e)
@@ -763,6 +769,6 @@ namespace Yaml_AudioTool_Rebuilt
                 Hide();
             }
             formMain.DestructiveEffectsButton.Enabled = true;
-        }        
+        }
     }
 }
