@@ -17,8 +17,8 @@ namespace Yaml_AudioTool_Rebuilt
     public partial class AboutDialog : Form
     {
         private string spacer = "  ";
-        private string version = "Version: 1.2.1";
-        private string buildDate = "Build date: 240104";
+        private string version = "Version: 1.3.0";
+        private string buildDate = "Build date: 240115";
         private string netVersion = "NET Version: " + Environment.Version;
         private string author = "Author: Johannes Wronka";
         private string additionalInfo = "Alex Miyamotos Vitei Audio Tool Remake\n  Logo by Owen Davis";

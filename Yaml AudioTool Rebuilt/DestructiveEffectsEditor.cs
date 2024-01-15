@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using NAudio.Gui;
+using NAudio.Wave;
 using ScottPlot;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,14 @@ namespace Yaml_AudioTool_Rebuilt
         {
             InitializeComponent();
             Text = formMain.Text + ": Destructive Effects Editor";
+            EnableGuiElements(false);
             PlotConfiguration();
             InitialPlotSetup();
             FadeComboBox.SelectedIndex = 0;
             if (formMain.FilelistView.SelectedItems.Count == 1)
             {
-                LoadAudioWaveform(formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
+                DEEBackgroundWorker.RunWorkerAsync(formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
+                //LoadAudioWaveform(formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
             }
         }
 
@@ -92,6 +95,10 @@ namespace Yaml_AudioTool_Rebuilt
 
         public void LoadAudioWaveform(string filePath)
         {
+            EnableGuiElements(false);
+
+            Text = "                                                                                                                 PROCESSING AUDIO DATA ...";
+
             CachedSound(filePath);
             Text = formMain.Text + ": Destructive Effects Editor -> " + filePath;
             FilenameLabel.Text = filePath;
@@ -124,25 +131,11 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (flag)
             {
-                TableLayoutPanelFD.Visible = true;
-                NormalizeButton.Enabled = true;
-                VolumeUpButton.Enabled = true;
-                VolumeDownButton.Enabled = true;
-                TrimButton.Enabled = true;
-                FadeButton.Enabled = true;
-                ZoomResetButton.Enabled = true;
-                FadeComboBox.Enabled = true;
+                TableLayoutPanelDEE.Enabled = true;
             }
             else
             {
-                TableLayoutPanelFD.Visible = false;
-                NormalizeButton.Enabled = false;
-                VolumeUpButton.Enabled = false;
-                VolumeDownButton.Enabled = false;
-                TrimButton.Enabled = false;
-                FadeButton.Enabled = false;
-                ZoomResetButton.Enabled = false;
-                FadeComboBox.Enabled = false;
+                TableLayoutPanelDEE.Enabled = false;
             }
         }
 
@@ -769,6 +762,17 @@ namespace Yaml_AudioTool_Rebuilt
                 Hide();
             }
             formMain.DestructiveEffectsButton.Enabled = true;
+        }
+
+        private void DEEBackgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            LoadAudioWaveform(e.Argument.ToString());
+            DEEBackgroundWorker.CancelAsync();
+        }
+
+        private void DEEBackgroundWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+
         }
     }
 }
