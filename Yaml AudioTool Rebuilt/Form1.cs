@@ -296,8 +296,8 @@ namespace Yaml_AudioTool_Rebuilt
                     if (GetOpenForm("DestructiveEffectsEditor") && formDestructiveEffectsEditor.Visible == true)
                     {
                         formDestructiveEffectsEditor.Text = Text + ": Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
-                        formDestructiveEffectsEditor.DEEBackgroundWorker.RunWorkerAsync(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
-                        //formDestructiveEffectsEditor.LoadAudioWaveform(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
+                        string bwString = "LOADAUDIO|" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
+                        formDestructiveEffectsEditor.DEEBackgroundWorker.RunWorkerAsync(bwString);
                     }
                 }
 
@@ -545,8 +545,8 @@ namespace Yaml_AudioTool_Rebuilt
                 if (FilelistView.SelectedItems.Count == 1)
                 {
                     formDestructiveEffectsEditor.Text = Text + ": Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
-                    formDestructiveEffectsEditor.DEEBackgroundWorker.RunWorkerAsync(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
-                    //formDestructiveEffectsEditor.LoadAudioWaveform(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
+                    string bwString = "LOADAUDIO|" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
+                    formDestructiveEffectsEditor.DEEBackgroundWorker.RunWorkerAsync(bwString);
                 }
             }
             else

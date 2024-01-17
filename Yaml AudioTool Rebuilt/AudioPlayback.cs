@@ -12,6 +12,7 @@ using NAudio.Wave;
 using Vortice.XAudio2;
 using Vortice.Multimedia;
 using NAudio.CoreAudioApi;
+using System.Drawing.Text;
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -29,6 +30,20 @@ namespace Yaml_AudioTool_Rebuilt
         public IXAudio2SourceVoice sourceVoice;
 
         public WaveFileReader waveFileReader;
+
+        private static string CalculateAudiolength(WaveFileReader waveFileReader)
+        {
+            int hours = waveFileReader.TotalTime.Hours;
+            if (hours > 0)
+            {
+                hours *= 60;
+            }
+            int minutes = waveFileReader.TotalTime.Minutes;
+            minutes += hours;
+            int seconds = waveFileReader.TotalTime.Seconds;
+            string time = minutes.ToString("D2") + ":" + seconds.ToString("D2");
+            return time;
+        }
 
         public void OpenFile(bool clickFlag)
         {            
@@ -58,7 +73,7 @@ namespace Yaml_AudioTool_Rebuilt
                                 f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filenameHeader)].Text = file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", "");
                                 f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filepathHeader)].Text = file;
                                 f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.sizeHeader)].Text = (waveFileReader.Length / 1000).ToString();
-                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.durationHeader)].Text = waveFileReader.TotalTime.ToString(@"mm\:ss");
+                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.durationHeader)].Text = CalculateAudiolength(waveFileReader);
                                 f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.channelsHeader)].Text = waveFileReader.WaveFormat.Channels.ToString();
                                 f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.samplerateHeader)].Text = Math.Round(waveFileReader.WaveFormat.SampleRate / 1000.0, 3).ToString();
                                 f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString();
@@ -76,7 +91,7 @@ namespace Yaml_AudioTool_Rebuilt
                                 fileInfos.SubItems.Add("");
                                 fileInfos.SubItems.Add("");
                                 fileInfos.SubItems.Add((waveFileReader.Length / 1000).ToString());
-                                fileInfos.SubItems.Add(waveFileReader.TotalTime.ToString(@"mm\:ss"));
+                                fileInfos.SubItems.Add(CalculateAudiolength(waveFileReader));
                                 fileInfos.SubItems.Add(waveFileReader.WaveFormat.Channels.ToString());
                                 fileInfos.SubItems.Add(Math.Round(waveFileReader.WaveFormat.SampleRate / 1000.0, 3).ToString());
                                 fileInfos.SubItems.Add((waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString());

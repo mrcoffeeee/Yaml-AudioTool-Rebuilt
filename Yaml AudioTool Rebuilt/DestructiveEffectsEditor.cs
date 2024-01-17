@@ -2,10 +2,12 @@
 using NAudio.Wave;
 using ScottPlot;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 using Vortice.Multimedia;
 
@@ -34,8 +36,8 @@ namespace Yaml_AudioTool_Rebuilt
             FadeComboBox.SelectedIndex = 0;
             if (formMain.FilelistView.SelectedItems.Count == 1)
             {
-                DEEBackgroundWorker.RunWorkerAsync(formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
-                //LoadAudioWaveform(formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.filepathHeader)].Text);
+                string bwString = "LOADAUDIO|" + formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.filepathHeader)].Text;
+                DEEBackgroundWorker.RunWorkerAsync(bwString);
             }
         }
 
@@ -95,12 +97,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         public void LoadAudioWaveform(string filePath)
         {
-            EnableGuiElements(false);
-
-            Text = "                                                                                                                 PROCESSING AUDIO DATA ...";
-
             CachedSound(filePath);
-            Text = formMain.Text + ": Destructive Effects Editor -> " + filePath;
             FilenameLabel.Text = filePath;
             if (WaveFormat.Channels == 1)
             {
@@ -123,8 +120,6 @@ namespace Yaml_AudioTool_Rebuilt
             PlotWaveform();
             PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
             PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
-
-            EnableGuiElements(true);
         }
 
         private void EnableGuiElements(bool flag)
@@ -152,61 +147,61 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void NormalizeButton_Click(object sender, EventArgs e)
         {
-            if (TableLayoutPanelFD.Visible == true)
+            string bwString = "NORMALIZEAUDIO|";
+            DEEBackgroundWorker.RunWorkerAsync(bwString);
+        }
+
+        private void AudioNormalization()
+        {
+            double startPoint;
+            double endPoint;
+
+            if (waveformSpan.X1 == waveformSpan.X2)
             {
-                double startPoint;
-                double endPoint;
+                var limits = WaveformsPlot.Plot.GetAxisLimits();
+                startPoint = limits.XMin;
+                endPoint = limits.XMax;
+            }
 
-                if (waveformSpan.X1 == waveformSpan.X2)
+            else
+            {
+                startPoint = waveformSpan.X1;
+                endPoint = waveformSpan.X2;
+            }
+
+            audioDataM.CopyTo(audioData_BackupM, 0);
+
+            if (WaveFormat.Channels == 1)
+            {
+                DestructiveAudioTools.Normalize(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
+                PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
+            }
+
+            else if (WaveFormat.Channels == 2)
+            {
+                DestructiveAudioTools.Normalize(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
+                int length = audioDataM.Length / 2;
+                for (int i = 0; i < length; i++)
                 {
-                    var limits = WaveformsPlot.Plot.GetAxisLimits();
-                    startPoint = limits.XMin;
-                    endPoint = limits.XMax;
+                    audioDataL[i] = audioDataM[2 * i];
+                    audioDataR[i] = audioDataM[2 * i + 1];
                 }
-
-                else
-                {
-                    startPoint = waveformSpan.X1;
-                    endPoint = waveformSpan.X2;
-                }
-
-                audioDataM.CopyTo(audioData_BackupM, 0);
-
-                if (WaveFormat.Channels == 1)
-                {
-                    DestructiveAudioTools.Normalize(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-                    PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
-                }
-
-                else if (WaveFormat.Channels == 2)
-                {
-                    DestructiveAudioTools.Normalize(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-                    int length = audioDataM.Length / 2;
-                    for (int i = 0; i < length; i++)
-                    {
-                        audioDataL[i] = audioDataM[2 * i];
-                        audioDataR[i] = audioDataM[2 * i + 1];
-                    }
-                    PeakLabel.Text =
-                        "Peak: " +
-                        DestructiveAudioTools.GetPeakVolume(audioDataL) +
-                        " : " +
-                        DestructiveAudioTools.GetPeakVolume(audioDataR);
-                }
-
-                if (!Text.EndsWith("*"))
-                {
-                    Text += "*";
-                }
-                RevertButton.Visible = true;
-                SaveButton.Enabled = true;
-                SaveButton.BackColor = Color.LightGreen;
-                WaveformsPlot.Render();
+                PeakLabel.Text =
+                    "Peak: " +
+                    DestructiveAudioTools.GetPeakVolume(audioDataL) +
+                    " : " +
+                    DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
         }
 
         private void VolumeUpButton_Click(object sender, EventArgs e)
         {
+            string bwString = "VOLUPAUDIO|";
+            DEEBackgroundWorker.RunWorkerAsync(bwString);
+        }
+
+        private void AudioVolumeUp()
+        {
             double startPoint;
             double endPoint;
 
@@ -246,18 +241,15 @@ namespace Yaml_AudioTool_Rebuilt
                     " : " +
                     DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
-
-            if (!Text.EndsWith("*"))
-            {
-                Text += "*";
-            }
-            RevertButton.Visible = true;
-            SaveButton.Enabled = true;
-            SaveButton.BackColor = Color.LightGreen;
-            WaveformsPlot.Render();
         }
 
         private void VolumeDownButton_Click(object sender, EventArgs e)
+        {
+            string bwString = "VOLDOWNAUDIO|";
+            DEEBackgroundWorker.RunWorkerAsync(bwString);
+        }
+
+        private void AudioVolumeDown()
         {
             double startPoint;
             double endPoint;
@@ -298,18 +290,15 @@ namespace Yaml_AudioTool_Rebuilt
                     " : " +
                     DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
-
-            if (!Text.EndsWith("*"))
-            {
-                Text += "*";
-            }
-            RevertButton.Visible = true;
-            SaveButton.Enabled = true;
-            SaveButton.BackColor = Color.LightGreen;
-            WaveformsPlot.Render();
         }
 
         private void TrimButton_Click(object sender, EventArgs e)
+        {
+            string bwString = "TRIMAUDIO|";
+            DEEBackgroundWorker.RunWorkerAsync(bwString);
+        }
+
+        private void AudioTrim()
         {
             if (waveformSpan.X1 != waveformSpan.X2)
             {
@@ -349,23 +338,17 @@ namespace Yaml_AudioTool_Rebuilt
                         DestructiveAudioTools.GetPeakVolume(audioDataL) +
                         " : " +
                         DestructiveAudioTools.GetPeakVolume(audioDataR);
-                }
-
-                if (!Text.EndsWith("*"))
-                {
-                    Text += "*";
-                }
-                RevertButton.Visible = true;
-                SaveButton.Enabled = true;
-                SaveButton.BackColor = Color.LightGreen;
-                InitialPlotSetup();
-                PlotWaveform();
-                PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
-                PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
+                }                
             }
         }
 
         private void FadeButton_Click(object sender, EventArgs e)
+        {
+            string bwString = "FADEAUDIO|";
+            DEEBackgroundWorker.RunWorkerAsync(bwString);
+        }
+
+        private void AudioFade()
         {
             double startPoint;
             double endPoint;
@@ -407,15 +390,6 @@ namespace Yaml_AudioTool_Rebuilt
                     " : " +
                     DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
-
-            if (!Text.EndsWith("*"))
-            {
-                Text += "*";
-            }
-            RevertButton.Visible = true;
-            SaveButton.Enabled = true;
-            SaveButton.BackColor = Color.LightGreen;
-            WaveformsPlot.Render();
         }
 
         private void AddMarker(int i)
@@ -766,13 +740,68 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void DEEBackgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            LoadAudioWaveform(e.Argument.ToString());
-            DEEBackgroundWorker.CancelAsync();
+            EnableGuiElements(false);
+            string temp = Text;
+            string choice = e.Argument.ToString().Split('|').First();
+            string argument = e.Argument.ToString().Split('|').Last();
+
+            if (choice == "LOADAUDIO")
+            {
+                temp = formMain.Text + ": Destructive Effects Editor -> " + argument;
+                Text = "PLEASE WAIT - CALCULATING AUDIO DATA ...";                
+                LoadAudioWaveform(argument);                
+            }
+            else if (choice == "NORMALIZEAUDIO")
+            {
+                Text = "PLEASE WAIT - PROCESSING AUDIO NORMALIZATION ...";
+                AudioNormalization();
+            }
+            else if (choice == "VOLUPAUDIO")
+            {
+                Text = "PLEASE WAIT - PROCESSING AUDIO VOLUME UP ...";
+                AudioVolumeUp();
+            }
+            else if (choice == "VOLDOWNAUDIO")
+            {
+                Text = "PLEASE WAIT - PROCESSING AUDIO VOLUME DOWN ...";
+                AudioVolumeDown();
+            }
+            else if (choice == "TRIMAUDIO")
+            {
+                Text = "PLEASE WAIT - PROCESSING AUDIO TRIM ...";
+                AudioTrim();
+            }
+            else if (choice == "FADEAUDIO")
+            {
+                Text = "PLEASE WAIT - PROCESSING AUDIO FADE ...";
+                AudioFade();
+            }
+            WaveformsPlot.Render();
+            Text = temp;
+            e.Result = choice;
         }
 
         private void DEEBackgroundWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
+            if (e.Result.ToString() != "LOADAUDIO")
+            {
+                if (!Text.EndsWith("*"))
+                {
+                    Text += "*";
+                }
+            }
+            if (e.Result.ToString() == "TRIMAUDIO")
+            {
+                InitialPlotSetup();
+                PlotWaveform();
+                PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
+                PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
+            }
 
+            RevertButton.Visible = true;
+            SaveButton.Enabled = true;
+            SaveButton.BackColor = Color.LightGreen;            
+            EnableGuiElements(true);
         }
     }
 }

@@ -260,7 +260,6 @@
             TableLayoutPanelFD.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             TableLayoutPanelFD.Size = new System.Drawing.Size(825, 34);
             TableLayoutPanelFD.TabIndex = 6;
-            TableLayoutPanelFD.Visible = false;
             // 
             // FilenameLabel
             // 
