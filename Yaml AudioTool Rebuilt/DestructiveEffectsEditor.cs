@@ -140,13 +140,12 @@ namespace Yaml_AudioTool_Rebuilt
             InitialPlotSetup();
             WaveformsPlot.Enabled = false;
             EnableGuiElements(false);
-            RevertButton.Visible = false;
-            SaveButton.Enabled = false;
+            TableLayoutPanelChanges.Enabled = false;
             SaveButton.BackColor = SystemColors.Control;
         }
 
         private void NormalizeButton_Click(object sender, EventArgs e)
-        {
+        {            
             string bwString = "NORMALIZEAUDIO|";
             DEEBackgroundWorker.RunWorkerAsync(bwString);
         }
@@ -458,6 +457,12 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void RevertButton_Click(object sender, EventArgs e)
         {
+            string bwString = "REVERTAUDIO|";
+            DEEBackgroundWorker.RunWorkerAsync(bwString);
+        }
+
+        private void AudioRevert()
+        {
             if (WaveFormat.Channels == 1)
             {
                 Array.Resize(ref audioDataM, audioData_BackupM.Length);
@@ -476,29 +481,25 @@ namespace Yaml_AudioTool_Rebuilt
                     DestructiveAudioTools.GetPeakVolume(audioDataL) +
                     " : " +
                     DestructiveAudioTools.GetPeakVolume(audioDataR);
-            }
-
-            RevertButton.Visible = false;
-            SaveButton.Enabled = false;
-            SaveButton.BackColor = SystemColors.Control;
-            if (Text.Contains(".wav*"))
-                Text = Text.Replace(".wav*", ".wav");
-            InitialPlotSetup();
-            PlotWaveform();
-            PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
-            PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
+            }            
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            RevertButton.Visible = false;
-            SaveButton.Enabled = false;
-            SaveButton.BackColor = SystemColors.Control;
+            string bwString = "SAVEAUDIO|";
+            DEEBackgroundWorker.RunWorkerAsync(bwString);
+        }
+
+        private void AudioSave()
+        {
+            TableLayoutPanelChanges.Enabled = false;
             string backupPath = FilenameLabel.Text.Replace(".wav", "");
+            TopMost = false;
 
             DialogResult dialogResult = MessageBox.Show("Do you want to replace the current file?", "Save Changes", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
+                TopMost = true;
                 File.Move(FilenameLabel.Text, backupPath + "_BACKUP.wav");
                 using CueWaveFileWriter writer = new(FilenameLabel.Text, WaveFormat);
                 writer.WriteSamples(audioDataM, 0, audioDataM.Length);
@@ -512,6 +513,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
             else if (dialogResult == DialogResult.No)
             {
+                TopMost = true;
                 using CueWaveFileWriter writer = new(backupPath + "_EDIT.wav", WaveFormat);
                 writer.WriteSamples(audioDataM, 0, audioDataM.Length);
                 for (int i = 0; i < markerLines.Length; i++)
@@ -521,15 +523,7 @@ namespace Yaml_AudioTool_Rebuilt
                         writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLabels[i].Text);
                     }
                 }
-            }
-            Text = formMain.Text + ": Destructive Effects Editor";
-            InitialPlotSetup();
-            ResetDestructiveEffectsEditorValues();
-            FilenameLabel.Text = "";
-            PositionLabel.Text = "Position (sec): ";
-            PeakLabel.Text = "Peak: ";
-            ChannelsLabel.Text = "";
-            SamplerateLabel.Text = "";
+            }            
         }
 
         public void PlotWaveform()
@@ -748,7 +742,7 @@ namespace Yaml_AudioTool_Rebuilt
             if (choice == "LOADAUDIO")
             {
                 temp = formMain.Text + ": Destructive Effects Editor -> " + argument;
-                Text = "PLEASE WAIT - CALCULATING AUDIO DATA ...";                
+                Text = "PLEASE WAIT - CALCULATING AUDIO DATA ...";
                 LoadAudioWaveform(argument);                
             }
             else if (choice == "NORMALIZEAUDIO")
@@ -776,6 +770,16 @@ namespace Yaml_AudioTool_Rebuilt
                 Text = "PLEASE WAIT - PROCESSING AUDIO FADE ...";
                 AudioFade();
             }
+            else if (choice == "REVERTAUDIO")
+            {
+                Text = "PLEASE WAIT - UNDOING AUDIO PROCESSING ...";
+                AudioRevert();
+            }
+            else if (choice == "SAVEAUDIO")
+            {
+                Text = "PLEASE WAIT - SAVING AUDIO FILE ...";
+                AudioSave();
+            }
             WaveformsPlot.Render();
             Text = temp;
             e.Result = choice;
@@ -783,24 +787,54 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void DEEBackgroundWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            if (e.Result.ToString() != "LOADAUDIO")
+            if (e.Result.ToString() != "REVERTAUDIO" && e.Result.ToString() != "SAVEAUDIO")
             {
-                if (!Text.EndsWith("*"))
+                if (e.Result.ToString() != "LOADAUDIO")
                 {
-                    Text += "*";
+                    if (!Text.EndsWith("*"))
+                    {
+                        Text += "*";
+                    }
                 }
+                else
+                {
+                    EnableGuiElements(true);
+                    return;
+                }
+                if (e.Result.ToString() == "TRIMAUDIO")
+                {
+                    InitialPlotSetup();
+                    PlotWaveform();
+                    PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
+                    PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
+                }
+
+                TableLayoutPanelChanges.Enabled = true;
+                SaveButton.BackColor = Color.LightGreen;                
             }
-            if (e.Result.ToString() == "TRIMAUDIO")
+            else if (e.Result.ToString() == "REVERTAUDIO")
             {
+                if (Text.Contains(".wav*"))
+                    Text = Text.Replace(".wav*", ".wav");
+                TableLayoutPanelChanges.Enabled = false;
+                SaveButton.BackColor = SystemColors.Control;
                 InitialPlotSetup();
                 PlotWaveform();
                 PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
                 PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
             }
+            else if (e.Result.ToString() == "SAVEAUDIO")
+            {
+                Text = formMain.Text + ": Destructive Effects Editor";
+                InitialPlotSetup();
+                ResetDestructiveEffectsEditorValues();
+                FilenameLabel.Text = "";
+                PositionLabel.Text = "Position (sec): ";
+                PeakLabel.Text = "Peak: ";
+                ChannelsLabel.Text = "";
+                SamplerateLabel.Text = "";
+            }
 
-            RevertButton.Visible = true;
-            SaveButton.Enabled = true;
-            SaveButton.BackColor = Color.LightGreen;            
             EnableGuiElements(true);
         }
     }

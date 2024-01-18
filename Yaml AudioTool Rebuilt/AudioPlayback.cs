@@ -1,18 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using NAudio.Wave;
-
 using Vortice.XAudio2;
-using Vortice.Multimedia;
 using NAudio.CoreAudioApi;
-using System.Drawing.Text;
 
 namespace Yaml_AudioTool_Rebuilt
 {

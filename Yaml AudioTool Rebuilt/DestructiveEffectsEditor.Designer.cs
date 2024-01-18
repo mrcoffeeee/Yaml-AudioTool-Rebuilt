@@ -324,6 +324,7 @@
             TableLayoutPanelChanges.Controls.Add(SaveButton, 1, 0);
             TableLayoutPanelChanges.Controls.Add(RevertButton, 0, 0);
             TableLayoutPanelChanges.Dock = System.Windows.Forms.DockStyle.Fill;
+            TableLayoutPanelChanges.Enabled = false;
             TableLayoutPanelChanges.Location = new System.Drawing.Point(833, 310);
             TableLayoutPanelChanges.Margin = new System.Windows.Forms.Padding(2);
             TableLayoutPanelChanges.Name = "TableLayoutPanelChanges";
@@ -361,7 +362,6 @@
             RevertButton.Size = new System.Drawing.Size(50, 28);
             RevertButton.TabIndex = 29;
             RevertButton.UseVisualStyleBackColor = false;
-            RevertButton.Visible = false;
             RevertButton.Click += RevertButton_Click;
             // 
             // PlotHScrollBar
@@ -388,10 +388,13 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(981, 348);
             Controls.Add(TableLayoutPanelDEE);
+            DoubleBuffered = true;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MinimumSize = new System.Drawing.Size(993, 373);
             Name = "DestructiveEffectsEditor";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Destructive Effects Editor";
+            TopMost = true;
             FormClosing += DestructiveEffectsEditor_FormClosing;
             TableLayoutPanelDEE.ResumeLayout(false);
             TableLayoutPanelA.ResumeLayout(false);
