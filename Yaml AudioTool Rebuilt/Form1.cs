@@ -109,8 +109,7 @@ namespace Yaml_AudioTool_Rebuilt
             double totalplaybackSeconds = (double)samplePosition / sampleRate;
             int minutes = (int)(totalplaybackSeconds / 60);
             int seconds = (int)(totalplaybackSeconds % 60);
-            string formattedTime = $"{minutes:D2}:{seconds:D2}";
-            timeLabel.Text = formattedTime;
+            timeLabel.Text = $"{minutes:D2}:{seconds:D2}";
 
             MainVolumeMeter.Amplitude = ap.device.AudioMeterInformation.MasterPeakValue;
             MainVolumeMeter.Refresh();

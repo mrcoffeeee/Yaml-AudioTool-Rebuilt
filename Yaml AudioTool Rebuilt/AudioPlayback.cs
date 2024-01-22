@@ -10,8 +10,6 @@ namespace Yaml_AudioTool_Rebuilt
 {
     public class AudioPlayback
     {
-        public int timerCount = 0;
-
         public bool playbackPause = false;
         public bool playbackStop = true;
 
@@ -235,7 +233,6 @@ namespace Yaml_AudioTool_Rebuilt
                 sourceVoice.Dispose();
                 sourceVoice = null;
             }
-            timerCount = 0;
             if (f1 != null)
                 f1.PlayButton.Text = "▶";
             playbackStop = true;
