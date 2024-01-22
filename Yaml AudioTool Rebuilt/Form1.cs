@@ -104,12 +104,15 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            ap.timerCount += playbackTimer.Interval;
-            var timeSpan = TimeSpan.FromMilliseconds(ap.timerCount);
-            timeLabel.Text = timeSpan.ToString(@"mm\:ss");
+            long samplePosition = (long)ap.sourceVoice.State.SamplesPlayed;
+            int sampleRate = ap.sourceVoice.VoiceDetails.InputSampleRate;
+            double totalplaybackSeconds = (double)samplePosition / sampleRate;
+            int minutes = (int)(totalplaybackSeconds / 60);
+            int seconds = (int)(totalplaybackSeconds % 60);
+            string formattedTime = $"{minutes:D2}:{seconds:D2}";
+            timeLabel.Text = formattedTime;
 
             MainVolumeMeter.Amplitude = ap.device.AudioMeterInformation.MasterPeakValue;
-
             MainVolumeMeter.Refresh();
 
             if (LoopButton.BackColor == Color.Salmon)

@@ -1360,13 +1360,13 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // RoomenableButton
             // 
-            RoomenableButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
             RoomenableButton.BackColor = System.Drawing.Color.Salmon;
-            RoomenableButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            RoomenableButton.Location = new System.Drawing.Point(234, 33);
+            RoomenableButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            RoomenableButton.Font = new System.Drawing.Font("Segoe UI", 8F);
+            RoomenableButton.Location = new System.Drawing.Point(234, 32);
             RoomenableButton.Margin = new System.Windows.Forms.Padding(4);
             RoomenableButton.Name = "RoomenableButton";
-            RoomenableButton.Size = new System.Drawing.Size(92, 19);
+            RoomenableButton.Size = new System.Drawing.Size(92, 21);
             RoomenableButton.TabIndex = 74;
             RoomenableButton.Text = "Off";
             RoomenableButton.UseVisualStyleBackColor = false;
