@@ -80,6 +80,7 @@ namespace Yaml_AudioTool_Rebuilt
                                 fileInfos.SubItems.Add(file);
                                 fileInfos.SubItems.Add("");
                                 fileInfos.SubItems.Add("");
+                                fileInfos.SubItems.Add("SFX");
                                 fileInfos.SubItems.Add((waveFileReader.Length / 1000).ToString());
                                 fileInfos.SubItems.Add(CalculateAudiolength(waveFileReader));
                                 fileInfos.SubItems.Add(waveFileReader.WaveFormat.Channels.ToString());
@@ -97,8 +98,7 @@ namespace Yaml_AudioTool_Rebuilt
                                 fileInfos.SubItems.Add("0");
                                 // add misc items
                                 fileInfos.SubItems.Add("false");
-                                fileInfos.SubItems.Add("false");
-                                fileInfos.SubItems.Add("1");
+                                fileInfos.SubItems.Add("false");                                
                                 fileInfos.SubItems.Add("0");
                                 fileInfos.SubItems.Add("0");
                                 // add fileinfos to listview

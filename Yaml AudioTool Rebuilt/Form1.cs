@@ -282,7 +282,7 @@ namespace Yaml_AudioTool_Rebuilt
                 dopplervalueLabel.Text = Convert.ToString(dopplerValue);
                 LocalizecheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(localizeHeader)].Text);
                 StreamcheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(streamHeader)].Text);
-                TypecomboBox.SelectedIndex = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text);
+                TypecomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text;
                 FalloffcomboBox.SelectedIndex = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text);
                 StackcomboBox.SelectedIndex = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text);
                 ChangeFilelabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
@@ -687,7 +687,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text = Convert.ToString(TypecomboBox.SelectedIndex);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text = Convert.ToString(TypecomboBox.SelectedItem);
                 }
             }
         }

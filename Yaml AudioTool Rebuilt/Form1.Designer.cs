@@ -47,6 +47,7 @@ namespace Yaml_AudioTool_Rebuilt
             filepathHeader = new System.Windows.Forms.ColumnHeader();
             roommapHeader = new System.Windows.Forms.ColumnHeader();
             roomidHeader = new System.Windows.Forms.ColumnHeader();
+            typeHeader = new System.Windows.Forms.ColumnHeader();
             sizeHeader = new System.Windows.Forms.ColumnHeader();
             durationHeader = new System.Windows.Forms.ColumnHeader();
             channelsHeader = new System.Windows.Forms.ColumnHeader();
@@ -63,7 +64,6 @@ namespace Yaml_AudioTool_Rebuilt
             pitchrandHeader = new System.Windows.Forms.ColumnHeader();
             localizeHeader = new System.Windows.Forms.ColumnHeader();
             streamHeader = new System.Windows.Forms.ColumnHeader();
-            typeHeader = new System.Windows.Forms.ColumnHeader();
             falloffHeader = new System.Windows.Forms.ColumnHeader();
             stackHeader = new System.Windows.Forms.ColumnHeader();
             reverbpresetHeader = new System.Windows.Forms.ColumnHeader();
@@ -349,7 +349,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // FilelistView
             // 
-            FilelistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { titleHeader, filenameHeader, filepathHeader, roommapHeader, roomidHeader, sizeHeader, durationHeader, channelsHeader, samplerateHeader, bitrateHeader, bitsizeHeader, volumeHeader, priorityHeader, loopHeader, mindistanceHeader, maxdistanceHeader, dopplerHeader, pitchHeader, pitchrandHeader, localizeHeader, streamHeader, typeHeader, falloffHeader, stackHeader });
+            FilelistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { titleHeader, filenameHeader, filepathHeader, roommapHeader, roomidHeader, typeHeader, sizeHeader, durationHeader, channelsHeader, samplerateHeader, bitrateHeader, bitsizeHeader, volumeHeader, priorityHeader, loopHeader, mindistanceHeader, maxdistanceHeader, dopplerHeader, pitchHeader, pitchrandHeader, localizeHeader, streamHeader, falloffHeader, stackHeader });
             FilelistView.Dock = System.Windows.Forms.DockStyle.Fill;
             FilelistView.FullRowSelect = true;
             FilelistView.GridLines = true;
@@ -385,6 +385,11 @@ namespace Yaml_AudioTool_Rebuilt
             // roomidHeader
             // 
             roomidHeader.Text = "Room ID";
+            // 
+            // typeHeader
+            // 
+            typeHeader.Text = "Sound Type";
+            typeHeader.Width = 120;
             // 
             // sizeHeader
             // 
@@ -465,11 +470,6 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             streamHeader.Text = "Stream";
             streamHeader.Width = 120;
-            // 
-            // typeHeader
-            // 
-            typeHeader.Text = "Type";
-            typeHeader.Width = 120;
             // 
             // falloffHeader
             // 
