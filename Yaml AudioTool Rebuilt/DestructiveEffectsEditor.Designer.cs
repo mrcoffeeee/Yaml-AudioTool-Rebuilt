@@ -351,8 +351,8 @@
             // RevertButton
             // 
             RevertButton.BackColor = System.Drawing.SystemColors.Control;
-            RevertButton.BackgroundImage = Properties.Resources.Undo;
-            RevertButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            RevertButton.BackgroundImage = (System.Drawing.Image)resources.GetObject("RevertButton.BackgroundImage");
+            RevertButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             RevertButton.Dock = System.Windows.Forms.DockStyle.Fill;
             RevertButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             RevertButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;

@@ -117,10 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="RevertButton.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EQAACxEBf2RfkQAAAO5JREFUOE+N0z1qAkEYxvGJH4SIqE2IhbewFmJnFxsREXIHGz2DpTcwF7CwEbs0
+        YicIdmlSCgqBgFqIJv9HXGFgZscHfsXuzsy78+6siUkCBTwjhwcEk0YLn9jggDUmqEOLOpPHGGf8QZNX
+        +Llen/CBJ1hJYgoNWqKKqEoKb/iCng+h8be8Qw8W0D5dKeEbeoOabihqxhxHvOpGTJpQkZEu2uhhh190
+        UIYv+gJbqB+mAVXUaqJ9vcCXR2iMmnppygCauEcFcbEqKxnMoFcOxdpzlCKs9jvi7HYowe/sSxfBE+ZL
+        H3edbVeycPxVxvwDcPo6gRRw5AAAAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="DEEBackgroundWorker.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAvLwAAAEAIAAIOgIAFgAAACgAAAC8AAAAeAEAAAEAIAAAAAAAQCgCACMuAAAjLgAAAAAAAAAA

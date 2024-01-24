@@ -39,7 +39,7 @@ namespace Yaml_AudioTool_Rebuilt
     {
         public static FilterParameters voiceFilter;
         public static reverbParameters[] ReverbPresets =
-            {
+            [
                 Vortice.XAudio2.Fx.Presets.Default,
                 Vortice.XAudio2.Fx.Presets.Generic,
                 Vortice.XAudio2.Fx.Presets.PaddedCell,
@@ -70,7 +70,7 @@ namespace Yaml_AudioTool_Rebuilt
                 Vortice.XAudio2.Fx.Presets.MediumHall,
                 Vortice.XAudio2.Fx.Presets.LargeHall,
                 Vortice.XAudio2.Fx.Presets.Plate
-            };
+            ];
 
         public static IXAudio2SourceVoice SetRoomFilter(IXAudio2SourceVoice sourceVoice)
         {

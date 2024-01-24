@@ -18,7 +18,7 @@ namespace Yaml_AudioTool_Rebuilt
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
 
         private bool mouseDown = false;
-        private double scrollScaler = 1000.0;
+        private readonly double scrollScaler = 1000.0;
         private float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
         private AxisLimits limits;
         private readonly ScottPlot.Plottable.VLine[] markerLines = new ScottPlot.Plottable.VLine[10];
@@ -52,7 +52,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 wholeFile.AddRange(readBuffer.Take(samplesRead));
             }
-            audioDataM = wholeFile.ToArray();
+            audioDataM = [.. wholeFile];
             audioData_BackupM = new float[audioDataM.Length];
             audioDataM.CopyTo(audioData_BackupM, 0);
 
@@ -401,7 +401,7 @@ namespace Yaml_AudioTool_Rebuilt
             markerLabels[i].TextFont.Size = 14;
             markerLabels[i].Y = WaveFormat.Channels;
 
-            if (!Text.EndsWith("*"))
+            if (!Text.EndsWith('*'))
             {
                 SaveButton.Enabled = true;
                 SaveButton.BackColor = Color.LightGreen;
@@ -791,7 +791,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 if (e.Result.ToString() != "LOADAUDIO")
                 {
-                    if (!Text.EndsWith("*"))
+                    if (!Text.EndsWith('*'))
                     {
                         Text += "*";
                     }

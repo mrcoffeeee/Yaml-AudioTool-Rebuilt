@@ -385,7 +385,7 @@ namespace Yaml_AudioTool_Rebuilt
                 stopFlag = false;
                 fileTime = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
                 FilelistView.Focus();
-                if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text.StartsWith("\\"))
+                if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text.StartsWith('\\'))
                 {
                     string filepathTemp;
                     SettingsDialog sd = new();
@@ -819,14 +819,14 @@ namespace Yaml_AudioTool_Rebuilt
                 ListViewColumnSorter lvwColumnSorter = new();
                 FilelistView.ListViewItemSorter = lvwColumnSorter;
 
-                int[] Columns = new int[5]
-                {
+                int[] Columns =
+                [
                     FilelistView.Columns.IndexOf(titleHeader),
                     FilelistView.Columns.IndexOf(filenameHeader),
                     FilelistView.Columns.IndexOf(filepathHeader),
                     FilelistView.Columns.IndexOf(roommapHeader),
                     FilelistView.Columns.IndexOf(typeHeader)
-                };
+                ];
 
                 lvwColumnSorter.SortColumn = Columns[SortcomboBox.SelectedIndex];
                 lvwColumnSorter.Order = SortOrder.Ascending;
@@ -1152,7 +1152,7 @@ namespace Yaml_AudioTool_Rebuilt
         /// <summary>
         /// Case insensitive comparer object
         /// </summary>
-        private CaseInsensitiveComparer ObjectCompare;
+        private readonly CaseInsensitiveComparer ObjectCompare;
 
         /// <summary>
         /// Class constructor. Initializes various elements
