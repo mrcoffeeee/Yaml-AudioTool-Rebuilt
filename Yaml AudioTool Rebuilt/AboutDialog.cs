@@ -18,7 +18,7 @@ namespace Yaml_AudioTool_Rebuilt
     {
         private readonly string spacer = "  ";
         private readonly string version = "Version: 1.3.0";
-        private readonly string buildDate = "Build date: 240124";
+        private readonly string buildDate = "Build date: 240125";
         private readonly string netVersion = "NET Version: " + Environment.Version;
         private readonly string author = "Author: Johannes Wronka";
         private readonly string additionalInfo = "Alex Miyamotos Vitei Audio Tool Remake\n  Logo by Owen Davis";

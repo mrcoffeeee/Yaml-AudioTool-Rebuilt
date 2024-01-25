@@ -134,7 +134,7 @@ namespace Yaml_AudioTool_Rebuilt
         public static float[] Trim(float[] audioData, double start, double end, int sampleRate, int channels)
         {
             (int startSample, int endSample) = GetSamplePostitions(start, end, sampleRate, channels);
-            List<float> trimmedAudioList = new();
+            List<float> trimmedAudioList = [];
 
             for (int i = 0; i < audioData.Length; i++)
             {
@@ -147,14 +147,14 @@ namespace Yaml_AudioTool_Rebuilt
                     trimmedAudioList.Add(audioData[i]);
                 }
             }
-            return trimmedAudioList.ToArray();
+            return [.. trimmedAudioList];
         }
 
         public static float[] Fade(float[] audioData, double start, double end, int sampleRate, int channels, int fadeIndex)
         {
             (int startSample, int endSample) = GetSamplePostitions(start, end, sampleRate, channels);
             float fadeRatio;
-            List<float> fadeAudioList = new();
+            List<float> fadeAudioList = [];
 
             // Linear FadeIn
             if (fadeIndex == 0)
@@ -231,7 +231,7 @@ namespace Yaml_AudioTool_Rebuilt
                     }
                 }
             }
-            return fadeAudioList.ToArray();
+            return [.. fadeAudioList];
         }
     }
 }
