@@ -14,10 +14,10 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //### Export Functions                               ###
         //###                                                ###
-        //######################################################
+        //######################################################        
 
         private static string CreateStringCRC32(string fileName)
-        {
+        {            
             byte[] data = Encoding.ASCII.GetBytes(fileName);
             uint crcValue = Crc32Algorithm.Compute(data, 0, fileName.Length);
             return crcValue.ToString();
@@ -91,6 +91,8 @@ namespace Yaml_AudioTool_Rebuilt
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
             int a = 0;
+            string eTypeFirst = "<%= ::AudioType::AUDIO_TYPE_";
+            string eTypeLast = " %>";
             lines.Add("  soundFiles:");
             foreach (var item in f1.FilelistView.Items)
             {
@@ -101,7 +103,7 @@ namespace Yaml_AudioTool_Rebuilt
                 lines.Add("    volume: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.volumeHeader)].Text.Replace(",", "."));
                 lines.Add("    minDistance: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.mindistanceHeader)].Text);
                 lines.Add("    maxDistance: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.maxdistanceHeader)].Text);
-                lines.Add("    eType: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.typeHeader)].Text);
+                lines.Add("    eType: " + eTypeFirst + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.typeHeader)].Text + eTypeLast);
                 lines.Add("    eFalloff: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.falloffHeader)].Text);
                 lines.Add("    pitchRandomisation: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.pitchrandHeader)].Text.Replace(",", "."));
                 lines.Add("    priority: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.priorityHeader)].Text);
@@ -163,6 +165,8 @@ namespace Yaml_AudioTool_Rebuilt
             using StreamReader StreamReader = new(fileStream, Encoding.UTF8);
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
+            string eTypeFirst = "<%= ::AudioType::AUDIO_TYPE_";
+            string eTypeLast = " %>";
             string line = "";
             SettingsDialog sd = new();
             string folderPath = sd.audiofolderLabel.Text;
@@ -246,7 +250,7 @@ namespace Yaml_AudioTool_Rebuilt
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.volumeHeader)].Text = StreamReader.ReadLine().Replace("    volume: ", "").Replace(".", ",");
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.mindistanceHeader)].Text = StreamReader.ReadLine().Replace("    minDistance: ", "");
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.maxdistanceHeader)].Text = StreamReader.ReadLine().Replace("    maxDistance: ", "");
-                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.typeHeader)].Text = StreamReader.ReadLine().Replace("    eType: ", "");
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.typeHeader)].Text = StreamReader.ReadLine().Replace("    eType: ", "").Replace(eTypeFirst, "").Replace(eTypeLast, "");
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.falloffHeader)].Text = StreamReader.ReadLine().Replace("    eFalloff: ", "");
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.pitchrandHeader)].Text = StreamReader.ReadLine().Replace("    pitchRandomisation: ", "").Replace(".", ",");
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.priorityHeader)].Text = StreamReader.ReadLine().Replace("    priority: ", "");
