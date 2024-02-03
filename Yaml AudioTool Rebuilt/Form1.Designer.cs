@@ -719,7 +719,7 @@ namespace Yaml_AudioTool_Rebuilt
             FalloffcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             FalloffcomboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             FalloffcomboBox.FormattingEnabled = true;
-            FalloffcomboBox.Items.AddRange(new object[] { "Linear", "Logarithmic" });
+            FalloffcomboBox.Items.AddRange(new object[] { "LINEAR", "LOGARITHMIC" });
             FalloffcomboBox.Location = new System.Drawing.Point(103, 139);
             FalloffcomboBox.Margin = new System.Windows.Forms.Padding(4);
             FalloffcomboBox.Name = "FalloffcomboBox";
@@ -910,7 +910,7 @@ namespace Yaml_AudioTool_Rebuilt
             StackcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             StackcomboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             StackcomboBox.FormattingEnabled = true;
-            StackcomboBox.Items.AddRange(new object[] { "Many", "Replace", "Drop" });
+            StackcomboBox.Items.AddRange(new object[] { "MANY", "REPLACE", "DROP" });
             StackcomboBox.Location = new System.Drawing.Point(103, 166);
             StackcomboBox.Margin = new System.Windows.Forms.Padding(4);
             StackcomboBox.Name = "StackcomboBox";
@@ -2166,7 +2166,6 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Label LocalizeLabel;
         public System.Windows.Forms.CheckBox StreamcheckBox;
         public System.Windows.Forms.CheckBox LocalizecheckBox;
-        private System.Windows.Forms.ComboBox TypecomboBox;
         private System.Windows.Forms.Label selectedsoundLabel;
         public System.Windows.Forms.Button PlayButton;
         public System.Windows.Forms.TrackBar DopplertrackBar;
@@ -2264,7 +2263,6 @@ namespace Yaml_AudioTool_Rebuilt
         public System.Windows.Forms.ComboBox FilterComboBox;
         private System.Windows.Forms.Button LoopButton;
         private System.Windows.Forms.Label FalloffLabel;
-        private System.Windows.Forms.ComboBox FalloffcomboBox;
         public System.Windows.Forms.ColumnHeader falloffHeader;
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
         public System.Windows.Forms.Button RoomenableButton;
@@ -2283,7 +2281,6 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Button ChangeFilebutton;
         private System.Windows.Forms.Label ChangeFilelabel;
         private System.Windows.Forms.Label Stacklabel;
-        private System.Windows.Forms.ComboBox StackcomboBox;
         public System.Windows.Forms.ColumnHeader stackHeader;
         public System.Windows.Forms.Button DestructiveEffectsButton;
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelMainSubDown;
@@ -2314,6 +2311,9 @@ namespace Yaml_AudioTool_Rebuilt
         public System.Windows.Forms.Button PitchenableButton;
         public NAudio.Gui.VolumeSlider MainVolumeSlider;
         private NAudio.Gui.VolumeMeter MainVolumeMeter;
+        public System.Windows.Forms.ComboBox FalloffcomboBox;
+        public System.Windows.Forms.ComboBox TypecomboBox;
+        public System.Windows.Forms.ComboBox StackcomboBox;
     }
 }
 

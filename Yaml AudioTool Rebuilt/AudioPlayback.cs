@@ -21,7 +21,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         public WaveFileReader waveFileReader;
 
-        private static string CalculateAudiolength(WaveFileReader waveFileReader)
+        public static string CalculateAudiolength(WaveFileReader waveFileReader)
         {
             int hours = waveFileReader.TotalTime.Hours;
             if (hours > 0)
@@ -99,8 +99,8 @@ namespace Yaml_AudioTool_Rebuilt
                                 // add misc items
                                 fileInfos.SubItems.Add("false");
                                 fileInfos.SubItems.Add("false");                                
-                                fileInfos.SubItems.Add("0");
-                                fileInfos.SubItems.Add("0");
+                                fileInfos.SubItems.Add("LINEAR");
+                                fileInfos.SubItems.Add("MANY");
                                 // add fileinfos to listview
                                 f1.FilelistView.Items.Add(fileInfos);
                             }

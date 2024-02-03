@@ -283,8 +283,8 @@ namespace Yaml_AudioTool_Rebuilt
                 LocalizecheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(localizeHeader)].Text);
                 StreamcheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(streamHeader)].Text);
                 TypecomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text;
-                FalloffcomboBox.SelectedIndex = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text);
-                StackcomboBox.SelectedIndex = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text);
+                FalloffcomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text;
+                StackcomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text;
                 ChangeFilelabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
                 //PitchShifterValues
                 PitchPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text) * 100;
@@ -698,7 +698,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text = Convert.ToString(FalloffcomboBox.SelectedIndex);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text = Convert.ToString(FalloffcomboBox.SelectedItem);
                 }
             }
         }
@@ -741,7 +741,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text = Convert.ToString(StackcomboBox.SelectedIndex);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text = Convert.ToString(StackcomboBox.SelectedItem);
                 }
             }
         }

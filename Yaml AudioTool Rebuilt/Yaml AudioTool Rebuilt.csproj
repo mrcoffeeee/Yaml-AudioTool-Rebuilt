@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="KEEP FOR SCOTTPLOT5\**" />
+    <EmbeddedResource Remove="KEEP FOR SCOTTPLOT5\**" />
+    <None Remove="KEEP FOR SCOTTPLOT5\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\Yaml Audio Tool Rebuilt - Manual.pdf" />
   </ItemGroup>
 

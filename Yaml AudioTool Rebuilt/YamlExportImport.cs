@@ -92,7 +92,9 @@ namespace Yaml_AudioTool_Rebuilt
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
             int a = 0;
             string eTypeFirst = "<%= ::AudioType::AUDIO_TYPE_";
-            string eTypeLast = " %>";
+            string eFalloffFirst = "<%= ::AudioFalloff::AUDIO_FALLOFF_";
+            string eStackFirst = "<%= ::AudioStacking::AUDIO_STACK_";
+            string eLast = " %>";
             lines.Add("  soundFiles:");
             foreach (var item in f1.FilelistView.Items)
             {
@@ -103,15 +105,15 @@ namespace Yaml_AudioTool_Rebuilt
                 lines.Add("    volume: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.volumeHeader)].Text.Replace(",", "."));
                 lines.Add("    minDistance: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.mindistanceHeader)].Text);
                 lines.Add("    maxDistance: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.maxdistanceHeader)].Text);
-                lines.Add("    eType: " + eTypeFirst + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.typeHeader)].Text + eTypeLast);
-                lines.Add("    eFalloff: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.falloffHeader)].Text);
+                lines.Add("    eType: " + eTypeFirst + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.typeHeader)].Text + eLast);
+                lines.Add("    eFalloff: " + eFalloffFirst + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.falloffHeader)].Text + eLast);
                 lines.Add("    pitchRandomisation: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.pitchrandHeader)].Text.Replace(",", "."));
                 lines.Add("    priority: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.priorityHeader)].Text);
                 lines.Add("    crossfade: ");
                 lines.Add("    basePitch: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.pitchHeader)].Text.Replace(",", "."));
                 lines.Add("    dopplerFactor: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.dopplerHeader)].Text.Replace(",", "."));
                 lines.Add("    localized: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.localizeHeader)].Text);
-                lines.Add("    eStacking: " + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.stackHeader)].Text);
+                lines.Add("    eStacking: " + eStackFirst + f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.stackHeader)].Text + eLast);
                 lines.Add("    crc: " + CreateStringCRC32(f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.titleHeader)].Text));
                 // ADD ROOM CRC ENTRY
                 if (f1.FilelistView.Items[a].SubItems[f1.FilelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
@@ -166,7 +168,9 @@ namespace Yaml_AudioTool_Rebuilt
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
             string eTypeFirst = "<%= ::AudioType::AUDIO_TYPE_";
-            string eTypeLast = " %>";
+            string eFalloffFirst = "<%= ::AudioFalloff::AUDIO_FALLOFF_";
+            string eStackFirst = "<%= ::AudioStacking::AUDIO_STACK_";
+            string eLast = " %>";
             string line = "";
             SettingsDialog sd = new();
             string folderPath = sd.audiofolderLabel.Text;
@@ -234,7 +238,7 @@ namespace Yaml_AudioTool_Rebuilt
                             string filePath = f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.filepathHeader)].Text;
                             using var waveFileReader = new WaveFileReader(filePath);
                             f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.sizeHeader)].Text = (waveFileReader.Length / 1000).ToString();
-                            f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.durationHeader)].Text = waveFileReader.TotalTime.ToString(@"mm\:ss");
+                            f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.durationHeader)].Text = AudioPlayback.CalculateAudiolength(waveFileReader);
                             f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.channelsHeader)].Text = (waveFileReader.WaveFormat.Channels).ToString();
                             f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.samplerateHeader)].Text = (waveFileReader.WaveFormat.SampleRate / 1000.0).ToString();
                             f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString();
@@ -250,8 +254,8 @@ namespace Yaml_AudioTool_Rebuilt
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.volumeHeader)].Text = StreamReader.ReadLine().Replace("    volume: ", "").Replace(".", ",");
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.mindistanceHeader)].Text = StreamReader.ReadLine().Replace("    minDistance: ", "");
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.maxdistanceHeader)].Text = StreamReader.ReadLine().Replace("    maxDistance: ", "");
-                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.typeHeader)].Text = StreamReader.ReadLine().Replace("    eType: ", "").Replace(eTypeFirst, "").Replace(eTypeLast, "");
-                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.falloffHeader)].Text = StreamReader.ReadLine().Replace("    eFalloff: ", "");
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.typeHeader)].Text = StreamReader.ReadLine().Replace("    eType: ", "").Replace(eTypeFirst, "").Replace(eLast, "");
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.falloffHeader)].Text = StreamReader.ReadLine().Replace("    eFalloff: ", "").Replace(eFalloffFirst, "").Replace(eLast, ""); ;
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.pitchrandHeader)].Text = StreamReader.ReadLine().Replace("    pitchRandomisation: ", "").Replace(".", ",");
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.priorityHeader)].Text = StreamReader.ReadLine().Replace("    priority: ", "");
                         StreamReader.ReadLine();
@@ -261,11 +265,11 @@ namespace Yaml_AudioTool_Rebuilt
                         line = StreamReader.ReadLine();
                         if (line.Contains("    eStacking: "))
                         {
-                            f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.stackHeader)].Text = line.Replace("    eStacking: ", "");
+                            f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.stackHeader)].Text = line.Replace("    eStacking: ", "").Replace(eStackFirst, "").Replace(eLast, ""); ;
                         }
                         else
                         {
-                            f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.stackHeader)].Text = "0";
+                            f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.stackHeader)].Text = "MANY";
                         }
 
                         line = StreamReader.ReadLine();// Read crc:
