@@ -40,7 +40,7 @@
             FadeButton = new System.Windows.Forms.Button();
             ZoomResetButton = new System.Windows.Forms.Button();
             FadeComboBox = new System.Windows.Forms.ComboBox();
-            WaveformsPlot = new ScottPlot.FormsPlot();
+            WaveformsPlot = new ScottPlot.WinForms.FormsPlot();
             TableLayoutPanelFD = new System.Windows.Forms.TableLayoutPanel();
             FilenameLabel = new System.Windows.Forms.Label();
             SamplerateLabel = new System.Windows.Forms.Label();
@@ -229,6 +229,7 @@
             // 
             // WaveformsPlot
             // 
+            WaveformsPlot.DisplayScale = 1F;
             WaveformsPlot.Dock = System.Windows.Forms.DockStyle.Fill;
             WaveformsPlot.Enabled = false;
             WaveformsPlot.Location = new System.Drawing.Point(4, 3);
@@ -408,7 +409,7 @@
         #endregion
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelDEE;
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelA;
-        public ScottPlot.FormsPlot WaveformsPlot;
+        public ScottPlot.WinForms.FormsPlot WaveformsPlot;
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelFD;
         private System.Windows.Forms.Label PositionLabel;
         private System.Windows.Forms.Label SamplerateLabel;

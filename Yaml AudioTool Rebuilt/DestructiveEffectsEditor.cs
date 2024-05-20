@@ -18,12 +18,12 @@ namespace Yaml_AudioTool_Rebuilt
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
 
         private bool mouseDown = false;
-        private readonly double scrollScaler = 1000.0;
+        private readonly double scrollScaler = 0.001;
         private float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
         private AxisLimits limits;
-        private readonly ScottPlot.Plottable.VLine[] markerLines = new ScottPlot.Plottable.VLine[10];
-        private readonly ScottPlot.Plottable.MarkerPlot[] markerLabels = new ScottPlot.Plottable.MarkerPlot[10];
-        private ScottPlot.Plottable.HSpan waveformSpan;
+        private readonly ScottPlot.Plottables.VerticalLine[] markerLines = new ScottPlot.Plottables.VerticalLine[10];
+        private ScottPlot.Plottables.HorizontalLine stereoLine = new ();
+        private ScottPlot.Plottables.HorizontalSpan waveformSpan;
         private NAudio.Wave.WaveFormat WaveFormat;
 
         public DestructiveEffectsEditor()
@@ -86,11 +86,9 @@ namespace Yaml_AudioTool_Rebuilt
                         break;
                     }
                     markerLines[i].X = Convert.ToDouble(cues[i].Position) / Convert.ToDouble(WaveFormat.SampleRate);
-                    markerLabels[i].X = Convert.ToDouble(cues[i].Position) / Convert.ToDouble(WaveFormat.SampleRate);
-                    markerLabels[i].Y = WaveFormat.Channels;
-                    markerLabels[i].Text = cues[i].Label;
+                    markerLines[i].Text = cues[i].Label;
+                    markerLines[i].LabelOppositeAxis = true;
                     markerLines[i].IsVisible = true;
-                    markerLabels[i].IsVisible = true;
                 }
             }
         }
@@ -118,7 +116,8 @@ namespace Yaml_AudioTool_Rebuilt
             SamplerateLabel.Text = WaveFormat.SampleRate + " kHz";
             WaveformsPlot.Enabled = true;
             PlotWaveform();
-            PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
+            //MessageBox.Show(limits.XRange.Max.ToString());
+            PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XRange.Max);
             PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
         }
 
@@ -157,9 +156,9 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (waveformSpan.X1 == waveformSpan.X2)
             {
-                var limits = WaveformsPlot.Plot.GetAxisLimits();
-                startPoint = limits.XMin;
-                endPoint = limits.XMax;
+                var limits = WaveformsPlot.Plot.Axes.GetLimits();
+                startPoint = limits.XRange.Min;
+                endPoint = limits.XRange.Max;
             }
 
             else
@@ -206,9 +205,9 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (waveformSpan.X1 == waveformSpan.X2)
             {
-                var limits = WaveformsPlot.Plot.GetAxisLimits();
-                startPoint = limits.XMin;
-                endPoint = limits.XMax;
+                var limits = WaveformsPlot.Plot.Axes.GetLimits();
+                startPoint = limits.XRange.Min;
+                endPoint = limits.XRange.Max;
             }
 
             else
@@ -255,9 +254,9 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (waveformSpan.X1 == waveformSpan.X2)
             {
-                var limits = WaveformsPlot.Plot.GetAxisLimits();
-                startPoint = limits.XMin;
-                endPoint = limits.XMax;
+                var limits = WaveformsPlot.Plot.Axes.GetLimits();
+                startPoint = limits.XRange.Min;
+                endPoint = limits.XRange.Max;
             }
 
             else
@@ -308,8 +307,6 @@ namespace Yaml_AudioTool_Rebuilt
                     {
                         markerLines[i].IsVisible = false;
                         markerLines[i].X = 0;
-                        markerLabels[i].IsVisible = false;
-                        markerLabels[i].X = 0;
                         RemoveMarkerButton.Enabled = false;
                     }
                 }
@@ -354,9 +351,9 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (waveformSpan.X1 == waveformSpan.X2)
             {
-                var limits = WaveformsPlot.Plot.GetAxisLimits();
-                startPoint = limits.XMin;
-                endPoint = limits.XMax;
+                var limits = WaveformsPlot.Plot.Axes.GetLimits();
+                startPoint = limits.XRange.Min;
+                endPoint = limits.XRange.Max;
             }
 
             else
@@ -393,21 +390,17 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void AddMarker(int i)
         {
-            markerLines[i].IsVisible = true;
-            markerLabels[i].IsVisible = true;
             markerLines[i].X = waveformSpan.X1;
-            markerLabels[i].X = waveformSpan.X1;
-            markerLabels[i].Text = "Marker" + (i + 1);
-            markerLabels[i].TextFont.Size = 14;
-            markerLabels[i].Y = WaveFormat.Channels;
+            markerLines[i].Text = "Marker " + (i + 1);
+            markerLines[i].IsVisible = true;
 
             if (!Text.EndsWith('*'))
             {
                 SaveButton.Enabled = true;
-                SaveButton.BackColor = Color.LightGreen;
+                SaveButton.BackColor = System.Drawing.Color.LightGreen;
                 Text += "*";
             }
-            WaveformsPlot.Render();
+            //WaveformsPlot.Refresh();
         }
 
         private void RemoveMarkerButton_Click(object sender, EventArgs e)
@@ -419,8 +412,6 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     markerLines[i].IsVisible = false;
                     markerLines[i].X = 0;
-                    markerLabels[i].IsVisible = false;
-                    markerLabels[i].X = 0;
                     RemoveMarkerButton.Enabled = false;
                 }
             }
@@ -450,8 +441,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void ZoomResetButton_Click(object sender, EventArgs e)
         {
-            WaveformsPlot.Plot.AxisAutoX();
-            WaveformsPlot.Render();
+            WaveformsPlot.Plot.Axes.AutoScaleX();
+            WaveformsPlot.Refresh();
             PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
         }
 
@@ -507,7 +498,7 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     if (markerLines[i].IsVisible == true)
                     {
-                        writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLabels[i].Text);
+                        writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLines[i].Text);
                     }
                 }
             }
@@ -520,7 +511,7 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     if (markerLines[i].IsVisible == true)
                     {
-                        writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLabels[i].Text);
+                        writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLines[i].Text);
                     }
                 }
             }            
@@ -533,14 +524,14 @@ namespace Yaml_AudioTool_Rebuilt
                 //MessageBox.Show(audioDataM.Length.ToString());
                 if (audioDataM.Length > 0)
                 {
-                    var chM = WaveformsPlot.Plot.AddSignal(audioDataM, WaveFormat.SampleRate);
-                    chM.Color = Color.DarkRed;
+                    var chM = WaveformsPlot.Plot.Add.Signal(audioDataM, WaveFormat.SampleRate);
+                    chM.Color = Colors.DarkRed;
 
-                    WaveformsPlot.Plot.SetAxisLimitsY(-1, 1);
-                    WaveformsPlot.Plot.AxisAutoX(0);
-                    limits = WaveformsPlot.Plot.GetAxisLimits();
-                    WaveformsPlot.Plot.XAxis.SetBoundary(0, limits.XMax);
-                    WaveformsPlot.Plot.YAxis.SetBoundary(-1, 1);
+                    WaveformsPlot.Plot.Axes.SetLimitsY(-1, 1);
+                    WaveformsPlot.Plot.Axes.AutoScaleX();
+                    limits = WaveformsPlot.Plot.Axes.GetLimits();
+                    WaveformsPlot.Plot.Axes.SetLimitsX(0, limits.XRange.Max);
+                    WaveformsPlot.Plot.Axes.SetLimitsY(-1, 1);                    
                 }
             }
 
@@ -549,32 +540,41 @@ namespace Yaml_AudioTool_Rebuilt
                 //MessageBox.Show(audioDataL.Length.ToString() + "--" + audioDataR.Length.ToString());
                 if (audioDataL.Length > 0 && audioDataR.Length > 0)
                 {
-                    var chL = WaveformsPlot.Plot.AddSignal(audioDataL, WaveFormat.SampleRate);
-                    chL.Color = Color.DarkRed;
-                    chL.OffsetY = 1;
+                    var chL = WaveformsPlot.Plot.Add.Signal(audioDataL, WaveFormat.SampleRate);
+                    chL.Color = Colors.DarkRed;
+                    chL.Data.YOffset = 1;
 
-                    var chR = WaveformsPlot.Plot.AddSignal(audioDataR, WaveFormat.SampleRate);
-                    chR.Color = Color.ForestGreen;
-                    chR.OffsetY = -1;
+                    var chR = WaveformsPlot.Plot.Add.Signal(audioDataR, WaveFormat.SampleRate);
+                    chR.Color = Colors.ForestGreen;
+                    chR.Data.YOffset = -1;
 
-                    WaveformsPlot.Plot.SetAxisLimitsY(-2, 2);
-                    WaveformsPlot.Plot.AxisAutoX(0);
-                    limits = WaveformsPlot.Plot.GetAxisLimits();
-                    WaveformsPlot.Plot.XAxis.SetBoundary(0, limits.XMax);
-                    WaveformsPlot.Plot.YAxis.SetBoundary(-2, 2);
+                    WaveformsPlot.Plot.Axes.SetLimitsY(-2, 2);
+                    WaveformsPlot.Plot.Axes.AutoScaleX();
+                    limits = WaveformsPlot.Plot.Axes.GetLimits();
+                    WaveformsPlot.Plot.Axes.SetLimitsX(0, limits.XRange.Max);
+                    WaveformsPlot.Plot.Axes.SetLimitsY(-2, 2);                    
+                    stereoLine.IsVisible = true;
                 }
             }
-            WaveformsPlot.Plot.XAxis.SetZoomInLimit(.001);
+
+            //SET SCROLL BOUNDARIES
+            ScottPlot.AxisRules.LockedVertical vlockRule = new(WaveformsPlot.Plot.Axes.Left, limits.Bottom, limits.Top);
+            ScottPlot.AxisRules.MaximumBoundary boundaryRule = new(xAxis: WaveformsPlot.Plot.Axes.Bottom, yAxis: WaveformsPlot.Plot.Axes.Left, limits: new AxisLimits(0, limits.XRange.Max, limits.Bottom, limits.Top));
+            WaveformsPlot.Plot.Axes.Rules.Clear();
+            WaveformsPlot.Plot.Axes.Rules.Add(vlockRule);
+            WaveformsPlot.Plot.Axes.Rules.Add(boundaryRule);
+
+            //WaveformsPlot.Plot.XAxis.SetZoomInLimit(.001);
             WaveformsPlot.Refresh();
         }
 
         private void PlotConfiguration()
         {
-            WaveformsPlot.Configuration.AllowDroppedFramesWhileDragging = true;
-            WaveformsPlot.Configuration.DoubleClickBenchmark = false;
-            WaveformsPlot.Configuration.EnablePlotObjectEditor = false;
-            WaveformsPlot.Configuration.LockVerticalAxis = true;
-            WaveformsPlot.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
+            //WaveformsPlot.Configuration.AllowDroppedFramesWhileDragging = true;
+            //WaveformsPlot.Configuration.DoubleClickBenchmark = false;
+            //WaveformsPlot.Configuration.EnablePlotObjectEditor = false;
+            //WaveformsPlot.Configuration.LockVerticalAxis = true;
+            //WaveformsPlot.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
         }
 
         private void InitialPlotSetup()
@@ -583,89 +583,154 @@ namespace Yaml_AudioTool_Rebuilt
             WaveformsPlot.Plot.Title("");
             WaveformsPlot.Plot.XLabel("Time (seconds)");
             WaveformsPlot.Plot.YLabel("Audio level");
-            WaveformsPlot.Plot.SetAxisLimitsX(0, 1);
-            WaveformsPlot.Plot.SetAxisLimitsY(-1, 1);
-            WaveformsPlot.Plot.YAxis.Grid(false);
-            waveformSpan = WaveformsPlot.Plot.AddHorizontalSpan(0, 0, Color.LightGray);
+            WaveformsPlot.Plot.Axes.SetLimitsX(0, 1);
+            WaveformsPlot.Plot.Axes.SetLimitsY(-1, 1);
+            //WaveformsPlot.Plot.YAxis.Grid(false);
+            waveformSpan = WaveformsPlot.Plot.Add.HorizontalSpan(0, 0, Colors.LightGray);
             waveformSpan.IsVisible = false;
 
             for (int i = 0; i < markerLines.Length; i++)
             {
-                markerLines[i] = WaveformsPlot.Plot.AddVerticalLine(0, Color.Red, 3, LineStyle.Solid);
-                markerLabels[i] = WaveformsPlot.Plot.AddMarker(0, 2, MarkerShape.filledCircle, 10, Color.Red);
+                markerLines[i] = WaveformsPlot.Plot.Add.VerticalLine(0, 3, Colors.Red, LinePattern.Solid);                
+                markerLines[i].LabelFontSize = 11;                
+                markerLines[i].LabelOppositeAxis = true;
                 markerLines[i].IsVisible = false;
-                markerLabels[i].IsVisible = false;
             }
+            WaveformsPlot.Plot.Axes.Top.MinimumSize = 30;
+
+            stereoLine = WaveformsPlot.Plot.Add.HorizontalLine(0, 1, Colors.Black, LinePattern.Solid);
+            stereoLine.Y = 0;
+            stereoLine.IsVisible = false;
             WaveformsPlot.Refresh();
-        }
+        }        
 
         private void WaveformsPlot_MouseMove(object sender, MouseEventArgs e)
         {
-            (double x, _) = WaveformsPlot.GetMouseCoordinates();
-            limits = WaveformsPlot.Plot.GetAxisLimits();
-            double position = 0;
-            if (x >= limits.XMin && x <= limits.XMax)
+            WaveformsPlot.MouseMove += (s, e) =>
             {
-                position = x;
-            }
-            else if (x > limits.XMax)
-            {
-                position = limits.XMax;
-            }
-            else if (x < limits.XMin)
-                position = limits.XMin;
+                Pixel mousePixel = new(e.X, e.Y);
+                Coordinates mouseCoordinates = WaveformsPlot.Plot.GetCoordinates(mousePixel);
 
-            if (mouseDown)
-            {
-                waveformSpan.X2 = position;
-            }
-            PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XMax - limits.XMin));
-            PlotHScrollBar.Value = Convert.ToInt32(limits.XMin * scrollScaler);
-            WaveformsPlot.Render();
-            PositionLabel.Text = "Position (sec): " + position.ToString("0.000");
+                limits = WaveformsPlot.Plot.Axes.GetLimits();
+                double x = mouseCoordinates.X;
+                double position = 0;
+                if (x >= limits.XRange.Min && x <= limits.XRange.Max)
+                {
+                    position = x;
+                }
+                else if (x > limits.XRange.Max)
+                {
+                    position = limits.XRange.Max;
+                }
+                else if (x < limits.XRange.Min)
+                    position = limits.XRange.Min;
+
+                if (mouseDown)
+                {
+                    waveformSpan.X2 = position;
+                }
+                PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XRange.Max - limits.XRange.Min));
+                PlotHScrollBar.Value = Convert.ToInt32(limits.XRange.Min * scrollScaler);
+                PositionLabel.Text = "Position (sec): " + position.ToString("0.000");
+            };
         }
 
         private void WaveformsPlot_MouseWheel(object sender, MouseEventArgs e)
         {
-            limits = WaveformsPlot.Plot.GetAxisLimits();
-            PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XMax - limits.XMin));
-            PlotHScrollBar.Value = Convert.ToInt32(limits.XMin * scrollScaler);
-            WaveformsPlot.Render();
+
+        }
+
+        private void WaveformsPlot_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void PlotHScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+
+        /*private void WaveformsPlot_MouseMove(object sender, MouseEventArgs e)
+        {
+            //(double x, _) = WaveformsPlot.GetMouseCoordinates();
+            WaveformsPlot.MouseMove += (s, e) =>
+            {
+                Pixel mousePixel = new(e.X, e.Y);
+                Coordinates mouseCoordinates = WaveformsPlot.Plot.GetCoordinates(mousePixel);
+                this.Text = $"X={mouseCoordinates.X:N3}, Y={mouseCoordinates.Y:N3}";
+                double x = mouseCoordinates.X;
+                limits = WaveformsPlot.Plot.Axes.GetLimits();
+                double position = 0;
+                if (x >= limits.XRange.Min && x <= limits.XRange.Max)
+                {
+                    position = x;
+                }
+                else if (x > limits.XRange.Max)
+                {
+                    position = limits.XRange.Max;
+                }
+                else if (x < limits.XRange.Min)
+                    position = limits.XRange.Min;
+
+                if (mouseDown)
+                {
+                    waveformSpan.X2 = position;
+                }
+                PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XRange.Max - limits.XRange.Min));
+                PlotHScrollBar.Value = Convert.ToInt32(limits.XRange.Min * scrollScaler);
+                PositionLabel.Text = "Position (sec): " + position.ToString("0.000");
+                WaveformsPlot.Refresh();
+            };            
+        }
+
+        private void WaveformsPlot_MouseWheel(object sender, MouseEventArgs e)
+        {
+            limits = WaveformsPlot.Plot.Axes.GetLimits();
+            PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XRange.Max - limits.XRange.Min));
+            PlotHScrollBar.Value = Convert.ToInt32(limits.XRange.Min * scrollScaler);
+            WaveformsPlot.Refresh();
         }
 
         private void WaveformsPlot_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && mouseDown == false)
             {
-                (double x, _) = WaveformsPlot.GetMouseCoordinates();
-                limits = WaveformsPlot.Plot.GetAxisLimits();
-
-                if (x >= limits.XMin && x <= limits.XMax)
+                //(double x, _) = WaveformsPlot.GetMouseCoordinates();
+                WaveformsPlot.MouseMove += (s, e) =>
                 {
-                    waveformSpan.X1 = x;
-                    waveformSpan.X2 = x;
-                }
+                    Pixel mousePixel = new(e.X, e.Y);
+                    Coordinates mouseCoordinates = WaveformsPlot.Plot.GetCoordinates(mousePixel);
+                    this.Text = $"X={mouseCoordinates.X:N3}, Y={mouseCoordinates.Y:N3}";
+                    double x = mouseCoordinates.X;
+                    limits = WaveformsPlot.Plot.Axes.GetLimits();
 
-                else if (x < limits.XMin)
-                {
-                    waveformSpan.X1 = limits.XMin;
-                    waveformSpan.X2 = limits.XMin;
-                }
+                    if (x >= limits.XRange.Min && x <= limits.XRange.Max)
+                    {
+                        waveformSpan.X1 = x;
+                        waveformSpan.X2 = x;
+                    }
 
-                else if (x > limits.XMax)
-                {
-                    waveformSpan.X1 = limits.XMax;
-                    waveformSpan.X2 = limits.XMax;
-                }
+                    else if (x < limits.XRange.Min)
+                    {
+                        waveformSpan.X1 = limits.XRange.Min;
+                        waveformSpan.X2 = limits.XRange.Min;
+                    }
 
-                for (int i = 0; i < markerLines.Length; i++)
-                {
-                    markerLines[i].Color = Color.Red;
-                    markerLabels[i].Color = Color.Red;
-                }
-                RemoveMarkerButton.Enabled = false;
-                waveformSpan.IsVisible = true;
-                mouseDown = true;
+                    else if (x > limits.XRange.Max)
+                    {
+                        waveformSpan.X1 = limits.XRange.Max;
+                        waveformSpan.X2 = limits.XRange.Max;
+                    }
+
+                    for (int i = 0; i < markerLines.Length; i++)
+                    {
+                        markerLines[i].Color = Colors.Red;
+                    }
+                    RemoveMarkerButton.Enabled = false;
+                    waveformSpan.IsVisible = true;
+                    mouseDown = true;
+                };                    
             }
 
             else if (e.Button == MouseButtons.Left && mouseDown == true)
@@ -690,8 +755,7 @@ namespace Yaml_AudioTool_Rebuilt
                             if (waveformSpan.X1 < markerLines[i].X && markerLines[i].X < waveformSpan.X2 ||
                                 waveformSpan.X2 < markerLines[i].X && markerLines[i].X < waveformSpan.X1)
                             {
-                                markerLines[i].Color = Color.LightGreen;
-                                markerLabels[i].Color = Color.LightGreen;
+                                markerLines[i].Color = Colors.LightGreen;
                                 RemoveMarkerButton.Enabled = true;
                             }
                         }
@@ -716,10 +780,10 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 if (xMax > PlotHScrollBar.Maximum)
                     xMax = PlotHScrollBar.Maximum;
-                WaveformsPlot.Plot.SetAxisLimitsX(xMin, xMax);
-                WaveformsPlot.Render();
+                WaveformsPlot.Plot.Axes.SetLimitsX(xMin, xMax);
+                WaveformsPlot.Refresh();
             }
-        }
+        }*/
 
         private void DestructiveEffectsEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -780,7 +844,7 @@ namespace Yaml_AudioTool_Rebuilt
                 Text = "PLEASE WAIT - SAVING AUDIO FILE ...";
                 AudioSave();
             }
-            WaveformsPlot.Render();
+            WaveformsPlot.Refresh();
             Text = temp;
             e.Result = choice;
         }
@@ -805,12 +869,12 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     InitialPlotSetup();
                     PlotWaveform();
-                    PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
+                    PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XRange.Max);
                     PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
                 }
 
                 TableLayoutPanelChanges.Enabled = true;
-                SaveButton.BackColor = Color.LightGreen;                
+                SaveButton.BackColor = System.Drawing.Color.LightGreen;                
             }
             else if (e.Result.ToString() == "REVERTAUDIO")
             {
@@ -820,7 +884,7 @@ namespace Yaml_AudioTool_Rebuilt
                 SaveButton.BackColor = SystemColors.Control;
                 InitialPlotSetup();
                 PlotWaveform();
-                PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XMax);
+                PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XRange.Max);
                 PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
             }
             else if (e.Result.ToString() == "SAVEAUDIO")
