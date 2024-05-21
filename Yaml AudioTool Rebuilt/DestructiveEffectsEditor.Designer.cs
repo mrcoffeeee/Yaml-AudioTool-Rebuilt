@@ -76,7 +76,7 @@
             TableLayoutPanelDEE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             TableLayoutPanelDEE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 13F));
             TableLayoutPanelDEE.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            TableLayoutPanelDEE.Size = new System.Drawing.Size(981, 348);
+            TableLayoutPanelDEE.Size = new System.Drawing.Size(984, 381);
             TableLayoutPanelDEE.TabIndex = 1;
             // 
             // TableLayoutPanelA
@@ -91,7 +91,7 @@
             TableLayoutPanelA.Controls.Add(ZoomResetButton, 0, 7);
             TableLayoutPanelA.Controls.Add(FadeComboBox, 0, 4);
             TableLayoutPanelA.Dock = System.Windows.Forms.DockStyle.Fill;
-            TableLayoutPanelA.Location = new System.Drawing.Point(834, 3);
+            TableLayoutPanelA.Location = new System.Drawing.Point(837, 3);
             TableLayoutPanelA.Name = "TableLayoutPanelA";
             TableLayoutPanelA.RowCount = 10;
             TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
@@ -104,7 +104,7 @@
             TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            TableLayoutPanelA.Size = new System.Drawing.Size(144, 289);
+            TableLayoutPanelA.Size = new System.Drawing.Size(144, 322);
             TableLayoutPanelA.TabIndex = 4;
             // 
             // NormalizeButton
@@ -235,10 +235,12 @@
             WaveformsPlot.Location = new System.Drawing.Point(4, 3);
             WaveformsPlot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             WaveformsPlot.Name = "WaveformsPlot";
-            WaveformsPlot.Size = new System.Drawing.Size(823, 289);
+            WaveformsPlot.Size = new System.Drawing.Size(826, 322);
             WaveformsPlot.TabIndex = 5;
+            WaveformsPlot.DoubleClick += WaveformsPlot_DoubleClick;
             WaveformsPlot.MouseDown += WaveformsPlot_MouseDown;
             WaveformsPlot.MouseMove += WaveformsPlot_MouseMove;
+            WaveformsPlot.MouseUp += WaveformsPlot_MouseUp;
             WaveformsPlot.MouseWheel += WaveformsPlot_MouseWheel;
             // 
             // TableLayoutPanelFD
@@ -255,11 +257,11 @@
             TableLayoutPanelFD.Controls.Add(ChannelsLabel, 3, 0);
             TableLayoutPanelFD.Controls.Add(PositionLabel, 1, 0);
             TableLayoutPanelFD.Dock = System.Windows.Forms.DockStyle.Fill;
-            TableLayoutPanelFD.Location = new System.Drawing.Point(3, 311);
+            TableLayoutPanelFD.Location = new System.Drawing.Point(3, 344);
             TableLayoutPanelFD.Name = "TableLayoutPanelFD";
             TableLayoutPanelFD.RowCount = 1;
             TableLayoutPanelFD.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            TableLayoutPanelFD.Size = new System.Drawing.Size(825, 34);
+            TableLayoutPanelFD.Size = new System.Drawing.Size(828, 34);
             TableLayoutPanelFD.TabIndex = 6;
             // 
             // FilenameLabel
@@ -268,7 +270,7 @@
             FilenameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             FilenameLabel.Location = new System.Drawing.Point(3, 0);
             FilenameLabel.Name = "FilenameLabel";
-            FilenameLabel.Size = new System.Drawing.Size(412, 34);
+            FilenameLabel.Size = new System.Drawing.Size(415, 34);
             FilenameLabel.TabIndex = 0;
             FilenameLabel.Text = "Filename";
             FilenameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -277,7 +279,7 @@
             // 
             SamplerateLabel.AutoSize = true;
             SamplerateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            SamplerateLabel.Location = new System.Drawing.Point(748, 0);
+            SamplerateLabel.Location = new System.Drawing.Point(751, 0);
             SamplerateLabel.Name = "SamplerateLabel";
             SamplerateLabel.Size = new System.Drawing.Size(74, 34);
             SamplerateLabel.TabIndex = 2;
@@ -288,7 +290,7 @@
             // 
             PeakLabel.AutoSize = true;
             PeakLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            PeakLabel.Location = new System.Drawing.Point(567, 0);
+            PeakLabel.Location = new System.Drawing.Point(570, 0);
             PeakLabel.Name = "PeakLabel";
             PeakLabel.Size = new System.Drawing.Size(111, 34);
             PeakLabel.TabIndex = 4;
@@ -299,7 +301,7 @@
             // 
             ChannelsLabel.AutoSize = true;
             ChannelsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            ChannelsLabel.Location = new System.Drawing.Point(684, 0);
+            ChannelsLabel.Location = new System.Drawing.Point(687, 0);
             ChannelsLabel.Name = "ChannelsLabel";
             ChannelsLabel.Size = new System.Drawing.Size(58, 34);
             ChannelsLabel.TabIndex = 1;
@@ -310,7 +312,7 @@
             // 
             PositionLabel.AutoSize = true;
             PositionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            PositionLabel.Location = new System.Drawing.Point(421, 0);
+            PositionLabel.Location = new System.Drawing.Point(424, 0);
             PositionLabel.Name = "PositionLabel";
             PositionLabel.Size = new System.Drawing.Size(140, 34);
             PositionLabel.TabIndex = 3;
@@ -326,7 +328,7 @@
             TableLayoutPanelChanges.Controls.Add(RevertButton, 0, 0);
             TableLayoutPanelChanges.Dock = System.Windows.Forms.DockStyle.Fill;
             TableLayoutPanelChanges.Enabled = false;
-            TableLayoutPanelChanges.Location = new System.Drawing.Point(833, 310);
+            TableLayoutPanelChanges.Location = new System.Drawing.Point(836, 343);
             TableLayoutPanelChanges.Margin = new System.Windows.Forms.Padding(2);
             TableLayoutPanelChanges.Name = "TableLayoutPanelChanges";
             TableLayoutPanelChanges.RowCount = 1;
@@ -369,10 +371,10 @@
             // 
             PlotHScrollBar.Dock = System.Windows.Forms.DockStyle.Fill;
             PlotHScrollBar.LargeChange = 1000;
-            PlotHScrollBar.Location = new System.Drawing.Point(0, 295);
+            PlotHScrollBar.Location = new System.Drawing.Point(0, 328);
             PlotHScrollBar.Maximum = 1000;
             PlotHScrollBar.Name = "PlotHScrollBar";
-            PlotHScrollBar.Size = new System.Drawing.Size(831, 13);
+            PlotHScrollBar.Size = new System.Drawing.Size(834, 13);
             PlotHScrollBar.TabIndex = 36;
             PlotHScrollBar.Scroll += PlotHScrollBar_Scroll;
             // 
@@ -387,11 +389,11 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(981, 348);
+            ClientSize = new System.Drawing.Size(984, 381);
             Controls.Add(TableLayoutPanelDEE);
             DoubleBuffered = true;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new System.Drawing.Size(991, 366);
+            MinimumSize = new System.Drawing.Size(1000, 420);
             Name = "DestructiveEffectsEditor";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Destructive Effects Editor";

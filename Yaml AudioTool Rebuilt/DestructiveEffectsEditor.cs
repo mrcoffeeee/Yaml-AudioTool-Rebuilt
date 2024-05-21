@@ -1,14 +1,17 @@
 ﻿using NAudio.Gui;
 using NAudio.Wave;
 using ScottPlot;
+using ScottPlot.Plottables;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
+using Vortice.Mathematics;
 using Vortice.Multimedia;
 
 namespace Yaml_AudioTool_Rebuilt
@@ -20,9 +23,11 @@ namespace Yaml_AudioTool_Rebuilt
         private bool mouseDown = false;
         private readonly double scrollScaler = 0.001;
         private float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
+        private double mousePositionX = 0;
         private AxisLimits limits;
+        private AxisLine PlottableBeingDragged;
         private readonly ScottPlot.Plottables.VerticalLine[] markerLines = new ScottPlot.Plottables.VerticalLine[10];
-        private ScottPlot.Plottables.HorizontalLine stereoLine = new ();
+        private ScottPlot.Plottables.HorizontalLine stereoLine = new();
         private ScottPlot.Plottables.HorizontalSpan waveformSpan;
         private NAudio.Wave.WaveFormat WaveFormat;
 
@@ -144,7 +149,7 @@ namespace Yaml_AudioTool_Rebuilt
         }
 
         private void NormalizeButton_Click(object sender, EventArgs e)
-        {            
+        {
             string bwString = "NORMALIZEAUDIO|";
             DEEBackgroundWorker.RunWorkerAsync(bwString);
         }
@@ -334,7 +339,7 @@ namespace Yaml_AudioTool_Rebuilt
                         DestructiveAudioTools.GetPeakVolume(audioDataL) +
                         " : " +
                         DestructiveAudioTools.GetPeakVolume(audioDataR);
-                }                
+                }
             }
         }
 
@@ -388,11 +393,13 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void AddMarker(int i)
+        private void AddMarker(int i, double posX)
         {
-            markerLines[i].X = waveformSpan.X1;
-            markerLines[i].Text = "Marker " + (i + 1);
+            markerLines[i].X = posX;
+            markerLines[i].Text = "M " + (i + 1);
             markerLines[i].IsVisible = true;
+            markerLines[i].IsDraggable = true;
+            WaveformsPlot.Plot.MoveToFront(markerLines[i]);
 
             if (!Text.EndsWith('*'))
             {
@@ -400,16 +407,16 @@ namespace Yaml_AudioTool_Rebuilt
                 SaveButton.BackColor = System.Drawing.Color.LightGreen;
                 Text += "*";
             }
-            //WaveformsPlot.Refresh();
+            WaveformsPlot.Refresh();
         }
 
         private void RemoveMarkerButton_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < markerLines.Length; i++)
             {
-                if (waveformSpan.X1 < markerLines[i].X && markerLines[i].X < waveformSpan.X2 ||
-                    waveformSpan.X2 < markerLines[i].X && markerLines[i].X < waveformSpan.X1)
+                if (markerLines[i].Color == ScottPlot.Colors.LimeGreen)
                 {
+                    markerLines[i].Color = ScottPlot.Colors.Red;
                     markerLines[i].IsVisible = false;
                     markerLines[i].X = 0;
                     RemoveMarkerButton.Enabled = false;
@@ -472,7 +479,7 @@ namespace Yaml_AudioTool_Rebuilt
                     DestructiveAudioTools.GetPeakVolume(audioDataL) +
                     " : " +
                     DestructiveAudioTools.GetPeakVolume(audioDataR);
-            }            
+            }
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -514,7 +521,7 @@ namespace Yaml_AudioTool_Rebuilt
                         writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLines[i].Text);
                     }
                 }
-            }            
+            }
         }
 
         public void PlotWaveform()
@@ -525,13 +532,13 @@ namespace Yaml_AudioTool_Rebuilt
                 if (audioDataM.Length > 0)
                 {
                     var chM = WaveformsPlot.Plot.Add.Signal(audioDataM, WaveFormat.SampleRate);
-                    chM.Color = Colors.DarkRed;
+                    chM.Color = ScottPlot.Colors.DarkRed;
 
                     WaveformsPlot.Plot.Axes.SetLimitsY(-1, 1);
                     WaveformsPlot.Plot.Axes.AutoScaleX();
                     limits = WaveformsPlot.Plot.Axes.GetLimits();
                     WaveformsPlot.Plot.Axes.SetLimitsX(0, limits.XRange.Max);
-                    WaveformsPlot.Plot.Axes.SetLimitsY(-1, 1);                    
+                    WaveformsPlot.Plot.Axes.SetLimitsY(-1, 1);
                 }
             }
 
@@ -541,40 +548,42 @@ namespace Yaml_AudioTool_Rebuilt
                 if (audioDataL.Length > 0 && audioDataR.Length > 0)
                 {
                     var chL = WaveformsPlot.Plot.Add.Signal(audioDataL, WaveFormat.SampleRate);
-                    chL.Color = Colors.DarkRed;
+                    chL.Color = ScottPlot.Colors.DarkRed;
                     chL.Data.YOffset = 1;
 
                     var chR = WaveformsPlot.Plot.Add.Signal(audioDataR, WaveFormat.SampleRate);
-                    chR.Color = Colors.ForestGreen;
+                    chR.Color = ScottPlot.Colors.ForestGreen;
                     chR.Data.YOffset = -1;
 
                     WaveformsPlot.Plot.Axes.SetLimitsY(-2, 2);
                     WaveformsPlot.Plot.Axes.AutoScaleX();
                     limits = WaveformsPlot.Plot.Axes.GetLimits();
                     WaveformsPlot.Plot.Axes.SetLimitsX(0, limits.XRange.Max);
-                    WaveformsPlot.Plot.Axes.SetLimitsY(-2, 2);                    
+                    WaveformsPlot.Plot.Axes.SetLimitsY(-2, 2);
                     stereoLine.IsVisible = true;
                 }
             }
 
-            //SET SCROLL BOUNDARIES
+            //SET SCROLL BOUNDARIES & ZOOM
             ScottPlot.AxisRules.LockedVertical vlockRule = new(WaveformsPlot.Plot.Axes.Left, limits.Bottom, limits.Top);
             ScottPlot.AxisRules.MaximumBoundary boundaryRule = new(xAxis: WaveformsPlot.Plot.Axes.Bottom, yAxis: WaveformsPlot.Plot.Axes.Left, limits: new AxisLimits(0, limits.XRange.Max, limits.Bottom, limits.Top));
+            ScottPlot.AxisRules.MinimumSpan minspanRule = new(xAxis: WaveformsPlot.Plot.Axes.Bottom, yAxis: WaveformsPlot.Plot.Axes.Left, xSpan: .001, ySpan: 1);
             WaveformsPlot.Plot.Axes.Rules.Clear();
             WaveformsPlot.Plot.Axes.Rules.Add(vlockRule);
             WaveformsPlot.Plot.Axes.Rules.Add(boundaryRule);
-
+            WaveformsPlot.Plot.Axes.Rules.Add(minspanRule);
             //WaveformsPlot.Plot.XAxis.SetZoomInLimit(.001);
             WaveformsPlot.Refresh();
         }
 
-        private void PlotConfiguration()
+        private static void PlotConfiguration()
         {
             //WaveformsPlot.Configuration.AllowDroppedFramesWhileDragging = true;
             //WaveformsPlot.Configuration.DoubleClickBenchmark = false;
             //WaveformsPlot.Configuration.EnablePlotObjectEditor = false;
             //WaveformsPlot.Configuration.LockVerticalAxis = true;
             //WaveformsPlot.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
+
         }
 
         private void InitialPlotSetup()
@@ -585,24 +594,33 @@ namespace Yaml_AudioTool_Rebuilt
             WaveformsPlot.Plot.YLabel("Audio level");
             WaveformsPlot.Plot.Axes.SetLimitsX(0, 1);
             WaveformsPlot.Plot.Axes.SetLimitsY(-1, 1);
-            //WaveformsPlot.Plot.YAxis.Grid(false);
-            waveformSpan = WaveformsPlot.Plot.Add.HorizontalSpan(0, 0, Colors.LightGray);
+            WaveformsPlot.Plot.Grid.XAxisStyle.IsVisible = false;
+            waveformSpan = WaveformsPlot.Plot.Add.HorizontalSpan(0, 0, ScottPlot.Colors.LightGray);
             waveformSpan.IsVisible = false;
 
             for (int i = 0; i < markerLines.Length; i++)
             {
-                markerLines[i] = WaveformsPlot.Plot.Add.VerticalLine(0, 3, Colors.Red, LinePattern.Solid);                
-                markerLines[i].LabelFontSize = 11;                
+                markerLines[i] = WaveformsPlot.Plot.Add.VerticalLine(0, 3, ScottPlot.Colors.Red, LinePattern.Solid);
+                markerLines[i].LabelFontSize = 11;
                 markerLines[i].LabelOppositeAxis = true;
                 markerLines[i].IsVisible = false;
             }
             WaveformsPlot.Plot.Axes.Top.MinimumSize = 30;
 
-            stereoLine = WaveformsPlot.Plot.Add.HorizontalLine(0, 1, Colors.Black, LinePattern.Solid);
+            stereoLine = WaveformsPlot.Plot.Add.HorizontalLine(0, 1, ScottPlot.Colors.Black, LinePattern.Solid);
             stereoLine.Y = 0;
             stereoLine.IsVisible = false;
+
+            WaveformsPlot.Plot.HideLegend();
+            ScottPlot.Panels.LegendPanel panel = new(WaveformsPlot.Plot.Legend)
+            {
+                Edge = Edge.Right,
+                Alignment = Alignment.UpperCenter
+            };
+            WaveformsPlot.Plot.Axes.AddPanel(panel);
+
             WaveformsPlot.Refresh();
-        }        
+        }
 
         private void WaveformsPlot_MouseMove(object sender, MouseEventArgs e)
         {
@@ -613,26 +631,54 @@ namespace Yaml_AudioTool_Rebuilt
 
                 limits = WaveformsPlot.Plot.Axes.GetLimits();
                 double x = mouseCoordinates.X;
-                double position = 0;
                 if (x >= limits.XRange.Min && x <= limits.XRange.Max)
                 {
-                    position = x;
+                    mousePositionX = x;
                 }
                 else if (x > limits.XRange.Max)
                 {
-                    position = limits.XRange.Max;
+                    mousePositionX = limits.XRange.Max;
                 }
                 else if (x < limits.XRange.Min)
-                    position = limits.XRange.Min;
+                    mousePositionX = limits.XRange.Min;
 
                 if (mouseDown)
                 {
-                    waveformSpan.X2 = position;
+                    waveformSpan.X2 = mousePositionX;
                 }
                 PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XRange.Max - limits.XRange.Min));
                 PlotHScrollBar.Value = Convert.ToInt32(limits.XRange.Min * scrollScaler);
-                PositionLabel.Text = "Position (sec): " + position.ToString("0.000");
+                PositionLabel.Text = "Position (sec): " + mousePositionX.ToString("0.000");
+                            
             };
+
+            // this rectangle is the area around the mouse in coordinate units
+            CoordinateRect rect = WaveformsPlot.Plot.GetCoordinateRect(e.X, e.Y, radius: 1);
+
+            if (PlottableBeingDragged is null)
+            {
+                // set cursor based on what's beneath the plottable
+                var lineUnderMouse = GetLineUnderMouse(e.X, e.Y);
+                if (lineUnderMouse is null) Cursor = Cursors.Default;
+                else if (lineUnderMouse.IsDraggable && lineUnderMouse is VerticalLine) Cursor = Cursors.Hand;
+            }
+            else
+            {
+                if (PlottableBeingDragged is VerticalLine vl)
+                {                    
+                    vl.X = rect.HorizontalCenter;
+                    if (vl.X < limits.XRange.Min)
+                    {
+                        vl.X = limits.XRange.Min;
+                    }
+
+                    else if (vl.X > limits.XRange.Max)
+                    {
+                        vl.X = limits.XRange.Max;
+                    }
+                }
+                WaveformsPlot.Refresh();
+            }
         }
 
         private void WaveformsPlot_MouseWheel(object sender, MouseEventArgs e)
@@ -640,9 +686,58 @@ namespace Yaml_AudioTool_Rebuilt
 
         }
 
+        private void WaveformsPlot_DoubleClick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < markerLines.Length; i++)
+            {
+                if (markerLines[i].IsVisible == false)
+                {
+                    AddMarker(i, mousePositionX);
+                    return;
+                }
+            }
+        }
+
         private void WaveformsPlot_MouseDown(object sender, MouseEventArgs e)
         {
+            var lineUnderMouse = GetLineUnderMouse(e.X, e.Y);
+            if (lineUnderMouse is not null)
+            {
+                PlottableBeingDragged = lineUnderMouse;
+                if (e.Button == MouseButtons.Right)
+                {
+                    if (PlottableBeingDragged.Color == ScottPlot.Colors.LimeGreen)
+                    {
+                        PlottableBeingDragged.Color = ScottPlot.Colors.Red;
+                        foreach (var ml in markerLines)
+                        {
+                            if (ml.Color == ScottPlot.Colors.LimeGreen)
+                            {
+                                RemoveMarkerButton.Enabled = true;
+                            }
+                            else
+                            {
+                                RemoveMarkerButton.Enabled = false;
+                            }
+                        }
+                    }
 
+                    else if (PlottableBeingDragged.Color == ScottPlot.Colors.Red)
+                    {
+                        PlottableBeingDragged.Color = ScottPlot.Colors.LimeGreen;
+                        RemoveMarkerButton.Enabled = true;
+                    }
+                }
+                
+                WaveformsPlot.Interaction.Disable(); // disable panning while dragging
+            }
+        }
+
+        private void WaveformsPlot_MouseUp(object sender, MouseEventArgs e)
+        {
+            PlottableBeingDragged = null;
+            WaveformsPlot.Interaction.Enable(); // enable panning again
+            WaveformsPlot.Refresh();
         }
 
         private void PlotHScrollBar_Scroll(object sender, ScrollEventArgs e)
@@ -682,17 +777,17 @@ namespace Yaml_AudioTool_Rebuilt
                 PositionLabel.Text = "Position (sec): " + position.ToString("0.000");
                 WaveformsPlot.Refresh();
             };            
-        }
+        }*/
 
-        private void WaveformsPlot_MouseWheel(object sender, MouseEventArgs e)
+        /*private void WaveformsPlot_MouseWheel(object sender, MouseEventArgs e)
         {
             limits = WaveformsPlot.Plot.Axes.GetLimits();
             PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XRange.Max - limits.XRange.Min));
             PlotHScrollBar.Value = Convert.ToInt32(limits.XRange.Min * scrollScaler);
             WaveformsPlot.Refresh();
-        }
+        }*/
 
-        private void WaveformsPlot_MouseDown(object sender, MouseEventArgs e)
+        /*private void WaveformsPlot_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && mouseDown == false)
             {
@@ -730,7 +825,7 @@ namespace Yaml_AudioTool_Rebuilt
                     RemoveMarkerButton.Enabled = false;
                     waveformSpan.IsVisible = true;
                     mouseDown = true;
-                };                    
+                };
             }
 
             else if (e.Button == MouseButtons.Left && mouseDown == true)
@@ -770,9 +865,9 @@ namespace Yaml_AudioTool_Rebuilt
                 waveformSpan.X1 = waveformSpan.X2;
                 mouseDown = false;
             }
-        }
+        }*/
 
-        private void PlotHScrollBar_Scroll(object sender, ScrollEventArgs e)
+        /*private void PlotHScrollBar_Scroll(object sender, ScrollEventArgs e)
         {
             double xMin = PlotHScrollBar.Value / scrollScaler;
             double xMax = (PlotHScrollBar.Value + PlotHScrollBar.LargeChange) / scrollScaler;
@@ -784,6 +879,19 @@ namespace Yaml_AudioTool_Rebuilt
                 WaveformsPlot.Refresh();
             }
         }*/
+
+        private AxisLine GetLineUnderMouse(float x, float y)
+        {
+            CoordinateRect rect = WaveformsPlot.Plot.GetCoordinateRect(x, y, radius: 10);
+
+            foreach (AxisLine axLine in WaveformsPlot.Plot.GetPlottables<AxisLine>().Reverse())
+            {
+                if (axLine.IsUnderMouse(rect))
+                    return axLine;
+            }
+
+            return null;
+        }
 
         private void DestructiveEffectsEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -807,7 +915,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 temp = formMain.Text + ": Destructive Effects Editor -> " + argument;
                 Text = "PLEASE WAIT - CALCULATING AUDIO DATA ...";
-                LoadAudioWaveform(argument);                
+                LoadAudioWaveform(argument);
             }
             else if (choice == "NORMALIZEAUDIO")
             {
@@ -874,7 +982,7 @@ namespace Yaml_AudioTool_Rebuilt
                 }
 
                 TableLayoutPanelChanges.Enabled = true;
-                SaveButton.BackColor = System.Drawing.Color.LightGreen;                
+                SaveButton.BackColor = System.Drawing.Color.LightGreen;
             }
             else if (e.Result.ToString() == "REVERTAUDIO")
             {
@@ -900,6 +1008,6 @@ namespace Yaml_AudioTool_Rebuilt
             }
 
             EnableGuiElements(true);
-        }
+        }        
     }
 }
