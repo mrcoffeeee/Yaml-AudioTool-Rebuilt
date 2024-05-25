@@ -376,6 +376,7 @@
             PlotHScrollBar.Name = "PlotHScrollBar";
             PlotHScrollBar.Size = new System.Drawing.Size(834, 13);
             PlotHScrollBar.TabIndex = 36;
+            PlotHScrollBar.Visible = false;
             PlotHScrollBar.Scroll += PlotHScrollBar_Scroll;
             // 
             // DEEBackgroundWorker
@@ -428,9 +429,9 @@
         private System.Windows.Forms.Button VolumeDownButton;
         private System.Windows.Forms.ComboBox FadeComboBox;
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanelChanges;
-        private System.Windows.Forms.HScrollBar PlotHScrollBar;
         private System.Windows.Forms.Button RemoveMarkerButton;
         private System.Windows.Forms.Button ZoomResetButton;
         public System.ComponentModel.BackgroundWorker DEEBackgroundWorker;
+        private System.Windows.Forms.HScrollBar PlotHScrollBar;
     }
 }

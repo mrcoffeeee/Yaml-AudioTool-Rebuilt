@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Vortice.XAudio2;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -485,9 +486,9 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void RemoveButton_Click(object sender, EventArgs e)
         {
-            foreach (var item in FilelistView.SelectedItems)
+            foreach (ListViewItem item in FilelistView.SelectedItems)
             {
-                FilelistView.SelectedItems[0].Remove();
+                FilelistView.Items.Remove(item);
             }
             ResetMainFormValues();
             formDestructiveEffectsEditor?.ResetDestructiveEffectsEditorValues();
