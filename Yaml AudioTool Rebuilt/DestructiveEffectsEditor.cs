@@ -21,14 +21,14 @@ namespace Yaml_AudioTool_Rebuilt
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
 
         private bool mouseDown = false;
-        private readonly double scrollScaler = 0.001;
+        private readonly double scrollScaler = 1.000;
         private float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
         private double mousePositionX = 0;
         private AxisLimits limits;
         private AxisLine PlottableBeingDragged;
-        private readonly ScottPlot.Plottables.VerticalLine[] markerLines = new ScottPlot.Plottables.VerticalLine[10];
-        private ScottPlot.Plottables.HorizontalLine stereoLine = new();
-        private ScottPlot.Plottables.HorizontalSpan waveformSpan;
+        private readonly VerticalLine[] markerLines = new VerticalLine[10];
+        private HorizontalLine stereoLine = new();
+        private HorizontalSpan waveformSpan;
         private NAudio.Wave.WaveFormat WaveFormat;
 
         public DestructiveEffectsEditor()
@@ -107,6 +107,7 @@ namespace Yaml_AudioTool_Rebuilt
                 ChannelsLabel.Text = "Mono";
                 PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
             }
+
             else if (WaveFormat.Channels == 2)
             {
                 ChannelsLabel.Text = "Stereo";
@@ -531,14 +532,13 @@ namespace Yaml_AudioTool_Rebuilt
                 //MessageBox.Show(audioDataM.Length.ToString());
                 if (audioDataM.Length > 0)
                 {
-                    var chM = WaveformsPlot.Plot.Add.Signal(audioDataM, WaveFormat.SampleRate);
+                    var chM = WaveformsPlot.Plot.Add.Signal(audioDataM, 1 / Convert.ToDouble(WaveFormat.SampleRate));
                     chM.Color = ScottPlot.Colors.DarkRed;
 
                     WaveformsPlot.Plot.Axes.SetLimitsY(-1, 1);
                     WaveformsPlot.Plot.Axes.AutoScaleX();
                     limits = WaveformsPlot.Plot.Axes.GetLimits();
                     WaveformsPlot.Plot.Axes.SetLimitsX(0, limits.XRange.Max);
-                    WaveformsPlot.Plot.Axes.SetLimitsY(-1, 1);
                 }
             }
 
@@ -547,11 +547,11 @@ namespace Yaml_AudioTool_Rebuilt
                 //MessageBox.Show(audioDataL.Length.ToString() + "--" + audioDataR.Length.ToString());
                 if (audioDataL.Length > 0 && audioDataR.Length > 0)
                 {
-                    var chL = WaveformsPlot.Plot.Add.Signal(audioDataL, WaveFormat.SampleRate);
+                    var chL = WaveformsPlot.Plot.Add.Signal(audioDataL, 1 / Convert.ToDouble(WaveFormat.SampleRate));
                     chL.Color = ScottPlot.Colors.DarkRed;
                     chL.Data.YOffset = 1;
 
-                    var chR = WaveformsPlot.Plot.Add.Signal(audioDataR, WaveFormat.SampleRate);
+                    var chR = WaveformsPlot.Plot.Add.Signal(audioDataR, 1 / Convert.ToDouble(WaveFormat.SampleRate));
                     chR.Color = ScottPlot.Colors.ForestGreen;
                     chR.Data.YOffset = -1;
 
@@ -559,7 +559,6 @@ namespace Yaml_AudioTool_Rebuilt
                     WaveformsPlot.Plot.Axes.AutoScaleX();
                     limits = WaveformsPlot.Plot.Axes.GetLimits();
                     WaveformsPlot.Plot.Axes.SetLimitsX(0, limits.XRange.Max);
-                    WaveformsPlot.Plot.Axes.SetLimitsY(-2, 2);
                     stereoLine.IsVisible = true;
                 }
             }
