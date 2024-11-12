@@ -21,7 +21,7 @@ namespace Yaml_AudioTool_Rebuilt
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
 
         private bool mouseDown = false;
-        private readonly double scrollScaler = 1.000;
+        //private readonly double scrollScaler = 1.000;
         private float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
         private double mousePositionX = 0;
         private double xLimit = 0;
@@ -760,7 +760,7 @@ namespace Yaml_AudioTool_Rebuilt
                     }
                 }
                 
-                WaveformsPlot.Interaction.Disable(); // disable panning while dragging
+                WaveformsPlot.UserInputProcessor.Disable(); // disable panning while dragging
             }
         }
 
@@ -768,7 +768,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             PlottableBeingDragged = null;
             mouseDown = false;
-            WaveformsPlot.Interaction.Enable(); // enable panning again
+            WaveformsPlot.UserInputProcessor.Enable(); // enable panning again
             WaveformsPlot.Refresh();
         }
 
