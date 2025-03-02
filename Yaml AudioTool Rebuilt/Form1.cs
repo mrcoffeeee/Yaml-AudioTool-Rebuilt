@@ -106,7 +106,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void Timer_Tick(object sender, EventArgs e)
         {
             long samplePosition = (long)ap.sourceVoice.State.SamplesPlayed;
-            int sampleRate = ap.sourceVoice.VoiceDetails.InputSampleRate;
+            uint sampleRate = ap.sourceVoice.VoiceDetails.InputSampleRate;
             double totalplaybackSeconds = (double)samplePosition / sampleRate;
             int minutes = (int)(totalplaybackSeconds / 60);
             int seconds = (int)(totalplaybackSeconds % 60);

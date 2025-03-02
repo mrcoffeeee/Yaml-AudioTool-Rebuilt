@@ -760,7 +760,7 @@ namespace Yaml_AudioTool_Rebuilt
                     }
                 }
                 
-                WaveformsPlot.Interaction.Disable(); // disable panning while dragging
+   //             WaveformsPlot.Interaction.Disable(); // disable panning while dragging
             }
         }
 
@@ -768,7 +768,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             PlottableBeingDragged = null;
             mouseDown = false;
-            WaveformsPlot.Interaction.Enable(); // enable panning again
+ //           WaveformsPlot.Interaction.Enable(); // enable panning again
             WaveformsPlot.Refresh();
         }
 
