@@ -1011,12 +1011,23 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 RoomenableButton.Text = "On";
                 RoomenableButton.BackColor = Color.LightGreen;
-            }
 
+                if (ap.sourceVoice != null)
+                {
+                    ap.sourceVoice.EnableEffect(0);
+                    ap.sourceVoice.EnableEffect(1);
+                }
+            }
             else if (RoomenableButton.Text == "On")
             {
                 RoomenableButton.Text = "Off";
                 RoomenableButton.BackColor = Color.Salmon;
+
+                if (ap.sourceVoice != null)
+                {
+                    ap.sourceVoice.DisableEffect(0);
+                    ap.sourceVoice.DisableEffect(1);
+                }
             }
         }
 

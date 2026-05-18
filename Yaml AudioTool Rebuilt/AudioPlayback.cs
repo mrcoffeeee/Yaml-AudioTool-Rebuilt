@@ -2,6 +2,7 @@
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 using NAudio.Wave;
 using Vortice.XAudio2;
 using NAudio.CoreAudioApi;
@@ -12,11 +13,13 @@ namespace Yaml_AudioTool_Rebuilt
     {
         public bool playbackPause = false;
         public bool playbackStop = true;
+        public IntPtr audioDataPtr = IntPtr.Zero;
 
         public MMDeviceEnumerator enumerator;
         public MMDevice device;
 
         public IXAudio2 xaudio2;
+        public AudioBuffer audioBuffer;        
         public IXAudio2SourceVoice sourceVoice;
         public IXAudio2MasteringVoice masteringVoice;
 
@@ -156,20 +159,30 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 string soundFilepath = f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filepathHeader)].Text;
                 Vortice.Multimedia.WaveFormat waveFormat;
-                AudioBuffer audioBuffer;
-
-                byte[] array;
 
                 WaveFormat readerFormat;
 
+                uint audioDataSize;
+
                 using (var reader = new WaveFileReader(soundFilepath))
                 {
-                    array = new byte[reader.Length];
-                    reader.ReadExactly(array);
+                    audioDataSize = (uint)reader.Length;
+                    audioDataPtr = Marshal.AllocHGlobal((int)audioDataSize);
+
+                    // In kleinen Chunks lesen, um LOH-Allokationen zu vermeiden
+                    byte[] chunk = new byte[8192];
+                    int totalRead = 0;
+                    int bytesRead;
+                    while ((bytesRead = reader.Read(chunk, 0, chunk.Length)) > 0)
+                    {
+                        Marshal.Copy(chunk, 0, audioDataPtr + totalRead, bytesRead);
+                        totalRead += bytesRead;
+                    }
+
                     readerFormat = reader.WaveFormat;
                 }
 
-                audioBuffer = new AudioBuffer(array, BufferFlags.None);
+                audioBuffer = new AudioBuffer(audioDataPtr, audioDataSize, BufferFlags.None);
 
                 waveFormat = Vortice.Multimedia.WaveFormat.CreateCustomFormat(
                     MapEncoding(readerFormat.Encoding),
@@ -199,13 +212,16 @@ namespace Yaml_AudioTool_Rebuilt
                     sourceVoice.SetFrequencyRatio(Effects.PitchRandomizer(pitchValue, pitchrandValue), operationSet: 0);
                 }
 
-                // Set Room                              
-                if (f1.RoomenableButton.BackColor == Color.LightGreen)
+                // Set Room
+                if (f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
                 {
-                    if (f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
+                    RoomCreationEffects.SetRoomFilter(sourceVoice);
+                    RoomCreationEffects.SetRoomReverb(sourceVoice);
+
+                    if (f1.RoomenableButton.BackColor != Color.LightGreen)
                     {
-                        RoomCreationEffects.SetRoomFilter(sourceVoice);
-                        RoomCreationEffects.SetRoomReverb(sourceVoice);
+                        sourceVoice.DisableEffect(0);
+                        sourceVoice.DisableEffect(1);
                     }
                 }
 
@@ -231,9 +247,16 @@ namespace Yaml_AudioTool_Rebuilt
                 sourceVoice = null;
             }
 
-            if (f1 != null)
-                f1.PlayButton.Text = "▶";
+            audioBuffer?.Dispose();
+            audioBuffer = null;
+            if (audioDataPtr != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(audioDataPtr);
+                audioDataPtr = IntPtr.Zero;
+            }
 
+            f1?.PlayButton.Text = "▶";
+            
             playbackStop = true;
             playbackPause = false;
         }
