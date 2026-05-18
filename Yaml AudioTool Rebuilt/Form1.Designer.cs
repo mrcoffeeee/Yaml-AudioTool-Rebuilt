@@ -802,7 +802,7 @@ namespace Yaml_AudioTool_Rebuilt
             TypeLabel.Location = new System.Drawing.Point(4, 114);
             TypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             TypeLabel.Name = "TypeLabel";
-            TypeLabel.Size = new System.Drawing.Size(71, 15);
+            TypeLabel.Size = new System.Drawing.Size(72, 15);
             TypeLabel.TabIndex = 12;
             TypeLabel.Text = "Sound Type:";
             TypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -982,7 +982,7 @@ namespace Yaml_AudioTool_Rebuilt
             MaxdistanceLabel.Location = new System.Drawing.Point(4, 195);
             MaxdistanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             MaxdistanceLabel.Name = "MaxdistanceLabel";
-            MaxdistanceLabel.Size = new System.Drawing.Size(81, 15);
+            MaxdistanceLabel.Size = new System.Drawing.Size(80, 15);
             MaxdistanceLabel.TabIndex = 11;
             MaxdistanceLabel.Text = "Max Distance:";
             MaxdistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1065,9 +1065,9 @@ namespace Yaml_AudioTool_Rebuilt
             SortLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             SortLabel.AutoSize = true;
             SortLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            SortLabel.Location = new System.Drawing.Point(18, 97);
+            SortLabel.Location = new System.Drawing.Point(17, 97);
             SortLabel.Name = "SortLabel";
-            SortLabel.Size = new System.Drawing.Size(61, 15);
+            SortLabel.Size = new System.Drawing.Size(62, 15);
             SortLabel.TabIndex = 76;
             SortLabel.Text = "Sort Titles:";
             SortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1268,7 +1268,7 @@ namespace Yaml_AudioTool_Rebuilt
             WetdryLabel.Location = new System.Drawing.Point(4, 0);
             WetdryLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             WetdryLabel.Name = "WetdryLabel";
-            WetdryLabel.Size = new System.Drawing.Size(69, 13);
+            WetdryLabel.Size = new System.Drawing.Size(68, 13);
             WetdryLabel.TabIndex = 36;
             WetdryLabel.Text = "Reverb Mix:";
             WetdryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1429,7 +1429,7 @@ namespace Yaml_AudioTool_Rebuilt
             FiltertypeLabel.Location = new System.Drawing.Point(4, 54);
             FiltertypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             FiltertypeLabel.Name = "FiltertypeLabel";
-            FiltertypeLabel.Size = new System.Drawing.Size(34, 15);
+            FiltertypeLabel.Size = new System.Drawing.Size(35, 15);
             FiltertypeLabel.TabIndex = 64;
             FiltertypeLabel.Text = "Type:";
             FiltertypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

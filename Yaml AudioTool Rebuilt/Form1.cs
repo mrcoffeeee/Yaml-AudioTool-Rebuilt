@@ -48,13 +48,14 @@ namespace Yaml_AudioTool_Rebuilt
             SetDoubleBuffering(MainVolumeSlider, true);
             SetDoubleBuffering(FilelistView, true);
             SetDoubleBuffering(RoomListView, true);
+            ap.Initialize();
         }
 
         private void PopulateComboboxes()
         {
             // Filter Combobox
             var f = typeof(FilterType);
-            List<string> filterNames = new(f.GetFields().Select(x => x.Name));
+            List<string> filterNames = [.. f.GetFields().Select(x => x.Name)];
             foreach (var item in filterNames)
             {
                 if (item.Contains("value__"))
@@ -65,7 +66,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             // Reverbpresets Combobox
             var r = typeof(Vortice.XAudio2.Fx.Presets);
-            List<string> reverbPresetNames = new(r.GetFields().Select(x => x.Name));
+            List<string> reverbPresetNames = [.. r.GetFields().Select(x => x.Name)];
             foreach (var item in reverbPresetNames)
             {
                 ReverbpresetComboBox.Items.Add(item);
@@ -105,6 +106,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            if (ap.sourceVoice == null)
+                return;
             long samplePosition = (long)ap.sourceVoice.State.SamplesPlayed;
             uint sampleRate = ap.sourceVoice.VoiceDetails.InputSampleRate;
             double totalplaybackSeconds = (double)samplePosition / sampleRate;
@@ -189,6 +192,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            ap.Cleanup();
             ExitApplication();
         }
 
@@ -303,7 +307,7 @@ namespace Yaml_AudioTool_Rebuilt
                         {
                             string bwString = "LOADAUDIO|" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
                             formDestructiveEffectsEditor.DEEBackgroundWorker.RunWorkerAsync(bwString);
-                        }                        
+                        }
                     }
                 }
 
@@ -386,30 +390,16 @@ namespace Yaml_AudioTool_Rebuilt
                 stopFlag = false;
                 fileTime = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
                 FilelistView.Focus();
-                if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text.StartsWith('\\'))
-                {
-                    string filepathTemp;
-                    SettingsDialog sd = new();
-                    filepathTemp = sd.audiofolderLabel.Text +
-                        FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text +
-                        FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text +
-                        ".wav";
-                    ap.GetSoundFromList(filepathTemp);
-                }
-                else
-                {
-                    ap.GetSoundFromList(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text);
-                }
 
                 try
                 {
                     ap.StartPlayback();
 
-                    if (ap.xaudio2 != null && ap.playbackPause == false)
+                    if (ap.sourceVoice != null && ap.playbackPause == false)
                     {
                         playbackTimer.Start();
                     }
-                    else if (ap.xaudio2 != null && ap.playbackPause == true)
+                    else if (ap.sourceVoice != null && ap.playbackPause == true)
                     {
                         playbackTimer.Stop();
                         MainVolumeMeter.Amplitude = 0;
@@ -447,7 +437,6 @@ namespace Yaml_AudioTool_Rebuilt
         private void StopPlayback()
         {
             ap.StopPlayback();
-            ap.waveFileReader?.Close();
             playbackTimer.Stop();
             MainVolumeMeter.Amplitude = 0;
         }
@@ -555,7 +544,7 @@ namespace Yaml_AudioTool_Rebuilt
                     {
                         string bwString = "LOADAUDIO|" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
                         formDestructiveEffectsEditor.DEEBackgroundWorker.RunWorkerAsync(bwString);
-                    }                    
+                    }
                 }
             }
             else
@@ -1136,6 +1125,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         #endregion Property-Effects        
 
+        
     }
 
     public class ListViewColumnSorter : IComparer

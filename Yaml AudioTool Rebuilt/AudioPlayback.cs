@@ -18,8 +18,19 @@ namespace Yaml_AudioTool_Rebuilt
 
         public IXAudio2 xaudio2;
         public IXAudio2SourceVoice sourceVoice;
+        public IXAudio2MasteringVoice masteringVoice;
 
-        public WaveFileReader waveFileReader;
+        public void Initialize()
+        {
+            if (xaudio2 != null) return;
+
+            enumerator = new MMDeviceEnumerator();
+            device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+
+            xaudio2 = XAudio2.XAudio2Create(ProcessorSpecifier.UseDefaultProcessor);
+            masteringVoice = xaudio2.CreateMasteringVoice(2, 48000);
+            xaudio2.StartEngine();
+        }
 
         public static string CalculateAudiolength(WaveFileReader waveFileReader)
         {
@@ -33,6 +44,18 @@ namespace Yaml_AudioTool_Rebuilt
             int seconds = waveFileReader.TotalTime.Seconds;
             string time = minutes.ToString("D2") + ":" + seconds.ToString("D2");
             return time;
+        }
+
+        private static Vortice.Multimedia.WaveFormatEncoding MapEncoding(NAudio.Wave.WaveFormatEncoding naudioEncoding)
+        {
+            return naudioEncoding switch
+            {
+                NAudio.Wave.WaveFormatEncoding.Pcm => Vortice.Multimedia.WaveFormatEncoding.Pcm,
+                NAudio.Wave.WaveFormatEncoding.IeeeFloat => Vortice.Multimedia.WaveFormatEncoding.IeeeFloat,
+                NAudio.Wave.WaveFormatEncoding.Extensible => Vortice.Multimedia.WaveFormatEncoding.Extensible,
+                NAudio.Wave.WaveFormatEncoding.Adpcm => Vortice.Multimedia.WaveFormatEncoding.Adpcm,
+                _ => throw new NotSupportedException($"Audio-Encoding '{naudioEncoding}' wird nicht unterstützt.")
+            };
         }
 
         public void OpenFile(bool clickFlag)
@@ -53,58 +76,56 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     try
                     {
-                        using (waveFileReader = new WaveFileReader(file))
+                        using var reader = new WaveFileReader(file);
+                        Form1 f1 = (Form1)Application.OpenForms["Form1"];
+
+                        if (clickFlag == true)
                         {
-                            Form1 f1 = (Form1)Application.OpenForms["Form1"];
+                            string tempString = sd.audiofolderLabel.Text + "\\";
+                            f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filenameHeader)].Text = file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", "");
+                            f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filepathHeader)].Text = file;
+                            f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.sizeHeader)].Text = (reader.Length / 1000).ToString();
+                            f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.durationHeader)].Text = CalculateAudiolength(reader);
+                            f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.channelsHeader)].Text = reader.WaveFormat.Channels.ToString();
+                            f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.samplerateHeader)].Text = Math.Round(reader.WaveFormat.SampleRate / 1000.0, 3).ToString();
+                            f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (reader.WaveFormat.BitsPerSample * reader.WaveFormat.SampleRate / 1000).ToString();
+                            f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = reader.WaveFormat.BitsPerSample.ToString();
 
-                            if (clickFlag == true)
-                            {
-                                string tempString = sd.audiofolderLabel.Text + "\\";
-                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filenameHeader)].Text = file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", "");
-                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filepathHeader)].Text = file;
-                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.sizeHeader)].Text = (waveFileReader.Length / 1000).ToString();
-                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.durationHeader)].Text = CalculateAudiolength(waveFileReader);
-                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.channelsHeader)].Text = waveFileReader.WaveFormat.Channels.ToString();
-                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.samplerateHeader)].Text = Math.Round(waveFileReader.WaveFormat.SampleRate / 1000.0, 3).ToString();
-                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString();
-                                f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = waveFileReader.WaveFormat.BitsPerSample.ToString();
+                        }
 
-                            }
-
-                            else if (clickFlag == false)
-                            {
-                                // add general fileinfos
-                                ListViewItem fileInfos = new(Path.GetFileNameWithoutExtension(file));
-                                string tempString = sd.audiofolderLabel.Text + "\\";
-                                fileInfos.SubItems.Add(file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", ""));
-                                fileInfos.SubItems.Add(file);
-                                fileInfos.SubItems.Add("");
-                                fileInfos.SubItems.Add("");
-                                fileInfos.SubItems.Add("SFX");
-                                fileInfos.SubItems.Add((waveFileReader.Length / 1000).ToString());
-                                fileInfos.SubItems.Add(CalculateAudiolength(waveFileReader));
-                                fileInfos.SubItems.Add(waveFileReader.WaveFormat.Channels.ToString());
-                                fileInfos.SubItems.Add(Math.Round(waveFileReader.WaveFormat.SampleRate / 1000.0, 3).ToString());
-                                fileInfos.SubItems.Add((waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString());
-                                fileInfos.SubItems.Add(waveFileReader.WaveFormat.BitsPerSample.ToString());
-                                fileInfos.SubItems.Add(f1.MainVolumeSlider.Volume.ToString(""));
-                                fileInfos.SubItems.Add(Convert.ToString(128));
-                                fileInfos.SubItems.Add("false");
-                                // add effects items
-                                fileInfos.SubItems.Add("1");
-                                fileInfos.SubItems.Add("1000");
-                                fileInfos.SubItems.Add(f1.DopplertrackBar.Minimum.ToString());
-                                fileInfos.SubItems.Add("1");
-                                fileInfos.SubItems.Add("0");
-                                // add misc items
-                                fileInfos.SubItems.Add("false");
-                                fileInfos.SubItems.Add("false");                                
-                                fileInfos.SubItems.Add("LINEAR");
-                                fileInfos.SubItems.Add("MANY");
-                                // add fileinfos to listview
-                                f1.FilelistView.Items.Add(fileInfos);
-                            }
-                        }                        
+                        else if (clickFlag == false)
+                        {
+                            // add general fileinfos
+                            ListViewItem fileInfos = new(Path.GetFileNameWithoutExtension(file));
+                            string tempString = sd.audiofolderLabel.Text + "\\";
+                            fileInfos.SubItems.Add(file.Replace(tempString, "").Replace("\\", "/").Replace(".wav", ""));
+                            fileInfos.SubItems.Add(file);
+                            fileInfos.SubItems.Add("");
+                            fileInfos.SubItems.Add("");
+                            fileInfos.SubItems.Add("SFX");
+                            fileInfos.SubItems.Add((reader.Length / 1000).ToString());
+                            fileInfos.SubItems.Add(CalculateAudiolength(reader));
+                            fileInfos.SubItems.Add(reader.WaveFormat.Channels.ToString());
+                            fileInfos.SubItems.Add(Math.Round(reader.WaveFormat.SampleRate / 1000.0, 3).ToString());
+                            fileInfos.SubItems.Add((reader.WaveFormat.BitsPerSample * reader.WaveFormat.SampleRate / 1000).ToString());
+                            fileInfos.SubItems.Add(reader.WaveFormat.BitsPerSample.ToString());
+                            fileInfos.SubItems.Add(f1.MainVolumeSlider.Volume.ToString(""));
+                            fileInfos.SubItems.Add(Convert.ToString(128));
+                            fileInfos.SubItems.Add("false");
+                            // add effects items
+                            fileInfos.SubItems.Add("1");
+                            fileInfos.SubItems.Add("1000");
+                            fileInfos.SubItems.Add(f1.DopplertrackBar.Minimum.ToString());
+                            fileInfos.SubItems.Add("1");
+                            fileInfos.SubItems.Add("0");
+                            // add misc items
+                            fileInfos.SubItems.Add("false");
+                            fileInfos.SubItems.Add("false");
+                            fileInfos.SubItems.Add("LINEAR");
+                            fileInfos.SubItems.Add("MANY");
+                            // add fileinfos to listview
+                            f1.FilelistView.Items.Add(fileInfos);
+                        }
                     }
 
                     catch (Exception)
@@ -115,70 +136,48 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        public void GetSoundFromList(string filePath)
-        {
-            try
-            {
-                waveFileReader = new WaveFileReader(filePath);
-            }
-
-            catch (Exception)
-            {
-                MessageBox.Show("Please check if its filepath is still correct.", "File not found! ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
-        }
-
         public void StartPlayback()
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
-            //Get active soundcard
-            enumerator = new();            
-            device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-
-            if (xaudio2 != null && playbackPause == false)
+            if (sourceVoice != null && playbackPause == false)
             {
                 sourceVoice.Stop();
                 f1.PlayButton.Text = "▶";
                 playbackPause = true;
             }
-            else if (xaudio2 != null && playbackPause == true)
+            else if (sourceVoice != null && playbackPause == true)
             {
                 sourceVoice.Start();
                 f1.PlayButton.Text = "| |";
                 playbackPause = false;
             }
-            else if (waveFileReader != null && playbackStop == true)
-            {                
+            else if (playbackStop == true && f1.FilelistView.SelectedItems.Count > 0)
+            {
                 string soundFilepath = f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.filepathHeader)].Text;
-                xaudio2 = XAudio2.XAudio2Create(ProcessorSpecifier.UseDefaultProcessor);
                 Vortice.Multimedia.WaveFormat waveFormat;
                 AudioBuffer audioBuffer;
-                var masteringVoice = xaudio2.CreateMasteringVoice(2, 48000);
-                xaudio2.StartEngine();
 
                 byte[] array;
 
-                AudioFileReader reader;
+                WaveFormat readerFormat;
 
-                using (reader = new AudioFileReader(soundFilepath))
+                using (var reader = new WaveFileReader(soundFilepath))
                 {
                     array = new byte[reader.Length];
-
-                    reader.Read(array, 0, array.Length);
+                    reader.ReadExactly(array);
+                    readerFormat = reader.WaveFormat;
                 }
 
                 audioBuffer = new AudioBuffer(array, BufferFlags.None);
 
-                int encoding_ = (int)reader.WaveFormat.Encoding;
-
-                waveFormat = Vortice.Multimedia.WaveFormat.CreateCustomFormat((Vortice.Multimedia.WaveFormatEncoding)encoding_,
-                    reader.WaveFormat.SampleRate,
-                    reader.WaveFormat.Channels,
-                    reader.WaveFormat.AverageBytesPerSecond,
-                    reader.WaveFormat.BlockAlign,
-                    reader.WaveFormat.BitsPerSample);
+                waveFormat = Vortice.Multimedia.WaveFormat.CreateCustomFormat(
+                    MapEncoding(readerFormat.Encoding),
+                    readerFormat.SampleRate,
+                    readerFormat.Channels,
+                    readerFormat.AverageBytesPerSecond,
+                    readerFormat.BlockAlign,
+                    readerFormat.BitsPerSample);
 
                 // Effects XAudio2
                 sourceVoice = xaudio2.CreateSourceVoice(waveFormat, VoiceFlags.UseFilter, 10);
@@ -222,20 +221,21 @@ namespace Yaml_AudioTool_Rebuilt
         public void StopPlayback()
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
-            if (xaudio2 != null)
-            {
-                xaudio2.StopEngine();
-                xaudio2.Dispose();
-                xaudio2 = null;
-            }
+
             if (sourceVoice != null)
             {
+                sourceVoice.Stop();
+                sourceVoice.FlushSourceBuffers();
+                sourceVoice.DestroyVoice();
                 sourceVoice.Dispose();
                 sourceVoice = null;
             }
+
             if (f1 != null)
                 f1.PlayButton.Text = "▶";
+
             playbackStop = true;
+            playbackPause = false;
         }
 
         public void SetVolume(double sliderValue, int filelistValue)
@@ -255,6 +255,31 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 sourceVoice.SetFrequencyRatio(Effects.PitchRandomizer(Convert.ToSingle(pitchValue), Convert.ToSingle(pitchrandValue)), operationSet: 0);
             }
+        }
+
+        public void Cleanup()
+        {
+            StopPlayback();
+
+            if (masteringVoice != null)
+            {
+                masteringVoice.DestroyVoice();
+                masteringVoice.Dispose();
+                masteringVoice = null;
+            }
+
+            if (xaudio2 != null)
+            {
+                xaudio2.StopEngine();
+                xaudio2.Dispose();
+                xaudio2 = null;
+            }
+
+            device?.Dispose();
+            device = null;
+
+            enumerator?.Dispose();
+            enumerator = null;
         }
     }
 }
