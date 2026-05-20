@@ -21,6 +21,9 @@ namespace Yaml_AudioTool_Rebuilt
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
 
         private bool mouseDown = false;
+        private string currentFilePath;
+        private string saveTargetPath;
+        private (double X, string Text)[] saveMarkerSnapshot;
         private readonly double scrollScaler = 1.000;
         private float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
         private double mousePositionX = 0;
@@ -31,6 +34,12 @@ namespace Yaml_AudioTool_Rebuilt
         private HorizontalLine stereoLine = new();
         private HorizontalSpan waveformSpan;
         private NAudio.Wave.WaveFormat WaveFormat;
+        private double operationStart;
+        private double operationEnd;
+        private int operationFadeIndex;
+        private double trimSpanX1;
+        private double trimSpanX2;
+        private bool[] trimMarkersToHide;
 
         public DestructiveEffectsEditor()
         {
@@ -42,7 +51,10 @@ namespace Yaml_AudioTool_Rebuilt
             FadeComboBox.SelectedIndex = 0;
             if (formMain.FilelistView.SelectedItems.Count == 1)
             {
-                string bwString = "LOADAUDIO|" + formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.filepathHeader)].Text;
+                string filepath = formMain.FilelistView.SelectedItems[0].SubItems[formMain.FilelistView.Columns.IndexOf(formMain.filepathHeader)].Text;
+                string bwString = "LOADAUDIO|" + filepath;
+                Text = "PLEASE WAIT - CALCULATING AUDIO DATA ...";
+                EnableGuiElements(false);
                 DEEBackgroundWorker.RunWorkerAsync(bwString);
             }
         }
@@ -101,30 +113,50 @@ namespace Yaml_AudioTool_Rebuilt
 
         public void LoadAudioWaveform(string filePath)
         {
+            currentFilePath = filePath;
             CachedSound(filePath);
-            FilenameLabel.Text = filePath;
+        }
+
+        private void DisplayLoadedAudio()
+        {
+            FilenameLabel.Text = currentFilePath;
+
             if (WaveFormat.Channels == 1)
             {
                 ChannelsLabel.Text = "Mono";
                 PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
             }
-
             else if (WaveFormat.Channels == 2)
             {
                 ChannelsLabel.Text = "Stereo";
                 PeakLabel.Text = "Peak: " +
-                        DestructiveAudioTools.GetPeakVolume(audioDataL) +
-                        " : " +
-                        DestructiveAudioTools.GetPeakVolume(audioDataR);
+                    DestructiveAudioTools.GetPeakVolume(audioDataL) +
+                    " : " +
+                    DestructiveAudioTools.GetPeakVolume(audioDataR);
+            }
+            else
+            {
+                ChannelsLabel.Text = "Unsupported Channels #";
             }
 
-            else
-                ChannelsLabel.Text = "Unsupported Channels #";
             SamplerateLabel.Text = WaveFormat.SampleRate + " kHz";
             WaveformsPlot.Enabled = true;
             PlotWaveform();
-            //PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XRange.Max);
-            //PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
+        }
+
+        private void UpdatePeakLabel()
+        {
+            if (WaveFormat.Channels == 1)
+            {
+                PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
+            }
+            else if (WaveFormat.Channels == 2)
+            {
+                PeakLabel.Text = "Peak: " +
+                    DestructiveAudioTools.GetPeakVolume(audioDataL) +
+                    " : " +
+                    DestructiveAudioTools.GetPeakVolume(audioDataR);
+            }
         }
 
         private void EnableGuiElements(bool flag)
@@ -139,258 +171,206 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
+        private (double start, double end) CalculateOperationRange()
+        {
+            if (waveformSpan.X1 == waveformSpan.X2)
+            {
+                var currentLimits = WaveformsPlot.Plot.Axes.GetLimits();
+                return (currentLimits.XRange.Min, xLimit);
+            }
+            else
+            {
+                return (waveformSpan.X1, waveformSpan.X2);
+            }
+        }
+
         public void ResetDestructiveEffectsEditorValues()
         {
             Text = formMain.Text + ": Destructive Effects Editor";
+
+            // Plot aufräumen und alte Audio-Daten freigeben
+            WaveformsPlot.Plot.Clear();
+            audioDataM = null;
+            audioDataL = null;
+            audioDataR = null;
+            audioData_BackupM = null;
+            audioData_BackupL = null;
+            audioData_BackupR = null;
+            saveMarkerSnapshot = null;
+            trimMarkersToHide = null;
+            WaveFormat = null;
+            currentFilePath = null;
+
             InitialPlotSetup();
             WaveformsPlot.Enabled = false;
             EnableGuiElements(false);
             TableLayoutPanelChanges.Enabled = false;
             SaveButton.BackColor = SystemColors.Control;
+            GC.Collect();
         }
 
         private void NormalizeButton_Click(object sender, EventArgs e)
         {
+            (operationStart, operationEnd) = CalculateOperationRange();
+            Text = "PLEASE WAIT - PROCESSING AUDIO NORMALIZATION ...";
+            EnableGuiElements(false);
             string bwString = "NORMALIZEAUDIO|";
             DEEBackgroundWorker.RunWorkerAsync(bwString);
         }
 
         private void AudioNormalization()
         {
-            double startPoint;
-            double endPoint;
-
-            if (waveformSpan.X1 == waveformSpan.X2)
-            {
-                var limits = WaveformsPlot.Plot.Axes.GetLimits();
-                startPoint = limits.XRange.Min;
-                endPoint = xLimit;
-            }
-
-            else
-            {
-                startPoint = waveformSpan.X1;
-                endPoint = waveformSpan.X2;
-            }
-
             audioDataM.CopyTo(audioData_BackupM, 0);
 
             if (WaveFormat.Channels == 1)
             {
-                DestructiveAudioTools.Normalize(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-                PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
+                DestructiveAudioTools.Normalize(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
             }
-
             else if (WaveFormat.Channels == 2)
             {
-                DestructiveAudioTools.Normalize(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
+                DestructiveAudioTools.Normalize(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
                 int length = audioDataM.Length / 2;
                 for (int i = 0; i < length; i++)
                 {
                     audioDataL[i] = audioDataM[2 * i];
                     audioDataR[i] = audioDataM[2 * i + 1];
                 }
-                PeakLabel.Text =
-                    "Peak: " +
-                    DestructiveAudioTools.GetPeakVolume(audioDataL) +
-                    " : " +
-                    DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
         }
 
         private void VolumeUpButton_Click(object sender, EventArgs e)
         {
+            (operationStart, operationEnd) = CalculateOperationRange();
+            Text = "PLEASE WAIT - PROCESSING AUDIO VOLUME UP ...";
+            EnableGuiElements(false);
             string bwString = "VOLUPAUDIO|";
             DEEBackgroundWorker.RunWorkerAsync(bwString);
         }
 
         private void AudioVolumeUp()
         {
-            double startPoint;
-            double endPoint;
-
-            if (waveformSpan.X1 == waveformSpan.X2)
-            {
-                var limits = WaveformsPlot.Plot.Axes.GetLimits();
-                startPoint = limits.XRange.Min;
-                endPoint = xLimit;
-            }
-
-            else
-            {
-                startPoint = waveformSpan.X1;
-                endPoint = waveformSpan.X2;
-            }
-
             audioDataM.CopyTo(audioData_BackupM, 0);
 
             if (WaveFormat.Channels == 1)
             {
-                DestructiveAudioTools.VolumeUp(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-                PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
+                DestructiveAudioTools.VolumeUp(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
             }
-
             else if (WaveFormat.Channels == 2)
             {
-                DestructiveAudioTools.VolumeUp(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
+                DestructiveAudioTools.VolumeUp(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
                 int length = audioDataM.Length / 2;
                 for (int i = 0; i < length; i++)
                 {
                     audioDataL[i] = audioDataM[2 * i];
                     audioDataR[i] = audioDataM[2 * i + 1];
                 }
-                PeakLabel.Text =
-                    "Peak: " +
-                    DestructiveAudioTools.GetPeakVolume(audioDataL) +
-                    " : " +
-                    DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
         }
 
         private void VolumeDownButton_Click(object sender, EventArgs e)
         {
+            (operationStart, operationEnd) = CalculateOperationRange();
+            Text = "PLEASE WAIT - PROCESSING AUDIO VOLUME DOWN ...";
+            EnableGuiElements(false);
             string bwString = "VOLDOWNAUDIO|";
             DEEBackgroundWorker.RunWorkerAsync(bwString);
         }
 
         private void AudioVolumeDown()
         {
-            double startPoint;
-            double endPoint;
-
-            if (waveformSpan.X1 == waveformSpan.X2)
-            {
-                var limits = WaveformsPlot.Plot.Axes.GetLimits();
-                startPoint = limits.XRange.Min;
-                endPoint = xLimit;
-            }
-
-            else
-            {
-                startPoint = waveformSpan.X1;
-                endPoint = waveformSpan.X2;
-            }
-
             audioDataM.CopyTo(audioData_BackupM, 0);
 
             if (WaveFormat.Channels == 1)
             {
-                DestructiveAudioTools.VolumeDown(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-                PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
+                DestructiveAudioTools.VolumeDown(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
             }
-
             else if (WaveFormat.Channels == 2)
             {
-                DestructiveAudioTools.VolumeDown(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
+                DestructiveAudioTools.VolumeDown(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
                 int length = audioDataM.Length / 2;
                 for (int i = 0; i < length; i++)
                 {
                     audioDataL[i] = audioDataM[2 * i];
                     audioDataR[i] = audioDataM[2 * i + 1];
                 }
-                PeakLabel.Text =
-                    "Peak: " +
-                    DestructiveAudioTools.GetPeakVolume(audioDataL) +
-                    " : " +
-                    DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
         }
 
         private void TrimButton_Click(object sender, EventArgs e)
         {
+            trimSpanX1 = waveformSpan.X1;
+            trimSpanX2 = waveformSpan.X2;
+
+            // Pre-Check: welche Marker liegen im zu trimmenden Bereich?
+            trimMarkersToHide = new bool[markerLines.Length];
+            for (int i = 0; i < markerLines.Length; i++)
+            {
+                if (markerLines[i].IsVisible &&
+                    ((trimSpanX1 < markerLines[i].X && markerLines[i].X < trimSpanX2) ||
+                     (trimSpanX2 < markerLines[i].X && markerLines[i].X < trimSpanX1)))
+                {
+                    trimMarkersToHide[i] = true;
+                }
+            }
+
+            Text = "PLEASE WAIT - PROCESSING AUDIO TRIM ...";
+            EnableGuiElements(false);
             string bwString = "TRIMAUDIO|";
             DEEBackgroundWorker.RunWorkerAsync(bwString);
         }
 
         private void AudioTrim()
         {
-            if (waveformSpan.X1 != waveformSpan.X2)
+            if (trimSpanX1 == trimSpanX2) return;
+
+            Array.Resize(ref audioData_BackupM, audioDataM.Length);
+            audioDataM.CopyTo(audioData_BackupM, 0);
+
+            if (WaveFormat.Channels == 1)
             {
-                for (int i = 0; i < markerLines.Length; i++)
+                audioDataM = DestructiveAudioTools.Trim(audioDataM, trimSpanX1, trimSpanX2, WaveFormat.SampleRate, WaveFormat.Channels);
+            }
+            else if (WaveFormat.Channels == 2)
+            {
+                audioDataM = DestructiveAudioTools.Trim(audioDataM, trimSpanX1, trimSpanX2, WaveFormat.SampleRate, WaveFormat.Channels);
+                int length = audioDataM.Length / 2;
+                Array.Resize(ref audioDataL, length);
+                Array.Resize(ref audioDataR, length);
+                for (int i = 0; i < length; i++)
                 {
-                    if (waveformSpan.X1 < markerLines[i].X && markerLines[i].X < waveformSpan.X2 ||
-                        waveformSpan.X2 < markerLines[i].X && markerLines[i].X < waveformSpan.X1)
-                    {
-                        markerLines[i].IsVisible = false;
-                        markerLines[i].X = 0;
-                        RemoveMarkerButton.Enabled = false;
-                    }
-                }
-
-                Array.Resize(ref audioData_BackupM, audioDataM.Length);
-                audioDataM.CopyTo(audioData_BackupM, 0);
-
-                if (WaveFormat.Channels == 1)
-                {
-                    audioDataM = DestructiveAudioTools.Trim(audioDataM, waveformSpan.X1, waveformSpan.X2, WaveFormat.SampleRate, WaveFormat.Channels);
-                    PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
-                }
-                else if (WaveFormat.Channels == 2)
-                {
-                    audioDataM = DestructiveAudioTools.Trim(audioDataM, waveformSpan.X1, waveformSpan.X2, WaveFormat.SampleRate, WaveFormat.Channels);
-                    int length = audioDataM.Length / 2;
-                    Array.Resize(ref audioDataL, length);
-                    Array.Resize(ref audioDataR, length);
-                    for (int i = 0; i < length; i++)
-                    {
-                        audioDataL[i] = audioDataM[2 * i];
-                        audioDataR[i] = audioDataM[2 * i + 1];
-                    }
-                    PeakLabel.Text = "Peak: " +
-                        DestructiveAudioTools.GetPeakVolume(audioDataL) +
-                        " : " +
-                        DestructiveAudioTools.GetPeakVolume(audioDataR);
+                    audioDataL[i] = audioDataM[2 * i];
+                    audioDataR[i] = audioDataM[2 * i + 1];
                 }
             }
         }
 
         private void FadeButton_Click(object sender, EventArgs e)
         {
+            (operationStart, operationEnd) = CalculateOperationRange();
+            operationFadeIndex = FadeComboBox.SelectedIndex;
+            Text = "PLEASE WAIT - PROCESSING AUDIO FADE ...";
+            EnableGuiElements(false);
             string bwString = "FADEAUDIO|";
             DEEBackgroundWorker.RunWorkerAsync(bwString);
         }
 
         private void AudioFade()
         {
-            double startPoint;
-            double endPoint;
-
-            if (waveformSpan.X1 == waveformSpan.X2)
-            {
-                var limits = WaveformsPlot.Plot.Axes.GetLimits();
-                startPoint = limits.XRange.Min;
-                endPoint = xLimit;
-            }
-
-            else
-            {
-                startPoint = waveformSpan.X1;
-                endPoint = waveformSpan.X2;
-            }
-
             audioDataM.CopyTo(audioData_BackupM, 0);
-
 
             if (WaveFormat.Channels == 1)
             {
-                DestructiveAudioTools.Fade(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels, FadeComboBox.SelectedIndex).CopyTo(audioDataM, 0);
-                PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
+                DestructiveAudioTools.Fade(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels, operationFadeIndex).CopyTo(audioDataM, 0);
             }
-
             else if (WaveFormat.Channels == 2)
             {
-                DestructiveAudioTools.Fade(audioDataM, startPoint, endPoint, WaveFormat.SampleRate, WaveFormat.Channels, FadeComboBox.SelectedIndex).CopyTo(audioDataM, 0);
+                DestructiveAudioTools.Fade(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels, operationFadeIndex).CopyTo(audioDataM, 0);
                 int length = audioDataM.Length / 2;
                 for (int i = 0; i < length; i++)
                 {
                     audioDataL[i] = audioDataM[2 * i];
                     audioDataR[i] = audioDataM[2 * i + 1];
                 }
-                PeakLabel.Text =
-                    "Peak: " +
-                    DestructiveAudioTools.GetPeakVolume(audioDataL) +
-                    " : " +
-                    DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
         }
 
@@ -456,6 +436,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void RevertButton_Click(object sender, EventArgs e)
         {
+            Text = "PLEASE WAIT - UNDOING AUDIO PROCESSING ...";
+            EnableGuiElements(false);
             string bwString = "REVERTAUDIO|";
             DEEBackgroundWorker.RunWorkerAsync(bwString);
         }
@@ -466,7 +448,6 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 Array.Resize(ref audioDataM, audioData_BackupM.Length);
                 audioData_BackupM.CopyTo(audioDataM, 0);
-                PeakLabel.Text = "Peak: " + DestructiveAudioTools.GetPeakVolume(audioDataM);
             }
             else if (WaveFormat.Channels == 2)
             {
@@ -476,52 +457,64 @@ namespace Yaml_AudioTool_Rebuilt
                 audioData_BackupM.CopyTo(audioDataM, 0);
                 audioData_BackupL.CopyTo(audioDataL, 0);
                 audioData_BackupR.CopyTo(audioDataR, 0);
-                PeakLabel.Text = "Peak: " +
-                    DestructiveAudioTools.GetPeakVolume(audioDataL) +
-                    " : " +
-                    DestructiveAudioTools.GetPeakVolume(audioDataR);
             }
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
-        {
-            string bwString = "SAVEAUDIO|";
-            DEEBackgroundWorker.RunWorkerAsync(bwString);
-        }
-
-        private void AudioSave()
         {
             TableLayoutPanelChanges.Enabled = false;
             string backupPath = FilenameLabel.Text.Replace(".wav", "");
             TopMost = false;
 
             DialogResult dialogResult = MessageBox.Show("Do you want to replace the current file?", "Save Changes", MessageBoxButtons.YesNo);
+            TopMost = true;
+
             if (dialogResult == DialogResult.Yes)
             {
-                TopMost = true;
-                File.Move(FilenameLabel.Text, backupPath + "_BACKUP.wav");
-                using CueWaveFileWriter writer = new(FilenameLabel.Text, WaveFormat);
-                writer.WriteSamples(audioDataM, 0, audioDataM.Length);
-                for (int i = 0; i < markerLines.Length; i++)
+                string backupTargetPath = backupPath + "_BACKUP.wav";
+                if (File.Exists(backupTargetPath))
                 {
-                    if (markerLines[i].IsVisible == true)
-                    {
-                        writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLines[i].Text);
-                    }
+                    File.Delete(backupTargetPath);
                 }
+                File.Move(FilenameLabel.Text, backupTargetPath);
+                saveTargetPath = FilenameLabel.Text;
             }
             else if (dialogResult == DialogResult.No)
             {
-                TopMost = true;
-                using CueWaveFileWriter writer = new(backupPath + "_EDIT.wav", WaveFormat);
-                writer.WriteSamples(audioDataM, 0, audioDataM.Length);
-                for (int i = 0; i < markerLines.Length; i++)
+                saveTargetPath = backupPath + "_EDIT.wav";
+            }
+            else
+            {
+                // User hat den Dialog abgebrochen
+                TableLayoutPanelChanges.Enabled = true;
+                return;
+            }
+
+            // Marker-Snapshot anlegen, damit der BG-Thread nicht auf die UI zugreifen muss
+            var snapshot = new System.Collections.Generic.List<(double, string)>();
+            for (int i = 0; i < markerLines.Length; i++)
+            {
+                if (markerLines[i].IsVisible)
                 {
-                    if (markerLines[i].IsVisible == true)
-                    {
-                        writer.AddCue((int)(markerLines[i].X * WaveFormat.SampleRate), markerLines[i].Text);
-                    }
+                    snapshot.Add((markerLines[i].X, markerLines[i].Text));
                 }
+            }
+            saveMarkerSnapshot = [.. snapshot];
+
+            Text = "PLEASE WAIT - SAVING AUDIO FILE ...";
+            EnableGuiElements(false);
+            string bwString = "SAVEAUDIO|";
+            DEEBackgroundWorker.RunWorkerAsync(bwString);
+        }
+
+        private void AudioSave()
+        {
+            using CueWaveFileWriter writer = new(saveTargetPath, WaveFormat);
+            writer.WriteSamples(audioDataM, 0, audioDataM.Length);
+
+            foreach (var marker in saveMarkerSnapshot)
+            {
+                writer.AddCue((int)(marker.X * WaveFormat.SampleRate), marker.Text);
             }
         }
 
@@ -624,34 +617,31 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void WaveformsPlot_MouseMove(object sender, MouseEventArgs e)
         {
-            WaveformsPlot.MouseMove += (s, e) =>
+            Pixel mousePixel = new(e.X, e.Y);
+            Coordinates mouseCoordinates = WaveformsPlot.Plot.GetCoordinates(mousePixel);
+
+            limits = WaveformsPlot.Plot.Axes.GetLimits();
+            double x = mouseCoordinates.X;
+
+            if (x >= limits.XRange.Min && x <= xLimit)
             {
-                Pixel mousePixel = new(e.X, e.Y);
-                Coordinates mouseCoordinates = WaveformsPlot.Plot.GetCoordinates(mousePixel);
+                mousePositionX = x;
+            }
+            else if (x > xLimit)
+            {
+                mousePositionX = xLimit;
+            }
+            else if (x < limits.XRange.Min)
+            {
+                mousePositionX = limits.XRange.Min;
+            }
 
-                limits = WaveformsPlot.Plot.Axes.GetLimits();
-                double x = mouseCoordinates.X;
-                if (x >= limits.XRange.Min && x <= xLimit)
-                {
-                    mousePositionX = x;
-                }
-                else if (x > xLimit)
-                {
-                    mousePositionX = xLimit;
-                }
-                else if (x < limits.XRange.Min)
-                    mousePositionX = limits.XRange.Min;
+            if (mouseDown && Cursor != Cursors.Hand)
+            {
+                waveformSpan.X2 = mousePositionX;
+            }
 
-                if (mouseDown && Cursor != Cursors.Hand)
-                {
-                    waveformSpan.X2 = mousePositionX;
-                }
-
-                //PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XRange.Max - limits.XRange.Min));
-                //PlotHScrollBar.Value = Convert.ToInt32(limits.XRange.Min * scrollScaler);
-                PositionLabel.Text = "Position (sec): " + mousePositionX.ToString("0.000");
-                            
-            };
+            PositionLabel.Text = "Position (sec): " + mousePositionX.ToString("0.000");
 
             // this rectangle is the area around the mouse in coordinate units
             CoordinateRect rect = WaveformsPlot.Plot.GetCoordinateRect(e.X, e.Y, radius: 1);
@@ -666,13 +656,12 @@ namespace Yaml_AudioTool_Rebuilt
             else
             {
                 if (PlottableBeingDragged is VerticalLine vl)
-                {                    
+                {
                     vl.X = rect.HorizontalCenter;
                     if (vl.X < limits.XRange.Min)
                     {
                         vl.X = limits.XRange.Min;
                     }
-
                     else if (vl.X > xLimit)
                     {
                         vl.X = xLimit;
@@ -929,8 +918,10 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
+                ResetDestructiveEffectsEditorValues();
                 InitialPlotSetup();
                 e.Cancel = true;
+                GC.Collect();
                 Hide();
             }
             formMain.DestructiveEffectsButton.Enabled = true;
@@ -938,85 +929,97 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void DEEBackgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            EnableGuiElements(false);
-            string temp = Text;
             string choice = e.Argument.ToString().Split('|').First();
             string argument = e.Argument.ToString().Split('|').Last();
 
             if (choice == "LOADAUDIO")
             {
-                temp = formMain.Text + ": Destructive Effects Editor -> " + argument;
-                Text = "PLEASE WAIT - CALCULATING AUDIO DATA ...";
                 LoadAudioWaveform(argument);
             }
             else if (choice == "NORMALIZEAUDIO")
             {
-                Text = "PLEASE WAIT - PROCESSING AUDIO NORMALIZATION ...";
                 AudioNormalization();
             }
             else if (choice == "VOLUPAUDIO")
             {
-                Text = "PLEASE WAIT - PROCESSING AUDIO VOLUME UP ...";
                 AudioVolumeUp();
             }
             else if (choice == "VOLDOWNAUDIO")
             {
-                Text = "PLEASE WAIT - PROCESSING AUDIO VOLUME DOWN ...";
                 AudioVolumeDown();
             }
             else if (choice == "TRIMAUDIO")
             {
-                Text = "PLEASE WAIT - PROCESSING AUDIO TRIM ...";
                 AudioTrim();
             }
             else if (choice == "FADEAUDIO")
             {
-                Text = "PLEASE WAIT - PROCESSING AUDIO FADE ...";
                 AudioFade();
             }
             else if (choice == "REVERTAUDIO")
             {
-                Text = "PLEASE WAIT - UNDOING AUDIO PROCESSING ...";
                 AudioRevert();
             }
             else if (choice == "SAVEAUDIO")
             {
-                Text = "PLEASE WAIT - SAVING AUDIO FILE ...";
                 AudioSave();
             }
-            WaveformsPlot.Refresh();
-            Text = temp;
+
             e.Result = choice;
         }
 
         private void DEEBackgroundWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            if (e.Result.ToString() != "REVERTAUDIO" && e.Result.ToString() != "SAVEAUDIO")
+            // Fehlerbehandlung: falls in DoWork eine Exception geflogen ist
+            if (e.Error != null)
             {
-                if (e.Result.ToString() != "LOADAUDIO")
+                MessageBox.Show("Error during audio operation: " + e.Error.Message);
+                EnableGuiElements(true);
+                return;
+            }
+
+            string result = e.Result?.ToString() ?? "";
+
+            if (result == "LOADAUDIO")
+            {
+                Text = formMain.Text + ": Destructive Effects Editor -> " + currentFilePath;
+                DisplayLoadedAudio();
+                EnableGuiElements(true);
+                return;
+            }
+
+            // Title vom "PLEASE WAIT..."-Status zurücksetzen
+            Text = formMain.Text + ": Destructive Effects Editor -> " + currentFilePath;
+
+            if (result != "REVERTAUDIO" && result != "SAVEAUDIO")
+            {
+                if (!Text.EndsWith('*'))
                 {
-                    if (!Text.EndsWith('*'))
-                    {
-                        Text += "*";
-                    }
-                }
-                else
-                {
-                    EnableGuiElements(true);
-                    return;
-                }
-                if (e.Result.ToString() == "TRIMAUDIO")
-                {
-                    InitialPlotSetup();
-                    PlotWaveform();
-                    //PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XRange.Max);
-                    //PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
+                    Text += "*";
                 }
 
+                if (result == "TRIMAUDIO")
+                {
+                    // Marker im getrimmten Bereich ausblenden (UI-Thread!)
+                    for (int i = 0; i < markerLines.Length; i++)
+                    {
+                        if (trimMarkersToHide != null && trimMarkersToHide[i])
+                        {
+                            markerLines[i].IsVisible = false;
+                            markerLines[i].X = 0;
+                        }
+                    }
+                    RemoveMarkerButton.Enabled = false;
+
+                    InitialPlotSetup();
+                    PlotWaveform();
+                }
+
+                UpdatePeakLabel();
                 TableLayoutPanelChanges.Enabled = true;
                 SaveButton.BackColor = System.Drawing.Color.LightGreen;
             }
-            else if (e.Result.ToString() == "REVERTAUDIO")
+            else if (result == "REVERTAUDIO")
             {
                 if (Text.Contains(".wav*"))
                     Text = Text.Replace(".wav*", ".wav");
@@ -1024,10 +1027,9 @@ namespace Yaml_AudioTool_Rebuilt
                 SaveButton.BackColor = SystemColors.Control;
                 InitialPlotSetup();
                 PlotWaveform();
-                //PlotHScrollBar.Maximum = Convert.ToInt32(scrollScaler * limits.XRange.Max);
-                //PlotHScrollBar.LargeChange = PlotHScrollBar.Maximum;
+                UpdatePeakLabel();
             }
-            else if (e.Result.ToString() == "SAVEAUDIO")
+            else if (result == "SAVEAUDIO")
             {
                 Text = formMain.Text + ": Destructive Effects Editor";
                 InitialPlotSetup();
@@ -1039,7 +1041,8 @@ namespace Yaml_AudioTool_Rebuilt
                 SamplerateLabel.Text = "";
             }
 
+            WaveformsPlot.Refresh();
             EnableGuiElements(true);
-        }        
+        }
     }
 }

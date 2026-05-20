@@ -229,7 +229,6 @@
             // 
             // WaveformsPlot
             // 
-            WaveformsPlot.DisplayScale = 1F;
             WaveformsPlot.Dock = System.Windows.Forms.DockStyle.Fill;
             WaveformsPlot.Enabled = false;
             WaveformsPlot.Location = new System.Drawing.Point(4, 3);

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
-    Microsoft ResX Schema 
+    Microsoft ResX Schema
 
     Version 2.0
 
@@ -48,7 +48,7 @@
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
@@ -121,11 +121,11 @@
   <data name="RevertButton.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAO5JREFUOE+N0z1qAkEYxvGJH4SIqE2IhbewFmJnFxsREXIHGz2DpTcwF7CwEbs0
-        YicIdmlSCgqBgFqIJv9HXGFgZscHfsXuzsy78+6siUkCBTwjhwcEk0YLn9jggDUmqEOLOpPHGGf8QZNX
-        +Llen/CBJ1hJYgoNWqKKqEoKb/iCng+h8be8Qw8W0D5dKeEbeoOabihqxhxHvOpGTJpQkZEu2uhhh190
-        UIYv+gJbqB+mAVXUaqJ9vcCXR2iMmnppygCauEcFcbEqKxnMoFcOxdpzlCKs9jvi7HYowe/sSxfBE+ZL
-        H3edbVeycPxVxvwDcPo6gRRw5AAAAAAASUVORK5CYII=
+        DAAACwwBP0AiyAAAAO1JREFUOE+N071KBDEUxfGfq7IoojaihW9hLWhnp42ICL6DjfsMlr6BvoCFjWy3
+        jdgJgp2NpaAgCGohfhC5KzMxw+wfpkhyTm7uSYZmOpjHAmYxlgtKTGIXAzziHQ+4wFZsWmQO5/jCd5hv
+        8RzjT5xiKjeOox+iG6xXqkxgE3exfhL6P/Zj4Tr6LLGM+zjBxnAyhXGFD6zV9f/YiSJnabCHHl7xggOs
+        5I4K6QaeIg/bUTHtlr7U12LuqNANTQr1N5TjML5hNVdn1ConpnEZR26j1vOQpTz+AsW022i95yYOR3lh
+        TRyN+rZLzDT9VT9w+jqBClHoMwAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="DEEBackgroundWorker.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
