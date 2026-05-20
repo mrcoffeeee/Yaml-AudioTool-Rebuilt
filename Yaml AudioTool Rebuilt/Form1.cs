@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Vortice.XAudio2;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Yaml_AudioTool_Rebuilt
 {

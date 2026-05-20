@@ -1,17 +1,12 @@
-﻿using NAudio.Gui;
-using NAudio.Wave;
+﻿using NAudio.Wave;
 using ScottPlot;
 using ScottPlot.Plottables;
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Windows.Forms;
-using Vortice.Mathematics;
 using Vortice.Multimedia;
 
 namespace Yaml_AudioTool_Rebuilt
@@ -24,7 +19,8 @@ namespace Yaml_AudioTool_Rebuilt
         private string currentFilePath;
         private string saveTargetPath;
         private (double X, string Text)[] saveMarkerSnapshot;
-        private readonly double scrollScaler = 1.000;
+        private (double X, string Label)[] loadedCues;
+        private bool cueLimitExceeded;
         private float[] audioDataM, audioDataL, audioDataR, audioData_BackupM, audioData_BackupL, audioData_BackupR;
         private double mousePositionX = 0;
         private double xLimit = 0;
@@ -46,7 +42,6 @@ namespace Yaml_AudioTool_Rebuilt
             InitializeComponent();
             Text = formMain.Text + ": Destructive Effects Editor";
             EnableGuiElements(false);
-            PlotConfiguration();
             InitialPlotSetup();
             FadeComboBox.SelectedIndex = 0;
             if (formMain.FilelistView.SelectedItems.Count == 1)
@@ -63,51 +58,80 @@ namespace Yaml_AudioTool_Rebuilt
         {
             using var audioReader = new AudioFileReader(filePath);
             WaveFormat = audioReader.WaveFormat;
-            List<float> wholeFile = new(Convert.ToInt32(audioReader.Length / 4));
-            var readBuffer = new float[WaveFormat.SampleRate * WaveFormat.Channels];
-            int samplesRead;
-            while ((samplesRead = audioReader.Read(readBuffer, 0, readBuffer.Length)) > 0)
-            {
-                wholeFile.AddRange(readBuffer.Take(samplesRead));
-            }
-            audioDataM = [.. wholeFile];
-            audioData_BackupM = new float[audioDataM.Length];
-            audioDataM.CopyTo(audioData_BackupM, 0);
 
-            if (WaveFormat.Channels == 2)
+            // AudioFileReader liefert 32-Bit IEEE Float, also 4 Bytes pro Sample
+            int totalSamples = (int)(audioReader.Length / 4);
+
+            if (WaveFormat.Channels == 1)
             {
-                int length = audioDataM.Length / 2;
+                audioDataM = new float[totalSamples];
+                int offset = 0;
+                int samplesRead;
+                while ((samplesRead = audioReader.Read(audioDataM, offset, audioDataM.Length - offset)) > 0)
+                {
+                    offset += samplesRead;
+                }
+                audioData_BackupM = new float[audioDataM.Length];
+                audioDataM.CopyTo(audioData_BackupM, 0);
+
+                audioDataL = null;
+                audioDataR = null;
+                audioData_BackupL = null;
+                audioData_BackupR = null;
+            }
+            else if (WaveFormat.Channels == 2)
+            {
+                int length = totalSamples / 2;
                 audioDataL = new float[length];
                 audioDataR = new float[length];
 
-                for (int i = 0; i < length; i++)
+                // In Chunks lesen und direkt nach L/R splitten, kein großer Zwischen-Buffer
+                float[] chunk = new float[8192]; // muss gerade Zahl sein für sauberes Stereo-Splitten
+                int sampleIndex = 0;
+                int samplesRead;
+                while ((samplesRead = audioReader.Read(chunk, 0, chunk.Length)) > 0)
                 {
-                    audioDataL[i] = audioDataM[2 * i];
-                    audioDataR[i] = audioDataM[2 * i + 1];
+                    for (int i = 0; i < samplesRead; i += 2)
+                    {
+                        audioDataL[sampleIndex] = chunk[i];
+                        audioDataR[sampleIndex] = chunk[i + 1];
+                        sampleIndex++;
+                    }
                 }
-                audioData_BackupL = new float[audioDataL.Length];
-                audioData_BackupR = new float[audioDataR.Length];
+
+                audioData_BackupL = new float[length];
+                audioData_BackupR = new float[length];
                 audioDataL.CopyTo(audioData_BackupL, 0);
                 audioDataR.CopyTo(audioData_BackupR, 0);
+
+                audioDataM = null;
+                audioData_BackupM = null;
             }
 
+            // Cue-Daten einsammeln
             using var cueReader = new CueWaveFileReader(filePath);
+            cueLimitExceeded = false;
 
             if (cueReader.Cues != null)
             {
                 CueList cues = cueReader.Cues;
-                for (int i = 0; i < cues.Count; i++)
+                int cueCount = Math.Min(cues.Count, markerLines.Length);
+                if (cues.Count > markerLines.Length)
                 {
-                    if (i == 10)
-                    {
-                        MessageBox.Show("Sorry, only 10 markers per file are supported.");
-                        break;
-                    }
-                    markerLines[i].X = Convert.ToDouble(cues[i].Position) / Convert.ToDouble(WaveFormat.SampleRate);
-                    markerLines[i].Text = cues[i].Label;
-                    markerLines[i].LabelOppositeAxis = true;
-                    markerLines[i].IsVisible = true;
+                    cueLimitExceeded = true;
                 }
+
+                var cueList = new List<(double, string)>();
+                for (int i = 0; i < cueCount; i++)
+                {
+                    double position = Convert.ToDouble(cues[i].Position) / Convert.ToDouble(WaveFormat.SampleRate);
+                    cueList.Add((position, cues[i].Label));
+                }
+                loadedCues = [.. cueList];
+            }
+            else
+            {
+                loadedCues = [];
             }
         }
 
@@ -142,6 +166,23 @@ namespace Yaml_AudioTool_Rebuilt
             SamplerateLabel.Text = WaveFormat.SampleRate + " kHz";
             WaveformsPlot.Enabled = true;
             PlotWaveform();
+
+            // Cues jetzt auf die markerLines übertragen (auf dem UI-Thread!)
+            if (loadedCues != null)
+            {
+                for (int i = 0; i < loadedCues.Length; i++)
+                {
+                    markerLines[i].X = loadedCues[i].X;
+                    markerLines[i].Text = loadedCues[i].Label;
+                    markerLines[i].LabelOppositeAxis = true;
+                    markerLines[i].IsVisible = true;
+                }
+            }
+
+            if (cueLimitExceeded)
+            {
+                MessageBox.Show("Sorry, only 10 markers per file are supported.");
+            }
         }
 
         private void UpdatePeakLabel()
@@ -156,6 +197,51 @@ namespace Yaml_AudioTool_Rebuilt
                     DestructiveAudioTools.GetPeakVolume(audioDataL) +
                     " : " +
                     DestructiveAudioTools.GetPeakVolume(audioDataR);
+            }
+        }
+
+        private float[] InterleaveStereo()
+        {
+            int length = audioDataL.Length;
+            float[] interleaved = new float[length * 2];
+            for (int i = 0; i < length; i++)
+            {
+                interleaved[2 * i] = audioDataL[i];
+                interleaved[2 * i + 1] = audioDataR[i];
+            }
+            return interleaved;
+        }
+
+        private void SplitStereo(float[] interleaved)
+        {
+            int length = interleaved.Length / 2;
+            if (audioDataL == null || audioDataL.Length != length)
+            {
+                audioDataL = new float[length];
+                audioDataR = new float[length];
+            }
+            for (int i = 0; i < length; i++)
+            {
+                audioDataL[i] = interleaved[2 * i];
+                audioDataR[i] = interleaved[2 * i + 1];
+            }
+        }
+
+        private void ApplyInPlaceEffect(Func<float[], float[]> effect)
+        {
+            if (WaveFormat.Channels == 1)
+            {
+                audioDataM.CopyTo(audioData_BackupM, 0);
+                effect(audioDataM).CopyTo(audioDataM, 0);
+            }
+            else if (WaveFormat.Channels == 2)
+            {
+                audioDataL.CopyTo(audioData_BackupL, 0);
+                audioDataR.CopyTo(audioData_BackupR, 0);
+
+                float[] interleaved = InterleaveStereo();
+                effect(interleaved).CopyTo(interleaved, 0);
+                SplitStereo(interleaved);
             }
         }
 
@@ -220,22 +306,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void AudioNormalization()
         {
-            audioDataM.CopyTo(audioData_BackupM, 0);
-
-            if (WaveFormat.Channels == 1)
-            {
-                DestructiveAudioTools.Normalize(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-            }
-            else if (WaveFormat.Channels == 2)
-            {
-                DestructiveAudioTools.Normalize(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-                int length = audioDataM.Length / 2;
-                for (int i = 0; i < length; i++)
-                {
-                    audioDataL[i] = audioDataM[2 * i];
-                    audioDataR[i] = audioDataM[2 * i + 1];
-                }
-            }
+            ApplyInPlaceEffect(data => DestructiveAudioTools.Normalize(
+                audioData: data, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels));
         }
 
         private void VolumeUpButton_Click(object sender, EventArgs e)
@@ -249,22 +321,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void AudioVolumeUp()
         {
-            audioDataM.CopyTo(audioData_BackupM, 0);
-
-            if (WaveFormat.Channels == 1)
-            {
-                DestructiveAudioTools.VolumeUp(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-            }
-            else if (WaveFormat.Channels == 2)
-            {
-                DestructiveAudioTools.VolumeUp(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-                int length = audioDataM.Length / 2;
-                for (int i = 0; i < length; i++)
-                {
-                    audioDataL[i] = audioDataM[2 * i];
-                    audioDataR[i] = audioDataM[2 * i + 1];
-                }
-            }
+            ApplyInPlaceEffect(data => DestructiveAudioTools.VolumeUp(
+                audioData: data, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels));
         }
 
         private void VolumeDownButton_Click(object sender, EventArgs e)
@@ -278,22 +336,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void AudioVolumeDown()
         {
-            audioDataM.CopyTo(audioData_BackupM, 0);
-
-            if (WaveFormat.Channels == 1)
-            {
-                DestructiveAudioTools.VolumeDown(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-            }
-            else if (WaveFormat.Channels == 2)
-            {
-                DestructiveAudioTools.VolumeDown(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels).CopyTo(audioDataM, 0);
-                int length = audioDataM.Length / 2;
-                for (int i = 0; i < length; i++)
-                {
-                    audioDataL[i] = audioDataM[2 * i];
-                    audioDataR[i] = audioDataM[2 * i + 1];
-                }
-            }
+            ApplyInPlaceEffect(data => DestructiveAudioTools.VolumeDown(
+                audioData: data, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels));
         }
 
         private void TrimButton_Click(object sender, EventArgs e)
@@ -323,24 +367,24 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (trimSpanX1 == trimSpanX2) return;
 
-            Array.Resize(ref audioData_BackupM, audioDataM.Length);
-            audioDataM.CopyTo(audioData_BackupM, 0);
-
             if (WaveFormat.Channels == 1)
             {
+                Array.Resize(ref audioData_BackupM, audioDataM.Length);
+                audioDataM.CopyTo(audioData_BackupM, 0);
                 audioDataM = DestructiveAudioTools.Trim(audioDataM, trimSpanX1, trimSpanX2, WaveFormat.SampleRate, WaveFormat.Channels);
             }
             else if (WaveFormat.Channels == 2)
             {
-                audioDataM = DestructiveAudioTools.Trim(audioDataM, trimSpanX1, trimSpanX2, WaveFormat.SampleRate, WaveFormat.Channels);
-                int length = audioDataM.Length / 2;
-                Array.Resize(ref audioDataL, length);
-                Array.Resize(ref audioDataR, length);
-                for (int i = 0; i < length; i++)
-                {
-                    audioDataL[i] = audioDataM[2 * i];
-                    audioDataR[i] = audioDataM[2 * i + 1];
-                }
+                // Backups vor Trim auf aktuelle Größe bringen und Daten kopieren
+                Array.Resize(ref audioData_BackupL, audioDataL.Length);
+                Array.Resize(ref audioData_BackupR, audioDataR.Length);
+                audioDataL.CopyTo(audioData_BackupL, 0);
+                audioDataR.CopyTo(audioData_BackupR, 0);
+
+                // M ad-hoc, trimmen, zurück nach L+R splitten (SplitStereo resized automatisch)
+                float[] interleaved = InterleaveStereo();
+                interleaved = DestructiveAudioTools.Trim(interleaved, trimSpanX1, trimSpanX2, WaveFormat.SampleRate, WaveFormat.Channels);
+                SplitStereo(interleaved);
             }
         }
 
@@ -356,22 +400,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void AudioFade()
         {
-            audioDataM.CopyTo(audioData_BackupM, 0);
-
-            if (WaveFormat.Channels == 1)
-            {
-                DestructiveAudioTools.Fade(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels, operationFadeIndex).CopyTo(audioDataM, 0);
-            }
-            else if (WaveFormat.Channels == 2)
-            {
-                DestructiveAudioTools.Fade(audioDataM, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels, operationFadeIndex).CopyTo(audioDataM, 0);
-                int length = audioDataM.Length / 2;
-                for (int i = 0; i < length; i++)
-                {
-                    audioDataL[i] = audioDataM[2 * i];
-                    audioDataR[i] = audioDataM[2 * i + 1];
-                }
-            }
+            ApplyInPlaceEffect(data => DestructiveAudioTools.Fade(
+                audioData: data, operationStart, operationEnd, WaveFormat.SampleRate, WaveFormat.Channels, operationFadeIndex));
         }
 
         private void AddMarker(int i, double posX)
@@ -451,10 +481,8 @@ namespace Yaml_AudioTool_Rebuilt
             }
             else if (WaveFormat.Channels == 2)
             {
-                Array.Resize(ref audioDataM, audioData_BackupM.Length);
                 Array.Resize(ref audioDataL, audioData_BackupL.Length);
                 Array.Resize(ref audioDataR, audioData_BackupR.Length);
-                audioData_BackupM.CopyTo(audioDataM, 0);
                 audioData_BackupL.CopyTo(audioDataL, 0);
                 audioData_BackupR.CopyTo(audioDataR, 0);
             }
@@ -510,7 +538,17 @@ namespace Yaml_AudioTool_Rebuilt
         private void AudioSave()
         {
             using CueWaveFileWriter writer = new(saveTargetPath, WaveFormat);
-            writer.WriteSamples(audioDataM, 0, audioDataM.Length);
+
+            if (WaveFormat.Channels == 1)
+            {
+                writer.WriteSamples(audioDataM, 0, audioDataM.Length);
+            }
+            else if (WaveFormat.Channels == 2)
+            {
+                // M ad-hoc bauen für den Writer
+                float[] interleaved = InterleaveStereo();
+                writer.WriteSamples(interleaved, 0, interleaved.Length);
+            }
 
             foreach (var marker in saveMarkerSnapshot)
             {
@@ -567,16 +605,6 @@ namespace Yaml_AudioTool_Rebuilt
             WaveformsPlot.Refresh();
         }
 
-        private static void PlotConfiguration()
-        {
-            //WaveformsPlot.Configuration.AllowDroppedFramesWhileDragging = true;
-            //WaveformsPlot.Configuration.DoubleClickBenchmark = false;
-            //WaveformsPlot.Configuration.EnablePlotObjectEditor = false;
-            //WaveformsPlot.Configuration.LockVerticalAxis = true;
-            //WaveformsPlot.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
-
-        }
-
         private void InitialPlotSetup()
         {
             WaveformsPlot.Reset();
@@ -603,15 +631,6 @@ namespace Yaml_AudioTool_Rebuilt
             stereoLine.IsVisible = false;
 
             WaveformsPlot.Plot.HideLegend();
-
-            // OPTIONS FOR DISPLAYING THE MARKER LEGEND
-            /*ScottPlot.Panels.LegendPanel panel = new(WaveformsPlot.Plot.Legend)
-            {
-                Edge = Edge.Right,
-                Alignment = Alignment.UpperCenter
-            };
-            WaveformsPlot.Plot.Axes.AddPanel(panel);*/
-
             WaveformsPlot.Refresh();
         }
 
@@ -710,10 +729,6 @@ namespace Yaml_AudioTool_Rebuilt
                     waveformSpan.X2 = xLimit;
                 }
 
-                /*for (int i = 0; i < markerLines.Length; i++)
-                {
-                    markerLines[i].Color = ScottPlot.Colors.LimeGreen;
-                }*/
                 RemoveMarkerButton.Enabled = false;
                 waveformSpan.IsVisible = true;
                 mouseDown = true;
@@ -748,8 +763,6 @@ namespace Yaml_AudioTool_Rebuilt
                         RemoveMarkerButton.Enabled = true;
                     }
                 }
-                
-   //             WaveformsPlot.Interaction.Disable(); // disable panning while dragging
             }
         }
 
@@ -765,141 +778,6 @@ namespace Yaml_AudioTool_Rebuilt
         {
 
         }
-
-
-        /*private void WaveformsPlot_MouseMove(object sender, MouseEventArgs e)
-        {
-            //(double x, _) = WaveformsPlot.GetMouseCoordinates();
-            WaveformsPlot.MouseMove += (s, e) =>
-            {
-                Pixel mousePixel = new(e.X, e.Y);
-                Coordinates mouseCoordinates = WaveformsPlot.Plot.GetCoordinates(mousePixel);
-                this.Text = $"X={mouseCoordinates.X:N3}, Y={mouseCoordinates.Y:N3}";
-                double x = mouseCoordinates.X;
-                limits = WaveformsPlot.Plot.Axes.GetLimits();
-                double position = 0;
-                if (x >= limits.XRange.Min && x <= limits.XRange.Max)
-                {
-                    position = x;
-                }
-                else if (x > limits.XRange.Max)
-                {
-                    position = limits.XRange.Max;
-                }
-                else if (x < limits.XRange.Min)
-                    position = limits.XRange.Min;
-
-                if (mouseDown)
-                {
-                    waveformSpan.X2 = position;
-                }
-                PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XRange.Max - limits.XRange.Min));
-                PlotHScrollBar.Value = Convert.ToInt32(limits.XRange.Min * scrollScaler);
-                PositionLabel.Text = "Position (sec): " + position.ToString("0.000");
-                WaveformsPlot.Refresh();
-            };            
-        }*/
-
-        /*private void WaveformsPlot_MouseWheel(object sender, MouseEventArgs e)
-        {
-            limits = WaveformsPlot.Plot.Axes.GetLimits();
-            PlotHScrollBar.LargeChange = Convert.ToInt32(scrollScaler * (limits.XRange.Max - limits.XRange.Min));
-            PlotHScrollBar.Value = Convert.ToInt32(limits.XRange.Min * scrollScaler);
-            WaveformsPlot.Refresh();
-        }*/
-
-        /*private void WaveformsPlot_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left && mouseDown == false)
-            {
-                //(double x, _) = WaveformsPlot.GetMouseCoordinates();
-                WaveformsPlot.MouseMove += (s, e) =>
-                {
-                    Pixel mousePixel = new(e.X, e.Y);
-                    Coordinates mouseCoordinates = WaveformsPlot.Plot.GetCoordinates(mousePixel);
-                    this.Text = $"X={mouseCoordinates.X:N3}, Y={mouseCoordinates.Y:N3}";
-                    double x = mouseCoordinates.X;
-                    limits = WaveformsPlot.Plot.Axes.GetLimits();
-
-                    if (x >= limits.XRange.Min && x <= limits.XRange.Max)
-                    {
-                        waveformSpan.X1 = x;
-                        waveformSpan.X2 = x;
-                    }
-
-                    else if (x < limits.XRange.Min)
-                    {
-                        waveformSpan.X1 = limits.XRange.Min;
-                        waveformSpan.X2 = limits.XRange.Min;
-                    }
-
-                    else if (x > limits.XRange.Max)
-                    {
-                        waveformSpan.X1 = limits.XRange.Max;
-                        waveformSpan.X2 = limits.XRange.Max;
-                    }
-
-                    for (int i = 0; i < markerLines.Length; i++)
-                    {
-                        markerLines[i].Color = Colors.Red;
-                    }
-                    RemoveMarkerButton.Enabled = false;
-                    waveformSpan.IsVisible = true;
-                    mouseDown = true;
-                };
-            }
-
-            else if (e.Button == MouseButtons.Left && mouseDown == true)
-            {
-                if (waveformSpan.X1 == waveformSpan.X2)
-                {
-                    for (int i = 0; i < markerLines.Length; i++)
-                    {
-                        if (markerLines[i].IsVisible == false)
-                        {
-                            AddMarker(i);
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < markerLines.Length; i++)
-                    {
-                        if (markerLines[i].IsVisible == true)
-                        {
-                            if (waveformSpan.X1 < markerLines[i].X && markerLines[i].X < waveformSpan.X2 ||
-                                waveformSpan.X2 < markerLines[i].X && markerLines[i].X < waveformSpan.X1)
-                            {
-                                markerLines[i].Color = Colors.LightGreen;
-                                RemoveMarkerButton.Enabled = true;
-                            }
-                        }
-                    }
-                }
-                mouseDown = false;
-            }
-
-            else if (e.Button == MouseButtons.Right && waveformSpan.IsVisible)
-            {
-                waveformSpan.IsVisible = false;
-                waveformSpan.X1 = waveformSpan.X2;
-                mouseDown = false;
-            }
-        }*/
-
-        /*private void PlotHScrollBar_Scroll(object sender, ScrollEventArgs e)
-        {
-            double xMin = PlotHScrollBar.Value / scrollScaler;
-            double xMax = (PlotHScrollBar.Value + PlotHScrollBar.LargeChange) / scrollScaler;
-            if (xMax > xMin)
-            {
-                if (xMax > PlotHScrollBar.Maximum)
-                    xMax = PlotHScrollBar.Maximum;
-                WaveformsPlot.Plot.Axes.SetLimitsX(xMin, xMax);
-                WaveformsPlot.Refresh();
-            }
-        }*/
 
         private AxisLine GetLineUnderMouse(float x, float y)
         {

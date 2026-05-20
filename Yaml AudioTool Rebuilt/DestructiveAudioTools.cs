@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -54,7 +52,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
 
             // Do Normalization
-            if (max != 0 || max < 1.0f)
+            if (max > 0 && max < 1.0f)
             {
                 for (int i = 0; i < audioData.Length; i++)
                 {
@@ -134,104 +132,83 @@ namespace Yaml_AudioTool_Rebuilt
         public static float[] Trim(float[] audioData, double start, double end, int sampleRate, int channels)
         {
             (int startSample, int endSample) = GetSamplePostitions(start, end, sampleRate, channels);
-            List<float> trimmedAudioList = [];
 
-            for (int i = 0; i < audioData.Length; i++)
+            // Clamp auf Array-Grenzen, um Edge Cases abzufangen
+            if (startSample < 0) startSample = 0;
+            if (endSample >= audioData.Length) endSample = audioData.Length - 1;
+            if (endSample < startSample) return audioData;
+
+            int removedCount = endSample - startSample + 1;
+            float[] result = new float[audioData.Length - removedCount];
+
+            // Alles vor dem zu entfernenden Bereich kopieren
+            Array.Copy(audioData, 0, result, 0, startSample);
+
+            // Alles nach dem Bereich kopieren
+            int tailLength = audioData.Length - (endSample + 1);
+            if (tailLength > 0)
             {
-                if (i >= startSample && i <= endSample)
-                {
-                    continue;
-                }
-                else
-                {
-                    trimmedAudioList.Add(audioData[i]);
-                }
+                Array.Copy(audioData, endSample + 1, result, startSample, tailLength);
             }
-            return [.. trimmedAudioList];
+
+            return result;
         }
 
         public static float[] Fade(float[] audioData, double start, double end, int sampleRate, int channels, int fadeIndex)
         {
             (int startSample, int endSample) = GetSamplePostitions(start, end, sampleRate, channels);
-            float fadeRatio;
-            List<float> fadeAudioList = [];
 
-            // Linear FadeIn
-            if (fadeIndex == 0)
+            // Clamp auf Array-Grenzen
+            if (startSample < 0) startSample = 0;
+            if (endSample >= audioData.Length) endSample = audioData.Length - 1;
+            if (endSample <= startSample) return audioData;
+
+            int fadeLength = endSample - startSample;
+            float[] result = new float[audioData.Length];
+
+            // Bereiche vor und nach dem Fade unverändert übernehmen
+            Array.Copy(audioData, 0, result, 0, startSample);
+            int tailStart = endSample + 1;
+            if (tailStart < audioData.Length)
             {
-                int fadeIn = 0;
-                for (int i = 0; i < audioData.Length; i++)
-                {
-                    if (i >= startSample && i <= endSample)
-                    {
-                        fadeRatio = (float)fadeIn / (endSample - startSample);
-                        fadeAudioList.Add(audioData[i] *= fadeRatio);
-                        fadeIn++;
-                    }
-                    else
-                    {
-                        fadeAudioList.Add(audioData[i]);
-                    }
-                }
+                Array.Copy(audioData, tailStart, result, tailStart, audioData.Length - tailStart);
             }
 
-            // Exponential FadeIn
-            if (fadeIndex == 1)
+            // Fade-Bereich verarbeiten
+            for (int i = startSample; i <= endSample; i++)
             {
-                int fadeIn = 0;
-                for (int i = 0; i < audioData.Length; i++)
+                float fadeRatio;
+                int relativePosition = i - startSample;
+
+                switch (fadeIndex)
                 {
-                    if (i >= startSample && i <= endSample)
-                    {
-                        fadeRatio = (float)Math.Pow(2, (float)fadeIn / (endSample - startSample)) - 1;
-                        fadeAudioList.Add(audioData[i] *= fadeRatio);
-                        fadeIn++;
-                    }
-                    else
-                    {
-                        fadeAudioList.Add(audioData[i]);
-                    }
+                    case 0: // Linear FadeIn
+                        fadeRatio = (float)relativePosition / fadeLength;
+                        break;
+                    case 1: // Exponential FadeIn
+                        {
+                            float t = (float)relativePosition / fadeLength;
+                            fadeRatio = t * t;
+                        }
+                        break;
+                    case 2: // Linear FadeOut
+                        fadeRatio = (float)(fadeLength - relativePosition) / fadeLength;
+                        break;
+                    case 3: // Exponential FadeOut
+                        {
+                            float t = (float)(fadeLength - relativePosition) / fadeLength;
+                            fadeRatio = t * t;
+                        }
+                        break;
+                    default:
+                        fadeRatio = 1f;
+                        break;
                 }
+
+                result[i] = audioData[i] * fadeRatio;
             }
 
-            // Linear FadeOut
-            else if (fadeIndex == 2)
-            {
-                int fadeOut = endSample - startSample;
-                for (int i = 0; i < audioData.Length; i++)
-                {
-                    if (i >= startSample && i <= endSample)
-                    {
-                        fadeRatio = (float)fadeOut / (endSample - startSample);
-                        fadeAudioList.Add(audioData[i] *= fadeRatio);
-                        fadeOut--;
-                    }
-                    else
-                    {
-                        fadeAudioList.Add(audioData[i]);
-                    }
-                }
-            }
-
-            // Exponential FadeOut
-            else if (fadeIndex == 3)
-            {
-                int fadeOut = endSample - startSample;
-                for (int i = 0; i < audioData.Length; i++)
-                {
-                    if (i >= startSample && i <= endSample)
-                    {
-                        fadeRatio = (float)Math.Pow(2, (float)fadeOut / (endSample - startSample)) - 1;
-                        fadeAudioList.Add(audioData[i] *= fadeRatio);
-                        fadeOut--;
-                    }
-                    else
-                    {
-                        fadeAudioList.Add(audioData[i]);
-                    }
-                }
-            }
-            return [.. fadeAudioList];
+            return result;
         }
     }
 }
