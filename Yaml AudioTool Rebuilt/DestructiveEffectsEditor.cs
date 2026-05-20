@@ -414,7 +414,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (!Text.EndsWith('*'))
             {
-                SaveButton.Enabled = true;
+                TableLayoutPanelChanges.Enabled = true;
                 SaveButton.BackColor = System.Drawing.Color.LightGreen;
                 Text += "*";
             }
@@ -451,7 +451,6 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 if (Text.Contains(".wav*"))
                     Text = Text.Replace(".wav*", ".wav");
-                SaveButton.Enabled = false;
                 SaveButton.BackColor = SystemColors.Control;
             }
             WaveformsPlot.Refresh();
