@@ -176,6 +176,7 @@ namespace Yaml_AudioTool_Rebuilt
                     markerLines[i].Text = loadedCues[i].Label;
                     markerLines[i].LabelOppositeAxis = true;
                     markerLines[i].IsVisible = true;
+                    WaveformsPlot.Plot.MoveToFront(markerLines[i]);
                 }
             }
 
@@ -409,7 +410,6 @@ namespace Yaml_AudioTool_Rebuilt
             markerLines[i].X = posX;
             markerLines[i].Text = "M " + (i + 1);
             markerLines[i].IsVisible = true;
-            markerLines[i].IsDraggable = true;
             WaveformsPlot.Plot.MoveToFront(markerLines[i]);
 
             if (!Text.EndsWith('*'))
@@ -622,6 +622,7 @@ namespace Yaml_AudioTool_Rebuilt
                 markerLines[i] = WaveformsPlot.Plot.Add.VerticalLine(0, 3, ScottPlot.Colors.Red, LinePattern.Solid);
                 markerLines[i].LabelFontSize = 11;
                 markerLines[i].LabelOppositeAxis = true;
+                markerLines[i].IsDraggable = true;
                 markerLines[i].IsVisible = false;
             }
             WaveformsPlot.Plot.Axes.Top.MinimumSize = 30;
@@ -709,59 +710,54 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void WaveformsPlot_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && mouseDown == false)
-            {
-                if (mousePositionX >= limits.XRange.Min && mousePositionX <= xLimit)
-                {
-                    waveformSpan.X1 = mousePositionX;
-                    waveformSpan.X2 = mousePositionX;
-                }
-
-                else if (mousePositionX < limits.XRange.Min)
-                {
-                    waveformSpan.X1 = limits.XRange.Min;
-                    waveformSpan.X2 = limits.XRange.Min;
-                }
-
-                else if (mousePositionX > xLimit)
-                {
-                    waveformSpan.X1 = xLimit;
-                    waveformSpan.X2 = xLimit;
-                }
-
-                RemoveMarkerButton.Enabled = false;
-                waveformSpan.IsVisible = true;
-                mouseDown = true;
-            }
-
             var lineUnderMouse = GetLineUnderMouse(e.X, e.Y);
-            if (lineUnderMouse is not null)
-            {
-                PlottableBeingDragged = lineUnderMouse;
 
-                if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Left)
+            {
+                if (lineUnderMouse is VerticalLine vl)
                 {
-                    if (PlottableBeingDragged.Color == ScottPlot.Colors.LimeGreen)
+                    // Klick auf Marker: alle anderen Marker zurück auf Rot, diesen auf Grün
+                    foreach (var ml in markerLines)
                     {
-                        PlottableBeingDragged.Color = ScottPlot.Colors.Red;
-                        foreach (var ml in markerLines)
+                        if (ml.IsVisible)
                         {
-                            if (ml.Color == ScottPlot.Colors.LimeGreen)
-                            {
-                                RemoveMarkerButton.Enabled = true;
-                            }
-                            else
-                            {
-                                RemoveMarkerButton.Enabled = false;
-                            }
+                            ml.Color = ReferenceEquals(ml, vl) ? ScottPlot.Colors.LimeGreen : ScottPlot.Colors.Red;
                         }
                     }
-
-                    else if (PlottableBeingDragged.Color == ScottPlot.Colors.Red)
+                    PlottableBeingDragged = vl;
+                    RemoveMarkerButton.Enabled = true;
+                    WaveformsPlot.Refresh();
+                }
+                else if (mouseDown == false)
+                {
+                    // Klick ins Leere: alle Marker zurück auf Rot, Span-Selektion starten
+                    foreach (var ml in markerLines)
                     {
-                        PlottableBeingDragged.Color = ScottPlot.Colors.LimeGreen;
-                        RemoveMarkerButton.Enabled = true;
+                        if (ml.IsVisible)
+                        {
+                            ml.Color = ScottPlot.Colors.Red;
+                        }
                     }
+                    RemoveMarkerButton.Enabled = false;
+
+                    if (mousePositionX >= limits.XRange.Min && mousePositionX <= xLimit)
+                    {
+                        waveformSpan.X1 = mousePositionX;
+                        waveformSpan.X2 = mousePositionX;
+                    }
+                    else if (mousePositionX < limits.XRange.Min)
+                    {
+                        waveformSpan.X1 = limits.XRange.Min;
+                        waveformSpan.X2 = limits.XRange.Min;
+                    }
+                    else if (mousePositionX > xLimit)
+                    {
+                        waveformSpan.X1 = xLimit;
+                        waveformSpan.X2 = xLimit;
+                    }
+
+                    waveformSpan.IsVisible = true;
+                    mouseDown = true;
                 }
             }
         }
