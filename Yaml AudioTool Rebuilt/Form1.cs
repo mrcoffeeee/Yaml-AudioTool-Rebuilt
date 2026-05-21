@@ -114,7 +114,7 @@ namespace Yaml_AudioTool_Rebuilt
             int seconds = (int)(totalplaybackSeconds % 60);
             timeLabel.Text = $"{minutes:D2}:{seconds:D2}";
 
-            MainVolumeMeter.Amplitude = ap.device.AudioMeterInformation.MasterPeakValue;
+            MainVolumeMeter.Amplitude = ap.GetSessionPeak();
             MainVolumeMeter.Refresh();
 
             if (LoopButton.BackColor == Color.Salmon)

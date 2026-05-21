@@ -35,6 +35,34 @@ namespace Yaml_AudioTool_Rebuilt
             xaudio2.StartEngine();
         }
 
+        public float GetSessionPeak()
+        {
+            if (device == null) return 0;
+
+            try
+            {
+                var sessions = device.AudioSessionManager.Sessions;
+                int currentProcessId = Environment.ProcessId;
+                float peak = 0;
+
+                for (int i = 0; i < sessions.Count; i++)
+                {
+                    var session = sessions[i];
+                    if (session.GetProcessID == currentProcessId)
+                    {
+                        float sessionPeak = session.AudioMeterInformation.MasterPeakValue;
+                        if (sessionPeak > peak) peak = sessionPeak;
+                    }
+                }
+                return peak;
+            }
+            catch
+            {
+                // COM-calls could sometimes fail
+                return 0;
+            }
+        }
+
         public static string CalculateAudiolength(WaveFileReader waveFileReader)
         {
             int hours = waveFileReader.TotalTime.Hours;
