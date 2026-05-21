@@ -900,6 +900,20 @@ namespace Yaml_AudioTool_Rebuilt
                 SaveButton.BackColor = SystemColors.Control;
                 InitialPlotSetup();
                 PlotWaveform();
+
+                // get original file markers back
+                if (loadedCues != null)
+                {
+                    for (int i = 0; i < loadedCues.Length; i++)
+                    {
+                        markerLines[i].X = loadedCues[i].X;
+                        markerLines[i].Text = loadedCues[i].Label;
+                        markerLines[i].LabelOppositeAxis = true;
+                        markerLines[i].IsVisible = true;
+                        WaveformsPlot.Plot.MoveToFront(markerLines[i]);
+                    }
+                }
+
                 UpdatePeakLabel();
             }
             else if (result == "SAVEAUDIO")
