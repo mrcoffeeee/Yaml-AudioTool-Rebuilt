@@ -138,20 +138,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private static string GetFilenameFromPath(string filePath)
         {
-            string fileName = "";
-            char[] tempArray = filePath.ToCharArray();
-            Array.Reverse(tempArray);
-            foreach (char c in tempArray)
-            {
-                if (c.ToString() == "/")
-                {
-                    break;
-                }
-                fileName += c.ToString();
-            }
-            tempArray = fileName.ToCharArray();
-            Array.Reverse(tempArray);
-            return new string(tempArray);
+            return Path.GetFileName(filePath);
         }
 
         public static void SetDoubleBuffering(Control control, bool value)
@@ -207,7 +194,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SettingsDialog formSettings = new();
+            using SettingsDialog formSettings = new();
             if (FilelistView.Items.Count > 0)
             {
                 formSettings.audiofoldersetButton.Enabled = false;
@@ -492,7 +479,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void OpenyamlButton_Click(object sender, EventArgs e)
         {
-            SettingsDialog sd = new();
+            using SettingsDialog sd = new();
             if (sd.audiofolderLabel.Text == "NONE")
             {
                 MessageBox.Show("No Audio folder in \"Settings\" selected.");
@@ -871,6 +858,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void RoomListView_Click(object sender, EventArgs e)
         {
+            if (RoomListView.SelectedItems.Count != 1)
+                return;
             FilternameTextBox.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filternameHeader)].Text;
             FilterComboBox.Text = FilterComboBox.Items[Convert.ToInt32(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filtertypeHeader)].Text)].ToString();
             FilterfrequencyPot.Value = Math.Round(Convert.ToDouble(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filterfrequencyHeader)].Text), 1);
