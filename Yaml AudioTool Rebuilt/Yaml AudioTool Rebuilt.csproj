@@ -7,6 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>Yaml_AudioTool_Rebuilt.Program</StartupObject>
     <ApplicationIcon>Resources\ProgramIcon.ico</ApplicationIcon>
+    <SupportedOSPlatformVersion>10.0.19041.1</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>
