@@ -257,10 +257,12 @@ namespace Yaml_AudioTool_Rebuilt
             if (flag)
             {
                 TableLayoutPanelDEE.Enabled = true;
+                UseWaitCursor = false;
             }
             else
             {
                 TableLayoutPanelDEE.Enabled = false;
+                UseWaitCursor = true;
             }
         }
 
