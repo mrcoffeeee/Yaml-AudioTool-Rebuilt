@@ -157,11 +157,11 @@ namespace Yaml_AudioTool_Rebuilt
             PitchrandLabel = new System.Windows.Forms.Label();
             PitrandPot = new NAudio.Gui.Pot();
             PitchPot = new NAudio.Gui.Pot();
-            PitchLabel = new System.Windows.Forms.Label();
             PitchvalueLabel = new System.Windows.Forms.Label();
             PitchrandvalueLabel = new System.Windows.Forms.Label();
             PitchenableButton = new System.Windows.Forms.Button();
             ResetButton = new System.Windows.Forms.Button();
+            PitchLabel = new System.Windows.Forms.Label();
             DestructiveEffectsButton = new System.Windows.Forms.Button();
             RoomListView = new System.Windows.Forms.ListView();
             roomnameHeader = new System.Windows.Forms.ColumnHeader();
@@ -1604,11 +1604,11 @@ namespace Yaml_AudioTool_Rebuilt
             PitchShifterTableLayoutPanelMain.Controls.Add(PitchrandLabel, 2, 0);
             PitchShifterTableLayoutPanelMain.Controls.Add(PitrandPot, 3, 0);
             PitchShifterTableLayoutPanelMain.Controls.Add(PitchPot, 1, 0);
-            PitchShifterTableLayoutPanelMain.Controls.Add(PitchLabel, 0, 0);
             PitchShifterTableLayoutPanelMain.Controls.Add(PitchvalueLabel, 1, 1);
             PitchShifterTableLayoutPanelMain.Controls.Add(PitchrandvalueLabel, 3, 1);
             PitchShifterTableLayoutPanelMain.Controls.Add(PitchenableButton, 3, 2);
             PitchShifterTableLayoutPanelMain.Controls.Add(ResetButton, 0, 2);
+            PitchShifterTableLayoutPanelMain.Controls.Add(PitchLabel, 0, 0);
             PitchShifterTableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             PitchShifterTableLayoutPanelMain.Location = new System.Drawing.Point(3, 19);
             PitchShifterTableLayoutPanelMain.Name = "PitchShifterTableLayoutPanelMain";
@@ -1623,11 +1623,11 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             PitchrandLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             PitchrandLabel.AutoSize = true;
-            PitchrandLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
-            PitchrandLabel.Location = new System.Drawing.Point(201, 14);
+            PitchrandLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            PitchrandLabel.Location = new System.Drawing.Point(211, 16);
             PitchrandLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             PitchrandLabel.Name = "PitchrandLabel";
-            PitchrandLabel.Size = new System.Drawing.Size(79, 19);
+            PitchrandLabel.Size = new System.Drawing.Size(69, 15);
             PitchrandLabel.TabIndex = 60;
             PitchrandLabel.Text = "Randomize:";
             PitchrandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1660,19 +1660,6 @@ namespace Yaml_AudioTool_Rebuilt
             PitchPot.TabIndex = 27;
             PitchPot.Value = 100D;
             PitchPot.ValueChanged += PitchPot_ValueChanged;
-            // 
-            // PitchLabel
-            // 
-            PitchLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            PitchLabel.AutoSize = true;
-            PitchLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
-            PitchLabel.Location = new System.Drawing.Point(74, 14);
-            PitchLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            PitchLabel.Name = "PitchLabel";
-            PitchLabel.Size = new System.Drawing.Size(39, 19);
-            PitchLabel.TabIndex = 58;
-            PitchLabel.Text = "Shift:";
-            PitchLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // PitchvalueLabel
             // 
@@ -1726,6 +1713,19 @@ namespace Yaml_AudioTool_Rebuilt
             ResetButton.Text = "Reset";
             ResetButton.UseVisualStyleBackColor = true;
             ResetButton.Click += ResetButton_Click;
+            // 
+            // PitchLabel
+            // 
+            PitchLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            PitchLabel.AutoSize = true;
+            PitchLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            PitchLabel.Location = new System.Drawing.Point(79, 16);
+            PitchLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            PitchLabel.Name = "PitchLabel";
+            PitchLabel.Size = new System.Drawing.Size(34, 15);
+            PitchLabel.TabIndex = 58;
+            PitchLabel.Text = "Shift:";
+            PitchLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // DestructiveEffectsButton
             // 

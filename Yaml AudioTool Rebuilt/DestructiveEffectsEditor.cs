@@ -65,7 +65,6 @@ namespace Yaml_AudioTool_Rebuilt
             using var audioReader = new AudioFileReader(filePath);
             WaveFormat = audioReader.WaveFormat;
 
-            // AudioFileReader liefert 32-Bit IEEE Float, also 4 Bytes pro Sample
             int totalSamples = (int)(audioReader.Length / 4);
 
             if (WaveFormat.Channels == 1)
@@ -91,8 +90,8 @@ namespace Yaml_AudioTool_Rebuilt
                 audioDataL = new float[length];
                 audioDataR = new float[length];
 
-                // In Chunks lesen und direkt nach L/R splitten, kein großer Zwischen-Buffer
-                float[] chunk = new float[8192]; // muss gerade Zahl sein für sauberes Stereo-Splitten
+                // Read into chunks and split directly into l/r without big buffering
+                float[] chunk = new float[8192];
                 int sampleIndex = 0;
                 int samplesRead;
                 while ((samplesRead = audioReader.Read(chunk, 0, chunk.Length)) > 0)
@@ -114,7 +113,7 @@ namespace Yaml_AudioTool_Rebuilt
                 audioData_BackupM = null;
             }
 
-            // Cue-Daten einsammeln
+            // Collect cue-daten
             using var cueReader = new CueWaveFileReader(filePath);
             cueLimitExceeded = false;
 
@@ -173,7 +172,7 @@ namespace Yaml_AudioTool_Rebuilt
             WaveformsPlot.Enabled = true;
             PlotWaveform();
 
-            // Cues jetzt auf die markerLines übertragen (auf dem UI-Thread!)
+            // Set cues to markerLines
             if (loadedCues != null)
             {
                 for (int i = 0; i < loadedCues.Length; i++)
@@ -283,7 +282,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             Text = formMain.Text + ": Destructive Effects Editor";
 
-            // Plot aufräumen und alte Audio-Daten freigeben
+            // Clean plot and release audio data
             WaveformsPlot.Plot.Clear();
             audioDataM = null;
             audioDataL = null;
@@ -399,13 +398,11 @@ namespace Yaml_AudioTool_Rebuilt
             }
             else if (WaveFormat.Channels == 2)
             {
-                // Backups vor Trim auf aktuelle Größe bringen und Daten kopieren
                 Array.Resize(ref audioData_BackupL, audioDataL.Length);
                 Array.Resize(ref audioData_BackupR, audioDataR.Length);
                 audioDataL.CopyTo(audioData_BackupL, 0);
                 audioDataR.CopyTo(audioData_BackupR, 0);
 
-                // M ad-hoc, trimmen, zurück nach L+R splitten (SplitStereo resized automatisch)
                 float[] interleaved = InterleaveStereo();
                 interleaved = DestructiveAudioTools.Trim(interleaved, trimSpanX1, trimSpanX2, WaveFormat.SampleRate, WaveFormat.Channels);
                 SplitStereo(interleaved);
@@ -535,12 +532,10 @@ namespace Yaml_AudioTool_Rebuilt
             }
             else
             {
-                // User hat den Dialog abgebrochen
                 TableLayoutPanelChanges.Enabled = true;
                 return;
             }
 
-            // Marker-Snapshot anlegen, damit der BG-Thread nicht auf die UI zugreifen muss
             var snapshot = new System.Collections.Generic.List<(double, string)>();
             for (int i = 0; i < markerLines.Length; i++)
             {
@@ -567,7 +562,6 @@ namespace Yaml_AudioTool_Rebuilt
             }
             else if (WaveFormat.Channels == 2)
             {
-                // M ad-hoc bauen für den Writer
                 float[] interleaved = InterleaveStereo();
                 writer.WriteSamples(interleaved, 0, interleaved.Length);
             }
@@ -582,7 +576,6 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (WaveFormat.Channels == 1)
             {
-                //MessageBox.Show(audioDataM.Length.ToString());
                 if (audioDataM.Length > 0)
                 {
                     var chM = WaveformsPlot.Plot.Add.Signal(audioDataM, 1 / Convert.ToDouble(WaveFormat.SampleRate));
@@ -597,7 +590,6 @@ namespace Yaml_AudioTool_Rebuilt
 
             else if (WaveFormat.Channels == 2)
             {
-                //MessageBox.Show(audioDataL.Length.ToString() + "--" + audioDataR.Length.ToString());
                 if (audioDataL.Length > 0 && audioDataR.Length > 0)
                 {
                     var chL = WaveformsPlot.Plot.Add.Signal(audioDataL, 1 / Convert.ToDouble(WaveFormat.SampleRate));
@@ -715,11 +707,6 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void WaveformsPlot_MouseWheel(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void WaveformsPlot_DoubleClick(object sender, EventArgs e)
         {
             for (int i = 0; i < markerLines.Length; i++)
@@ -740,7 +727,6 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 if (lineUnderMouse is VerticalLine vl)
                 {
-                    // Klick auf Marker: alle anderen Marker zurück auf Rot, diesen auf Grün
                     foreach (var ml in markerLines)
                     {
                         if (ml.IsVisible)
@@ -754,7 +740,6 @@ namespace Yaml_AudioTool_Rebuilt
                 }
                 else if (mouseDown == false)
                 {
-                    // Klick ins Leere: alle Marker zurück auf Rot, Span-Selektion starten
                     foreach (var ml in markerLines)
                     {
                         if (ml.IsVisible)
@@ -790,7 +775,6 @@ namespace Yaml_AudioTool_Rebuilt
         {
             PlottableBeingDragged = null;
             mouseDown = false;
- //           WaveformsPlot.Interaction.Enable(); // enable panning again
             WaveformsPlot.Refresh();
         }
 
@@ -868,7 +852,6 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void DEEBackgroundWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            // Fehlerbehandlung: falls in DoWork eine Exception geflogen ist
             if (e.Error != null)
             {
                 MessageBox.Show("Error during audio operation: " + e.Error.Message);
@@ -886,7 +869,6 @@ namespace Yaml_AudioTool_Rebuilt
                 return;
             }
 
-            // Title vom "PLEASE WAIT..."-Status zurücksetzen
             Text = formMain.Text + ": Destructive Effects Editor -> " + currentFilePath;
 
             if (result != "REVERTAUDIO" && result != "SAVEAUDIO")

@@ -240,7 +240,6 @@
             WaveformsPlot.MouseDown += WaveformsPlot_MouseDown;
             WaveformsPlot.MouseMove += WaveformsPlot_MouseMove;
             WaveformsPlot.MouseUp += WaveformsPlot_MouseUp;
-            WaveformsPlot.MouseWheel += WaveformsPlot_MouseWheel;
             // 
             // TableLayoutPanelFD
             // 
