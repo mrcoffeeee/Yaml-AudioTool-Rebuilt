@@ -36,6 +36,7 @@ namespace Yaml_AudioTool_Rebuilt
         private double trimSpanX1;
         private double trimSpanX2;
         private bool[] trimMarkersToHide;
+        private (double X, string Text)[] trimMarkerSnapshot;
 
         private readonly ScottPlot.Color leftChannelColor = new(13, 148, 136);      // Teal;
         private readonly ScottPlot.Color rightChannelColor = new(244, 63, 94);      // Coral;
@@ -351,7 +352,7 @@ namespace Yaml_AudioTool_Rebuilt
             trimSpanX1 = waveformSpan.X1;
             trimSpanX2 = waveformSpan.X2;
 
-            // Pre-Check: welche Marker liegen im zu trimmenden Bereich?
+            // Pre-Check: which marker is where?
             trimMarkersToHide = new bool[markerLines.Length];
             for (int i = 0; i < markerLines.Length; i++)
             {
@@ -362,6 +363,21 @@ namespace Yaml_AudioTool_Rebuilt
                     trimMarkersToHide[i] = true;
                 }
             }
+
+            // Snapshot of all visible markers for restauration
+            var snapshot = new (double X, string Text)[markerLines.Length];
+            for (int i = 0; i < markerLines.Length; i++)
+            {
+                if (markerLines[i].IsVisible && !trimMarkersToHide[i])
+                {
+                    snapshot[i] = (markerLines[i].X, markerLines[i].Text);
+                }
+                else
+                {
+                    snapshot[i] = (-1, null); // -1 marks "no marker to be trimmed"
+                }
+            }
+            trimMarkerSnapshot = snapshot;
 
             Text = "PLEASE WAIT - PROCESSING AUDIO TRIM ...";
             EnableGuiElements(false);
@@ -880,19 +896,38 @@ namespace Yaml_AudioTool_Rebuilt
 
                 if (result == "TRIMAUDIO")
                 {
-                    // Marker im getrimmten Bereich ausblenden (UI-Thread!)
-                    for (int i = 0; i < markerLines.Length; i++)
-                    {
-                        if (trimMarkersToHide != null && trimMarkersToHide[i])
-                        {
-                            markerLines[i].IsVisible = false;
-                            markerLines[i].X = 0;
-                        }
-                    }
                     RemoveMarkerButton.Enabled = false;
 
+                    // build plot from scratch
                     InitialPlotSetup();
                     PlotWaveform();
+
+                    double trimStart = Math.Min(trimSpanX1, trimSpanX2);
+                    double trimEnd = Math.Max(trimSpanX1, trimSpanX2);
+                    double removedDuration = trimEnd - trimStart;
+
+                    // recover markers
+                    if (trimMarkerSnapshot != null)
+                    {
+                        for (int i = 0; i < trimMarkerSnapshot.Length && i < markerLines.Length; i++)
+                        {
+                            if (trimMarkerSnapshot[i].X < 0) continue;
+
+                            double newX = trimMarkerSnapshot[i].X;
+
+                            // put markers to the left after trim
+                            if (newX >= trimEnd)
+                            {
+                                newX -= removedDuration;
+                            }
+
+                            markerLines[i].X = newX;
+                            markerLines[i].Text = trimMarkerSnapshot[i].Text;
+                            markerLines[i].LabelOppositeAxis = true;
+                            markerLines[i].IsVisible = true;
+                            WaveformsPlot.Plot.MoveToFront(markerLines[i]);
+                        }
+                    }
                 }
 
                 UpdatePeakLabel();
