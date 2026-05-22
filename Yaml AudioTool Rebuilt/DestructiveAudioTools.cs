@@ -177,27 +177,40 @@ namespace Yaml_AudioTool_Rebuilt
             // Fade-Bereich verarbeiten
             for (int i = startSample; i <= endSample; i++)
             {
+                // t läuft von 0 (Bereichsanfang) bis 1 (Bereichsende)
+                float t = (float)(i - startSample) / fadeLength;
                 float fadeRatio;
-                int relativePosition = i - startSample;
 
                 switch (fadeIndex)
                 {
-                    case 0: // Linear FadeIn
-                        fadeRatio = (float)relativePosition / fadeLength;
+                    case 0: // Linear IN
+                        fadeRatio = t;
                         break;
-                    case 1: // Exponential FadeIn
+                    case 1: // Exponential IN (concave) – startet flach, schwillt spät an
+                        fadeRatio = t * t;
+                        break;
+                    case 2: // Exponential IN (convex) – schwillt früh an, flacht oben ab
+                        fadeRatio = 1f - (1f - t) * (1f - t);
+                        break;
+                    case 3: // S-Curve IN – flach, steile Mitte, flach
+                        fadeRatio = t * t * (3f - 2f * t);
+                        break;
+                    case 4: // Linear OUT
+                        fadeRatio = 1f - t;
+                        break;
+                    case 5: // Exponential OUT (concave)
                         {
-                            float t = (float)relativePosition / fadeLength;
-                            fadeRatio = t * t;
+                            float to = 1f - t;
+                            fadeRatio = to * to;
                         }
                         break;
-                    case 2: // Linear FadeOut
-                        fadeRatio = (float)(fadeLength - relativePosition) / fadeLength;
+                    case 6: // Exponential OUT (convex)
+                        fadeRatio = 1f - t * t;
                         break;
-                    case 3: // Exponential FadeOut
+                    case 7: // S-Curve OUT
                         {
-                            float t = (float)(fadeLength - relativePosition) / fadeLength;
-                            fadeRatio = t * t;
+                            float to = 1f - t;
+                            fadeRatio = to * to * (3f - 2f * to);
                         }
                         break;
                     default:

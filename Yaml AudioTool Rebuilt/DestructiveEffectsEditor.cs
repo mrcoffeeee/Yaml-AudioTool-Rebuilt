@@ -632,6 +632,8 @@ namespace Yaml_AudioTool_Rebuilt
 
             WaveformsPlot.Plot.HideLegend();
             WaveformsPlot.Refresh();
+
+            FadeComboBox.SelectedIndex = 0;
         }
 
         private void WaveformsPlot_MouseMove(object sender, MouseEventArgs e)

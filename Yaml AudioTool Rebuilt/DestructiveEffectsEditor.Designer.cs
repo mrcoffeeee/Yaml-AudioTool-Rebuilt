@@ -220,7 +220,7 @@
             FadeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             FadeComboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             FadeComboBox.FormattingEnabled = true;
-            FadeComboBox.Items.AddRange(new object[] { "Linear IN", "Exponential IN", "Linear OUT", "Exponential OUT" });
+            FadeComboBox.Items.AddRange(new object[] { "Linear IN", "Exponential IN (concave)", "Exponential IN (convex)", "S-Curve IN", "Linear OUT", "Exponential OUT (concave)", "Exponential OUT (convex)", "S-Curve OUT" });
             FadeComboBox.Location = new System.Drawing.Point(4, 142);
             FadeComboBox.Margin = new System.Windows.Forms.Padding(2);
             FadeComboBox.Name = "FadeComboBox";
