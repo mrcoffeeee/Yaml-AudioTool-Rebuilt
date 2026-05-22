@@ -37,6 +37,11 @@ namespace Yaml_AudioTool_Rebuilt
         private double trimSpanX2;
         private bool[] trimMarkersToHide;
 
+        private readonly ScottPlot.Color leftChannelColor = new(13, 148, 136);      // Teal;
+        private readonly ScottPlot.Color rightChannelColor = new(244, 63, 94);      // Coral;
+        private readonly ScottPlot.Color markerColorNormal = new(55, 65, 75);       // Anthrazit
+        private readonly ScottPlot.Color markerColorSelected = new(245, 158, 11);   // Amber
+
         public DestructiveEffectsEditor()
         {
             InitializeComponent();
@@ -425,9 +430,9 @@ namespace Yaml_AudioTool_Rebuilt
         {
             for (int i = 0; i < markerLines.Length; i++)
             {
-                if (markerLines[i].Color == ScottPlot.Colors.LimeGreen)
+                if (markerLines[i].Color == markerColorSelected)
                 {
-                    markerLines[i].Color = ScottPlot.Colors.Red;
+                    markerLines[i].Color = markerColorNormal;
                     markerLines[i].IsVisible = false;
                     markerLines[i].X = 0;
                     RemoveMarkerButton.Enabled = false;
@@ -563,8 +568,8 @@ namespace Yaml_AudioTool_Rebuilt
                 if (audioDataM.Length > 0)
                 {
                     var chM = WaveformsPlot.Plot.Add.Signal(audioDataM, 1 / Convert.ToDouble(WaveFormat.SampleRate));
-                    chM.Color = ScottPlot.Colors.DarkRed;
-                    
+                    chM.Color = leftChannelColor;
+
                     WaveformsPlot.Plot.Axes.SetLimitsY(-1, 1);
                     limits = WaveformsPlot.Plot.Axes.GetLimits();
                     xLimit = audioDataM.Length / Convert.ToDouble(WaveFormat.SampleRate);
@@ -578,11 +583,11 @@ namespace Yaml_AudioTool_Rebuilt
                 if (audioDataL.Length > 0 && audioDataR.Length > 0)
                 {
                     var chL = WaveformsPlot.Plot.Add.Signal(audioDataL, 1 / Convert.ToDouble(WaveFormat.SampleRate));
-                    chL.Color = ScottPlot.Colors.DarkRed;
+                    chL.Color = leftChannelColor;
                     chL.Data.YOffset = 1;
 
                     var chR = WaveformsPlot.Plot.Add.Signal(audioDataR, 1 / Convert.ToDouble(WaveFormat.SampleRate));
-                    chR.Color = ScottPlot.Colors.ForestGreen;
+                    chR.Color = rightChannelColor;
                     chR.Data.YOffset = -1;
 
                     WaveformsPlot.Plot.Axes.SetLimitsY(-2, 2);
@@ -618,7 +623,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             for (int i = 0; i < markerLines.Length; i++)
             {
-                markerLines[i] = WaveformsPlot.Plot.Add.VerticalLine(0, 3, ScottPlot.Colors.Red, LinePattern.Solid);
+                markerLines[i] = WaveformsPlot.Plot.Add.VerticalLine(0, 3, markerColorNormal, LinePattern.Solid);
                 markerLines[i].LabelFontSize = 11;
                 markerLines[i].LabelOppositeAxis = true;
                 markerLines[i].IsDraggable = true;
@@ -722,7 +727,7 @@ namespace Yaml_AudioTool_Rebuilt
                     {
                         if (ml.IsVisible)
                         {
-                            ml.Color = ReferenceEquals(ml, vl) ? ScottPlot.Colors.LimeGreen : ScottPlot.Colors.Red;
+                            ml.Color = ReferenceEquals(ml, vl) ? markerColorSelected : markerColorNormal;
                         }
                     }
                     PlottableBeingDragged = vl;
@@ -736,7 +741,7 @@ namespace Yaml_AudioTool_Rebuilt
                     {
                         if (ml.IsVisible)
                         {
-                            ml.Color = ScottPlot.Colors.Red;
+                            ml.Color = markerColorNormal;
                         }
                     }
                     RemoveMarkerButton.Enabled = false;
