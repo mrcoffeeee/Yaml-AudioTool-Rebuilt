@@ -22,6 +22,7 @@ namespace Yaml_AudioTool_Rebuilt
         public AudioBuffer audioBuffer;        
         public IXAudio2SourceVoice sourceVoice;
         public IXAudio2MasteringVoice masteringVoice;
+        public IDisposable reverbEffect;
 
         public void Initialize()
         {
@@ -244,7 +245,7 @@ namespace Yaml_AudioTool_Rebuilt
                 if (f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
                 {
                     RoomCreationEffects.SetRoomFilter(sourceVoice);
-                    RoomCreationEffects.SetRoomReverb(sourceVoice);
+                    reverbEffect = RoomCreationEffects.SetRoomReverb(sourceVoice);
 
                     if (f1.RoomenableButton.BackColor != Color.LightGreen)
                     {
@@ -275,6 +276,12 @@ namespace Yaml_AudioTool_Rebuilt
                 sourceVoice = null;
             }
 
+            if (reverbEffect != null)
+            {
+                reverbEffect.Dispose();
+                reverbEffect = null;
+            }
+
             audioBuffer?.Dispose();
             audioBuffer = null;
             if (audioDataPtr != IntPtr.Zero)
@@ -291,7 +298,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         public void SetVolume(double sliderValue, int filelistValue)
         {
-            if (xaudio2 != null &&
+            if (sourceVoice != null &&
                 filelistValue == 1)
             {
                 sourceVoice.SetVolume(Convert.ToSingle(sliderValue));
@@ -300,8 +307,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         public void SetPitch(double pitchValue, double pitchrandValue, int filelistValue)
         {
-            
-            if (xaudio2 != null &&
+            if (sourceVoice != null &&
                 filelistValue == 1)
             {
                 sourceVoice.SetFrequencyRatio(Effects.PitchRandomizer(Convert.ToSingle(pitchValue), Convert.ToSingle(pitchrandValue)), operationSet: 0);

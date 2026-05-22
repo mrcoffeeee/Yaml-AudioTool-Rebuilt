@@ -1,27 +1,21 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
 using Vortice.XAudio2;
 
 using reverbParameters = Vortice.XAudio2.Fx.ReverbI3DL2Parameters;
-//using volumeMeterLevels = Vortice.XAudio2.Fx.VolumeMeterLevels;
 
 namespace Yaml_AudioTool_Rebuilt
 {
     public class Effects
     {
+        private static readonly Random rnd = new();
+
         public static float PitchRandomizer(float pitchValue, float pitchrandValue)
         {
             int min = Convert.ToInt32(pitchrandValue * -10);
             int max = -min;
-            Random rnd = new();
             float rand = rnd.Next(min, max) / 10.0f;
 
             if (pitchValue + rand < 0.5)
@@ -97,16 +91,16 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        public static IXAudio2SourceVoice SetRoomReverb(IXAudio2SourceVoice sourceVoice)
+        public static IDisposable SetRoomReverb(IXAudio2SourceVoice sourceVoice)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
             var reverb = Vortice.XAudio2.Fx.Fx.XAudio2CreateReverb();
             var effectDescriptor = new EffectDescriptor(reverb, sourceVoice.VoiceDetails.InputChannels);
             sourceVoice.SetEffectChain(effectDescriptor);
-            ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.ReverbwetdryPot.Value, 1)); 
+            ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.ReverbwetdryPot.Value, 1));
             sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
             sourceVoice.EnableEffect(0);
-            return sourceVoice;
+            return reverb;
         }
 
         public static void UpdateReverbSettings(int filelistValue, IXAudio2SourceVoice sourceVoice)
