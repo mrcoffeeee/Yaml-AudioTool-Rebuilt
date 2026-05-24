@@ -279,9 +279,9 @@ namespace Yaml_AudioTool_Rebuilt
                 ChangeFilelabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
                 //PitchShifterValues
                 PitchPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text) * 100;
-                PitchvalueLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text;
+                PitchvalueLabel.Text = "Pitch: " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text;
                 PitrandPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text) * 100;
-                PitchrandvalueLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text;
+                PitchrandvalueLabel.Text = "Rand: " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text;
                 PitchenableButton.Enabled = true;
                 RemoveButtonsEnabled(true, true);
                 if (FilelistView.SelectedItems.Count == 1)
@@ -1066,7 +1066,7 @@ namespace Yaml_AudioTool_Rebuilt
                 ap.SetPitch(soundPitchFactor, soundPitchRand, FilelistView.SelectedItems.Count);
             }
 
-            PitchvalueLabel.Text = soundPitchFactor.ToString();
+            PitchvalueLabel.Text = "Pitch: " + soundPitchFactor.ToString("0.00");
 
             if (FilelistView.SelectedItems.Count == 1)
             {
@@ -1077,7 +1077,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void PitrandPot_ValueChanged(object sender, EventArgs e)
         {
             double soundPitchRand = Math.Round(PitrandPot.Value / 100.00, 2);
-            PitchrandvalueLabel.Text = soundPitchRand.ToString("");
+            PitchrandvalueLabel.Text = "Rand: " + soundPitchRand.ToString("0.00");
 
             if (FilelistView.SelectedItems.Count == 1)
             {
@@ -1087,9 +1087,9 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void ResetButton_Click(object sender, EventArgs e)
         {
-            PitchvalueLabel.Text = "1";
+            PitchvalueLabel.Text = "Pitch: 1";
             PitchPot.Value = 100;
-            PitchrandvalueLabel.Text = "0";
+            PitchrandvalueLabel.Text = "Rand: 0";
             PitrandPot.Value = 0;
 
             if (PitchenableButton.BackColor == Color.LightGreen)
