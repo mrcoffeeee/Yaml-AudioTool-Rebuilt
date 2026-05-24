@@ -1660,39 +1660,39 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             EchoWetDryLabel.AutoSize = true;
             EchoWetDryLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            EchoWetDryLabel.Font = new System.Drawing.Font("Segoe UI", 7F);
+            EchoWetDryLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             EchoWetDryLabel.Location = new System.Drawing.Point(79, 78);
             EchoWetDryLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             EchoWetDryLabel.Name = "EchoWetDryLabel";
             EchoWetDryLabel.Size = new System.Drawing.Size(68, 39);
             EchoWetDryLabel.TabIndex = 82;
-            EchoWetDryLabel.Text = "Wet/Dry: 50%";
+            EchoWetDryLabel.Text = "Mix:\r\n50%";
             EchoWetDryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EchoFeedbackLabel
             // 
             EchoFeedbackLabel.AutoSize = true;
             EchoFeedbackLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            EchoFeedbackLabel.Font = new System.Drawing.Font("Segoe UI", 7F);
+            EchoFeedbackLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             EchoFeedbackLabel.Location = new System.Drawing.Point(79, 39);
             EchoFeedbackLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             EchoFeedbackLabel.Name = "EchoFeedbackLabel";
             EchoFeedbackLabel.Size = new System.Drawing.Size(68, 39);
             EchoFeedbackLabel.TabIndex = 81;
-            EchoFeedbackLabel.Text = "Feedback: 1";
+            EchoFeedbackLabel.Text = "Feedback:\r\n0,5";
             EchoFeedbackLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EchoDelayLabel
             // 
             EchoDelayLabel.AutoSize = true;
             EchoDelayLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            EchoDelayLabel.Font = new System.Drawing.Font("Segoe UI", 7F);
+            EchoDelayLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             EchoDelayLabel.Location = new System.Drawing.Point(79, 0);
             EchoDelayLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             EchoDelayLabel.Name = "EchoDelayLabel";
             EchoDelayLabel.Size = new System.Drawing.Size(68, 39);
             EchoDelayLabel.TabIndex = 80;
-            EchoDelayLabel.Text = "Delay: 500ms";
+            EchoDelayLabel.Text = "Delay:\r\n500ms";
             EchoDelayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EchoDelayPot
@@ -1709,10 +1709,12 @@ namespace Yaml_AudioTool_Rebuilt
             EchoDelayPot.TabIndex = 27;
             toolTip1.SetToolTip(EchoDelayPot, "Delay");
             EchoDelayPot.Value = 500D;
+            EchoDelayPot.ValueChanged += EchoDelayPot_ValueChanged;
             // 
             // EchoenableButton
             // 
             EchoenableButton.BackColor = System.Drawing.Color.Salmon;
+            EchoenableButton.Dock = System.Windows.Forms.DockStyle.Fill;
             EchoenableButton.Font = new System.Drawing.Font("Segoe UI", 8F);
             EchoenableButton.Location = new System.Drawing.Point(79, 121);
             EchoenableButton.Margin = new System.Windows.Forms.Padding(4);
@@ -1721,9 +1723,11 @@ namespace Yaml_AudioTool_Rebuilt
             EchoenableButton.TabIndex = 25;
             EchoenableButton.Text = "Off";
             EchoenableButton.UseVisualStyleBackColor = false;
+            EchoenableButton.Click += EchoenableButton_Click;
             // 
             // EchoResetButton
             // 
+            EchoResetButton.Dock = System.Windows.Forms.DockStyle.Fill;
             EchoResetButton.Font = new System.Drawing.Font("Segoe UI", 9F);
             EchoResetButton.Location = new System.Drawing.Point(4, 121);
             EchoResetButton.Margin = new System.Windows.Forms.Padding(4);
@@ -1732,6 +1736,7 @@ namespace Yaml_AudioTool_Rebuilt
             EchoResetButton.TabIndex = 63;
             EchoResetButton.Text = "Reset";
             EchoResetButton.UseVisualStyleBackColor = true;
+            EchoResetButton.Click += EchoResetButton_Click;
             // 
             // EchoFeedbackPot
             // 
@@ -1745,6 +1750,7 @@ namespace Yaml_AudioTool_Rebuilt
             EchoFeedbackPot.TabIndex = 59;
             toolTip1.SetToolTip(EchoFeedbackPot, "Feedback");
             EchoFeedbackPot.Value = 0.5D;
+            EchoFeedbackPot.ValueChanged += EchoFeedbackPot_ValueChanged;
             // 
             // EchoWetDryPot
             // 
@@ -1758,6 +1764,7 @@ namespace Yaml_AudioTool_Rebuilt
             EchoWetDryPot.TabIndex = 64;
             toolTip1.SetToolTip(EchoWetDryPot, "Wet/Dry Mix");
             EchoWetDryPot.Value = 50D;
+            EchoWetDryPot.ValueChanged += EchoWetDryPot_ValueChanged;
             // 
             // EQGroupBox
             // 
@@ -2179,7 +2186,7 @@ namespace Yaml_AudioTool_Rebuilt
             PitchrandvalueLabel.Name = "PitchrandvalueLabel";
             PitchrandvalueLabel.Size = new System.Drawing.Size(68, 41);
             PitchrandvalueLabel.TabIndex = 62;
-            PitchrandvalueLabel.Text = "Rand: 0";
+            PitchrandvalueLabel.Text = "Random:\r\n0";
             PitchrandvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ResetButton
@@ -2233,7 +2240,7 @@ namespace Yaml_AudioTool_Rebuilt
             PitchvalueLabel.Name = "PitchvalueLabel";
             PitchvalueLabel.Size = new System.Drawing.Size(68, 41);
             PitchvalueLabel.TabIndex = 61;
-            PitchvalueLabel.Text = "Pitch: 1";
+            PitchvalueLabel.Text = "Pitch:\r\n1";
             PitchvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DestructiveEffectsButton

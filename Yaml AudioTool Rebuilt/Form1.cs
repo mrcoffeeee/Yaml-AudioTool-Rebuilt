@@ -279,9 +279,9 @@ namespace Yaml_AudioTool_Rebuilt
                 ChangeFilelabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
                 //PitchShifterValues
                 PitchPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text) * 100;
-                PitchvalueLabel.Text = "Pitch: " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text;
+                PitchvalueLabel.Text = "Pitch:\n" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text;
                 PitrandPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text) * 100;
-                PitchrandvalueLabel.Text = "Rand: " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text;
+                PitchrandvalueLabel.Text = "Random:\n" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text;
                 PitchenableButton.Enabled = true;
                 RemoveButtonsEnabled(true, true);
                 if (FilelistView.SelectedItems.Count == 1)
@@ -1066,7 +1066,7 @@ namespace Yaml_AudioTool_Rebuilt
                 ap.SetPitch(soundPitchFactor, soundPitchRand, FilelistView.SelectedItems.Count);
             }
 
-            PitchvalueLabel.Text = "Pitch: " + soundPitchFactor.ToString("0.00");
+            PitchvalueLabel.Text = "Pitch:\n" + soundPitchFactor.ToString("0.00");
 
             if (FilelistView.SelectedItems.Count == 1)
             {
@@ -1077,7 +1077,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void PitrandPot_ValueChanged(object sender, EventArgs e)
         {
             double soundPitchRand = Math.Round(PitrandPot.Value / 100.00, 2);
-            PitchrandvalueLabel.Text = "Rand: " + soundPitchRand.ToString("0.00");
+            PitchrandvalueLabel.Text = "Random:\n" + soundPitchRand.ToString("0.00");
 
             if (FilelistView.SelectedItems.Count == 1)
             {
@@ -1087,14 +1087,16 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void ResetButton_Click(object sender, EventArgs e)
         {
-            PitchvalueLabel.Text = "Pitch: 1";
-            PitchPot.Value = 100;
-            PitchrandvalueLabel.Text = "Rand: 0";
+            PitchvalueLabel.Text = "Pitch:\n1";
+            PitchrandvalueLabel.Text = "Random:\n0";
+            PitchPot.Value = 100;            
             PitrandPot.Value = 0;
 
             if (PitchenableButton.BackColor == Color.LightGreen)
             {
-                ap.SetPitch(Convert.ToSingle(PitchvalueLabel.Text), Convert.ToSingle(PitchrandvalueLabel.Text), FilelistView.SelectedItems.Count);
+                double soundPitchFactor = Math.Round(PitchPot.Value / 100.00, 2);
+                double soundPitchRand = Math.Round(PitrandPot.Value / 100.00, 2);
+                ap.SetPitch(soundPitchFactor, soundPitchRand, FilelistView.SelectedItems.Count);
             }
 
             if (FilelistView.SelectedItems.Count == 1)
@@ -1124,6 +1126,103 @@ namespace Yaml_AudioTool_Rebuilt
         }
 
 
+        // Echo
+
+        private void EchoDelayPot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EchoenableButton.BackColor == Color.LightGreen)
+            {
+                EchoCreationEffect.UpdateEchoSettings(ap.sourceVoice);
+            }
+
+            EchoDelayLabel.Text = "Delay:\n" + EchoDelayPot.Value.ToString("0.00") + "ms";
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void EchoFeedbackPot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EchoenableButton.BackColor == Color.LightGreen)
+            {
+                EchoCreationEffect.UpdateEchoSettings(ap.sourceVoice);
+            }
+
+            EchoFeedbackLabel.Text = "Feedback:\n" + EchoFeedbackPot.Value.ToString("0.00");
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void EchoWetDryPot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EchoenableButton.BackColor == Color.LightGreen)
+            {
+                EchoCreationEffect.UpdateEchoSettings(ap.sourceVoice);
+            }
+
+            EchoWetDryLabel.Text = "Mix:\n" + EchoWetDryPot.Value.ToString("0.00") + "%";
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void EchoResetButton_Click(object sender, EventArgs e)
+        {
+            EchoDelayPot.Value = 500;
+            EchoFeedbackPot.Value = 0.5;
+            EchoWetDryPot.Value= 50;
+            EchoDelayLabel.Text = "Delay:\n500ms";
+            EchoFeedbackLabel.Text = "Feedback:\n0,5";
+            EchoWetDryLabel.Text = "Mix:\n50%";
+
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = "1";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text = "0";
+            }*/
+        }
+
+        private void EchoenableButton_Click(object sender, EventArgs e)
+        {
+            if (EchoenableButton.Text == "Off")
+            {
+                EchoenableButton.Text = "On";
+                EchoenableButton.BackColor = Color.LightGreen;
+                // Activate EQ
+                if (ap.sourceVoice != null && ap.echoEffect != null)
+                {
+                    ap.sourceVoice.EnableEffect(1);
+                }
+            }
+
+            else if (EchoenableButton.Text == "On")
+            {
+                EchoenableButton.Text = "Off";
+                EchoenableButton.BackColor = Color.Salmon;
+                if (ap.sourceVoice != null && ap.echoEffect != null)
+                {
+                    ap.sourceVoice.DisableEffect(1);
+                }
+            }
+        }
+
+
         // EQ
 
         private void EQGain4Pot_ValueChanged(object sender, EventArgs e)
@@ -1133,7 +1232,7 @@ namespace Yaml_AudioTool_Rebuilt
                 EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
-            EQGain4Label.Text = "G: " + EQGain4Pot.Value.ToString("0.00") + " dB";
+            EQGain4Label.Text = "G: " + EQGain4Pot.Value.ToString("0.00") + "dB";
 
             // Implement later if/when implemented in engine
             /*if (FilelistView.SelectedItems.Count == 1)
@@ -1165,7 +1264,7 @@ namespace Yaml_AudioTool_Rebuilt
                 EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
-            EQGain3Label.Text = "G: " + EQGain3Pot.Value.ToString("0.00") + " dB";
+            EQGain3Label.Text = "G: " + EQGain3Pot.Value.ToString("0.00") + "dB";
 
             // Implement later if/when implemented in engine
             /*if (FilelistView.SelectedItems.Count == 1)
@@ -1197,7 +1296,7 @@ namespace Yaml_AudioTool_Rebuilt
                 EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
-            EQGain2Label.Text = "G: " + EQGain2Pot.Value.ToString("0.00") + " dB";
+            EQGain2Label.Text = "G: " + EQGain2Pot.Value.ToString("0.00") + "dB";
 
             // Implement later if/when implemented in engine
             /*if (FilelistView.SelectedItems.Count == 1)
@@ -1229,7 +1328,7 @@ namespace Yaml_AudioTool_Rebuilt
                 EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
-            EQGain1Label.Text = "G: " + EQGain1Pot.Value.ToString("0.00") + " dB";
+            EQGain1Label.Text = "G: " + EQGain1Pot.Value.ToString("0.00") + "dB";
 
             // Implement later if/when implemented in engine
             /*if (FilelistView.SelectedItems.Count == 1)
@@ -1260,10 +1359,10 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain3Pot.Value = 0;
             EQGain2Pot.Value = 0;
             EQGain1Pot.Value = 0;
-            EQGain4Label.Text = "G: 0 dB";
-            EQGain3Label.Text = "G: 0 dB";
-            EQGain2Label.Text = "G: 0 dB";
-            EQGain1Label.Text = "G: 0 dB";
+            EQGain4Label.Text = "G: 0dB";
+            EQGain3Label.Text = "G: 0dB";
+            EQGain2Label.Text = "G: 0dB";
+            EQGain1Label.Text = "G: 0dB";
             Bandwidth4Pot.Value = 1;
             Bandwidth3Pot.Value = 1;
             Bandwidth2Pot.Value = 1;
@@ -1311,8 +1410,7 @@ namespace Yaml_AudioTool_Rebuilt
         }
 
 
-        #endregion Property-Effects        
-
+        #endregion Property-Effects
     }
 
     public class ListViewColumnSorter : IComparer

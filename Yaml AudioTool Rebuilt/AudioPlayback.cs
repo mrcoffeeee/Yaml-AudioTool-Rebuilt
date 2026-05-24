@@ -23,6 +23,7 @@ namespace Yaml_AudioTool_Rebuilt
         public IXAudio2SourceVoice sourceVoice;
         public IXAudio2MasteringVoice masteringVoice;
         public IDisposable eqEffect;
+        public IDisposable echoEffect;
         public IDisposable reverbEffect;
 
         public void Initialize()
@@ -258,13 +259,17 @@ namespace Yaml_AudioTool_Rebuilt
                 // Set Effect Chain
                 bool roomAssigned = f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roommapHeader)].Text != "";
                 bool eqEnabled = f1.EQenableButton.BackColor == Color.LightGreen;
+                bool echoEnabled = f1.EchoenableButton.BackColor == Color.LightGreen;
                 bool reverbEnabled = roomAssigned && f1.RoomenableButton.BackColor == Color.LightGreen;
 
                 // Build effect chain
-                (eqEffect, reverbEffect) = RoomCreationEffects.SetEffectChain(sourceVoice);
+                (eqEffect, echoEffect, reverbEffect) = RoomCreationEffects.SetEffectChain(sourceVoice);
 
                 // Set eq parameters
                 EQCreationEffect.SetEqualizer(sourceVoice);
+
+                // Set echo parameters
+                EchoCreationEffect.SetEcho(sourceVoice);
 
                 // Set room parameters
                 if (roomAssigned)
@@ -279,10 +284,15 @@ namespace Yaml_AudioTool_Rebuilt
                 else
                     sourceVoice.DisableEffect(0);
 
-                if (reverbEnabled)
+                if (echoEnabled)
                     sourceVoice.EnableEffect(1);
                 else
                     sourceVoice.DisableEffect(1);
+
+                if (reverbEnabled)
+                    sourceVoice.EnableEffect(2);
+                else
+                    sourceVoice.DisableEffect(2);
 
                 sourceVoice.SubmitSourceBuffer(audioBuffer);
                 sourceVoice.Start();
@@ -307,6 +317,9 @@ namespace Yaml_AudioTool_Rebuilt
 
             eqEffect?.Dispose();
             eqEffect = null;
+
+            echoEffect?.Dispose();
+            echoEffect = null;
 
             reverbEffect?.Dispose();
             reverbEffect = null;

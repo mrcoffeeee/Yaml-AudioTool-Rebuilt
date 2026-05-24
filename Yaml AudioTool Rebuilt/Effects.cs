@@ -27,6 +27,26 @@ namespace Yaml_AudioTool_Rebuilt
 
             return 20.0 * Math.Log10(linear);
         }
+
+        public static float PercentToWetDry(double percent)
+        {
+            float wetDry = (float)(percent / 100.0);
+
+            // Clamp to FXECHO-WetDryMix borders
+            if (wetDry < 0.0f) wetDry = 0.0f;
+            if (wetDry > 1.0f) wetDry = 1.0f;
+
+            return wetDry;
+        }
+
+        public static double WetDryToPercent(float wetDry)
+        {
+            // Clamp to FXECHO-WetDryMix borders
+            if (wetDry < 0.0f) wetDry = 0.0f;
+            if (wetDry > 1.0f) wetDry = 1.0f;
+
+            return wetDry * 100.0;
+        }
     }
 
     public class Effects
@@ -83,6 +103,32 @@ namespace Yaml_AudioTool_Rebuilt
             if (sourceVoice != null)
             {
                 SetEqualizer(sourceVoice);
+            }
+        }
+    }
+
+    public class EchoCreationEffect
+    {
+        // Sets echo parameters (Index 1 in the chain)
+        public static void SetEcho(IXAudio2SourceVoice sourceVoice)
+        {
+            Form1 f1 = (Form1)Application.OpenForms["Form1"];
+
+            var echoParams = new Vortice.XAPO.EchoParameters
+            {
+                WetDryMix = EffectsHelperFunctions.PercentToWetDry(f1.EchoWetDryPot.Value),
+                Feedback = Convert.ToSingle(f1.EchoFeedbackPot.Value),
+                Delay = Convert.ToSingle(f1.EchoDelayPot.Value)
+            };
+
+            sourceVoice.SetEffectParameters(1, echoParams, 0);
+        }
+
+        public static void UpdateEchoSettings(IXAudio2SourceVoice sourceVoice)
+        {
+            if (sourceVoice != null)
+            {
+                SetEcho(sourceVoice);
             }
         }
     }
@@ -149,31 +195,34 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        // Builds the effect chain: index 0 = EQ, index 1 = Reverb.
-        public static (IDisposable eq, IDisposable reverb) SetEffectChain(IXAudio2SourceVoice sourceVoice)
+        // Builds the effect chain: index 0 = EQ, index 1 = Echo, index 2 = Reverb.
+        public static (IDisposable eq, IDisposable echo, IDisposable reverb) SetEffectChain(IXAudio2SourceVoice sourceVoice)
         {
-            //Form1 f1 = (Form1)Application.OpenForms["Form1"];
-
             // --- Create EQ (Index 0) ---
             Vortice.XAPO.XAPO.CreateFX(Vortice.XAPO.XAPO.CLSID_FXEQ, out var eqUnknown);
 
-            // --- Create Reverb (Index 1) ---
+            // --- Create Echo (Index 1) mit MaxDelay 2000ms ---
+            var echoInit = new Vortice.XAPO.EchoInitData { MaxDelay = 2000f };
+            Vortice.XAPO.XAPO.CreateFX(Vortice.XAPO.XAPO.CLSID_FXEcho, echoInit, out var echoUnknown);
+
+            // --- Create Reverb (Index 2) ---
             var reverb = Vortice.XAudio2.Fx.Fx.XAudio2CreateReverb();
 
             // --- Set chain ---
             uint channels = (uint)sourceVoice.VoiceDetails.InputChannels;
             var eqDescriptor = new EffectDescriptor(eqUnknown, channels);
+            var echoDescriptor = new EffectDescriptor(echoUnknown, channels);
             var reverbDescriptor = new EffectDescriptor(reverb, channels);
-            sourceVoice.SetEffectChain(eqDescriptor, reverbDescriptor);
+            sourceVoice.SetEffectChain(eqDescriptor, echoDescriptor, reverbDescriptor);
 
-            return (eqUnknown, reverb);
+            return (eqUnknown, echoUnknown, reverb);
         }
 
         public static void SetRoomReverb(IXAudio2SourceVoice sourceVoice)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
             ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.ReverbwetdryPot.Value, 1));
-            sourceVoice.SetEffectParameters(1, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
+            sourceVoice.SetEffectParameters(2, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
         }
 
         public static void UpdateReverbSettings(int filelistValue, IXAudio2SourceVoice sourceVoice)
@@ -183,7 +232,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 Form1 f1 = (Form1)Application.OpenForms["Form1"];
                 ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.ReverbwetdryPot.Value, 1));
-                sourceVoice.SetEffectParameters(1, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
+                sourceVoice.SetEffectParameters(2, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
             }
         }
     }
