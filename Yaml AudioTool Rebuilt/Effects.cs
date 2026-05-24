@@ -1,13 +1,34 @@
 ﻿using System;
 using System.Windows.Forms;
-
-
 using Vortice.XAudio2;
 
 using reverbParameters = Vortice.XAudio2.Fx.ReverbI3DL2Parameters;
 
 namespace Yaml_AudioTool_Rebuilt
 {
+    public class EffectsHelperFunctions
+    {
+        public static float DbToLinear(double db)
+        {
+            float linear = (float)Math.Pow(10, db / 20.0);
+
+            // Clamp to EQ borders
+            if (linear < 0.126f) linear = 0.126f;
+            if (linear > 7.94f) linear = 7.94f;
+
+            return linear;
+        }
+
+        public static double LinearToDb(float linear)
+        {
+            // Clamp to EQ borders
+            if (linear < 0.126f) linear = 0.126f;
+            if (linear > 7.94f) linear = 7.94f;
+
+            return 20.0 * Math.Log10(linear);
+        }
+    }
+
     public class Effects
     {
         private static readonly Random rnd = new();
@@ -26,6 +47,43 @@ namespace Yaml_AudioTool_Rebuilt
                 pitchValue += rand;
             //MessageBox.Show(pitchValue.ToString());
             return pitchValue;
+        }
+    }
+
+    public class EQCreationEffect
+    {
+        // Sets EQ-parameters (fixed frequencies: 40 / 160 / 650 / 2500 Hz)
+        public static void SetEqualizer(IXAudio2SourceVoice sourceVoice)
+        {
+            Form1 f1 = (Form1)Application.OpenForms["Form1"];
+
+            var eqParams = new Vortice.XAPO.EqualizerParameters
+            {
+                FrequencyCenter0 = 40f,
+                Gain0 = EffectsHelperFunctions.DbToLinear(f1.EQGain1Pot.Value),
+                Bandwidth0 = Convert.ToSingle(f1.Bandwidth1Pot.Value),
+
+                FrequencyCenter1 = 160f,
+                Gain1 = EffectsHelperFunctions.DbToLinear(f1.EQGain2Pot.Value),
+                Bandwidth1 = Convert.ToSingle(f1.Bandwidth2Pot.Value),
+
+                FrequencyCenter2 = 650f,
+                Gain2 = EffectsHelperFunctions.DbToLinear(f1.EQGain3Pot.Value),
+                Bandwidth2 = Convert.ToSingle(f1.Bandwidth3Pot.Value),
+
+                FrequencyCenter3 = 2500f,
+                Gain3 = EffectsHelperFunctions.DbToLinear(f1.EQGain4Pot.Value),
+                Bandwidth3 = Convert.ToSingle(f1.Bandwidth4Pot.Value)
+            };
+            sourceVoice.SetEffectParameters(0, eqParams, 0);
+        }
+
+        public static void UpdateEqualizerSettings(IXAudio2SourceVoice sourceVoice)
+        {
+            if (sourceVoice != null)
+            {
+                SetEqualizer(sourceVoice);
+            }
         }
     }
 
@@ -91,16 +149,31 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        public static IDisposable SetRoomReverb(IXAudio2SourceVoice sourceVoice)
+        // Builds the effect chain: index 0 = EQ, index 1 = Reverb.
+        public static (IDisposable eq, IDisposable reverb) SetEffectChain(IXAudio2SourceVoice sourceVoice)
+        {
+            //Form1 f1 = (Form1)Application.OpenForms["Form1"];
+
+            // --- Create EQ (Index 0) ---
+            Vortice.XAPO.XAPO.CreateFX(Vortice.XAPO.XAPO.CLSID_FXEQ, out var eqUnknown);
+
+            // --- Create Reverb (Index 1) ---
+            var reverb = Vortice.XAudio2.Fx.Fx.XAudio2CreateReverb();
+
+            // --- Set chain ---
+            uint channels = (uint)sourceVoice.VoiceDetails.InputChannels;
+            var eqDescriptor = new EffectDescriptor(eqUnknown, channels);
+            var reverbDescriptor = new EffectDescriptor(reverb, channels);
+            sourceVoice.SetEffectChain(eqDescriptor, reverbDescriptor);
+
+            return (eqUnknown, reverb);
+        }
+
+        public static void SetRoomReverb(IXAudio2SourceVoice sourceVoice)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
-            var reverb = Vortice.XAudio2.Fx.Fx.XAudio2CreateReverb();
-            var effectDescriptor = new EffectDescriptor(reverb, sourceVoice.VoiceDetails.InputChannels);
-            sourceVoice.SetEffectChain(effectDescriptor);
             ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.ReverbwetdryPot.Value, 1));
-            sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
-            sourceVoice.EnableEffect(0);
-            return reverb;
+            sourceVoice.SetEffectParameters(1, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
         }
 
         public static void UpdateReverbSettings(int filelistValue, IXAudio2SourceVoice sourceVoice)
@@ -110,8 +183,8 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 Form1 f1 = (Form1)Application.OpenForms["Form1"];
                 ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex].WetDryMix = Convert.ToSingle(Math.Round(f1.ReverbwetdryPot.Value, 1));
-                sourceVoice.SetEffectParameters(0, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
+                sourceVoice.SetEffectParameters(1, Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(ReverbPresets[f1.ReverbpresetComboBox.SelectedIndex]), 0);
             }
-        }        
+        }
     }
 }

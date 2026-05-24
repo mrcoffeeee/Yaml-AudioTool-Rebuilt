@@ -1055,25 +1055,7 @@ namespace Yaml_AudioTool_Rebuilt
         //######################################################
 
 
-        private void PitchenableButton_Click(object sender, EventArgs e)
-        {
-            if (PitchenableButton.Text == "Off")
-            {
-                double soundPitchFactor = Math.Round(PitchPot.Value / 100.00, 2);
-                double soundPitchRand = Math.Round(PitrandPot.Value / 100.00, 2);
-                ap.SetPitch(soundPitchFactor, soundPitchRand, FilelistView.SelectedItems.Count);
-                PitchenableButton.Text = "On";
-                PitchenableButton.BackColor = Color.LightGreen;
-            }
-
-            else if (PitchenableButton.Text == "On")
-            {
-                ap.SetPitch(1, 0, FilelistView.SelectedItems.Count);
-                PitchenableButton.Text = "Off";
-                PitchenableButton.BackColor = Color.Salmon;
-            }
-        }
-
+        // PitchShifter
         private void PitchPot_ValueChanged(object sender, EventArgs e)
         {
             double soundPitchFactor = Math.Round(PitchPot.Value / 100.00, 2);
@@ -1122,9 +1104,215 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
+        private void PitchenableButton_Click(object sender, EventArgs e)
+        {
+            if (PitchenableButton.Text == "Off")
+            {
+                double soundPitchFactor = Math.Round(PitchPot.Value / 100.00, 2);
+                double soundPitchRand = Math.Round(PitrandPot.Value / 100.00, 2);
+                ap.SetPitch(soundPitchFactor, soundPitchRand, FilelistView.SelectedItems.Count);
+                PitchenableButton.Text = "On";
+                PitchenableButton.BackColor = Color.LightGreen;
+            }
+
+            else if (PitchenableButton.Text == "On")
+            {
+                ap.SetPitch(1, 0, FilelistView.SelectedItems.Count);
+                PitchenableButton.Text = "Off";
+                PitchenableButton.BackColor = Color.Salmon;
+            }
+        }
+
+
+        // EQ
+
+        private void EQGain4Pot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            EQGain4Label.Text = "G: " + EQGain4Pot.Value.ToString("0.00") + " dB";
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void Bandwidth4Pot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            Bandwidth4Label.Text = "Q: " + Bandwidth4Pot.Value.ToString("0.00");
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void EQGain3Pot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            EQGain3Label.Text = "G: " + EQGain3Pot.Value.ToString("0.00") + " dB";
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void Bandwidth3Pot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            Bandwidth3Label.Text = "Q: " + Bandwidth3Pot.Value.ToString("0.00");
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void EQGain2Pot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            EQGain2Label.Text = "G: " + EQGain2Pot.Value.ToString("0.00") + " dB";
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void Bandwidth2Pot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            Bandwidth2Label.Text = "Q: " + Bandwidth2Pot.Value.ToString("0.00");
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void EQGain1Pot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            EQGain1Label.Text = "G: " + EQGain1Pot.Value.ToString("0.00") + " dB";
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void Bandwidth1Pot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            Bandwidth1Label.Text = "Q: " + Bandwidth1Pot.Value.ToString("0.00");
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
+            }*/
+        }
+
+        private void EQResetButton_Click(object sender, EventArgs e)
+        {
+            EQGain4Pot.Value = 0;
+            EQGain3Pot.Value = 0;
+            EQGain2Pot.Value = 0;
+            EQGain1Pot.Value = 0;
+            EQGain4Label.Text = "G: 0 dB";
+            EQGain3Label.Text = "G: 0 dB";
+            EQGain2Label.Text = "G: 0 dB";
+            EQGain1Label.Text = "G: 0 dB";
+            Bandwidth4Pot.Value = 1;
+            Bandwidth3Pot.Value = 1;
+            Bandwidth2Pot.Value = 1;
+            Bandwidth1Pot.Value = 1;
+            Bandwidth4Label.Text = "Q: 1";
+            Bandwidth3Label.Text = "Q: 1";
+            Bandwidth2Label.Text = "Q: 1";
+            Bandwidth1Label.Text = "Q: 1";
+
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            // Implement later if/when implemented in engine
+            /*if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = "1";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text = "0";
+            }*/
+        }
+
+        private void EQenableButton_Click(object sender, EventArgs e)
+        {
+            if (EQenableButton.Text == "Off")
+            {
+                EQenableButton.Text = "On";
+                EQenableButton.BackColor = Color.LightGreen;
+                // Activate EQ
+                if (ap.sourceVoice != null && ap.eqEffect != null)
+                {
+                    ap.sourceVoice.EnableEffect(0);
+                }
+            }
+
+            else if (EQenableButton.Text == "On")
+            {
+                EQenableButton.Text = "Off";
+                EQenableButton.BackColor = Color.Salmon;
+                if (ap.sourceVoice != null && ap.eqEffect != null)
+                {
+                    ap.sourceVoice.DisableEffect(0);
+                }
+            }
+        }
+
+
         #endregion Property-Effects        
 
-        
     }
 
     public class ListViewColumnSorter : IComparer

@@ -22,6 +22,7 @@ namespace Yaml_AudioTool_Rebuilt
         public AudioBuffer audioBuffer;        
         public IXAudio2SourceVoice sourceVoice;
         public IXAudio2MasteringVoice masteringVoice;
+        public IDisposable eqEffect;
         public IDisposable reverbEffect;
 
         public void Initialize()
@@ -254,22 +255,37 @@ namespace Yaml_AudioTool_Rebuilt
                     sourceVoice.SetFrequencyRatio(Effects.PitchRandomizer(pitchValue, pitchrandValue), operationSet: 0);
                 }
 
-                // Set Room
-                if (f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roommapHeader)].Text != "")
+                // Set Effect Chain
+                bool roomAssigned = f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roommapHeader)].Text != "";
+                bool eqEnabled = f1.EQenableButton.BackColor == Color.LightGreen;
+                bool reverbEnabled = roomAssigned && f1.RoomenableButton.BackColor == Color.LightGreen;
+
+                // Build effect chain
+                (eqEffect, reverbEffect) = RoomCreationEffects.SetEffectChain(sourceVoice);
+
+                // Set eq parameters
+                EQCreationEffect.SetEqualizer(sourceVoice);
+
+                // Set room parameters
+                if (roomAssigned)
                 {
                     RoomCreationEffects.SetRoomFilter(sourceVoice);
-                    reverbEffect = RoomCreationEffects.SetRoomReverb(sourceVoice);
-
-                    if (f1.RoomenableButton.BackColor != Color.LightGreen)
-                    {
-                        sourceVoice.DisableEffect(0);
-                        sourceVoice.DisableEffect(1);
-                    }
+                    RoomCreationEffects.SetRoomReverb(sourceVoice);
                 }
+
+                // Initial effects states due to buttons
+                if (eqEnabled)
+                    sourceVoice.EnableEffect(0);
+                else
+                    sourceVoice.DisableEffect(0);
+
+                if (reverbEnabled)
+                    sourceVoice.EnableEffect(1);
+                else
+                    sourceVoice.DisableEffect(1);
 
                 sourceVoice.SubmitSourceBuffer(audioBuffer);
                 sourceVoice.Start();
-                //RoomCreationEffects.UpdateReverbSettings(f1.filelistView.SelectedItems.Count, sourceVoice);
 
                 f1.PlayButton.Text = "| |";
                 playbackStop = false;
@@ -288,6 +304,9 @@ namespace Yaml_AudioTool_Rebuilt
                 sourceVoice.Dispose();
                 sourceVoice = null;
             }
+
+            eqEffect?.Dispose();
+            eqEffect = null;
 
             reverbEffect?.Dispose();
             reverbEffect = null;
