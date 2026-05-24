@@ -652,7 +652,7 @@ namespace Yaml_AudioTool_Rebuilt
             TabControl.Multiline = true;
             TabControl.Name = "TabControl";
             TabControl.SelectedIndex = 0;
-            TabControl.Size = new System.Drawing.Size(356, 312);
+            TabControl.Size = new System.Drawing.Size(356, 372);
             TabControl.TabIndex = 4;
             // 
             // playbacktabPage
@@ -665,7 +665,7 @@ namespace Yaml_AudioTool_Rebuilt
             playbacktabPage.Margin = new System.Windows.Forms.Padding(4);
             playbacktabPage.Name = "playbacktabPage";
             playbacktabPage.Padding = new System.Windows.Forms.Padding(4);
-            playbacktabPage.Size = new System.Drawing.Size(348, 284);
+            playbacktabPage.Size = new System.Drawing.Size(348, 344);
             playbacktabPage.TabIndex = 0;
             playbacktabPage.Text = "Playback";
             playbacktabPage.UseVisualStyleBackColor = true;
@@ -680,14 +680,14 @@ namespace Yaml_AudioTool_Rebuilt
             MainVolumeMeter.MaxDb = 0F;
             MainVolumeMeter.MinDb = -60F;
             MainVolumeMeter.Name = "MainVolumeMeter";
-            MainVolumeMeter.Size = new System.Drawing.Size(38, 276);
+            MainVolumeMeter.Size = new System.Drawing.Size(38, 332);
             MainVolumeMeter.TabIndex = 31;
             MainVolumeMeter.Text = "MainVolumeMeter";
             // 
             // MainVolumeSlider
             // 
             MainVolumeSlider.Font = new System.Drawing.Font("Segoe UI", 8F);
-            MainVolumeSlider.Location = new System.Drawing.Point(8, 256);
+            MainVolumeSlider.Location = new System.Drawing.Point(9, 311);
             MainVolumeSlider.Name = "MainVolumeSlider";
             MainVolumeSlider.Size = new System.Drawing.Size(290, 26);
             MainVolumeSlider.TabIndex = 30;
@@ -1019,7 +1019,7 @@ namespace Yaml_AudioTool_Rebuilt
             organizetabPage.Location = new System.Drawing.Point(4, 24);
             organizetabPage.Name = "organizetabPage";
             organizetabPage.Padding = new System.Windows.Forms.Padding(3);
-            organizetabPage.Size = new System.Drawing.Size(348, 284);
+            organizetabPage.Size = new System.Drawing.Size(348, 344);
             organizetabPage.TabIndex = 3;
             organizetabPage.Text = "Organize";
             organizetabPage.UseVisualStyleBackColor = true;
@@ -1151,7 +1151,7 @@ namespace Yaml_AudioTool_Rebuilt
             reverbtabPage.Margin = new System.Windows.Forms.Padding(4);
             reverbtabPage.Name = "reverbtabPage";
             reverbtabPage.Padding = new System.Windows.Forms.Padding(4);
-            reverbtabPage.Size = new System.Drawing.Size(348, 284);
+            reverbtabPage.Size = new System.Drawing.Size(348, 344);
             reverbtabPage.TabIndex = 2;
             reverbtabPage.Text = "Room Creation";
             reverbtabPage.UseVisualStyleBackColor = true;
@@ -1160,9 +1160,9 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             RoomGroupBox.Controls.Add(RoomTableLayoutPanelMain);
             RoomGroupBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            RoomGroupBox.Location = new System.Drawing.Point(3, 118);
+            RoomGroupBox.Location = new System.Drawing.Point(3, 136);
             RoomGroupBox.Name = "RoomGroupBox";
-            RoomGroupBox.Size = new System.Drawing.Size(342, 162);
+            RoomGroupBox.Size = new System.Drawing.Size(339, 201);
             RoomGroupBox.TabIndex = 76;
             RoomGroupBox.TabStop = false;
             RoomGroupBox.Text = "Room Creation";
@@ -1179,7 +1179,7 @@ namespace Yaml_AudioTool_Rebuilt
             RoomTableLayoutPanelMain.RowCount = 2;
             RoomTableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
             RoomTableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            RoomTableLayoutPanelMain.Size = new System.Drawing.Size(336, 140);
+            RoomTableLayoutPanelMain.Size = new System.Drawing.Size(333, 179);
             RoomTableLayoutPanelMain.TabIndex = 0;
             // 
             // RoomTableLayoutPanelUpper
@@ -1201,7 +1201,7 @@ namespace Yaml_AudioTool_Rebuilt
             RoomTableLayoutPanelUpper.RowCount = 2;
             RoomTableLayoutPanelUpper.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             RoomTableLayoutPanelUpper.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            RoomTableLayoutPanelUpper.Size = new System.Drawing.Size(330, 71);
+            RoomTableLayoutPanelUpper.Size = new System.Drawing.Size(327, 92);
             RoomTableLayoutPanelUpper.TabIndex = 0;
             // 
             // ReverbpresetLabel
@@ -1209,7 +1209,7 @@ namespace Yaml_AudioTool_Rebuilt
             ReverbpresetLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             ReverbpresetLabel.AutoSize = true;
             ReverbpresetLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            ReverbpresetLabel.Location = new System.Drawing.Point(4, 10);
+            ReverbpresetLabel.Location = new System.Drawing.Point(4, 15);
             ReverbpresetLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             ReverbpresetLabel.Name = "ReverbpresetLabel";
             ReverbpresetLabel.Size = new System.Drawing.Size(46, 15);
@@ -1223,7 +1223,7 @@ namespace Yaml_AudioTool_Rebuilt
             RoomLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             RoomLabel.AutoSize = true;
             RoomLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            RoomLabel.Location = new System.Drawing.Point(4, 45);
+            RoomLabel.Location = new System.Drawing.Point(4, 61);
             RoomLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             RoomLabel.Name = "RoomLabel";
             RoomLabel.Size = new System.Drawing.Size(42, 15);
@@ -1238,10 +1238,10 @@ namespace Yaml_AudioTool_Rebuilt
             ReverbpresetComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             ReverbpresetComboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             ReverbpresetComboBox.FormattingEnabled = true;
-            ReverbpresetComboBox.Location = new System.Drawing.Point(70, 6);
+            ReverbpresetComboBox.Location = new System.Drawing.Point(69, 11);
             ReverbpresetComboBox.Margin = new System.Windows.Forms.Padding(4);
             ReverbpresetComboBox.Name = "ReverbpresetComboBox";
-            ReverbpresetComboBox.Size = new System.Drawing.Size(107, 23);
+            ReverbpresetComboBox.Size = new System.Drawing.Size(106, 23);
             ReverbpresetComboBox.TabIndex = 57;
             ReverbpresetComboBox.SelectedIndexChanged += ReverbpresetComboBox_SelectedIndexChanged;
             // 
@@ -1249,7 +1249,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             RoomnameTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             RoomnameTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            RoomnameTextBox.Location = new System.Drawing.Point(69, 41);
+            RoomnameTextBox.Location = new System.Drawing.Point(68, 57);
             RoomnameTextBox.MaxLength = 30;
             RoomnameTextBox.Name = "RoomnameTextBox";
             RoomnameTextBox.Size = new System.Drawing.Size(108, 23);
@@ -1259,12 +1259,12 @@ namespace Yaml_AudioTool_Rebuilt
             // ReverbwetdryPot
             // 
             ReverbwetdryPot.Dock = System.Windows.Forms.DockStyle.Fill;
-            ReverbwetdryPot.Location = new System.Drawing.Point(185, 3);
+            ReverbwetdryPot.Location = new System.Drawing.Point(183, 3);
             ReverbwetdryPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             ReverbwetdryPot.Maximum = 100D;
             ReverbwetdryPot.Minimum = 0D;
             ReverbwetdryPot.Name = "ReverbwetdryPot";
-            ReverbwetdryPot.Size = new System.Drawing.Size(41, 29);
+            ReverbwetdryPot.Size = new System.Drawing.Size(41, 40);
             ReverbwetdryPot.TabIndex = 69;
             ReverbwetdryPot.Value = 100D;
             ReverbwetdryPot.ValueChanged += ReverbwetdryPot_ValueChanged;
@@ -1276,12 +1276,12 @@ namespace Yaml_AudioTool_Rebuilt
             RoomTableLayoutPanelMix.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             RoomTableLayoutPanelMix.Controls.Add(WetdryLabel, 0, 0);
             RoomTableLayoutPanelMix.Controls.Add(ReverbwetdryvalueLabel, 0, 1);
-            RoomTableLayoutPanelMix.Location = new System.Drawing.Point(233, 3);
+            RoomTableLayoutPanelMix.Location = new System.Drawing.Point(231, 3);
             RoomTableLayoutPanelMix.Name = "RoomTableLayoutPanelMix";
             RoomTableLayoutPanelMix.RowCount = 2;
             RoomTableLayoutPanelMix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             RoomTableLayoutPanelMix.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            RoomTableLayoutPanelMix.Size = new System.Drawing.Size(94, 27);
+            RoomTableLayoutPanelMix.Size = new System.Drawing.Size(93, 27);
             RoomTableLayoutPanelMix.TabIndex = 72;
             // 
             // WetdryLabel
@@ -1323,21 +1323,21 @@ namespace Yaml_AudioTool_Rebuilt
             RoomTableLayoutPanelLower.Controls.Add(RoommapButton, 0, 1);
             RoomTableLayoutPanelLower.Controls.Add(RoomenableButton, 2, 1);
             RoomTableLayoutPanelLower.Dock = System.Windows.Forms.DockStyle.Fill;
-            RoomTableLayoutPanelLower.Location = new System.Drawing.Point(3, 80);
+            RoomTableLayoutPanelLower.Location = new System.Drawing.Point(3, 101);
             RoomTableLayoutPanelLower.Name = "RoomTableLayoutPanelLower";
             RoomTableLayoutPanelLower.RowCount = 2;
             RoomTableLayoutPanelLower.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             RoomTableLayoutPanelLower.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            RoomTableLayoutPanelLower.Size = new System.Drawing.Size(330, 57);
+            RoomTableLayoutPanelLower.Size = new System.Drawing.Size(327, 75);
             RoomTableLayoutPanelLower.TabIndex = 1;
             // 
             // RoomstoreButton
             // 
             RoomstoreButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             RoomstoreButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            RoomstoreButton.Location = new System.Drawing.Point(3, 3);
+            RoomstoreButton.Location = new System.Drawing.Point(3, 8);
             RoomstoreButton.Name = "RoomstoreButton";
-            RoomstoreButton.Size = new System.Drawing.Size(109, 21);
+            RoomstoreButton.Size = new System.Drawing.Size(108, 21);
             RoomstoreButton.TabIndex = 66;
             RoomstoreButton.Text = "Create Room";
             RoomstoreButton.UseVisualStyleBackColor = true;
@@ -1348,7 +1348,7 @@ namespace Yaml_AudioTool_Rebuilt
             RoomunmapButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             RoomunmapButton.Enabled = false;
             RoomunmapButton.Font = new System.Drawing.Font("Segoe UI", 8F);
-            RoomunmapButton.Location = new System.Drawing.Point(118, 3);
+            RoomunmapButton.Location = new System.Drawing.Point(117, 8);
             RoomunmapButton.Name = "RoomunmapButton";
             RoomunmapButton.Size = new System.Drawing.Size(107, 21);
             RoomunmapButton.TabIndex = 73;
@@ -1361,7 +1361,7 @@ namespace Yaml_AudioTool_Rebuilt
             RoomremoveButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             RoomremoveButton.Enabled = false;
             RoomremoveButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            RoomremoveButton.Location = new System.Drawing.Point(118, 32);
+            RoomremoveButton.Location = new System.Drawing.Point(117, 45);
             RoomremoveButton.Name = "RoomremoveButton";
             RoomremoveButton.Size = new System.Drawing.Size(107, 21);
             RoomremoveButton.TabIndex = 68;
@@ -1374,9 +1374,9 @@ namespace Yaml_AudioTool_Rebuilt
             RoommapButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             RoommapButton.Enabled = false;
             RoommapButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            RoommapButton.Location = new System.Drawing.Point(3, 32);
+            RoommapButton.Location = new System.Drawing.Point(3, 45);
             RoommapButton.Name = "RoommapButton";
-            RoommapButton.Size = new System.Drawing.Size(109, 21);
+            RoommapButton.Size = new System.Drawing.Size(108, 21);
             RoommapButton.TabIndex = 72;
             RoommapButton.Text = "Map Room";
             RoommapButton.UseVisualStyleBackColor = true;
@@ -1387,10 +1387,10 @@ namespace Yaml_AudioTool_Rebuilt
             RoomenableButton.BackColor = System.Drawing.Color.Salmon;
             RoomenableButton.Dock = System.Windows.Forms.DockStyle.Fill;
             RoomenableButton.Font = new System.Drawing.Font("Segoe UI", 8F);
-            RoomenableButton.Location = new System.Drawing.Point(234, 32);
+            RoomenableButton.Location = new System.Drawing.Point(232, 41);
             RoomenableButton.Margin = new System.Windows.Forms.Padding(4);
             RoomenableButton.Name = "RoomenableButton";
-            RoomenableButton.Size = new System.Drawing.Size(92, 21);
+            RoomenableButton.Size = new System.Drawing.Size(91, 30);
             RoomenableButton.TabIndex = 74;
             RoomenableButton.Text = "Off";
             RoomenableButton.UseVisualStyleBackColor = false;
@@ -1402,7 +1402,7 @@ namespace Yaml_AudioTool_Rebuilt
             FilterGroupBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             FilterGroupBox.Location = new System.Drawing.Point(3, 7);
             FilterGroupBox.Name = "FilterGroupBox";
-            FilterGroupBox.Size = new System.Drawing.Size(342, 105);
+            FilterGroupBox.Size = new System.Drawing.Size(339, 123);
             FilterGroupBox.TabIndex = 75;
             FilterGroupBox.TabStop = false;
             FilterGroupBox.Text = "Filter Creation";
@@ -1428,7 +1428,7 @@ namespace Yaml_AudioTool_Rebuilt
             FilterTableLayoutPanelMain.RowCount = 2;
             FilterTableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             FilterTableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            FilterTableLayoutPanelMain.Size = new System.Drawing.Size(336, 83);
+            FilterTableLayoutPanelMain.Size = new System.Drawing.Size(333, 101);
             FilterTableLayoutPanelMain.TabIndex = 0;
             // 
             // FilterLabel
@@ -1436,7 +1436,7 @@ namespace Yaml_AudioTool_Rebuilt
             FilterLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             FilterLabel.AutoSize = true;
             FilterLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            FilterLabel.Location = new System.Drawing.Point(4, 13);
+            FilterLabel.Location = new System.Drawing.Point(4, 17);
             FilterLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             FilterLabel.Name = "FilterLabel";
             FilterLabel.Size = new System.Drawing.Size(42, 15);
@@ -1450,7 +1450,7 @@ namespace Yaml_AudioTool_Rebuilt
             FiltertypeLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             FiltertypeLabel.AutoSize = true;
             FiltertypeLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            FiltertypeLabel.Location = new System.Drawing.Point(4, 54);
+            FiltertypeLabel.Location = new System.Drawing.Point(4, 68);
             FiltertypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             FiltertypeLabel.Name = "FiltertypeLabel";
             FiltertypeLabel.Size = new System.Drawing.Size(35, 15);
@@ -1463,10 +1463,10 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             FilternameTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             FilternameTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            FilternameTextBox.Location = new System.Drawing.Point(70, 9);
+            FilternameTextBox.Location = new System.Drawing.Point(69, 13);
             FilternameTextBox.MaxLength = 30;
             FilternameTextBox.Name = "FilternameTextBox";
-            FilternameTextBox.Size = new System.Drawing.Size(111, 23);
+            FilternameTextBox.Size = new System.Drawing.Size(110, 23);
             FilternameTextBox.TabIndex = 65;
             FilternameTextBox.Text = "New Filter";
             // 
@@ -1476,21 +1476,21 @@ namespace Yaml_AudioTool_Rebuilt
             FilterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             FilterComboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             FilterComboBox.FormattingEnabled = true;
-            FilterComboBox.Location = new System.Drawing.Point(70, 50);
+            FilterComboBox.Location = new System.Drawing.Point(69, 64);
             FilterComboBox.Name = "FilterComboBox";
-            FilterComboBox.Size = new System.Drawing.Size(111, 23);
+            FilterComboBox.Size = new System.Drawing.Size(110, 23);
             FilterComboBox.TabIndex = 63;
             FilterComboBox.SelectedIndexChanged += FiltercomboBox_SelectedIndexChanged;
             // 
             // FilterfrequencyPot
             // 
             FilterfrequencyPot.Dock = System.Windows.Forms.DockStyle.Fill;
-            FilterfrequencyPot.Location = new System.Drawing.Point(188, 3);
+            FilterfrequencyPot.Location = new System.Drawing.Point(186, 3);
             FilterfrequencyPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             FilterfrequencyPot.Maximum = 1D;
             FilterfrequencyPot.Minimum = 0D;
             FilterfrequencyPot.Name = "FilterfrequencyPot";
-            FilterfrequencyPot.Size = new System.Drawing.Size(42, 35);
+            FilterfrequencyPot.Size = new System.Drawing.Size(41, 44);
             FilterfrequencyPot.TabIndex = 25;
             FilterfrequencyPot.Value = 1D;
             FilterfrequencyPot.ValueChanged += FrequencyPot_ValueChanged;
@@ -1498,12 +1498,12 @@ namespace Yaml_AudioTool_Rebuilt
             // FilteroneoverqPot
             // 
             FilteroneoverqPot.Dock = System.Windows.Forms.DockStyle.Fill;
-            FilteroneoverqPot.Location = new System.Drawing.Point(188, 44);
+            FilteroneoverqPot.Location = new System.Drawing.Point(186, 53);
             FilteroneoverqPot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             FilteroneoverqPot.Maximum = 1.5D;
             FilteroneoverqPot.Minimum = 0.1D;
             FilteroneoverqPot.Name = "FilteroneoverqPot";
-            FilteroneoverqPot.Size = new System.Drawing.Size(42, 36);
+            FilteroneoverqPot.Size = new System.Drawing.Size(41, 45);
             FilteroneoverqPot.TabIndex = 26;
             FilteroneoverqPot.Value = 1D;
             FilteroneoverqPot.ValueChanged += OneoverqPot_ValueChanged;
@@ -1515,7 +1515,7 @@ namespace Yaml_AudioTool_Rebuilt
             TableLayoutPanelFilterFreq.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             TableLayoutPanelFilterFreq.Controls.Add(FilterfrequencyLabel, 0, 0);
             TableLayoutPanelFilterFreq.Controls.Add(FilterfrequencyvalueLabel, 0, 1);
-            TableLayoutPanelFilterFreq.Location = new System.Drawing.Point(237, 3);
+            TableLayoutPanelFilterFreq.Location = new System.Drawing.Point(234, 3);
             TableLayoutPanelFilterFreq.Name = "TableLayoutPanelFilterFreq";
             TableLayoutPanelFilterFreq.RowCount = 2;
             TableLayoutPanelFilterFreq.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -1558,7 +1558,7 @@ namespace Yaml_AudioTool_Rebuilt
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel1.Controls.Add(FilteroneoverqLabel, 0, 0);
             tableLayoutPanel1.Controls.Add(FilteroneoverqvalueLabel, 0, 1);
-            tableLayoutPanel1.Location = new System.Drawing.Point(237, 44);
+            tableLayoutPanel1.Location = new System.Drawing.Point(234, 53);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -1603,7 +1603,7 @@ namespace Yaml_AudioTool_Rebuilt
             effectstabPage.Margin = new System.Windows.Forms.Padding(4);
             effectstabPage.Name = "effectstabPage";
             effectstabPage.Padding = new System.Windows.Forms.Padding(4);
-            effectstabPage.Size = new System.Drawing.Size(348, 284);
+            effectstabPage.Size = new System.Drawing.Size(348, 344);
             effectstabPage.TabIndex = 1;
             effectstabPage.Text = "Effects";
             effectstabPage.UseVisualStyleBackColor = true;
@@ -1614,7 +1614,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGroupBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             EQGroupBox.Location = new System.Drawing.Point(167, 7);
             EQGroupBox.Name = "EQGroupBox";
-            EQGroupBox.Size = new System.Drawing.Size(174, 270);
+            EQGroupBox.Size = new System.Drawing.Size(174, 330);
             EQGroupBox.TabIndex = 26;
             EQGroupBox.TabStop = false;
             EQGroupBox.Text = "EQ";
@@ -1651,16 +1651,16 @@ namespace Yaml_AudioTool_Rebuilt
             EQTableLayoutPanel.Location = new System.Drawing.Point(3, 19);
             EQTableLayoutPanel.Name = "EQTableLayoutPanel";
             EQTableLayoutPanel.RowCount = 9;
-            EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
-            EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
-            EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
-            EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
             EQTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            EQTableLayoutPanel.Size = new System.Drawing.Size(168, 248);
+            EQTableLayoutPanel.Size = new System.Drawing.Size(168, 308);
             EQTableLayoutPanel.TabIndex = 0;
             // 
             // Band4Label
@@ -1668,7 +1668,7 @@ namespace Yaml_AudioTool_Rebuilt
             Band4Label.Anchor = System.Windows.Forms.AnchorStyles.None;
             Band4Label.AutoSize = true;
             Band4Label.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            Band4Label.Location = new System.Drawing.Point(138, 7);
+            Band4Label.Location = new System.Drawing.Point(138, 12);
             Band4Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             Band4Label.Name = "Band4Label";
             Band4Label.Size = new System.Drawing.Size(26, 26);
@@ -1686,7 +1686,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain4Pot.Minimum = -18D;
             EQGain4Pot.Name = "EQGain4Pot";
             EQGain4Pot.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            EQGain4Pot.Size = new System.Drawing.Size(59, 34);
+            EQGain4Pot.Size = new System.Drawing.Size(59, 44);
             EQGain4Pot.TabIndex = 27;
             toolTip1.SetToolTip(EQGain4Pot, "Gain Band 4");
             EQGain4Pot.Value = 0D;
@@ -1701,7 +1701,7 @@ namespace Yaml_AudioTool_Rebuilt
             Bandwidth4Pot.Maximum = 2D;
             Bandwidth4Pot.Minimum = 0.1D;
             Bandwidth4Pot.Name = "Bandwidth4Pot";
-            Bandwidth4Pot.Size = new System.Drawing.Size(59, 34);
+            Bandwidth4Pot.Size = new System.Drawing.Size(59, 44);
             Bandwidth4Pot.TabIndex = 59;
             toolTip1.SetToolTip(Bandwidth4Pot, "Bandwidth Band 4");
             Bandwidth4Pot.Value = 1D;
@@ -1712,7 +1712,7 @@ namespace Yaml_AudioTool_Rebuilt
             Bandwidth4Label.AutoSize = true;
             Bandwidth4Label.Dock = System.Windows.Forms.DockStyle.Fill;
             Bandwidth4Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            Bandwidth4Label.Location = new System.Drawing.Point(71, 40);
+            Bandwidth4Label.Location = new System.Drawing.Point(71, 50);
             Bandwidth4Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             Bandwidth4Label.Name = "Bandwidth4Label";
             Bandwidth4Label.Size = new System.Drawing.Size(59, 15);
@@ -1725,7 +1725,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain4Label.AutoSize = true;
             EQGain4Label.Dock = System.Windows.Forms.DockStyle.Fill;
             EQGain4Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            EQGain4Label.Location = new System.Drawing.Point(4, 40);
+            EQGain4Label.Location = new System.Drawing.Point(4, 50);
             EQGain4Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             EQGain4Label.Name = "EQGain4Label";
             EQGain4Label.Size = new System.Drawing.Size(59, 15);
@@ -1737,10 +1737,10 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             EQResetButton.Dock = System.Windows.Forms.DockStyle.Fill;
             EQResetButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            EQResetButton.Location = new System.Drawing.Point(4, 224);
+            EQResetButton.Location = new System.Drawing.Point(4, 264);
             EQResetButton.Margin = new System.Windows.Forms.Padding(4);
             EQResetButton.Name = "EQResetButton";
-            EQResetButton.Size = new System.Drawing.Size(59, 20);
+            EQResetButton.Size = new System.Drawing.Size(59, 40);
             EQResetButton.TabIndex = 63;
             EQResetButton.Text = "Reset";
             EQResetButton.UseVisualStyleBackColor = true;
@@ -1751,10 +1751,10 @@ namespace Yaml_AudioTool_Rebuilt
             EQenableButton.BackColor = System.Drawing.Color.Salmon;
             EQenableButton.Dock = System.Windows.Forms.DockStyle.Fill;
             EQenableButton.Font = new System.Drawing.Font("Segoe UI", 8F);
-            EQenableButton.Location = new System.Drawing.Point(71, 224);
+            EQenableButton.Location = new System.Drawing.Point(71, 264);
             EQenableButton.Margin = new System.Windows.Forms.Padding(4);
             EQenableButton.Name = "EQenableButton";
-            EQenableButton.Size = new System.Drawing.Size(59, 20);
+            EQenableButton.Size = new System.Drawing.Size(59, 40);
             EQenableButton.TabIndex = 25;
             EQenableButton.Text = "Off";
             EQenableButton.UseVisualStyleBackColor = false;
@@ -1765,7 +1765,7 @@ namespace Yaml_AudioTool_Rebuilt
             Band3Label.Anchor = System.Windows.Forms.AnchorStyles.None;
             Band3Label.AutoSize = true;
             Band3Label.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            Band3Label.Location = new System.Drawing.Point(138, 62);
+            Band3Label.Location = new System.Drawing.Point(138, 77);
             Band3Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             Band3Label.Name = "Band3Label";
             Band3Label.Size = new System.Drawing.Size(25, 26);
@@ -1778,7 +1778,7 @@ namespace Yaml_AudioTool_Rebuilt
             Band2Label.Anchor = System.Windows.Forms.AnchorStyles.None;
             Band2Label.AutoSize = true;
             Band2Label.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            Band2Label.Location = new System.Drawing.Point(138, 117);
+            Band2Label.Location = new System.Drawing.Point(138, 142);
             Band2Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             Band2Label.Name = "Band2Label";
             Band2Label.Size = new System.Drawing.Size(25, 26);
@@ -1791,7 +1791,7 @@ namespace Yaml_AudioTool_Rebuilt
             Band1Label.Anchor = System.Windows.Forms.AnchorStyles.None;
             Band1Label.AutoSize = true;
             Band1Label.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            Band1Label.Location = new System.Drawing.Point(140, 172);
+            Band1Label.Location = new System.Drawing.Point(140, 207);
             Band1Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             Band1Label.Name = "Band1Label";
             Band1Label.Size = new System.Drawing.Size(22, 26);
@@ -1803,13 +1803,13 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             EQGain3Pot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             EQGain3Pot.Dock = System.Windows.Forms.DockStyle.Fill;
-            EQGain3Pot.Location = new System.Drawing.Point(4, 58);
+            EQGain3Pot.Location = new System.Drawing.Point(4, 68);
             EQGain3Pot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             EQGain3Pot.Maximum = 18D;
             EQGain3Pot.Minimum = -18D;
             EQGain3Pot.Name = "EQGain3Pot";
             EQGain3Pot.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            EQGain3Pot.Size = new System.Drawing.Size(59, 34);
+            EQGain3Pot.Size = new System.Drawing.Size(59, 44);
             EQGain3Pot.TabIndex = 68;
             toolTip1.SetToolTip(EQGain3Pot, "Gain Band 3");
             EQGain3Pot.Value = 0D;
@@ -1819,13 +1819,13 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             EQGain2Pot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             EQGain2Pot.Dock = System.Windows.Forms.DockStyle.Fill;
-            EQGain2Pot.Location = new System.Drawing.Point(4, 113);
+            EQGain2Pot.Location = new System.Drawing.Point(4, 133);
             EQGain2Pot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             EQGain2Pot.Maximum = 18D;
             EQGain2Pot.Minimum = -18D;
             EQGain2Pot.Name = "EQGain2Pot";
             EQGain2Pot.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            EQGain2Pot.Size = new System.Drawing.Size(59, 34);
+            EQGain2Pot.Size = new System.Drawing.Size(59, 44);
             EQGain2Pot.TabIndex = 69;
             toolTip1.SetToolTip(EQGain2Pot, "Gain Band 2");
             EQGain2Pot.Value = 0D;
@@ -1835,13 +1835,13 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             EQGain1Pot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             EQGain1Pot.Dock = System.Windows.Forms.DockStyle.Fill;
-            EQGain1Pot.Location = new System.Drawing.Point(4, 168);
+            EQGain1Pot.Location = new System.Drawing.Point(4, 198);
             EQGain1Pot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             EQGain1Pot.Maximum = 18D;
             EQGain1Pot.Minimum = -18D;
             EQGain1Pot.Name = "EQGain1Pot";
             EQGain1Pot.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            EQGain1Pot.Size = new System.Drawing.Size(59, 34);
+            EQGain1Pot.Size = new System.Drawing.Size(59, 44);
             EQGain1Pot.TabIndex = 70;
             toolTip1.SetToolTip(EQGain1Pot, "Gain Band 1");
             EQGain1Pot.Value = 0D;
@@ -1852,7 +1852,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain3Label.AutoSize = true;
             EQGain3Label.Dock = System.Windows.Forms.DockStyle.Fill;
             EQGain3Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            EQGain3Label.Location = new System.Drawing.Point(4, 95);
+            EQGain3Label.Location = new System.Drawing.Point(4, 115);
             EQGain3Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             EQGain3Label.Name = "EQGain3Label";
             EQGain3Label.Size = new System.Drawing.Size(59, 15);
@@ -1865,7 +1865,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain2Label.AutoSize = true;
             EQGain2Label.Dock = System.Windows.Forms.DockStyle.Fill;
             EQGain2Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            EQGain2Label.Location = new System.Drawing.Point(4, 150);
+            EQGain2Label.Location = new System.Drawing.Point(4, 180);
             EQGain2Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             EQGain2Label.Name = "EQGain2Label";
             EQGain2Label.Size = new System.Drawing.Size(59, 15);
@@ -1878,7 +1878,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain1Label.AutoSize = true;
             EQGain1Label.Dock = System.Windows.Forms.DockStyle.Fill;
             EQGain1Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            EQGain1Label.Location = new System.Drawing.Point(4, 205);
+            EQGain1Label.Location = new System.Drawing.Point(4, 245);
             EQGain1Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             EQGain1Label.Name = "EQGain1Label";
             EQGain1Label.Size = new System.Drawing.Size(59, 15);
@@ -1890,12 +1890,12 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             Bandwidth3Pot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Bandwidth3Pot.Dock = System.Windows.Forms.DockStyle.Fill;
-            Bandwidth3Pot.Location = new System.Drawing.Point(71, 58);
+            Bandwidth3Pot.Location = new System.Drawing.Point(71, 68);
             Bandwidth3Pot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Bandwidth3Pot.Maximum = 2D;
             Bandwidth3Pot.Minimum = 0.1D;
             Bandwidth3Pot.Name = "Bandwidth3Pot";
-            Bandwidth3Pot.Size = new System.Drawing.Size(59, 34);
+            Bandwidth3Pot.Size = new System.Drawing.Size(59, 44);
             Bandwidth3Pot.TabIndex = 74;
             toolTip1.SetToolTip(Bandwidth3Pot, "Bandwidth Band 3");
             Bandwidth3Pot.Value = 1D;
@@ -1905,12 +1905,12 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             Bandwidth2Pot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Bandwidth2Pot.Dock = System.Windows.Forms.DockStyle.Fill;
-            Bandwidth2Pot.Location = new System.Drawing.Point(71, 113);
+            Bandwidth2Pot.Location = new System.Drawing.Point(71, 133);
             Bandwidth2Pot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Bandwidth2Pot.Maximum = 2D;
             Bandwidth2Pot.Minimum = 0.1D;
             Bandwidth2Pot.Name = "Bandwidth2Pot";
-            Bandwidth2Pot.Size = new System.Drawing.Size(59, 34);
+            Bandwidth2Pot.Size = new System.Drawing.Size(59, 44);
             Bandwidth2Pot.TabIndex = 75;
             toolTip1.SetToolTip(Bandwidth2Pot, "Bandwidth Band 2");
             Bandwidth2Pot.Value = 1D;
@@ -1920,12 +1920,12 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             Bandwidth1Pot.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             Bandwidth1Pot.Dock = System.Windows.Forms.DockStyle.Fill;
-            Bandwidth1Pot.Location = new System.Drawing.Point(71, 168);
+            Bandwidth1Pot.Location = new System.Drawing.Point(71, 198);
             Bandwidth1Pot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Bandwidth1Pot.Maximum = 2D;
             Bandwidth1Pot.Minimum = 0.1D;
             Bandwidth1Pot.Name = "Bandwidth1Pot";
-            Bandwidth1Pot.Size = new System.Drawing.Size(59, 34);
+            Bandwidth1Pot.Size = new System.Drawing.Size(59, 44);
             Bandwidth1Pot.TabIndex = 76;
             toolTip1.SetToolTip(Bandwidth1Pot, "Bandwidth Band 1");
             Bandwidth1Pot.Value = 1D;
@@ -1936,7 +1936,7 @@ namespace Yaml_AudioTool_Rebuilt
             Bandwidth3Label.AutoSize = true;
             Bandwidth3Label.Dock = System.Windows.Forms.DockStyle.Fill;
             Bandwidth3Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            Bandwidth3Label.Location = new System.Drawing.Point(71, 95);
+            Bandwidth3Label.Location = new System.Drawing.Point(71, 115);
             Bandwidth3Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             Bandwidth3Label.Name = "Bandwidth3Label";
             Bandwidth3Label.Size = new System.Drawing.Size(59, 15);
@@ -1949,7 +1949,7 @@ namespace Yaml_AudioTool_Rebuilt
             Bandwidth2Label.AutoSize = true;
             Bandwidth2Label.Dock = System.Windows.Forms.DockStyle.Fill;
             Bandwidth2Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            Bandwidth2Label.Location = new System.Drawing.Point(71, 150);
+            Bandwidth2Label.Location = new System.Drawing.Point(71, 180);
             Bandwidth2Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             Bandwidth2Label.Name = "Bandwidth2Label";
             Bandwidth2Label.Size = new System.Drawing.Size(59, 15);
@@ -1962,7 +1962,7 @@ namespace Yaml_AudioTool_Rebuilt
             Bandwidth1Label.AutoSize = true;
             Bandwidth1Label.Dock = System.Windows.Forms.DockStyle.Fill;
             Bandwidth1Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            Bandwidth1Label.Location = new System.Drawing.Point(71, 205);
+            Bandwidth1Label.Location = new System.Drawing.Point(71, 245);
             Bandwidth1Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             Bandwidth1Label.Name = "Bandwidth1Label";
             Bandwidth1Label.Size = new System.Drawing.Size(59, 15);
@@ -2105,11 +2105,11 @@ namespace Yaml_AudioTool_Rebuilt
             RoomListView.Dock = System.Windows.Forms.DockStyle.Fill;
             RoomListView.FullRowSelect = true;
             RoomListView.GridLines = true;
-            RoomListView.Location = new System.Drawing.Point(2, 347);
+            RoomListView.Location = new System.Drawing.Point(2, 407);
             RoomListView.Margin = new System.Windows.Forms.Padding(2);
             RoomListView.MultiSelect = false;
             RoomListView.Name = "RoomListView";
-            RoomListView.Size = new System.Drawing.Size(360, 98);
+            RoomListView.Size = new System.Drawing.Size(360, 38);
             RoomListView.TabIndex = 67;
             RoomListView.UseCompatibleStateImageBehavior = false;
             RoomListView.View = System.Windows.Forms.View.Details;
@@ -2384,7 +2384,7 @@ namespace Yaml_AudioTool_Rebuilt
             TableLayoutPanelMainRight.Name = "TableLayoutPanelMainRight";
             TableLayoutPanelMainRight.RowCount = 3;
             TableLayoutPanelMainRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            TableLayoutPanelMainRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 320F));
+            TableLayoutPanelMainRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 380F));
             TableLayoutPanelMainRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             TableLayoutPanelMainRight.Size = new System.Drawing.Size(364, 447);
             TableLayoutPanelMainRight.TabIndex = 69;
