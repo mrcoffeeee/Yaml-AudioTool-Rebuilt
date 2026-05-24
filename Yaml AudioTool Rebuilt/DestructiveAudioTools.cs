@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
+using System;
 
 namespace Yaml_AudioTool_Rebuilt
 {
@@ -222,6 +224,36 @@ namespace Yaml_AudioTool_Rebuilt
             }
 
             return result;
+        }
+
+        public static void ResampleTo48kHz(string inputPath, string outputPath)
+        {
+            // Read original wavefile specs
+            int originalBits;
+            NAudio.Wave.WaveFormatEncoding originalEncoding;
+            using (var probe = new WaveFileReader(inputPath))
+            {
+                originalBits = probe.WaveFormat.BitsPerSample;
+                originalEncoding = probe.WaveFormat.Encoding;
+            }
+
+            using var reader = new AudioFileReader(inputPath);
+            var resampler = new WdlResamplingSampleProvider(reader, 48000);
+
+            // Reconvert float o original bitrate, 32bit stays as it is
+            if (originalEncoding == NAudio.Wave.WaveFormatEncoding.IeeeFloat)
+            {
+                WaveFileWriter.CreateWaveFile(outputPath, new SampleToWaveProvider(resampler));
+            }
+            else if (originalBits == 24)
+            {
+                WaveFileWriter.CreateWaveFile(outputPath, new SampleToWaveProvider24(resampler));
+            }
+            else
+            {
+                // 16-Bit
+                WaveFileWriter.CreateWaveFile16(outputPath, resampler);
+            }
         }
     }
 }

@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DestructiveEffectsEditor));
             TableLayoutPanelDEE = new System.Windows.Forms.TableLayoutPanel();
             TableLayoutPanelA = new System.Windows.Forms.TableLayoutPanel();
+            ResampleButton = new System.Windows.Forms.Button();
             NormalizeButton = new System.Windows.Forms.Button();
             TrimButton = new System.Windows.Forms.Button();
             TableLayoutPanelVolume = new System.Windows.Forms.TableLayoutPanel();
@@ -83,6 +84,7 @@
             // 
             TableLayoutPanelA.ColumnCount = 1;
             TableLayoutPanelA.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            TableLayoutPanelA.Controls.Add(ResampleButton, 0, 6);
             TableLayoutPanelA.Controls.Add(NormalizeButton, 0, 0);
             TableLayoutPanelA.Controls.Add(TrimButton, 0, 2);
             TableLayoutPanelA.Controls.Add(TableLayoutPanelVolume, 0, 1);
@@ -106,6 +108,19 @@
             TableLayoutPanelA.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             TableLayoutPanelA.Size = new System.Drawing.Size(144, 322);
             TableLayoutPanelA.TabIndex = 4;
+            // 
+            // ResampleButton
+            // 
+            ResampleButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            ResampleButton.Font = new System.Drawing.Font("Segoe UI", 9F);
+            ResampleButton.Location = new System.Drawing.Point(4, 204);
+            ResampleButton.Margin = new System.Windows.Forms.Padding(4);
+            ResampleButton.Name = "ResampleButton";
+            ResampleButton.Size = new System.Drawing.Size(136, 28);
+            ResampleButton.TabIndex = 37;
+            ResampleButton.Text = "Resample to 48kHz";
+            ResampleButton.UseVisualStyleBackColor = true;
+            ResampleButton.Click += ResampleButton_Click;
             // 
             // NormalizeButton
             // 
@@ -431,5 +446,6 @@
         private System.Windows.Forms.Button ZoomResetButton;
         public System.ComponentModel.BackgroundWorker DEEBackgroundWorker;
         private System.Windows.Forms.HScrollBar PlotHScrollBar;
+        private System.Windows.Forms.Button ResampleButton;
     }
 }

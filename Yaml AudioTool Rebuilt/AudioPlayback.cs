@@ -112,18 +112,6 @@ namespace Yaml_AudioTool_Rebuilt
                     {
                         using var reader = new WaveFileReader(file);
 
-                        // Only samplerates from 22kHz o 48kHz
-                        if (reader.WaveFormat.SampleRate < 22000 || reader.WaveFormat.SampleRate > 48000)
-                        {
-                            MessageBox.Show(
-                                $"The file \"{Path.GetFileName(file)}\" can´t be opened due to its samplerate: {reader.WaveFormat.SampleRate} Hz.\n" +
-                                "Valid samplerates are between 22kHz - 48kHz. Please convert the file first.",
-                                "Samplerate not supported",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-                            continue;
-                        }
-
                         Form1 f1 = (Form1)Application.OpenForms["Form1"];
 
                         if (clickFlag == true)
@@ -224,6 +212,26 @@ namespace Yaml_AudioTool_Rebuilt
                     }
 
                     readerFormat = reader.WaveFormat;
+                }
+
+                // Samplerate check
+                if (readerFormat.SampleRate < 22000 || readerFormat.SampleRate > 48000)
+                {
+                    MessageBox.Show(
+                        $"This file has a samplerate of {readerFormat.SampleRate} Hz and can´t be played.\n" +
+                        "Please resample it to 48000 Hz first:" +
+                        "\n[Destructive Effects → \"Resample to 48kHz\"]",
+                        "Samplerate not supported",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    // Free used space
+                    if (audioDataPtr != IntPtr.Zero)
+                    {
+                        Marshal.FreeHGlobal(audioDataPtr);
+                        audioDataPtr = IntPtr.Zero;
+                    }
+                    return;
                 }
 
                 audioBuffer = new AudioBuffer(audioDataPtr, audioDataSize, BufferFlags.None);

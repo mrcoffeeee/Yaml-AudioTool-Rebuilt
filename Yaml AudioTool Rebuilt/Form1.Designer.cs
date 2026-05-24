@@ -1660,7 +1660,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             EchoWetDryLabel.AutoSize = true;
             EchoWetDryLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            EchoWetDryLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            EchoWetDryLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
             EchoWetDryLabel.Location = new System.Drawing.Point(79, 78);
             EchoWetDryLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             EchoWetDryLabel.Name = "EchoWetDryLabel";
@@ -1673,7 +1673,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             EchoFeedbackLabel.AutoSize = true;
             EchoFeedbackLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            EchoFeedbackLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            EchoFeedbackLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
             EchoFeedbackLabel.Location = new System.Drawing.Point(79, 39);
             EchoFeedbackLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             EchoFeedbackLabel.Name = "EchoFeedbackLabel";
@@ -1686,7 +1686,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             EchoDelayLabel.AutoSize = true;
             EchoDelayLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            EchoDelayLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            EchoDelayLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
             EchoDelayLabel.Location = new System.Drawing.Point(79, 0);
             EchoDelayLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             EchoDelayLabel.Name = "EchoDelayLabel";

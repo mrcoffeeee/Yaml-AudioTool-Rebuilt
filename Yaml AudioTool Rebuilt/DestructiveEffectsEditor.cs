@@ -1,4 +1,5 @@
 ﻿using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
 using ScottPlot;
 using ScottPlot.Plottables;
 using System;
@@ -16,8 +17,11 @@ namespace Yaml_AudioTool_Rebuilt
         readonly Form1 formMain = (Form1)Application.OpenForms["Form1"];
 
         private bool mouseDown = false;
+        private bool resampleReplacedOriginal;
         private string currentFilePath;
         private string saveTargetPath;
+        private string resampleSourcePath;
+        private string resampleTargetPath;
         private (double X, string Text)[] saveMarkerSnapshot;
         private (double X, string Label)[] loadedCues;
         private bool cueLimitExceeded;
@@ -476,6 +480,72 @@ namespace Yaml_AudioTool_Rebuilt
             WaveformsPlot.Refresh();
         }
 
+        private void ResampleButton_Click(object sender, EventArgs e)
+        {
+            // Warning message for unsafed changes
+            if (Text.EndsWith('*'))
+            {
+                TopMost = false;
+                DialogResult unsavedResult = MessageBox.Show(
+                    "There are unsaved changes that will be lost when resampling (resampling works on the original file).\nContinue?",
+                    "Unsaved Changes",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+                TopMost = true;
+
+                if (unsavedResult != DialogResult.Yes)
+                    return;
+            }
+
+            resampleSourcePath = currentFilePath;
+            string backupPath = currentFilePath.Replace(".wav", "");
+
+            TopMost = false;
+            DialogResult dialogResult = MessageBox.Show(
+                "Do you want to replace the current file?",
+                "Resample to 48 kHz",
+                MessageBoxButtons.YesNo);
+            TopMost = true;
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                resampleTargetPath = currentFilePath;
+                resampleReplacedOriginal = true;
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                resampleTargetPath = backupPath + "_48kHz.wav";
+                resampleReplacedOriginal = false;
+            }
+            else
+            {
+                return; // Quit dialog
+            }
+
+            Text = "PLEASE WAIT - RESAMPLING TO 48 kHz ...";
+            EnableGuiElements(false);
+            string bwString = "RESAMPLEAUDIO|";
+            DEEBackgroundWorker.RunWorkerAsync(bwString);
+        }
+
+        private void AudioResample()
+        {
+            // Source == Destination (Replace): use temporary file
+            if (resampleSourcePath == resampleTargetPath)
+            {
+                string tempPath = resampleTargetPath + ".tmp_resample.wav";
+                DestructiveAudioTools.ResampleTo48kHz(resampleSourcePath, tempPath);
+
+                // Replace original file with resampled one
+                System.IO.File.Delete(resampleTargetPath);
+                System.IO.File.Move(tempPath, resampleTargetPath);
+            }
+            else
+            {
+                DestructiveAudioTools.ResampleTo48kHz(resampleSourcePath, resampleTargetPath);
+            }
+        }
+
         private void ZoomResetButton_Click(object sender, EventArgs e)
         {
             WaveformsPlot.Plot.Axes.AutoScaleX();
@@ -838,6 +908,10 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 AudioFade();
             }
+            else if (choice == "RESAMPLEAUDIO")
+            {
+                AudioResample();
+            }
             else if (choice == "REVERTAUDIO")
             {
                 AudioRevert();
@@ -861,10 +935,32 @@ namespace Yaml_AudioTool_Rebuilt
 
             string result = e.Result?.ToString() ?? "";
 
+            if (result == "RESAMPLEAUDIO")
+            {
+                currentFilePath = resampleTargetPath;
+                Text = "PLEASE WAIT - CALCULATING AUDIO DATA ...";
+                EnableGuiElements(false);
+                string bwString = "LOADAUDIO|" + resampleTargetPath;
+                DEEBackgroundWorker.RunWorkerAsync(bwString);
+                return;
+            }
+
             if (result == "LOADAUDIO")
             {
                 Text = formMain.Text + ": Destructive Effects Editor -> " + currentFilePath;
                 DisplayLoadedAudio();
+
+                if (resampleReplacedOriginal)
+                {
+                    if (formMain.FilelistView.SelectedItems.Count == 1)
+                    {
+                        formMain.FilelistView.SelectedItems[0]
+                            .SubItems[formMain.FilelistView.Columns.IndexOf(formMain.samplerateHeader)]
+                            .Text = Math.Round(WaveFormat.SampleRate / 1000.0, 3).ToString();
+                    }
+                    resampleReplacedOriginal = false;
+                }
+
                 EnableGuiElements(true);
                 return;
             }
@@ -882,7 +978,7 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     RemoveMarkerButton.Enabled = false;
 
-                    // build plot from scratch
+                    // Build plot from scratch
                     InitialPlotSetup();
                     PlotWaveform();
 
@@ -890,7 +986,7 @@ namespace Yaml_AudioTool_Rebuilt
                     double trimEnd = Math.Max(trimSpanX1, trimSpanX2);
                     double removedDuration = trimEnd - trimStart;
 
-                    // recover markers
+                    // Recover markers
                     if (trimMarkerSnapshot != null)
                     {
                         for (int i = 0; i < trimMarkerSnapshot.Length && i < markerLines.Length; i++)
@@ -899,7 +995,7 @@ namespace Yaml_AudioTool_Rebuilt
 
                             double newX = trimMarkerSnapshot[i].X;
 
-                            // put markers to the left after trim
+                            // Put markers to the left after trim
                             if (newX >= trimEnd)
                             {
                                 newX -= removedDuration;
@@ -918,6 +1014,7 @@ namespace Yaml_AudioTool_Rebuilt
                 TableLayoutPanelChanges.Enabled = true;
                 SaveButton.BackColor = System.Drawing.Color.LightGreen;
             }
+
             else if (result == "REVERTAUDIO")
             {
                 if (Text.Contains(".wav*"))
@@ -927,7 +1024,7 @@ namespace Yaml_AudioTool_Rebuilt
                 InitialPlotSetup();
                 PlotWaveform();
 
-                // get original file markers back
+                // Get original file markers back
                 if (loadedCues != null)
                 {
                     for (int i = 0; i < loadedCues.Length; i++)
