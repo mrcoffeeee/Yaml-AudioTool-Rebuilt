@@ -18,6 +18,11 @@
 
   <ItemGroup>
     <None Remove="Resources\Yaml Audio Tool Rebuilt - Manual.pdf" />
+    <None Remove="Tools\CreateAudioTestFile-README.txt" />
+    <None Remove="Tools\CreateAudioTestFile.py" />
+    <None Remove="Tools\Testfiles\sinus_1min_20k-s.wav" />
+    <None Remove="Tools\Testfiles\sinus_1min_44-1k-m.wav" />
+    <None Remove="Tools\Testfiles\sinus_1min_44-1k-s.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +33,24 @@
     <Content Include="Yaml Audio Tool Rebuilt - Manual.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\CreateAudioTestFile-README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\CreateAudioTestFile.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Testfiles\sinus_1min_20k-s.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Testfiles\sinus_1min_44-1k-m.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Testfiles\sinus_1min_44-1k-s.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

@@ -1888,7 +1888,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain4Label.Name = "EQGain4Label";
             EQGain4Label.Size = new System.Drawing.Size(59, 17);
             EQGain4Label.TabIndex = 61;
-            EQGain4Label.Text = "G: 0 dB";
+            EQGain4Label.Text = "G: 0dB";
             EQGain4Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EQResetButton
@@ -2015,7 +2015,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain3Label.Name = "EQGain3Label";
             EQGain3Label.Size = new System.Drawing.Size(59, 17);
             EQGain3Label.TabIndex = 71;
-            EQGain3Label.Text = "G: 0 dB";
+            EQGain3Label.Text = "G: 0dB";
             EQGain3Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EQGain2Label
@@ -2028,7 +2028,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain2Label.Name = "EQGain2Label";
             EQGain2Label.Size = new System.Drawing.Size(59, 17);
             EQGain2Label.TabIndex = 72;
-            EQGain2Label.Text = "G: 0 dB";
+            EQGain2Label.Text = "G: 0dB";
             EQGain2Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EQGain1Label
@@ -2041,7 +2041,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain1Label.Name = "EQGain1Label";
             EQGain1Label.Size = new System.Drawing.Size(59, 17);
             EQGain1Label.TabIndex = 73;
-            EQGain1Label.Text = "G: 0 dB";
+            EQGain1Label.Text = "G: 0dB";
             EQGain1Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Bandwidth3Pot
