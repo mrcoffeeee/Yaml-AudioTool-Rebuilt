@@ -62,6 +62,15 @@ namespace Yaml_AudioTool_Rebuilt
             dopplerHeader = new System.Windows.Forms.ColumnHeader();
             pitchHeader = new System.Windows.Forms.ColumnHeader();
             pitchrandHeader = new System.Windows.Forms.ColumnHeader();
+            eqband1gHeader = new System.Windows.Forms.ColumnHeader();
+            eqband1qHeader = new System.Windows.Forms.ColumnHeader();
+            eqband2gHeader = new System.Windows.Forms.ColumnHeader();
+            eqband2qHeader = new System.Windows.Forms.ColumnHeader();
+            eqband3gHeader = new System.Windows.Forms.ColumnHeader();
+            eqband3qHeader = new System.Windows.Forms.ColumnHeader();
+            eqband4gHeader = new System.Windows.Forms.ColumnHeader();
+            eqband4qHeader = new System.Windows.Forms.ColumnHeader();
+            eqonHeader = new System.Windows.Forms.ColumnHeader();
             echodelayHeader = new System.Windows.Forms.ColumnHeader();
             echofeedbackHeader = new System.Windows.Forms.ColumnHeader();
             echomixHeader = new System.Windows.Forms.ColumnHeader();
@@ -389,7 +398,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // FilelistView
             // 
-            FilelistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { titleHeader, filenameHeader, filepathHeader, roommapHeader, roomidHeader, typeHeader, sizeHeader, durationHeader, channelsHeader, samplerateHeader, bitrateHeader, bitsizeHeader, volumeHeader, priorityHeader, loopHeader, mindistanceHeader, maxdistanceHeader, dopplerHeader, pitchHeader, pitchrandHeader, echodelayHeader, echofeedbackHeader, echomixHeader, echoonHeader, localizeHeader, streamHeader, falloffHeader, stackHeader });
+            FilelistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { titleHeader, filenameHeader, filepathHeader, roommapHeader, roomidHeader, typeHeader, sizeHeader, durationHeader, channelsHeader, samplerateHeader, bitrateHeader, bitsizeHeader, volumeHeader, priorityHeader, loopHeader, mindistanceHeader, maxdistanceHeader, dopplerHeader, pitchHeader, pitchrandHeader, eqband1gHeader, eqband1qHeader, eqband2gHeader, eqband2qHeader, eqband3gHeader, eqband3qHeader, eqband4gHeader, eqband4qHeader, eqonHeader, echodelayHeader, echofeedbackHeader, echomixHeader, echoonHeader, localizeHeader, streamHeader, falloffHeader, stackHeader });
             FilelistView.Dock = System.Windows.Forms.DockStyle.Fill;
             FilelistView.FullRowSelect = true;
             FilelistView.GridLines = true;
@@ -500,6 +509,42 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             pitchrandHeader.Text = "Pitch Rand";
             pitchrandHeader.Width = 120;
+            // 
+            // eqband1gHeader
+            // 
+            eqband1gHeader.Text = "EQ1 Gain";
+            // 
+            // eqband1qHeader
+            // 
+            eqband1qHeader.Text = "EQ1 Q";
+            // 
+            // eqband2gHeader
+            // 
+            eqband2gHeader.Text = "EQ2 Gain";
+            // 
+            // eqband2qHeader
+            // 
+            eqband2qHeader.Text = "EQ2 Q";
+            // 
+            // eqband3gHeader
+            // 
+            eqband3gHeader.Text = "EQ3 Gain";
+            // 
+            // eqband3qHeader
+            // 
+            eqband3qHeader.Text = "EQ3 Q";
+            // 
+            // eqband4gHeader
+            // 
+            eqband4gHeader.Text = "EQ4 Gain";
+            // 
+            // eqband4qHeader
+            // 
+            eqband4qHeader.Text = "EQ4 Q";
+            // 
+            // eqonHeader
+            // 
+            eqonHeader.Text = "EQ ON";
             // 
             // echodelayHeader
             // 
@@ -1895,7 +1940,7 @@ namespace Yaml_AudioTool_Rebuilt
             Bandwidth4Label.Name = "Bandwidth4Label";
             Bandwidth4Label.Size = new System.Drawing.Size(59, 17);
             Bandwidth4Label.TabIndex = 62;
-            Bandwidth4Label.Text = "Q: 1";
+            Bandwidth4Label.Text = "Q: 1,00";
             Bandwidth4Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EQGain4Label
@@ -1908,7 +1953,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain4Label.Name = "EQGain4Label";
             EQGain4Label.Size = new System.Drawing.Size(59, 17);
             EQGain4Label.TabIndex = 61;
-            EQGain4Label.Text = "G: 0dB";
+            EQGain4Label.Text = "G: 0,00dB";
             EQGain4Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EQResetButton
@@ -2035,7 +2080,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain3Label.Name = "EQGain3Label";
             EQGain3Label.Size = new System.Drawing.Size(59, 17);
             EQGain3Label.TabIndex = 71;
-            EQGain3Label.Text = "G: 0dB";
+            EQGain3Label.Text = "G: 0,00dB";
             EQGain3Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EQGain2Label
@@ -2048,7 +2093,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain2Label.Name = "EQGain2Label";
             EQGain2Label.Size = new System.Drawing.Size(59, 17);
             EQGain2Label.TabIndex = 72;
-            EQGain2Label.Text = "G: 0dB";
+            EQGain2Label.Text = "G: 0,00dB";
             EQGain2Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EQGain1Label
@@ -2061,7 +2106,7 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain1Label.Name = "EQGain1Label";
             EQGain1Label.Size = new System.Drawing.Size(59, 17);
             EQGain1Label.TabIndex = 73;
-            EQGain1Label.Text = "G: 0dB";
+            EQGain1Label.Text = "G: 0,00dB";
             EQGain1Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Bandwidth3Pot
@@ -2119,7 +2164,7 @@ namespace Yaml_AudioTool_Rebuilt
             Bandwidth3Label.Name = "Bandwidth3Label";
             Bandwidth3Label.Size = new System.Drawing.Size(59, 17);
             Bandwidth3Label.TabIndex = 77;
-            Bandwidth3Label.Text = "Q: 1";
+            Bandwidth3Label.Text = "Q: 1,00";
             Bandwidth3Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Bandwidth2Label
@@ -2132,7 +2177,7 @@ namespace Yaml_AudioTool_Rebuilt
             Bandwidth2Label.Name = "Bandwidth2Label";
             Bandwidth2Label.Size = new System.Drawing.Size(59, 17);
             Bandwidth2Label.TabIndex = 78;
-            Bandwidth2Label.Text = "Q: 1";
+            Bandwidth2Label.Text = "Q: 1,00";
             Bandwidth2Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Bandwidth1Label
@@ -2145,7 +2190,7 @@ namespace Yaml_AudioTool_Rebuilt
             Bandwidth1Label.Name = "Bandwidth1Label";
             Bandwidth1Label.Size = new System.Drawing.Size(59, 17);
             Bandwidth1Label.TabIndex = 79;
-            Bandwidth1Label.Text = "Q: 1";
+            Bandwidth1Label.Text = "Q: 1,00";
             Bandwidth1Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PitchShifterGroupBox
@@ -2892,6 +2937,15 @@ namespace Yaml_AudioTool_Rebuilt
         public System.Windows.Forms.ColumnHeader echodelayHeader;
         public System.Windows.Forms.ColumnHeader echofeedbackHeader;
         public System.Windows.Forms.ColumnHeader echomixHeader;
+        private System.Windows.Forms.ColumnHeader eqband1gHeader;
+        private System.Windows.Forms.ColumnHeader eqband1qHeader;
+        private System.Windows.Forms.ColumnHeader eqband2gHeader;
+        private System.Windows.Forms.ColumnHeader eqband2qHeader;
+        private System.Windows.Forms.ColumnHeader eqband3gHeader;
+        private System.Windows.Forms.ColumnHeader eqband3qHeader;
+        private System.Windows.Forms.ColumnHeader eqband4gHeader;
+        private System.Windows.Forms.ColumnHeader eqband4qHeader;
+        private System.Windows.Forms.ColumnHeader eqonHeader;
     }
 }
 

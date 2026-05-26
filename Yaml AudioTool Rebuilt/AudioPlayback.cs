@@ -154,6 +154,16 @@ namespace Yaml_AudioTool_Rebuilt
                             // add pitch effect items
                             fileInfos.SubItems.Add("1");
                             fileInfos.SubItems.Add("0");
+                            // add eq effect items
+                            fileInfos.SubItems.Add("1,00");
+                            fileInfos.SubItems.Add("1,00");
+                            fileInfos.SubItems.Add("1,00");
+                            fileInfos.SubItems.Add("1,00");
+                            fileInfos.SubItems.Add("1,00");
+                            fileInfos.SubItems.Add("1,00");
+                            fileInfos.SubItems.Add("1,00");
+                            fileInfos.SubItems.Add("1,00");
+                            fileInfos.SubItems.Add("0");
                             // add echo effect items
                             fileInfos.SubItems.Add("500");
                             fileInfos.SubItems.Add("0,50");

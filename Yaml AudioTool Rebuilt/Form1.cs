@@ -283,6 +283,33 @@ namespace Yaml_AudioTool_Rebuilt
                 PitrandPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text) * 100;
                 PitchrandvalueLabel.Text = "Random:\n" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text;
                 PitchenableButton.Enabled = true;
+                //EQValues
+                EQGain1Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband1gHeader)].Text));
+                EQGain1Label.Text = "G: " + EQGain1Pot.Value.ToString("0.00") +"dB";
+                EQGain2Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband2gHeader)].Text));
+                EQGain2Label.Text = "G: " + EQGain2Pot.Value.ToString("0.00") + "dB";
+                EQGain3Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband3gHeader)].Text));
+                EQGain3Label.Text = "G: " + EQGain3Pot.Value.ToString("0.00") + "dB";
+                EQGain4Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband4gHeader)].Text));
+                EQGain4Label.Text = "G: " + EQGain4Pot.Value.ToString("0.00") + "dB";
+                Bandwidth1Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband1qHeader)].Text);
+                Bandwidth1Label.Text = "Q: " + Bandwidth1Pot.Value.ToString("0.00");
+                Bandwidth2Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband2qHeader)].Text);
+                Bandwidth2Label.Text = "Q: " + Bandwidth2Pot.Value.ToString("0.00");
+                Bandwidth3Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband3qHeader)].Text);
+                Bandwidth3Label.Text = "Q: " + Bandwidth3Pot.Value.ToString("0.00");
+                Bandwidth4Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband4qHeader)].Text);
+                Bandwidth4Label.Text = "Q: " + Bandwidth4Pot.Value.ToString("0.00");
+                if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqonHeader)].Text == "1")
+                {
+                    EQenableButton.Text = "On";
+                    EQenableButton.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    EQenableButton.Text = "Off";
+                    EQenableButton.BackColor = Color.Salmon;
+                }
                 //EchoValues
                 EchoDelayPot.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echodelayHeader)].Text);
                 EchoDelayLabel.Text = "Delay:\n" + EchoDelayPot.Value.ToString() + "ms";
@@ -1257,11 +1284,10 @@ namespace Yaml_AudioTool_Rebuilt
 
             EQGain4Label.Text = "G: " + EQGain4Pot.Value.ToString("0.00") + "dB";
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband4gHeader)].Text = EffectsHelperFunctions.DbToLinear(EQGain4Pot.Value).ToString("0.000");
+            }
         }
 
         private void Bandwidth4Pot_ValueChanged(object sender, EventArgs e)
@@ -1273,11 +1299,10 @@ namespace Yaml_AudioTool_Rebuilt
 
             Bandwidth4Label.Text = "Q: " + Bandwidth4Pot.Value.ToString("0.00");
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband4qHeader)].Text = Bandwidth4Pot.Value.ToString("0.00");
+            }
         }
 
         private void EQGain3Pot_ValueChanged(object sender, EventArgs e)
@@ -1289,11 +1314,10 @@ namespace Yaml_AudioTool_Rebuilt
 
             EQGain3Label.Text = "G: " + EQGain3Pot.Value.ToString("0.00") + "dB";
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband3gHeader)].Text = EffectsHelperFunctions.DbToLinear(EQGain3Pot.Value).ToString("0.000");
+            }
         }
 
         private void Bandwidth3Pot_ValueChanged(object sender, EventArgs e)
@@ -1305,11 +1329,10 @@ namespace Yaml_AudioTool_Rebuilt
 
             Bandwidth3Label.Text = "Q: " + Bandwidth3Pot.Value.ToString("0.00");
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband3qHeader)].Text = Bandwidth3Pot.Value.ToString("0.00");
+            }
         }
 
         private void EQGain2Pot_ValueChanged(object sender, EventArgs e)
@@ -1321,11 +1344,10 @@ namespace Yaml_AudioTool_Rebuilt
 
             EQGain2Label.Text = "G: " + EQGain2Pot.Value.ToString("0.00") + "dB";
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband2gHeader)].Text = EffectsHelperFunctions.DbToLinear(EQGain2Pot.Value).ToString("0.000");
+            }
         }
 
         private void Bandwidth2Pot_ValueChanged(object sender, EventArgs e)
@@ -1337,11 +1359,10 @@ namespace Yaml_AudioTool_Rebuilt
 
             Bandwidth2Label.Text = "Q: " + Bandwidth2Pot.Value.ToString("0.00");
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband2qHeader)].Text = Bandwidth2Pot.Value.ToString("0.00");
+            }
         }
 
         private void EQGain1Pot_ValueChanged(object sender, EventArgs e)
@@ -1353,11 +1374,10 @@ namespace Yaml_AudioTool_Rebuilt
 
             EQGain1Label.Text = "G: " + EQGain1Pot.Value.ToString("0.00") + "dB";
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband1gHeader)].Text = EffectsHelperFunctions.DbToLinear(EQGain1Pot.Value).ToString("0.000");
+            }
         }
 
         private void Bandwidth1Pot_ValueChanged(object sender, EventArgs e)
@@ -1369,11 +1389,10 @@ namespace Yaml_AudioTool_Rebuilt
 
             Bandwidth1Label.Text = "Q: " + Bandwidth1Pot.Value.ToString("0.00");
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband1qHeader)].Text = Bandwidth1Pot.Value.ToString("0.00");
+            }
         }
 
         private void EQResetButton_Click(object sender, EventArgs e)
@@ -1382,30 +1401,36 @@ namespace Yaml_AudioTool_Rebuilt
             EQGain3Pot.Value = 0;
             EQGain2Pot.Value = 0;
             EQGain1Pot.Value = 0;
-            EQGain4Label.Text = "G: 0dB";
-            EQGain3Label.Text = "G: 0dB";
-            EQGain2Label.Text = "G: 0dB";
-            EQGain1Label.Text = "G: 0dB";
+            EQGain4Label.Text = "G: 0,00dB";
+            EQGain3Label.Text = "G: 0,00dB";
+            EQGain2Label.Text = "G: 0,00dB";
+            EQGain1Label.Text = "G: 0,00dB";
             Bandwidth4Pot.Value = 1;
             Bandwidth3Pot.Value = 1;
             Bandwidth2Pot.Value = 1;
             Bandwidth1Pot.Value = 1;
-            Bandwidth4Label.Text = "Q: 1";
-            Bandwidth3Label.Text = "Q: 1";
-            Bandwidth2Label.Text = "Q: 1";
-            Bandwidth1Label.Text = "Q: 1";
+            Bandwidth4Label.Text = "Q: 1,00";
+            Bandwidth3Label.Text = "Q: 1,00";
+            Bandwidth2Label.Text = "Q: 1,00";
+            Bandwidth1Label.Text = "Q: 1,00";
 
             if (EQenableButton.BackColor == Color.LightGreen)
             {
                 EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = "1";
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text = "0";
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband4gHeader)].Text = "1,00";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband3gHeader)].Text = "1,00";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband2gHeader)].Text = "1,00";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband1gHeader)].Text = "1,00";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband4qHeader)].Text = "1,00";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband3qHeader)].Text = "1,00";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband2qHeader)].Text = "1,00";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband1qHeader)].Text = "1,00";
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqonHeader)].Text = "0";
+            }
         }
 
         private void EQenableButton_Click(object sender, EventArgs e)
@@ -1419,6 +1444,10 @@ namespace Yaml_AudioTool_Rebuilt
                 {
                     ap.sourceVoice.EnableEffect(0);
                 }
+                if (FilelistView.SelectedItems.Count == 1)
+                {
+                    FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqonHeader)].Text = "1";
+                }
             }
 
             else if (EQenableButton.Text == "On")
@@ -1428,6 +1457,10 @@ namespace Yaml_AudioTool_Rebuilt
                 if (ap.sourceVoice != null && ap.eqEffect != null)
                 {
                     ap.sourceVoice.DisableEffect(0);
+                }
+                if (FilelistView.SelectedItems.Count == 1)
+                {
+                    FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqonHeader)].Text = "0";
                 }
             }
         }
