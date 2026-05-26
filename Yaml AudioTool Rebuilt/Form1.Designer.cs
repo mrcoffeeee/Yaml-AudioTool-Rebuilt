@@ -62,6 +62,10 @@ namespace Yaml_AudioTool_Rebuilt
             dopplerHeader = new System.Windows.Forms.ColumnHeader();
             pitchHeader = new System.Windows.Forms.ColumnHeader();
             pitchrandHeader = new System.Windows.Forms.ColumnHeader();
+            echodelayHeader = new System.Windows.Forms.ColumnHeader();
+            echofeedbackHeader = new System.Windows.Forms.ColumnHeader();
+            echomixHeader = new System.Windows.Forms.ColumnHeader();
+            echoonHeader = new System.Windows.Forms.ColumnHeader();
             localizeHeader = new System.Windows.Forms.ColumnHeader();
             streamHeader = new System.Windows.Forms.ColumnHeader();
             falloffHeader = new System.Windows.Forms.ColumnHeader();
@@ -385,7 +389,7 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // FilelistView
             // 
-            FilelistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { titleHeader, filenameHeader, filepathHeader, roommapHeader, roomidHeader, typeHeader, sizeHeader, durationHeader, channelsHeader, samplerateHeader, bitrateHeader, bitsizeHeader, volumeHeader, priorityHeader, loopHeader, mindistanceHeader, maxdistanceHeader, dopplerHeader, pitchHeader, pitchrandHeader, localizeHeader, streamHeader, falloffHeader, stackHeader });
+            FilelistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { titleHeader, filenameHeader, filepathHeader, roommapHeader, roomidHeader, typeHeader, sizeHeader, durationHeader, channelsHeader, samplerateHeader, bitrateHeader, bitsizeHeader, volumeHeader, priorityHeader, loopHeader, mindistanceHeader, maxdistanceHeader, dopplerHeader, pitchHeader, pitchrandHeader, echodelayHeader, echofeedbackHeader, echomixHeader, echoonHeader, localizeHeader, streamHeader, falloffHeader, stackHeader });
             FilelistView.Dock = System.Windows.Forms.DockStyle.Fill;
             FilelistView.FullRowSelect = true;
             FilelistView.GridLines = true;
@@ -496,6 +500,22 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             pitchrandHeader.Text = "Pitch Rand";
             pitchrandHeader.Width = 120;
+            // 
+            // echodelayHeader
+            // 
+            echodelayHeader.Text = "Echo Delay";
+            // 
+            // echofeedbackHeader
+            // 
+            echofeedbackHeader.Text = "Echo Feedback";
+            // 
+            // echomixHeader
+            // 
+            echomixHeader.Text = "Echo Mix";
+            // 
+            // echoonHeader
+            // 
+            echoonHeader.Text = "Echo ON";
             // 
             // localizeHeader
             // 
@@ -1679,7 +1699,7 @@ namespace Yaml_AudioTool_Rebuilt
             EchoFeedbackLabel.Name = "EchoFeedbackLabel";
             EchoFeedbackLabel.Size = new System.Drawing.Size(68, 39);
             EchoFeedbackLabel.TabIndex = 81;
-            EchoFeedbackLabel.Text = "Feedback:\r\n0,5";
+            EchoFeedbackLabel.Text = "Feedback:\r\n0,50";
             EchoFeedbackLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // EchoDelayLabel
@@ -2868,6 +2888,10 @@ namespace Yaml_AudioTool_Rebuilt
         public System.Windows.Forms.Label EchoWetDryLabel;
         public System.Windows.Forms.Label EchoFeedbackLabel;
         public System.Windows.Forms.Label EchoDelayLabel;
+        private System.Windows.Forms.ColumnHeader echoonHeader;
+        public System.Windows.Forms.ColumnHeader echodelayHeader;
+        public System.Windows.Forms.ColumnHeader echofeedbackHeader;
+        public System.Windows.Forms.ColumnHeader echomixHeader;
     }
 }
 

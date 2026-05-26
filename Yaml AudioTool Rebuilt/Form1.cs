@@ -283,6 +283,23 @@ namespace Yaml_AudioTool_Rebuilt
                 PitrandPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text) * 100;
                 PitchrandvalueLabel.Text = "Random:\n" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text;
                 PitchenableButton.Enabled = true;
+                //EchoValues
+                EchoDelayPot.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echodelayHeader)].Text);
+                EchoDelayLabel.Text = "Delay:\n" + EchoDelayPot.Value.ToString() + "ms";
+                EchoFeedbackPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echofeedbackHeader)].Text);
+                EchoFeedbackLabel.Text = "Feedback:\n" + EchoFeedbackPot.Value.ToString("0.00");
+                EchoWetDryPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echomixHeader)].Text) * 100;
+                EchoWetDryLabel.Text = "Mix:\n" + EchoWetDryPot.Value.ToString() + "%";
+                if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text == "1")
+                {
+                    EchoenableButton.Text = "On";
+                    EchoenableButton.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    EchoenableButton.Text = "Off";
+                    EchoenableButton.BackColor = Color.Salmon;
+                }
                 RemoveButtonsEnabled(true, true);
                 if (FilelistView.SelectedItems.Count == 1)
                 {
@@ -1135,13 +1152,12 @@ namespace Yaml_AudioTool_Rebuilt
                 EchoCreationEffect.UpdateEchoSettings(ap.sourceVoice);
             }
 
-            EchoDelayLabel.Text = "Delay:\n" + EchoDelayPot.Value.ToString("0.00") + "ms";
+            EchoDelayLabel.Text = "Delay:\n" + EchoDelayPot.Value.ToString("0") + "ms";
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echodelayHeader)].Text = EchoDelayPot.Value.ToString("0");
+            }
         }
 
         private void EchoFeedbackPot_ValueChanged(object sender, EventArgs e)
@@ -1153,11 +1169,10 @@ namespace Yaml_AudioTool_Rebuilt
 
             EchoFeedbackLabel.Text = "Feedback:\n" + EchoFeedbackPot.Value.ToString("0.00");
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echofeedbackHeader)].Text = EchoFeedbackPot.Value.ToString("0.00");
+            }
         }
 
         private void EchoWetDryPot_ValueChanged(object sender, EventArgs e)
@@ -1167,13 +1182,12 @@ namespace Yaml_AudioTool_Rebuilt
                 EchoCreationEffect.UpdateEchoSettings(ap.sourceVoice);
             }
 
-            EchoWetDryLabel.Text = "Mix:\n" + EchoWetDryPot.Value.ToString("0.00") + "%";
+            EchoWetDryLabel.Text = "Mix:\n" + EchoWetDryPot.Value.ToString("0") + "%";
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = soundPitchFactor.ToString("");
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echomixHeader)].Text = (EchoWetDryPot.Value / 100).ToString("0.00");
+            }
         }
 
         private void EchoResetButton_Click(object sender, EventArgs e)
@@ -1182,7 +1196,7 @@ namespace Yaml_AudioTool_Rebuilt
             EchoFeedbackPot.Value = 0.5;
             EchoWetDryPot.Value= 50;
             EchoDelayLabel.Text = "Delay:\n500ms";
-            EchoFeedbackLabel.Text = "Feedback:\n0,5";
+            EchoFeedbackLabel.Text = "Feedback:\n0,50";
             EchoWetDryLabel.Text = "Mix:\n50%";
 
             if (EQenableButton.BackColor == Color.LightGreen)
@@ -1190,12 +1204,13 @@ namespace Yaml_AudioTool_Rebuilt
                 EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
-            // Implement later if/when implemented in engine
-            /*if (FilelistView.SelectedItems.Count == 1)
+            if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text = "1";
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text = "0";
-            }*/
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echodelayHeader)].Text = EchoDelayPot.Value.ToString("0");
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echofeedbackHeader)].Text = EchoFeedbackPot.Value.ToString("0.00");
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echomixHeader)].Text = EchoWetDryPot.Value.ToString("0.00");
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text = "0";
+            }
         }
 
         private void EchoenableButton_Click(object sender, EventArgs e)
@@ -1207,7 +1222,11 @@ namespace Yaml_AudioTool_Rebuilt
                 // Activate EQ
                 if (ap.sourceVoice != null && ap.echoEffect != null)
                 {
-                    ap.sourceVoice.EnableEffect(1);
+                    ap.sourceVoice.EnableEffect(1);                    
+                }
+                if (FilelistView.SelectedItems.Count == 1)
+                {
+                    FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text = "1";
                 }
             }
 
@@ -1218,6 +1237,10 @@ namespace Yaml_AudioTool_Rebuilt
                 if (ap.sourceVoice != null && ap.echoEffect != null)
                 {
                     ap.sourceVoice.DisableEffect(1);
+                }
+                if (FilelistView.SelectedItems.Count == 1)
+                {
+                    FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text = "0";
                 }
             }
         }

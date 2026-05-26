@@ -147,11 +147,17 @@ namespace Yaml_AudioTool_Rebuilt
                             fileInfos.SubItems.Add(f1.MainVolumeSlider.Volume.ToString(""));
                             fileInfos.SubItems.Add(Convert.ToString(128));
                             fileInfos.SubItems.Add("false");
-                            // add effects items
+                            // add effect items
                             fileInfos.SubItems.Add("1");
                             fileInfos.SubItems.Add("1000");
                             fileInfos.SubItems.Add(f1.DopplertrackBar.Minimum.ToString());
+                            // add pitch effect items
                             fileInfos.SubItems.Add("1");
+                            fileInfos.SubItems.Add("0");
+                            // add echo effect items
+                            fileInfos.SubItems.Add("500");
+                            fileInfos.SubItems.Add("0,50");
+                            fileInfos.SubItems.Add("0,50");
                             fileInfos.SubItems.Add("0");
                             // add misc items
                             fileInfos.SubItems.Add("false");

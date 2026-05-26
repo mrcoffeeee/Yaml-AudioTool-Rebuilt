@@ -27,26 +27,6 @@ namespace Yaml_AudioTool_Rebuilt
 
             return 20.0 * Math.Log10(linear);
         }
-
-        public static float PercentToWetDry(double percent)
-        {
-            float wetDry = (float)(percent / 100.0);
-
-            // Clamp to FXECHO-WetDryMix borders
-            if (wetDry < 0.0f) wetDry = 0.0f;
-            if (wetDry > 1.0f) wetDry = 1.0f;
-
-            return wetDry;
-        }
-
-        public static double WetDryToPercent(float wetDry)
-        {
-            // Clamp to FXECHO-WetDryMix borders
-            if (wetDry < 0.0f) wetDry = 0.0f;
-            if (wetDry > 1.0f) wetDry = 1.0f;
-
-            return wetDry * 100.0;
-        }
     }
 
     public class Effects
@@ -116,7 +96,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             var echoParams = new Vortice.XAPO.EchoParameters
             {
-                WetDryMix = EffectsHelperFunctions.PercentToWetDry(f1.EchoWetDryPot.Value),
+                WetDryMix = Convert.ToSingle(f1.EchoWetDryPot.Value / 100),
                 Feedback = Convert.ToSingle(f1.EchoFeedbackPot.Value),
                 Delay = Convert.ToSingle(f1.EchoDelayPot.Value)
             };
