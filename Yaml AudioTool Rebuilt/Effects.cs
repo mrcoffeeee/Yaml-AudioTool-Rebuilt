@@ -48,10 +48,7 @@ namespace Yaml_AudioTool_Rebuilt
             //MessageBox.Show(pitchValue.ToString());
             return pitchValue;
         }
-    }
 
-    public class EQCreationEffect
-    {
         // Sets EQ-parameters (fixed frequencies: 40 / 160 / 650 / 2500 Hz)
         public static void SetEqualizer(IXAudio2SourceVoice sourceVoice)
         {
@@ -85,10 +82,7 @@ namespace Yaml_AudioTool_Rebuilt
                 SetEqualizer(sourceVoice);
             }
         }
-    }
 
-    public class EchoCreationEffect
-    {
         // Sets echo parameters (Index 1 in the chain)
         public static void SetEcho(IXAudio2SourceVoice sourceVoice)
         {
@@ -111,12 +105,25 @@ namespace Yaml_AudioTool_Rebuilt
                 SetEcho(sourceVoice);
             }
         }
+
+        // Sets limiter parameters (Index 3 in the chain) – fixed protective settings
+        public static void SetLimiter(IXAudio2SourceVoice sourceVoice)
+        {
+            // Usage as peak limiter
+            var limiterParams = new Vortice.XAPO.MasteringLimiterParameters
+            {
+                Release = 3,      // Default (1-20)
+                Loudness = 1600   // Default (1-1800)
+            };
+
+            sourceVoice.SetEffectParameters(3, limiterParams, 0);
+        }
+
     }
 
     public class RoomCreationEffects
     {
-        public static FilterParameters voiceFilter;
-        public static reverbParameters[] ReverbPresets =
+        public static readonly reverbParameters[] ReverbPresets =
             [
                 Vortice.XAudio2.Fx.Presets.Default,
                 Vortice.XAudio2.Fx.Presets.Generic,
@@ -150,33 +157,41 @@ namespace Yaml_AudioTool_Rebuilt
                 Vortice.XAudio2.Fx.Presets.Plate
             ];
 
+        private static void ApplyFilter(IXAudio2SourceVoice sourceVoice, int roomIndex)
+        {
+            Form1 f1 = (Form1)Application.OpenForms["Form1"];
+            var room = f1.RoomListView.Items[roomIndex];
+
+            FilterParameters voiceFilter = new()
+            {
+                Frequency = Convert.ToSingle(room.SubItems[f1.RoomListView.Columns.IndexOf(f1.filterfrequencyHeader)].Text),
+                OneOverQ = Convert.ToSingle(room.SubItems[f1.RoomListView.Columns.IndexOf(f1.filteroneoverqHeader)].Text),
+                Type = (FilterType)Convert.ToInt32(room.SubItems[f1.RoomListView.Columns.IndexOf(f1.filtertypeHeader)].Text)
+            };
+
+            sourceVoice.SetFilterParameters(voiceFilter, operationSet: 0);
+        }
+
         public static IXAudio2SourceVoice SetRoomFilter(IXAudio2SourceVoice sourceVoice)
         {
             Form1 f1 = (Form1)Application.OpenForms["Form1"];
             int roomIndex = Convert.ToInt32(f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.roomidHeader)].Text);
-            voiceFilter.Frequency = Convert.ToSingle(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filterfrequencyHeader)].Text);
-            voiceFilter.OneOverQ = Convert.ToSingle(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filteroneoverqHeader)].Text);
-            voiceFilter.Type = (FilterType)Convert.ToInt32(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filtertypeHeader)].Text);
-            sourceVoice.SetFilterParameters(voiceFilter, operationSet: 0);
+            ApplyFilter(sourceVoice, roomIndex);
             return sourceVoice;
         }
 
         public static void UpdateFilterSettings(int roomlistValue, IXAudio2SourceVoice sourceVoice)
         {
-            if (sourceVoice != null &&
-                roomlistValue == 1)
+            if (sourceVoice != null && roomlistValue == 1)
             {
                 Form1 f1 = (Form1)Application.OpenForms["Form1"];
                 int roomIndex = f1.RoomListView.SelectedItems[0].Index;
-                voiceFilter.Frequency = Convert.ToSingle(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filterfrequencyHeader)].Text);
-                voiceFilter.OneOverQ = Convert.ToSingle(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filteroneoverqHeader)].Text);
-                voiceFilter.Type = (FilterType)Convert.ToInt32(f1.RoomListView.Items[roomIndex].SubItems[f1.RoomListView.Columns.IndexOf(f1.filtertypeHeader)].Text);
-                sourceVoice.SetFilterParameters(voiceFilter, operationSet: 0);
+                ApplyFilter(sourceVoice, roomIndex);
             }
         }
 
-        // Builds the effect chain: index 0 = EQ, index 1 = Echo, index 2 = Reverb.
-        public static (IDisposable eq, IDisposable echo, IDisposable reverb) SetEffectChain(IXAudio2SourceVoice sourceVoice)
+        // Builds the effect chain: index 0 = EQ, index 1 = Echo, index 2 = Reverb, index 3 = Limiter.
+        public static (IDisposable eq, IDisposable echo, IDisposable reverb, IDisposable limiter) SetEffectChain(IXAudio2SourceVoice sourceVoice)
         {
             // --- Create EQ (Index 0) ---
             Vortice.XAPO.XAPO.CreateFX(Vortice.XAPO.XAPO.CLSID_FXEQ, out var eqUnknown);
@@ -188,14 +203,18 @@ namespace Yaml_AudioTool_Rebuilt
             // --- Create Reverb (Index 2) ---
             var reverb = Vortice.XAudio2.Fx.Fx.XAudio2CreateReverb();
 
+            // --- Create Limiter (Index 3) ---
+            Vortice.XAPO.XAPO.CreateFX(Vortice.XAPO.XAPO.CLSID_FXMasteringLimiter, out var limiterUnknown);
+
             // --- Set chain ---
             uint channels = (uint)sourceVoice.VoiceDetails.InputChannels;
             var eqDescriptor = new EffectDescriptor(eqUnknown, channels);
             var echoDescriptor = new EffectDescriptor(echoUnknown, channels);
             var reverbDescriptor = new EffectDescriptor(reverb, channels);
-            sourceVoice.SetEffectChain(eqDescriptor, echoDescriptor, reverbDescriptor);
+            var limiterDescriptor = new EffectDescriptor(limiterUnknown, channels);
+            sourceVoice.SetEffectChain(eqDescriptor, echoDescriptor, reverbDescriptor, limiterDescriptor);
 
-            return (eqUnknown, echoUnknown, reverb);
+            return (eqUnknown, echoUnknown, reverb, limiterUnknown);
         }
 
         public static void SetRoomReverb(IXAudio2SourceVoice sourceVoice)

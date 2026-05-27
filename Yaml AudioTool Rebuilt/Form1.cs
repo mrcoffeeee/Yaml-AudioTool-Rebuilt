@@ -1176,7 +1176,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EchoenableButton.BackColor == Color.LightGreen)
             {
-                EchoCreationEffect.UpdateEchoSettings(ap.sourceVoice);
+                Effects.UpdateEchoSettings(ap.sourceVoice);
             }
 
             EchoDelayLabel.Text = "Delay:\n" + EchoDelayPot.Value.ToString("0") + "ms";
@@ -1191,7 +1191,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EchoenableButton.BackColor == Color.LightGreen)
             {
-                EchoCreationEffect.UpdateEchoSettings(ap.sourceVoice);
+                Effects.UpdateEchoSettings(ap.sourceVoice);
             }
 
             EchoFeedbackLabel.Text = "Feedback:\n" + EchoFeedbackPot.Value.ToString("0.00");
@@ -1206,7 +1206,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EchoenableButton.BackColor == Color.LightGreen)
             {
-                EchoCreationEffect.UpdateEchoSettings(ap.sourceVoice);
+                Effects.UpdateEchoSettings(ap.sourceVoice);
             }
 
             EchoWetDryLabel.Text = "Mix:\n" + EchoWetDryPot.Value.ToString("0") + "%";
@@ -1228,7 +1228,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (EQenableButton.BackColor == Color.LightGreen)
             {
-                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
             if (FilelistView.SelectedItems.Count == 1)
@@ -1279,7 +1279,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EQenableButton.BackColor == Color.LightGreen)
             {
-                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
             EQGain4Label.Text = "G: " + EQGain4Pot.Value.ToString("0.00") + "dB";
@@ -1294,7 +1294,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EQenableButton.BackColor == Color.LightGreen)
             {
-                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
             Bandwidth4Label.Text = "Q: " + Bandwidth4Pot.Value.ToString("0.00");
@@ -1309,7 +1309,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EQenableButton.BackColor == Color.LightGreen)
             {
-                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
             EQGain3Label.Text = "G: " + EQGain3Pot.Value.ToString("0.00") + "dB";
@@ -1324,7 +1324,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EQenableButton.BackColor == Color.LightGreen)
             {
-                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
             Bandwidth3Label.Text = "Q: " + Bandwidth3Pot.Value.ToString("0.00");
@@ -1339,7 +1339,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EQenableButton.BackColor == Color.LightGreen)
             {
-                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
             EQGain2Label.Text = "G: " + EQGain2Pot.Value.ToString("0.00") + "dB";
@@ -1354,7 +1354,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EQenableButton.BackColor == Color.LightGreen)
             {
-                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
             Bandwidth2Label.Text = "Q: " + Bandwidth2Pot.Value.ToString("0.00");
@@ -1369,7 +1369,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EQenableButton.BackColor == Color.LightGreen)
             {
-                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
             EQGain1Label.Text = "G: " + EQGain1Pot.Value.ToString("0.00") + "dB";
@@ -1384,7 +1384,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (EQenableButton.BackColor == Color.LightGreen)
             {
-                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
             Bandwidth1Label.Text = "Q: " + Bandwidth1Pot.Value.ToString("0.00");
@@ -1416,7 +1416,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (EQenableButton.BackColor == Color.LightGreen)
             {
-                EQCreationEffect.UpdateEqualizerSettings(ap.sourceVoice);
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
             }
 
             if (FilelistView.SelectedItems.Count == 1)

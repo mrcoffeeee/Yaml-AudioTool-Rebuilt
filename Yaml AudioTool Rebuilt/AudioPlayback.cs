@@ -25,6 +25,7 @@ namespace Yaml_AudioTool_Rebuilt
         public IDisposable eqEffect;
         public IDisposable echoEffect;
         public IDisposable reverbEffect;
+        public IDisposable limiterEffect;
 
         public void Initialize()
         {
@@ -287,13 +288,13 @@ namespace Yaml_AudioTool_Rebuilt
                 bool reverbEnabled = roomAssigned && f1.RoomenableButton.BackColor == Color.LightGreen;
 
                 // Build effect chain
-                (eqEffect, echoEffect, reverbEffect) = RoomCreationEffects.SetEffectChain(sourceVoice);
+                (eqEffect, echoEffect, reverbEffect, limiterEffect) = RoomCreationEffects.SetEffectChain(sourceVoice);
 
                 // Set eq parameters
-                EQCreationEffect.SetEqualizer(sourceVoice);
+                Effects.SetEqualizer(sourceVoice);
 
                 // Set echo parameters
-                EchoCreationEffect.SetEcho(sourceVoice);
+                Effects.SetEcho(sourceVoice);
 
                 // Set room parameters
                 if (roomAssigned)
@@ -301,6 +302,10 @@ namespace Yaml_AudioTool_Rebuilt
                     RoomCreationEffects.SetRoomFilter(sourceVoice);
                     RoomCreationEffects.SetRoomReverb(sourceVoice);
                 }
+
+                // Set limiter parameters and always activate
+                Effects.SetLimiter(sourceVoice);
+                sourceVoice.EnableEffect(3);
 
                 // Initial effects states due to buttons
                 if (eqEnabled)
@@ -347,6 +352,9 @@ namespace Yaml_AudioTool_Rebuilt
 
             reverbEffect?.Dispose();
             reverbEffect = null;
+
+            limiterEffect?.Dispose();
+            limiterEffect = null;
 
             audioBuffer?.Dispose();
             audioBuffer = null;
