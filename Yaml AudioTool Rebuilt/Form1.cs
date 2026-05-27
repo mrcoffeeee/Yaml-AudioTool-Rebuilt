@@ -1044,10 +1044,9 @@ namespace Yaml_AudioTool_Rebuilt
                 RoomenableButton.Text = "On";
                 RoomenableButton.BackColor = Color.LightGreen;
 
-                if (ap.sourceVoice != null)
+                if (ap.sourceVoice != null && ap.reverbEffect != null)
                 {
-                    ap.sourceVoice.EnableEffect(0);
-                    ap.sourceVoice.EnableEffect(1);
+                    ap.sourceVoice.EnableEffect(2);
                 }
             }
             else if (RoomenableButton.Text == "On")
@@ -1055,10 +1054,9 @@ namespace Yaml_AudioTool_Rebuilt
                 RoomenableButton.Text = "Off";
                 RoomenableButton.BackColor = Color.Salmon;
 
-                if (ap.sourceVoice != null)
+                if (ap.sourceVoice != null && ap.reverbEffect != null)
                 {
-                    ap.sourceVoice.DisableEffect(0);
-                    ap.sourceVoice.DisableEffect(1);
+                    ap.sourceVoice.DisableEffect(2);
                 }
             }
         }
