@@ -27,6 +27,11 @@ namespace Yaml_AudioTool_Rebuilt
         public IDisposable reverbEffect;
         public IDisposable limiterEffect;
 
+        public IDisposable masterVolumeMeter;
+        private float[] peakLevels;
+        private float[] rmsLevels;
+        public uint masterChannelCount = 2;
+
         public void Initialize()
         {
             if (xaudio2 != null) return;
@@ -37,33 +42,72 @@ namespace Yaml_AudioTool_Rebuilt
             xaudio2 = XAudio2.XAudio2Create(ProcessorSpecifier.UseDefaultProcessor);
             masteringVoice = xaudio2.CreateMasteringVoice(2, 48000);
             xaudio2.StartEngine();
+
+            // Bind VolumeMeter to MasteringVoice (Index 0 of chain)
+            Vortice.XAudio2.Fx.Fx.XAudio2CreateVolumeMeter(out var meterUnknown);
+            masterVolumeMeter = meterUnknown;
+
+            var meterDescriptor = new EffectDescriptor(meterUnknown, masterChannelCount);
+            masteringVoice.SetEffectChain(meterDescriptor);
+            masteringVoice.EnableEffect(0);
+
+            peakLevels = new float[masterChannelCount];
+            rmsLevels = new float[masterChannelCount];
         }
 
-        public float GetSessionPeak()
+        [StructLayout(LayoutKind.Sequential)]
+        private struct VolumeMeterLevelsNative
         {
-            if (device == null) return 0;
+            public IntPtr PeakLevels;
+            public IntPtr RMSLevels;
+            public uint ChannelCount;
+        }
+
+        public (float peak, float rms) GetMasterLevels()
+        {
+            if (masteringVoice == null || peakLevels == null || rmsLevels == null)
+                return (0, 0);
+
+            GCHandle peakHandle = default;
+            GCHandle rmsHandle = default;
 
             try
             {
-                var sessions = device.AudioSessionManager.Sessions;
-                int currentProcessId = Environment.ProcessId;
-                float peak = 0;
+                // Float-Arrays pinnen, damit XAudio2 in den unmanaged Speicher schreiben kann
+                peakHandle = GCHandle.Alloc(peakLevels, GCHandleType.Pinned);
+                rmsHandle = GCHandle.Alloc(rmsLevels, GCHandleType.Pinned);
 
-                for (int i = 0; i < sessions.Count; i++)
+                var native = new VolumeMeterLevelsNative
                 {
-                    var session = sessions[i];
-                    if (session.GetProcessID == currentProcessId)
-                    {
-                        float sessionPeak = session.AudioMeterInformation.MasterPeakValue;
-                        if (sessionPeak > peak) peak = sessionPeak;
-                    }
+                    PeakLevels = peakHandle.AddrOfPinnedObject(),
+                    RMSLevels = rmsHandle.AddrOfPinnedObject(),
+                    ChannelCount = masterChannelCount
+                };
+
+                // Native Struktur als Span<byte> übergeben
+                Span<byte> buffer = MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref native, 1));
+                masteringVoice.GetEffectParameters(0, buffer);
+
+                // peakLevels und rmsLevels sind jetzt mit den aktuellen Werten gefüllt
+                float maxPeak = 0;
+                float maxRms = 0;
+                for (int i = 0; i < masterChannelCount; i++)
+                {
+                    if (peakLevels[i] > maxPeak) maxPeak = peakLevels[i];
+                    if (rmsLevels[i] > maxRms) maxRms = rmsLevels[i];
                 }
-                return peak;
+
+                return (maxPeak, maxRms);
             }
             catch
             {
-                // COM-calls could sometimes fail
-                return 0;
+                return (0, 0);
+            }
+            finally
+            {
+                // Pins immer freigeben, auch bei Exception
+                if (peakHandle.IsAllocated) peakHandle.Free();
+                if (rmsHandle.IsAllocated) rmsHandle.Free();
             }
         }
 

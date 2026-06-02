@@ -23,6 +23,11 @@ namespace Yaml_AudioTool_Rebuilt
 
         private bool stopFlag = false;
         private string fileTime = "";
+        private bool meterDecaying = false;
+        const float rmsSmoothFactor = 0.07f; // lower values for more smoothing, higher for more direct showing
+        const float peakSmoothFactor = 0.4f;
+        private float smoothedRms = 0;
+        private float smoothedPeak = 0;
         private readonly AudioPlayback ap = new();
 
         private static DestructiveEffectsEditor formDestructiveEffectsEditor;
@@ -43,7 +48,7 @@ namespace Yaml_AudioTool_Rebuilt
             SetWindowsSize();
             PopulateComboboxes();
             RoomListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            SetDoubleBuffering(MainVolumeMeter, true);
+            SetDoubleBuffering(MainVolumePeakMeter, true);
             SetDoubleBuffering(MainVolumeSlider, true);
             SetDoubleBuffering(FilelistView, true);
             SetDoubleBuffering(RoomListView, true);
@@ -105,8 +110,26 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            //System.Diagnostics.Debug.WriteLine($"meterDecaying = {meterDecaying}");
+            // RMS-Decay when playback is stopped
+            if (meterDecaying)
+            {
+                smoothedRms += rmsSmoothFactor * (0 - smoothedRms);
+
+                if (smoothedRms < 0.001f)
+                {
+                    smoothedRms = 0;
+                    meterDecaying = false;
+                    playbackTimer.Stop();
+                }
+
+                MainVolumeRMSMeter.Amplitude = smoothedRms;
+                return;
+            }
+
             if (ap.sourceVoice == null)
                 return;
+
             long samplePosition = (long)ap.sourceVoice.State.SamplesPlayed;
             uint sampleRate = ap.sourceVoice.VoiceDetails.InputSampleRate;
             double totalplaybackSeconds = (double)samplePosition / sampleRate;
@@ -114,8 +137,15 @@ namespace Yaml_AudioTool_Rebuilt
             int seconds = (int)(totalplaybackSeconds % 60);
             timeLabel.Text = $"{minutes:D2}:{seconds:D2}";
 
-            MainVolumeMeter.Amplitude = ap.GetSessionPeak();
-            MainVolumeMeter.Refresh();
+            var (peak, rms) = ap.GetMasterLevels();
+            smoothedPeak += peakSmoothFactor * (peak - smoothedPeak);
+            smoothedRms += rmsSmoothFactor * (rms - smoothedRms);
+
+            if (smoothedPeak < 0.001f) smoothedPeak = 0;
+            if (smoothedRms < 0.001f) smoothedRms = 0;
+
+            MainVolumePeakMeter.Amplitude = smoothedPeak;
+            MainVolumeRMSMeter.Amplitude = smoothedRms;
 
             if (LoopButton.BackColor == Color.Salmon)
             {
@@ -129,9 +159,10 @@ namespace Yaml_AudioTool_Rebuilt
                     stopFlag = true;
                 }
 
-                if (stopFlag == true && MainVolumeMeter.Amplitude < 0.00001)
+                if (stopFlag == true && MainVolumePeakMeter.Amplitude < 0.00001)
                 {
                     StopPlayback();
+                    meterDecaying = true;
                 }
             }
         }
@@ -432,7 +463,7 @@ namespace Yaml_AudioTool_Rebuilt
                     else if (ap.sourceVoice != null && ap.playbackPause == true)
                     {
                         playbackTimer.Stop();
-                        MainVolumeMeter.Amplitude = 0;
+                        MainVolumePeakMeter.Amplitude = 0;
                     }
                 }
 
@@ -467,8 +498,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void StopPlayback()
         {
             ap.StopPlayback();
-            playbackTimer.Stop();
-            MainVolumeMeter.Amplitude = 0;
+            MainVolumePeakMeter.Amplitude = 0;            
         }
 
         #endregion PlaybackSection
@@ -1168,109 +1198,6 @@ namespace Yaml_AudioTool_Rebuilt
         }
 
 
-        // Echo
-
-        private void EchoDelayPot_ValueChanged(object sender, EventArgs e)
-        {
-            if (EchoenableButton.BackColor == Color.LightGreen)
-            {
-                Effects.UpdateEchoSettings(ap.sourceVoice);
-            }
-
-            EchoDelayLabel.Text = "Delay:\n" + EchoDelayPot.Value.ToString("0") + "ms";
-
-            if (FilelistView.SelectedItems.Count == 1)
-            {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echodelayHeader)].Text = EchoDelayPot.Value.ToString("0");
-            }
-        }
-
-        private void EchoFeedbackPot_ValueChanged(object sender, EventArgs e)
-        {
-            if (EchoenableButton.BackColor == Color.LightGreen)
-            {
-                Effects.UpdateEchoSettings(ap.sourceVoice);
-            }
-
-            EchoFeedbackLabel.Text = "Feedback:\n" + EchoFeedbackPot.Value.ToString("0.00");
-
-            if (FilelistView.SelectedItems.Count == 1)
-            {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echofeedbackHeader)].Text = EchoFeedbackPot.Value.ToString("0.00");
-            }
-        }
-
-        private void EchoWetDryPot_ValueChanged(object sender, EventArgs e)
-        {
-            if (EchoenableButton.BackColor == Color.LightGreen)
-            {
-                Effects.UpdateEchoSettings(ap.sourceVoice);
-            }
-
-            EchoWetDryLabel.Text = "Mix:\n" + EchoWetDryPot.Value.ToString("0") + "%";
-
-            if (FilelistView.SelectedItems.Count == 1)
-            {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echomixHeader)].Text = (EchoWetDryPot.Value / 100).ToString("0.00");
-            }
-        }
-
-        private void EchoResetButton_Click(object sender, EventArgs e)
-        {
-            EchoDelayPot.Value = 500;
-            EchoFeedbackPot.Value = 0.5;
-            EchoWetDryPot.Value= 50;
-            EchoDelayLabel.Text = "Delay:\n500ms";
-            EchoFeedbackLabel.Text = "Feedback:\n0,50";
-            EchoWetDryLabel.Text = "Mix:\n50%";
-
-            if (EQenableButton.BackColor == Color.LightGreen)
-            {
-                Effects.UpdateEqualizerSettings(ap.sourceVoice);
-            }
-
-            if (FilelistView.SelectedItems.Count == 1)
-            {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echodelayHeader)].Text = EchoDelayPot.Value.ToString("0");
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echofeedbackHeader)].Text = EchoFeedbackPot.Value.ToString("0.00");
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echomixHeader)].Text = EchoWetDryPot.Value.ToString("0.00");
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text = "0";
-            }
-        }
-
-        private void EchoenableButton_Click(object sender, EventArgs e)
-        {
-            if (EchoenableButton.Text == "Off")
-            {
-                EchoenableButton.Text = "On";
-                EchoenableButton.BackColor = Color.LightGreen;
-                // Activate EQ
-                if (ap.sourceVoice != null && ap.echoEffect != null)
-                {
-                    ap.sourceVoice.EnableEffect(1);                    
-                }
-                if (FilelistView.SelectedItems.Count == 1)
-                {
-                    FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text = "1";
-                }
-            }
-
-            else if (EchoenableButton.Text == "On")
-            {
-                EchoenableButton.Text = "Off";
-                EchoenableButton.BackColor = Color.Salmon;
-                if (ap.sourceVoice != null && ap.echoEffect != null)
-                {
-                    ap.sourceVoice.DisableEffect(1);
-                }
-                if (FilelistView.SelectedItems.Count == 1)
-                {
-                    FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text = "0";
-                }
-            }
-        }
-
-
         // EQ
 
         private void EQGain4Pot_ValueChanged(object sender, EventArgs e)
@@ -1459,6 +1386,109 @@ namespace Yaml_AudioTool_Rebuilt
                 if (FilelistView.SelectedItems.Count == 1)
                 {
                     FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqonHeader)].Text = "0";
+                }
+            }
+        }
+
+
+        // Echo
+
+        private void EchoDelayPot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EchoenableButton.BackColor == Color.LightGreen)
+            {
+                Effects.UpdateEchoSettings(ap.sourceVoice);
+            }
+
+            EchoDelayLabel.Text = "Delay:\n" + EchoDelayPot.Value.ToString("0") + "ms";
+
+            if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echodelayHeader)].Text = EchoDelayPot.Value.ToString("0");
+            }
+        }
+
+        private void EchoFeedbackPot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EchoenableButton.BackColor == Color.LightGreen)
+            {
+                Effects.UpdateEchoSettings(ap.sourceVoice);
+            }
+
+            EchoFeedbackLabel.Text = "Feedback:\n" + EchoFeedbackPot.Value.ToString("0.00");
+
+            if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echofeedbackHeader)].Text = EchoFeedbackPot.Value.ToString("0.00");
+            }
+        }
+
+        private void EchoWetDryPot_ValueChanged(object sender, EventArgs e)
+        {
+            if (EchoenableButton.BackColor == Color.LightGreen)
+            {
+                Effects.UpdateEchoSettings(ap.sourceVoice);
+            }
+
+            EchoWetDryLabel.Text = "Mix:\n" + EchoWetDryPot.Value.ToString("0") + "%";
+
+            if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echomixHeader)].Text = (EchoWetDryPot.Value / 100).ToString("0.00");
+            }
+        }
+
+        private void EchoResetButton_Click(object sender, EventArgs e)
+        {
+            EchoDelayPot.Value = 500;
+            EchoFeedbackPot.Value = 0.5;
+            EchoWetDryPot.Value= 50;
+            EchoDelayLabel.Text = "Delay:\n500ms";
+            EchoFeedbackLabel.Text = "Feedback:\n0,50";
+            EchoWetDryLabel.Text = "Mix:\n50%";
+
+            if (EQenableButton.BackColor == Color.LightGreen)
+            {
+                Effects.UpdateEqualizerSettings(ap.sourceVoice);
+            }
+
+            if (FilelistView.SelectedItems.Count == 1)
+            {
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echodelayHeader)].Text = EchoDelayPot.Value.ToString("0");
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echofeedbackHeader)].Text = EchoFeedbackPot.Value.ToString("0.00");
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echomixHeader)].Text = EchoWetDryPot.Value.ToString("0.00");
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text = "0";
+            }
+        }
+
+        private void EchoenableButton_Click(object sender, EventArgs e)
+        {
+            if (EchoenableButton.Text == "Off")
+            {
+                EchoenableButton.Text = "On";
+                EchoenableButton.BackColor = Color.LightGreen;
+                // Activate EQ
+                if (ap.sourceVoice != null && ap.echoEffect != null)
+                {
+                    ap.sourceVoice.EnableEffect(1);                    
+                }
+                if (FilelistView.SelectedItems.Count == 1)
+                {
+                    FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text = "1";
+                }
+            }
+
+            else if (EchoenableButton.Text == "On")
+            {
+                EchoenableButton.Text = "Off";
+                EchoenableButton.BackColor = Color.Salmon;
+                if (ap.sourceVoice != null && ap.echoEffect != null)
+                {
+                    ap.sourceVoice.DisableEffect(1);
+                }
+                if (FilelistView.SelectedItems.Count == 1)
+                {
+                    FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text = "0";
                 }
             }
         }
