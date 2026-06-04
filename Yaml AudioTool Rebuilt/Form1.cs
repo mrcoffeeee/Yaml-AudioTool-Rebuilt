@@ -190,9 +190,9 @@ namespace Yaml_AudioTool_Rebuilt
                 ap.StopPlayback();
                 File.Delete("Temp.wav");
             }
-            catch
+            catch (Exception ex)
             {
-
+                System.Diagnostics.Debug.WriteLine("ExitApplication cleanup error: " + ex.Message);
             }
             Application.Exit();
         }
@@ -291,91 +291,103 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (FilelistView.SelectedItems.Count > 0)
             {
-                EnumtextBox.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text;
-                timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
-                selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text);
-                MainVolumeSlider.Volume = Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text);
-                PrioritytrackBar.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(priorityHeader)].Text);
-                priorityvalueLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(priorityHeader)].Text;
-                if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(loopHeader)].Text == "true")
-                    LoopButton.BackColor = Color.LightGreen;
-                else if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(loopHeader)].Text == "false")
-                    LoopButton.BackColor = Color.Salmon;
-                MinDistancenumericUpDown.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(mindistanceHeader)].Text);
-                MaxDistancenumericUpDown.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(maxdistanceHeader)].Text);
-                double dopplerValue = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(dopplerHeader)].Text);
-                DopplertrackBar.Value = Convert.ToInt32(dopplerValue * 100);
-                dopplervalueLabel.Text = Convert.ToString(dopplerValue);
-                LocalizecheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(localizeHeader)].Text);
-                StreamcheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(streamHeader)].Text);
-                TypecomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text;
-                FalloffcomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text;
-                StackcomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text;
-                ChangeFilelabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
-                //PitchShifterValues
-                PitchPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text) * 100;
-                PitchvalueLabel.Text = "Pitch:\n" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text;
-                PitrandPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text) * 100;
-                PitchrandvalueLabel.Text = "Random:\n" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text;
-                PitchenableButton.Enabled = true;
-                //EQValues
-                EQGain1Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband1gHeader)].Text));
-                EQGain1Label.Text = "G: " + EQGain1Pot.Value.ToString("0.00") +"dB";
-                EQGain2Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband2gHeader)].Text));
-                EQGain2Label.Text = "G: " + EQGain2Pot.Value.ToString("0.00") + "dB";
-                EQGain3Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband3gHeader)].Text));
-                EQGain3Label.Text = "G: " + EQGain3Pot.Value.ToString("0.00") + "dB";
-                EQGain4Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband4gHeader)].Text));
-                EQGain4Label.Text = "G: " + EQGain4Pot.Value.ToString("0.00") + "dB";
-                Bandwidth1Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband1qHeader)].Text);
-                Bandwidth1Label.Text = "Q: " + Bandwidth1Pot.Value.ToString("0.00");
-                Bandwidth2Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband2qHeader)].Text);
-                Bandwidth2Label.Text = "Q: " + Bandwidth2Pot.Value.ToString("0.00");
-                Bandwidth3Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband3qHeader)].Text);
-                Bandwidth3Label.Text = "Q: " + Bandwidth3Pot.Value.ToString("0.00");
-                Bandwidth4Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband4qHeader)].Text);
-                Bandwidth4Label.Text = "Q: " + Bandwidth4Pot.Value.ToString("0.00");
-                if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqonHeader)].Text == "1")
+                try
                 {
-                    EQenableButton.Text = "On";
-                    EQenableButton.BackColor = Color.LightGreen;
-                }
-                else
-                {
-                    EQenableButton.Text = "Off";
-                    EQenableButton.BackColor = Color.Salmon;
-                }
-                //EchoValues
-                EchoDelayPot.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echodelayHeader)].Text);
-                EchoDelayLabel.Text = "Delay:\n" + EchoDelayPot.Value.ToString() + "ms";
-                EchoFeedbackPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echofeedbackHeader)].Text);
-                EchoFeedbackLabel.Text = "Feedback:\n" + EchoFeedbackPot.Value.ToString("0.00");
-                EchoWetDryPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echomixHeader)].Text) * 100;
-                EchoWetDryLabel.Text = "Mix:\n" + EchoWetDryPot.Value.ToString() + "%";
-                if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text == "1")
-                {
-                    EchoenableButton.Text = "On";
-                    EchoenableButton.BackColor = Color.LightGreen;
-                }
-                else
-                {
-                    EchoenableButton.Text = "Off";
-                    EchoenableButton.BackColor = Color.Salmon;
-                }
-                RemoveButtonsEnabled(true, true);
-                if (FilelistView.SelectedItems.Count == 1)
-                {
-                    if (GetOpenForm("DestructiveEffectsEditor") && formDestructiveEffectsEditor.Visible == true)
+                    EnumtextBox.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text;
+                    timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
+                    selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text);
+                    MainVolumeSlider.Volume = Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text);
+                    PrioritytrackBar.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(priorityHeader)].Text);
+                    priorityvalueLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(priorityHeader)].Text;
+                    if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(loopHeader)].Text == "true")
+                        LoopButton.BackColor = Color.LightGreen;
+                    else if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(loopHeader)].Text == "false")
+                        LoopButton.BackColor = Color.Salmon;
+                    MinDistancenumericUpDown.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(mindistanceHeader)].Text);
+                    MaxDistancenumericUpDown.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(maxdistanceHeader)].Text);
+                    double dopplerValue = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(dopplerHeader)].Text);
+                    DopplertrackBar.Value = Convert.ToInt32(dopplerValue * 100);
+                    dopplervalueLabel.Text = Convert.ToString(dopplerValue);
+                    LocalizecheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(localizeHeader)].Text);
+                    StreamcheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(streamHeader)].Text);
+                    TypecomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text;
+                    FalloffcomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text;
+                    StackcomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text;
+                    ChangeFilelabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
+                    //PitchShifterValues
+                    PitchPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text) * 100;
+                    PitchvalueLabel.Text = "Pitch:\n" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text;
+                    PitrandPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text) * 100;
+                    PitchrandvalueLabel.Text = "Random:\n" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchrandHeader)].Text;
+                    PitchenableButton.Enabled = true;
+                    //EQValues
+                    EQGain1Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband1gHeader)].Text));
+                    EQGain1Label.Text = "G: " + EQGain1Pot.Value.ToString("0.00") + "dB";
+                    EQGain2Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband2gHeader)].Text));
+                    EQGain2Label.Text = "G: " + EQGain2Pot.Value.ToString("0.00") + "dB";
+                    EQGain3Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband3gHeader)].Text));
+                    EQGain3Label.Text = "G: " + EQGain3Pot.Value.ToString("0.00") + "dB";
+                    EQGain4Pot.Value = EffectsHelperFunctions.LinearToDb(Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband4gHeader)].Text));
+                    EQGain4Label.Text = "G: " + EQGain4Pot.Value.ToString("0.00") + "dB";
+                    Bandwidth1Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband1qHeader)].Text);
+                    Bandwidth1Label.Text = "Q: " + Bandwidth1Pot.Value.ToString("0.00");
+                    Bandwidth2Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband2qHeader)].Text);
+                    Bandwidth2Label.Text = "Q: " + Bandwidth2Pot.Value.ToString("0.00");
+                    Bandwidth3Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband3qHeader)].Text);
+                    Bandwidth3Label.Text = "Q: " + Bandwidth3Pot.Value.ToString("0.00");
+                    Bandwidth4Pot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqband4qHeader)].Text);
+                    Bandwidth4Label.Text = "Q: " + Bandwidth4Pot.Value.ToString("0.00");
+                    if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(eqonHeader)].Text == "1")
                     {
-                        formDestructiveEffectsEditor.Text = Text + ": Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
-                        if (!formDestructiveEffectsEditor.DEEBackgroundWorker.IsBusy)
+                        EQenableButton.Text = "On";
+                        EQenableButton.BackColor = Color.LightGreen;
+                    }
+                    else
+                    {
+                        EQenableButton.Text = "Off";
+                        EQenableButton.BackColor = Color.Salmon;
+                    }
+                    //EchoValues
+                    EchoDelayPot.Value = Convert.ToInt32(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echodelayHeader)].Text);
+                    EchoDelayLabel.Text = "Delay:\n" + EchoDelayPot.Value.ToString() + "ms";
+                    EchoFeedbackPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echofeedbackHeader)].Text);
+                    EchoFeedbackLabel.Text = "Feedback:\n" + EchoFeedbackPot.Value.ToString("0.00");
+                    EchoWetDryPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echomixHeader)].Text) * 100;
+                    EchoWetDryLabel.Text = "Mix:\n" + EchoWetDryPot.Value.ToString() + "%";
+                    if (FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(echoonHeader)].Text == "1")
+                    {
+                        EchoenableButton.Text = "On";
+                        EchoenableButton.BackColor = Color.LightGreen;
+                    }
+                    else
+                    {
+                        EchoenableButton.Text = "Off";
+                        EchoenableButton.BackColor = Color.Salmon;
+                    }
+                    RemoveButtonsEnabled(true, true);
+                    if (FilelistView.SelectedItems.Count == 1)
+                    {
+                        if (GetOpenForm("DestructiveEffectsEditor") && formDestructiveEffectsEditor.Visible == true)
                         {
-                            string bwString = "LOADAUDIO|" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
-                            formDestructiveEffectsEditor.DEEBackgroundWorker.RunWorkerAsync(bwString);
+                            formDestructiveEffectsEditor.Text = Text + ": Destructive Effects Editor -> " + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text + ".wav";
+                            if (!formDestructiveEffectsEditor.DEEBackgroundWorker.IsBusy)
+                            {
+                                string bwString = "LOADAUDIO|" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
+                                formDestructiveEffectsEditor.DEEBackgroundWorker.RunWorkerAsync(bwString);
+                            }
                         }
                     }
                 }
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        "This sound contains invalid or missing data and could not be loaded correctly.\n\n" +
+                        "Details: " + ex.Message,
+                        "Invalid Sound Data",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    ResetMainFormValues();
+                }
             }
         }
 
