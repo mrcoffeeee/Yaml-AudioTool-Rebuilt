@@ -111,19 +111,23 @@ namespace Yaml_AudioTool_Rebuilt
         private void Timer_Tick(object sender, EventArgs e)
         {
             //System.Diagnostics.Debug.WriteLine($"meterDecaying = {meterDecaying}");
-            // RMS-Decay when playback is stopped
+            // RMS-Decay when playback is stopped at timer
             if (meterDecaying)
             {
                 smoothedRms += rmsSmoothFactor * (0 - smoothedRms);
+                smoothedPeak += peakSmoothFactor * (0 - smoothedPeak);
 
-                if (smoothedRms < 0.001f)
+                if (smoothedRms < 0.001f) smoothedRms = 0;
+                if (smoothedPeak < 0.001f) smoothedPeak = 0;
+
+                MainVolumeRMSMeter.Amplitude = smoothedRms;
+                MainVolumePeakMeter.Amplitude = smoothedPeak;
+
+                if (smoothedRms == 0 && smoothedPeak == 0)
                 {
-                    smoothedRms = 0;
                     meterDecaying = false;
                     playbackTimer.Stop();
                 }
-
-                MainVolumeRMSMeter.Amplitude = smoothedRms;
                 return;
             }
 
@@ -413,6 +417,7 @@ namespace Yaml_AudioTool_Rebuilt
                 timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
             }
             StopPlayback();
+            meterDecaying = true;
         }
 
         private void LoopButton_Click(object sender, EventArgs e)
@@ -458,12 +463,12 @@ namespace Yaml_AudioTool_Rebuilt
 
                     if (ap.sourceVoice != null && ap.playbackPause == false)
                     {
+                        meterDecaying = false;
                         playbackTimer.Start();
                     }
                     else if (ap.sourceVoice != null && ap.playbackPause == true)
                     {
-                        playbackTimer.Stop();
-                        MainVolumePeakMeter.Amplitude = 0;
+                        meterDecaying = true;
                     }
                 }
 
@@ -498,7 +503,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void StopPlayback()
         {
             ap.StopPlayback();
-            MainVolumePeakMeter.Amplitude = 0;            
+            stopFlag = true;
         }
 
         #endregion PlaybackSection

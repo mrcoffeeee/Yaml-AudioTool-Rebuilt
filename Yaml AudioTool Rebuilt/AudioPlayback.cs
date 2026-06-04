@@ -73,7 +73,7 @@ namespace Yaml_AudioTool_Rebuilt
 
             try
             {
-                // Float-Arrays pinnen, damit XAudio2 in den unmanaged Speicher schreiben kann
+                // pin float-arrays to make xaudio to write into unmanaged memory
                 peakHandle = GCHandle.Alloc(peakLevels, GCHandleType.Pinned);
                 rmsHandle = GCHandle.Alloc(rmsLevels, GCHandleType.Pinned);
 
@@ -84,11 +84,11 @@ namespace Yaml_AudioTool_Rebuilt
                     ChannelCount = masterChannelCount
                 };
 
-                // Native Struktur als Span<byte> übergeben
+                // Hand over native struct as Span<byte>
                 Span<byte> buffer = MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref native, 1));
                 masteringVoice.GetEffectParameters(0, buffer);
 
-                // peakLevels und rmsLevels sind jetzt mit den aktuellen Werten gefüllt
+                // Fill peakLevels and rmsLevels with actual values
                 float maxPeak = 0;
                 float maxRms = 0;
                 for (int i = 0; i < masterChannelCount; i++)
@@ -105,7 +105,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
             finally
             {
-                // Pins immer freigeben, auch bei Exception
+                // Free pins always
                 if (peakHandle.IsAllocated) peakHandle.Free();
                 if (rmsHandle.IsAllocated) rmsHandle.Free();
             }
@@ -262,7 +262,7 @@ namespace Yaml_AudioTool_Rebuilt
                     audioDataSize = (uint)reader.Length;
                     audioDataPtr = Marshal.AllocHGlobal((int)audioDataSize);
 
-                    // In kleinen Chunks lesen, um LOH-Allokationen zu vermeiden
+                    // Read in little chunks to avoid LOH allocation
                     byte[] chunk = new byte[8192];
                     int totalRead = 0;
                     int bytesRead;
