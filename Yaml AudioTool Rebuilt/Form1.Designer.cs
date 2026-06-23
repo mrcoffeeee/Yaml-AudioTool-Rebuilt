@@ -99,13 +99,13 @@ namespace Yaml_AudioTool_Rebuilt
             AddfileButton = new System.Windows.Forms.Button();
             TabControl = new System.Windows.Forms.TabControl();
             playbacktabPage = new System.Windows.Forms.TabPage();
+            MainVolumeLabel = new System.Windows.Forms.Label();
             MainVolumeRMSMeter = new NAudio.Gui.VolumeMeter();
             MainVolumePeakMeter = new NAudio.Gui.VolumeMeter();
             MainVolumeSlider = new NAudio.Gui.VolumeSlider();
             PlaybackLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             FalloffcomboBox = new System.Windows.Forms.ComboBox();
             PriorityLabel = new System.Windows.Forms.Label();
-            PrioritytrackBar = new System.Windows.Forms.TrackBar();
             priorityvalueLabel = new System.Windows.Forms.Label();
             StreamcheckBox = new System.Windows.Forms.CheckBox();
             LocalizecheckBox = new System.Windows.Forms.CheckBox();
@@ -123,6 +123,15 @@ namespace Yaml_AudioTool_Rebuilt
             Stacklabel = new System.Windows.Forms.Label();
             MindistanceLabel = new System.Windows.Forms.Label();
             MaxdistanceLabel = new System.Windows.Forms.Label();
+            PrioritytrackBar = new System.Windows.Forms.TrackBar();
+            DB3Label = new System.Windows.Forms.Label();
+            DB0Label = new System.Windows.Forms.Label();
+            DB6Label = new System.Windows.Forms.Label();
+            DB12Label = new System.Windows.Forms.Label();
+            DB24Label = new System.Windows.Forms.Label();
+            DB36Label = new System.Windows.Forms.Label();
+            DB48Label = new System.Windows.Forms.Label();
+            DBInfLabel = new System.Windows.Forms.Label();
             organizetabPage = new System.Windows.Forms.TabPage();
             OrganizeLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             EnumtextBox = new System.Windows.Forms.TextBox();
@@ -257,10 +266,10 @@ namespace Yaml_AudioTool_Rebuilt
             TabControl.SuspendLayout();
             playbacktabPage.SuspendLayout();
             PlaybackLayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)PrioritytrackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DopplertrackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinDistancenumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MaxDistancenumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PrioritytrackBar).BeginInit();
             organizetabPage.SuspendLayout();
             OrganizeLayoutPanel.SuspendLayout();
             reverbtabPage.SuspendLayout();
@@ -735,10 +744,19 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // playbacktabPage
             // 
+            playbacktabPage.Controls.Add(MainVolumeLabel);
             playbacktabPage.Controls.Add(MainVolumeRMSMeter);
             playbacktabPage.Controls.Add(MainVolumePeakMeter);
             playbacktabPage.Controls.Add(MainVolumeSlider);
             playbacktabPage.Controls.Add(PlaybackLayoutPanel);
+            playbacktabPage.Controls.Add(DB3Label);
+            playbacktabPage.Controls.Add(DB0Label);
+            playbacktabPage.Controls.Add(DB6Label);
+            playbacktabPage.Controls.Add(DB12Label);
+            playbacktabPage.Controls.Add(DB24Label);
+            playbacktabPage.Controls.Add(DB36Label);
+            playbacktabPage.Controls.Add(DB48Label);
+            playbacktabPage.Controls.Add(DBInfLabel);
             playbacktabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             playbacktabPage.Location = new System.Drawing.Point(4, 24);
             playbacktabPage.Margin = new System.Windows.Forms.Padding(4);
@@ -749,19 +767,32 @@ namespace Yaml_AudioTool_Rebuilt
             playbacktabPage.Text = "Playback";
             playbacktabPage.UseVisualStyleBackColor = true;
             // 
+            // MainVolumeLabel
+            // 
+            MainVolumeLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            MainVolumeLabel.AutoSize = true;
+            MainVolumeLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            MainVolumeLabel.Location = new System.Drawing.Point(8, 288);
+            MainVolumeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            MainVolumeLabel.Name = "MainVolumeLabel";
+            MainVolumeLabel.Size = new System.Drawing.Size(80, 15);
+            MainVolumeLabel.TabIndex = 30;
+            MainVolumeLabel.Text = "Main Volume:";
+            MainVolumeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolTip1.SetToolTip(MainVolumeLabel, "Within the MinDistance, the sound will stay at loudest possible. Outside MinDistance it will begin to attenuate.");
+            // 
             // MainVolumeRMSMeter
             // 
             MainVolumeRMSMeter.Amplitude = 0F;
             MainVolumeRMSMeter.Font = new System.Drawing.Font("Segoe UI", 8F);
             MainVolumeRMSMeter.ForeColor = System.Drawing.Color.Crimson;
-            MainVolumeRMSMeter.Location = new System.Drawing.Point(314, 6);
+            MainVolumeRMSMeter.Location = new System.Drawing.Point(315, 12);
             MainVolumeRMSMeter.Margin = new System.Windows.Forms.Padding(2);
             MainVolumeRMSMeter.MaxDb = 0F;
             MainVolumeRMSMeter.MinDb = -60F;
             MainVolumeRMSMeter.Name = "MainVolumeRMSMeter";
-            MainVolumeRMSMeter.Size = new System.Drawing.Size(30, 332);
+            MainVolumeRMSMeter.Size = new System.Drawing.Size(14, 326);
             MainVolumeRMSMeter.TabIndex = 32;
-            MainVolumeRMSMeter.Text = "MainVolumeRMSMeter";
             toolTip1.SetToolTip(MainVolumeRMSMeter, "RMS Value");
             // 
             // MainVolumePeakMeter
@@ -769,12 +800,12 @@ namespace Yaml_AudioTool_Rebuilt
             MainVolumePeakMeter.Amplitude = 0F;
             MainVolumePeakMeter.Font = new System.Drawing.Font("Segoe UI", 8F);
             MainVolumePeakMeter.ForeColor = System.Drawing.Color.LimeGreen;
-            MainVolumePeakMeter.Location = new System.Drawing.Point(280, 6);
+            MainVolumePeakMeter.Location = new System.Drawing.Point(301, 12);
             MainVolumePeakMeter.Margin = new System.Windows.Forms.Padding(2);
             MainVolumePeakMeter.MaxDb = 0F;
             MainVolumePeakMeter.MinDb = -60F;
             MainVolumePeakMeter.Name = "MainVolumePeakMeter";
-            MainVolumePeakMeter.Size = new System.Drawing.Size(30, 332);
+            MainVolumePeakMeter.Size = new System.Drawing.Size(41, 326);
             MainVolumePeakMeter.TabIndex = 31;
             MainVolumePeakMeter.Text = "MainVolumePeakMeter";
             toolTip1.SetToolTip(MainVolumePeakMeter, "Peak Value");
@@ -782,9 +813,9 @@ namespace Yaml_AudioTool_Rebuilt
             // MainVolumeSlider
             // 
             MainVolumeSlider.Font = new System.Drawing.Font("Segoe UI", 8F);
-            MainVolumeSlider.Location = new System.Drawing.Point(8, 298);
+            MainVolumeSlider.Location = new System.Drawing.Point(8, 306);
             MainVolumeSlider.Name = "MainVolumeSlider";
-            MainVolumeSlider.Size = new System.Drawing.Size(267, 40);
+            MainVolumeSlider.Size = new System.Drawing.Size(218, 32);
             MainVolumeSlider.TabIndex = 30;
             MainVolumeSlider.VolumeChanged += MainVolumeSlider_VolumeChanged;
             // 
@@ -792,12 +823,11 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             PlaybackLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             PlaybackLayoutPanel.ColumnCount = 3;
-            PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.9879341F));
-            PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.10615F));
-            PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.9059076F));
+            PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.68081F));
+            PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.7394333F));
+            PlaybackLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.57976F));
             PlaybackLayoutPanel.Controls.Add(FalloffcomboBox, 1, 5);
             PlaybackLayoutPanel.Controls.Add(PriorityLabel, 0, 0);
-            PlaybackLayoutPanel.Controls.Add(PrioritytrackBar, 1, 0);
             PlaybackLayoutPanel.Controls.Add(priorityvalueLabel, 2, 0);
             PlaybackLayoutPanel.Controls.Add(StreamcheckBox, 1, 3);
             PlaybackLayoutPanel.Controls.Add(LocalizecheckBox, 1, 2);
@@ -815,7 +845,8 @@ namespace Yaml_AudioTool_Rebuilt
             PlaybackLayoutPanel.Controls.Add(Stacklabel, 0, 6);
             PlaybackLayoutPanel.Controls.Add(MindistanceLabel, 0, 8);
             PlaybackLayoutPanel.Controls.Add(MaxdistanceLabel, 0, 7);
-            PlaybackLayoutPanel.Location = new System.Drawing.Point(4, 6);
+            PlaybackLayoutPanel.Controls.Add(PrioritytrackBar, 1, 0);
+            PlaybackLayoutPanel.Location = new System.Drawing.Point(4, 12);
             PlaybackLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
             PlaybackLayoutPanel.Name = "PlaybackLayoutPanel";
             PlaybackLayoutPanel.RowCount = 10;
@@ -829,20 +860,20 @@ namespace Yaml_AudioTool_Rebuilt
             PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             PlaybackLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
-            PlaybackLayoutPanel.Size = new System.Drawing.Size(270, 252);
+            PlaybackLayoutPanel.Size = new System.Drawing.Size(263, 252);
             PlaybackLayoutPanel.TabIndex = 2;
             // 
             // FalloffcomboBox
             // 
-            FalloffcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            FalloffcomboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             FalloffcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             FalloffcomboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             FalloffcomboBox.FormattingEnabled = true;
             FalloffcomboBox.Items.AddRange(new object[] { "LINEAR", "LOGARITHMIC" });
-            FalloffcomboBox.Location = new System.Drawing.Point(99, 139);
+            FalloffcomboBox.Location = new System.Drawing.Point(95, 139);
             FalloffcomboBox.Margin = new System.Windows.Forms.Padding(4);
             FalloffcomboBox.Name = "FalloffcomboBox";
-            FalloffcomboBox.Size = new System.Drawing.Size(127, 23);
+            FalloffcomboBox.Size = new System.Drawing.Size(125, 23);
             FalloffcomboBox.TabIndex = 25;
             FalloffcomboBox.SelectedIndexChanged += FalloffcomboBox_SelectedIndexChanged;
             // 
@@ -860,27 +891,15 @@ namespace Yaml_AudioTool_Rebuilt
             PriorityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             toolTip1.SetToolTip(PriorityLabel, "Determines the priority of this audio source among all the ones that coexist in the scene:\r\n- 0 = most important\r\n- 128 = Default\r\n- 256 = least important");
             // 
-            // PrioritytrackBar
-            // 
-            PrioritytrackBar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            PrioritytrackBar.Location = new System.Drawing.Point(95, 4);
-            PrioritytrackBar.Margin = new System.Windows.Forms.Padding(4);
-            PrioritytrackBar.Maximum = 255;
-            PrioritytrackBar.Name = "PrioritytrackBar";
-            PrioritytrackBar.Size = new System.Drawing.Size(127, 19);
-            PrioritytrackBar.TabIndex = 4;
-            PrioritytrackBar.Value = 128;
-            PrioritytrackBar.Scroll += PrioritytrackBar_Scroll;
-            // 
             // priorityvalueLabel
             // 
             priorityvalueLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             priorityvalueLabel.AutoSize = true;
-            priorityvalueLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            priorityvalueLabel.Location = new System.Drawing.Point(238, 6);
+            priorityvalueLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            priorityvalueLabel.Location = new System.Drawing.Point(228, 7);
             priorityvalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             priorityvalueLabel.Name = "priorityvalueLabel";
-            priorityvalueLabel.Size = new System.Drawing.Size(25, 15);
+            priorityvalueLabel.Size = new System.Drawing.Size(25, 13);
             priorityvalueLabel.TabIndex = 18;
             priorityvalueLabel.Text = "128";
             priorityvalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -958,12 +977,13 @@ namespace Yaml_AudioTool_Rebuilt
             // DopplertrackBar
             // 
             DopplertrackBar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            DopplertrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
             DopplertrackBar.LargeChange = 1;
             DopplertrackBar.Location = new System.Drawing.Point(95, 31);
             DopplertrackBar.Margin = new System.Windows.Forms.Padding(4);
             DopplertrackBar.Maximum = 100;
             DopplertrackBar.Name = "DopplertrackBar";
-            DopplertrackBar.Size = new System.Drawing.Size(127, 19);
+            DopplertrackBar.Size = new System.Drawing.Size(125, 19);
             DopplertrackBar.TabIndex = 10;
             DopplertrackBar.Value = 100;
             DopplertrackBar.Scroll += DopplertrackBar_Scroll;
@@ -972,11 +992,11 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             dopplervalueLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             dopplervalueLabel.AutoSize = true;
-            dopplervalueLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dopplervalueLabel.Location = new System.Drawing.Point(238, 33);
+            dopplervalueLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            dopplervalueLabel.Location = new System.Drawing.Point(228, 34);
             dopplervalueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             dopplervalueLabel.Name = "dopplervalueLabel";
-            dopplervalueLabel.Size = new System.Drawing.Size(13, 15);
+            dopplervalueLabel.Size = new System.Drawing.Size(13, 13);
             dopplervalueLabel.TabIndex = 20;
             dopplervalueLabel.Text = "1";
             dopplervalueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1011,56 +1031,56 @@ namespace Yaml_AudioTool_Rebuilt
             // 
             // TypecomboBox
             // 
-            TypecomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            TypecomboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             TypecomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             TypecomboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             TypecomboBox.FormattingEnabled = true;
             TypecomboBox.Items.AddRange(new object[] { "MUSIC", "SFX", "UI", "SPEECH", "CUSTOM" });
-            TypecomboBox.Location = new System.Drawing.Point(99, 112);
+            TypecomboBox.Location = new System.Drawing.Point(95, 112);
             TypecomboBox.Margin = new System.Windows.Forms.Padding(4);
             TypecomboBox.Name = "TypecomboBox";
-            TypecomboBox.Size = new System.Drawing.Size(127, 23);
+            TypecomboBox.Size = new System.Drawing.Size(125, 23);
             TypecomboBox.TabIndex = 23;
             TypecomboBox.SelectedIndexChanged += TypecomboBox_SelectedIndexChanged;
             // 
             // StackcomboBox
             // 
-            StackcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            StackcomboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             StackcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             StackcomboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             StackcomboBox.FormattingEnabled = true;
             StackcomboBox.Items.AddRange(new object[] { "MANY", "REPLACE", "DROP" });
-            StackcomboBox.Location = new System.Drawing.Point(99, 166);
+            StackcomboBox.Location = new System.Drawing.Point(95, 166);
             StackcomboBox.Margin = new System.Windows.Forms.Padding(4);
             StackcomboBox.Name = "StackcomboBox";
-            StackcomboBox.Size = new System.Drawing.Size(127, 23);
+            StackcomboBox.Size = new System.Drawing.Size(125, 23);
             StackcomboBox.TabIndex = 29;
             StackcomboBox.SelectedIndexChanged += StackcomboBox_SelectedIndexChanged;
             // 
             // MinDistancenumericUpDown
             // 
-            MinDistancenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
+            MinDistancenumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
             MinDistancenumericUpDown.Font = new System.Drawing.Font("Segoe UI", 9F);
-            MinDistancenumericUpDown.Location = new System.Drawing.Point(99, 218);
+            MinDistancenumericUpDown.Location = new System.Drawing.Point(93, 218);
             MinDistancenumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             MinDistancenumericUpDown.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             MinDistancenumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             MinDistancenumericUpDown.Name = "MinDistancenumericUpDown";
-            MinDistancenumericUpDown.Size = new System.Drawing.Size(127, 23);
+            MinDistancenumericUpDown.Size = new System.Drawing.Size(129, 23);
             MinDistancenumericUpDown.TabIndex = 26;
             MinDistancenumericUpDown.Value = new decimal(new int[] { 1, 0, 0, 0 });
             MinDistancenumericUpDown.ValueChanged += MinDistancenumericUpDown_ValueChanged;
             // 
             // MaxDistancenumericUpDown
             // 
-            MaxDistancenumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
+            MaxDistancenumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
             MaxDistancenumericUpDown.Font = new System.Drawing.Font("Segoe UI", 9F);
-            MaxDistancenumericUpDown.Location = new System.Drawing.Point(99, 191);
+            MaxDistancenumericUpDown.Location = new System.Drawing.Point(93, 191);
             MaxDistancenumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             MaxDistancenumericUpDown.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             MaxDistancenumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             MaxDistancenumericUpDown.Name = "MaxDistancenumericUpDown";
-            MaxDistancenumericUpDown.Size = new System.Drawing.Size(127, 23);
+            MaxDistancenumericUpDown.Size = new System.Drawing.Size(129, 23);
             MaxDistancenumericUpDown.TabIndex = 27;
             MaxDistancenumericUpDown.Value = new decimal(new int[] { 1000, 0, 0, 0 });
             MaxDistancenumericUpDown.ValueChanged += MaxDistancenumericUpDown_ValueChanged;
@@ -1106,6 +1126,123 @@ namespace Yaml_AudioTool_Rebuilt
             MaxdistanceLabel.Text = "Max Distance:";
             MaxdistanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             toolTip1.SetToolTip(MaxdistanceLabel, "MaxDistance is the distance where the sound is completely inaudible.");
+            // 
+            // PrioritytrackBar
+            // 
+            PrioritytrackBar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            PrioritytrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            PrioritytrackBar.Location = new System.Drawing.Point(95, 4);
+            PrioritytrackBar.Margin = new System.Windows.Forms.Padding(4);
+            PrioritytrackBar.Maximum = 255;
+            PrioritytrackBar.Name = "PrioritytrackBar";
+            PrioritytrackBar.Size = new System.Drawing.Size(125, 19);
+            PrioritytrackBar.TabIndex = 4;
+            PrioritytrackBar.Value = 128;
+            PrioritytrackBar.Scroll += PrioritytrackBar_Scroll;
+            // 
+            // DB3Label
+            // 
+            DB3Label.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            DB3Label.AutoSize = true;
+            DB3Label.Font = new System.Drawing.Font("Segoe UI", 9F);
+            DB3Label.Location = new System.Drawing.Point(281, 21);
+            DB3Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            DB3Label.Name = "DB3Label";
+            DB3Label.Size = new System.Drawing.Size(26, 15);
+            DB3Label.TabIndex = 33;
+            DB3Label.Text = "-3 -";
+            DB3Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // DB0Label
+            // 
+            DB0Label.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            DB0Label.AutoSize = true;
+            DB0Label.Font = new System.Drawing.Font("Segoe UI", 9F);
+            DB0Label.Location = new System.Drawing.Point(285, 4);
+            DB0Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            DB0Label.Name = "DB0Label";
+            DB0Label.Size = new System.Drawing.Size(21, 15);
+            DB0Label.TabIndex = 30;
+            DB0Label.Text = "0 -";
+            DB0Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // DB6Label
+            // 
+            DB6Label.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            DB6Label.AutoSize = true;
+            DB6Label.Font = new System.Drawing.Font("Segoe UI", 9F);
+            DB6Label.Location = new System.Drawing.Point(281, 39);
+            DB6Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            DB6Label.Name = "DB6Label";
+            DB6Label.Size = new System.Drawing.Size(26, 15);
+            DB6Label.TabIndex = 34;
+            DB6Label.Text = "-6 -";
+            DB6Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // DB12Label
+            // 
+            DB12Label.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            DB12Label.AutoSize = true;
+            DB12Label.Font = new System.Drawing.Font("Segoe UI", 9F);
+            DB12Label.Location = new System.Drawing.Point(275, 70);
+            DB12Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            DB12Label.Name = "DB12Label";
+            DB12Label.Size = new System.Drawing.Size(32, 15);
+            DB12Label.TabIndex = 35;
+            DB12Label.Text = "-12 -";
+            DB12Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // DB24Label
+            // 
+            DB24Label.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            DB24Label.AutoSize = true;
+            DB24Label.Font = new System.Drawing.Font("Segoe UI", 9F);
+            DB24Label.Location = new System.Drawing.Point(275, 135);
+            DB24Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            DB24Label.Name = "DB24Label";
+            DB24Label.Size = new System.Drawing.Size(32, 15);
+            DB24Label.TabIndex = 36;
+            DB24Label.Text = "-24 -";
+            DB24Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // DB36Label
+            // 
+            DB36Label.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            DB36Label.AutoSize = true;
+            DB36Label.Font = new System.Drawing.Font("Segoe UI", 9F);
+            DB36Label.Location = new System.Drawing.Point(275, 200);
+            DB36Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            DB36Label.Name = "DB36Label";
+            DB36Label.Size = new System.Drawing.Size(32, 15);
+            DB36Label.TabIndex = 37;
+            DB36Label.Text = "-36 -";
+            DB36Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // DB48Label
+            // 
+            DB48Label.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            DB48Label.AutoSize = true;
+            DB48Label.Font = new System.Drawing.Font("Segoe UI", 9F);
+            DB48Label.Location = new System.Drawing.Point(275, 263);
+            DB48Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            DB48Label.Name = "DB48Label";
+            DB48Label.Size = new System.Drawing.Size(32, 15);
+            DB48Label.TabIndex = 39;
+            DB48Label.Text = "-48 -";
+            DB48Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // DBInfLabel
+            // 
+            DBInfLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            DBInfLabel.AutoSize = true;
+            DBInfLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            DBInfLabel.Location = new System.Drawing.Point(276, 329);
+            DBInfLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            DBInfLabel.Name = "DBInfLabel";
+            DBInfLabel.Size = new System.Drawing.Size(30, 15);
+            DBInfLabel.TabIndex = 38;
+            DBInfLabel.Text = "-∞ -";
+            DBInfLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // organizetabPage
             // 
@@ -2697,12 +2834,13 @@ namespace Yaml_AudioTool_Rebuilt
             YamlGroupBox.ResumeLayout(false);
             TabControl.ResumeLayout(false);
             playbacktabPage.ResumeLayout(false);
+            playbacktabPage.PerformLayout();
             PlaybackLayoutPanel.ResumeLayout(false);
             PlaybackLayoutPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)PrioritytrackBar).EndInit();
             ((System.ComponentModel.ISupportInitialize)DopplertrackBar).EndInit();
             ((System.ComponentModel.ISupportInitialize)MinDistancenumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)MaxDistancenumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PrioritytrackBar).EndInit();
             organizetabPage.ResumeLayout(false);
             OrganizeLayoutPanel.ResumeLayout(false);
             OrganizeLayoutPanel.PerformLayout();
@@ -2965,6 +3103,15 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.ColumnHeader eqband4qHeader;
         private System.Windows.Forms.ColumnHeader eqonHeader;
         private NAudio.Gui.VolumeMeter MainVolumeRMSMeter;
+        private System.Windows.Forms.Label DB0Label;
+        private System.Windows.Forms.Label DB3Label;
+        private System.Windows.Forms.Label DB6Label;
+        private System.Windows.Forms.Label DB12Label;
+        private System.Windows.Forms.Label DB24Label;
+        private System.Windows.Forms.Label DB36Label;
+        private System.Windows.Forms.Label MainVolumeLabel;
+        private System.Windows.Forms.Label DB48Label;
+        private System.Windows.Forms.Label DBInfLabel;
     }
 }
 
