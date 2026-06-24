@@ -3051,7 +3051,6 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Button ResetButton;
         public System.Windows.Forms.Button PitchenableButton;
         public NAudio.Gui.VolumeSlider MainVolumeSlider;
-        private NAudio.Gui.VolumeMeter MainVolumePeakMeter;
         public System.Windows.Forms.ComboBox FalloffcomboBox;
         public System.Windows.Forms.ComboBox TypecomboBox;
         public System.Windows.Forms.ComboBox StackcomboBox;
@@ -3102,7 +3101,6 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.ColumnHeader eqband4gHeader;
         private System.Windows.Forms.ColumnHeader eqband4qHeader;
         private System.Windows.Forms.ColumnHeader eqonHeader;
-        private NAudio.Gui.VolumeMeter MainVolumeRMSMeter;
         private System.Windows.Forms.Label DB0Label;
         private System.Windows.Forms.Label DB3Label;
         private System.Windows.Forms.Label DB6Label;
@@ -3112,6 +3110,8 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Label MainVolumeLabel;
         private System.Windows.Forms.Label DB48Label;
         private System.Windows.Forms.Label DBInfLabel;
+        public NAudio.Gui.VolumeMeter MainVolumePeakMeter;
+        public NAudio.Gui.VolumeMeter MainVolumeRMSMeter;
     }
 }
 

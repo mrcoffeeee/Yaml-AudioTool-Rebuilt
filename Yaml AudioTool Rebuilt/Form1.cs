@@ -23,11 +23,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private bool stopFlag = false;
         private string fileTime = "";
-        private bool meterDecaying = false;
-        const float rmsSmoothFactor = 0.07f; // lower values for more smoothing, higher for more direct showing
-        const float peakSmoothFactor = 0.4f;
-        private float smoothedRms = 0;
-        private float smoothedPeak = 0;
+        public bool meterDecaying = false;        
         private readonly AudioPlayback ap = new();
 
         private static DestructiveEffectsEditor formDestructiveEffectsEditor;
@@ -81,7 +77,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void ResetMainFormValues()
         {
             ap.StopPlayback();
-            playbackTimer.Stop();
+            meterDecaying = true;
             RemoveButtonsEnabled(false, false);
             if (FilelistView.Items.Count == 0)
                 SaveYamlButton.Enabled = false;
@@ -114,21 +110,7 @@ namespace Yaml_AudioTool_Rebuilt
             // RMS-Decay when playback is stopped at timer
             if (meterDecaying)
             {
-                smoothedRms += rmsSmoothFactor * (0 - smoothedRms);
-                smoothedPeak += peakSmoothFactor * (0 - smoothedPeak);
-
-                if (smoothedRms < 0.001f) smoothedRms = 0;
-                if (smoothedPeak < 0.001f) smoothedPeak = 0;
-
-                MainVolumeRMSMeter.Amplitude = smoothedRms;
-                MainVolumePeakMeter.Amplitude = smoothedPeak;
-
-                if (smoothedRms == 0 && smoothedPeak == 0)
-                {
-                    meterDecaying = false;
-                    playbackTimer.Stop();
-                }
-                return;
+                ap.MeterDecaying();
             }
 
             if (ap.sourceVoice == null)
@@ -141,15 +123,9 @@ namespace Yaml_AudioTool_Rebuilt
             int seconds = (int)(totalplaybackSeconds % 60);
             timeLabel.Text = $"{minutes:D2}:{seconds:D2}";
 
-            var (peak, rms) = ap.GetMasterLevels();
-            smoothedPeak += peakSmoothFactor * (peak - smoothedPeak);
-            smoothedRms += rmsSmoothFactor * (rms - smoothedRms);
+            ap.GetMasterLevels();
 
-            if (smoothedPeak < 0.001f) smoothedPeak = 0;
-            if (smoothedRms < 0.001f) smoothedRms = 0;
-
-            MainVolumePeakMeter.Amplitude = smoothedPeak;
-            MainVolumeRMSMeter.Amplitude = smoothedRms;
+            (MainVolumePeakMeter.Amplitude, MainVolumeRMSMeter.Amplitude) = ap.GetMasterLevels();
 
             if (LoopButton.BackColor == Color.Salmon)
             {
@@ -276,8 +252,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void FilelistView_SelectedIndexChanged(object sender, EventArgs e)
         {
             formDestructiveEffectsEditor = (DestructiveEffectsEditor)Application.OpenForms["DestructiveEffectseditor"];
-
-            StopPlayback();
+            
             if (FilelistView.SelectedItems.Count == 0)
             {
                 ResetMainFormValues();
@@ -291,6 +266,9 @@ namespace Yaml_AudioTool_Rebuilt
 
             if (FilelistView.SelectedItems.Count > 0)
             {
+                StopPlayback();
+                meterDecaying = true;
+
                 try
                 {
                     EnumtextBox.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text;

@@ -30,6 +30,10 @@ namespace Yaml_AudioTool_Rebuilt
         public IDisposable masterVolumeMeter;
         private float[] peakLevels;
         private float[] rmsLevels;
+        const float rmsSmoothFactor = 0.07f; // lower values for more smoothing, higher for more direct showing
+        const float peakSmoothFactor = 0.4f;
+        private float smoothedRms = 0;
+        private float smoothedPeak = 0;
         public uint masterChannelCount = 2;
 
         public void Initialize()
@@ -97,7 +101,13 @@ namespace Yaml_AudioTool_Rebuilt
                     if (rmsLevels[i] > maxRms) maxRms = rmsLevels[i];
                 }
 
-                return (maxPeak, maxRms);
+                smoothedPeak += peakSmoothFactor * (maxPeak - smoothedPeak);
+                smoothedRms += rmsSmoothFactor * (maxRms - smoothedRms);
+
+                if (smoothedPeak < 0.001f) smoothedPeak = 0;
+                if (smoothedRms < 0.001f) smoothedRms = 0;
+
+                return (smoothedPeak, smoothedRms);
             }
             catch
             {
@@ -109,6 +119,27 @@ namespace Yaml_AudioTool_Rebuilt
                 if (peakHandle.IsAllocated) peakHandle.Free();
                 if (rmsHandle.IsAllocated) rmsHandle.Free();
             }
+        }
+
+        public void MeterDecaying()
+        {
+            Form1 f1 = (Form1)Application.OpenForms["Form1"];
+
+            smoothedRms += rmsSmoothFactor * (0 - smoothedRms);
+            smoothedPeak += peakSmoothFactor * (0 - smoothedPeak);
+
+            if (smoothedRms < 0.001f) smoothedRms = 0;
+            if (smoothedPeak < 0.001f) smoothedPeak = 0;
+
+            f1.MainVolumeRMSMeter.Amplitude = smoothedRms;
+            f1.MainVolumePeakMeter.Amplitude = smoothedPeak;
+
+            if (smoothedRms == 0 && smoothedPeak == 0)
+            {
+                f1.meterDecaying = false;
+                f1.playbackTimer.Stop();
+            }
+            return;
         }
 
         public static string CalculateAudiolength(WaveFileReader waveFileReader)
@@ -430,7 +461,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 sourceVoice.SetFrequencyRatio(Effects.PitchRandomizer(Convert.ToSingle(pitchValue), Convert.ToSingle(pitchrandValue)), operationSet: 0);
             }
-        }
+        }        
 
         public void Cleanup()
         {
