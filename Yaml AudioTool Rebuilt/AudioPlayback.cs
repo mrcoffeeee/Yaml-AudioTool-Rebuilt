@@ -285,15 +285,42 @@ namespace Yaml_AudioTool_Rebuilt
                 Vortice.Multimedia.WaveFormat waveFormat;
 
                 WaveFormat readerFormat;
-
                 uint audioDataSize;
 
-                using (var reader = new WaveFileReader(soundFilepath))
+                // Check waveformat
+                using (var probe = new WaveFileReader(soundFilepath))
                 {
+                    readerFormat = probe.WaveFormat;
+                }
+
+                bool is24BitPcm = readerFormat.Encoding == WaveFormatEncoding.Pcm
+                                  && readerFormat.BitsPerSample == 24;
+
+                if (is24BitPcm)
+                {
+                    // Convert 24Bit to 32Bit float to enable playback
+                    using var floatReader = new AudioFileReader(soundFilepath);
+                    audioDataSize = (uint)floatReader.Length;
+                    audioDataPtr = Marshal.AllocHGlobal((int)audioDataSize);
+
+                    byte[] chunk = new byte[8192];
+                    int totalRead = 0;
+                    int bytesRead;
+                    while ((bytesRead = floatReader.Read(chunk, 0, chunk.Length)) > 0)
+                    {
+                        Marshal.Copy(chunk, 0, audioDataPtr + totalRead, bytesRead);
+                        totalRead += bytesRead;
+                    }
+
+                    readerFormat = floatReader.WaveFormat;  // jetzt IeeeFloat, 32 Bit
+                }
+                else
+                {
+                    // Read 16Bit or 32Bit data
+                    using var reader = new WaveFileReader(soundFilepath);
                     audioDataSize = (uint)reader.Length;
                     audioDataPtr = Marshal.AllocHGlobal((int)audioDataSize);
 
-                    // Read in little chunks to avoid LOH allocation
                     byte[] chunk = new byte[8192];
                     int totalRead = 0;
                     int bytesRead;
@@ -302,8 +329,6 @@ namespace Yaml_AudioTool_Rebuilt
                         Marshal.Copy(chunk, 0, audioDataPtr + totalRead, bytesRead);
                         totalRead += bytesRead;
                     }
-
-                    readerFormat = reader.WaveFormat;
                 }
 
                 // Samplerate check
