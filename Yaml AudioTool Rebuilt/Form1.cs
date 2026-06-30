@@ -123,9 +123,10 @@ namespace Yaml_AudioTool_Rebuilt
             int seconds = (int)(totalplaybackSeconds % 60);
             timeLabel.Text = $"{minutes:D2}:{seconds:D2}";
 
-            ap.GetMasterLevels();
-
-            (MainVolumePeakMeter.Amplitude, MainVolumeRMSMeter.Amplitude) = ap.GetMasterLevels();
+            var (peak, rms) = ap.GetMasterLevels();
+            //System.Diagnostics.Debug.WriteLine($"peak={peak:F4}  rms={rms:F4}");
+            MainVolumePeakMeter.Amplitude = peak;
+            MainVolumeRMSMeter.Amplitude = rms;
 
             if (LoopButton.BackColor == Color.Salmon)
             {

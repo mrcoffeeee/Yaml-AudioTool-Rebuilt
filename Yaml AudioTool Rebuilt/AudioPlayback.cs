@@ -131,8 +131,8 @@ namespace Yaml_AudioTool_Rebuilt
             if (smoothedRms < 0.001f) smoothedRms = 0;
             if (smoothedPeak < 0.001f) smoothedPeak = 0;
 
-            f1.MainVolumeRMSMeter.Amplitude = smoothedRms;
             f1.MainVolumePeakMeter.Amplitude = smoothedPeak;
+            f1.MainVolumeRMSMeter.Amplitude = smoothedRms;
 
             if (smoothedRms == 0 && smoothedPeak == 0)
             {
@@ -343,7 +343,7 @@ namespace Yaml_AudioTool_Rebuilt
                 if (f1.FilelistView.SelectedItems[0].SubItems[f1.FilelistView.Columns.IndexOf(f1.loopHeader)].Text == "true")
                 {
                     audioBuffer.LoopCount = XAudio2.LoopInfinite;
-                }       
+                }
 
                 // Set Volume
                 sourceVoice.SetVolume(f1.MainVolumeSlider.Volume);
@@ -365,38 +365,27 @@ namespace Yaml_AudioTool_Rebuilt
                 // Build effect chain
                 (eqEffect, echoEffect, reverbEffect, limiterEffect) = RoomCreationEffects.SetEffectChain(sourceVoice);
 
-                // Set eq parameters
+                // Deactivate all effects by default
+                sourceVoice.DisableEffect(0);  // EQ
+                sourceVoice.DisableEffect(1);  // Echo
+                sourceVoice.DisableEffect(2);  // Reverb
+                sourceVoice.DisableEffect(3);  // Limiter
+
+                // Set parameters
                 Effects.SetEqualizer(sourceVoice);
-
-                // Set echo parameters
                 Effects.SetEcho(sourceVoice);
-
-                // Set room parameters
                 if (roomAssigned)
                 {
                     RoomCreationEffects.SetRoomFilter(sourceVoice);
                     RoomCreationEffects.SetRoomReverb(sourceVoice);
                 }
-
-                // Set limiter parameters and always activate
                 Effects.SetLimiter(sourceVoice);
-                sourceVoice.EnableEffect(3);
 
-                // Initial effects states due to buttons
-                if (eqEnabled)
-                    sourceVoice.EnableEffect(0);
-                else
-                    sourceVoice.DisableEffect(0);
-
-                if (echoEnabled)
-                    sourceVoice.EnableEffect(1);
-                else
-                    sourceVoice.DisableEffect(1);
-
-                if (reverbEnabled)
-                    sourceVoice.EnableEffect(2);
-                else
-                    sourceVoice.DisableEffect(2);
+                // Activate effects dependend to gui buttons
+                if (eqEnabled) sourceVoice.EnableEffect(0);
+                if (echoEnabled) sourceVoice.EnableEffect(1);
+                if (reverbEnabled) sourceVoice.EnableEffect(2);
+                //sourceVoice.EnableEffect(3);  // Limiter always on as master peak protection
 
                 sourceVoice.SubmitSourceBuffer(audioBuffer);
                 sourceVoice.Start();
