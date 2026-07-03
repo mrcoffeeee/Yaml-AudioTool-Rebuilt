@@ -222,6 +222,19 @@ namespace Yaml_AudioTool_Rebuilt
                     fileitem.SubItems.Add("");
                     fileitem.SubItems.Add("");
                     fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
+                    fileitem.SubItems.Add("");
                     f1.FilelistView.Items.Add(fileitem);
                     int index = fileitem.Index;
 
@@ -244,11 +257,30 @@ namespace Yaml_AudioTool_Rebuilt
                             f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.bitrateHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample * waveFileReader.WaveFormat.SampleRate / 1000).ToString();
                             f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.bitsizeHeader)].Text = (waveFileReader.WaveFormat.BitsPerSample).ToString();
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
                             f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.titleHeader)].Text = "--> FILE IS MISSING OR CORRUPT";
+                            System.Diagnostics.Debug.WriteLine($"YAML-Import base data error: '{e}'");
                         }
 
+                        // EQ section --> currently DUMMY
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.eqband1gHeader)].Text = "1,00";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.eqband1qHeader)].Text = "1,00";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.eqband2gHeader)].Text = "1,00";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.eqband2qHeader)].Text = "1,00";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.eqband3gHeader)].Text = "1,00";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.eqband3qHeader)].Text = "1,00";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.eqband4gHeader)].Text = "1,00";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.eqband4qHeader)].Text = "1,00";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.eqonHeader)].Text = "0";
+
+                        // Delay section --> currently DUMMY
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.echodelayHeader)].Text = "500";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.echofeedbackHeader)].Text = "0,50";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.echomixHeader)].Text = "0,50";
+                        f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.echoonHeader)].Text = "0";
+
+                        // Other extended data
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.streamHeader)].Text = StreamReader.ReadLine().Replace("    stream: ", "");
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.loopHeader)].Text = StreamReader.ReadLine().Replace("    loop: ", "");
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.volumeHeader)].Text = StreamReader.ReadLine().Replace("    volume: ", "").Replace(".", ",");
@@ -285,9 +317,10 @@ namespace Yaml_AudioTool_Rebuilt
                             line = StreamReader.ReadLine();
                         }
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         f1.FilelistView.Items[index].SubItems[f1.FilelistView.Columns.IndexOf(f1.titleHeader)].Text = "--> YAML ENTRY IS CORRUPT";
+                        System.Diagnostics.Debug.WriteLine($"YAML-Import extended data error: '{e}'");
                         return;
                     }
 

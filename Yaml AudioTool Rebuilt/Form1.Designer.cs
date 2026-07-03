@@ -3088,19 +3088,9 @@ namespace Yaml_AudioTool_Rebuilt
         public System.Windows.Forms.Label EchoWetDryLabel;
         public System.Windows.Forms.Label EchoFeedbackLabel;
         public System.Windows.Forms.Label EchoDelayLabel;
-        private System.Windows.Forms.ColumnHeader echoonHeader;
         public System.Windows.Forms.ColumnHeader echodelayHeader;
         public System.Windows.Forms.ColumnHeader echofeedbackHeader;
         public System.Windows.Forms.ColumnHeader echomixHeader;
-        private System.Windows.Forms.ColumnHeader eqband1gHeader;
-        private System.Windows.Forms.ColumnHeader eqband1qHeader;
-        private System.Windows.Forms.ColumnHeader eqband2gHeader;
-        private System.Windows.Forms.ColumnHeader eqband2qHeader;
-        private System.Windows.Forms.ColumnHeader eqband3gHeader;
-        private System.Windows.Forms.ColumnHeader eqband3qHeader;
-        private System.Windows.Forms.ColumnHeader eqband4gHeader;
-        private System.Windows.Forms.ColumnHeader eqband4qHeader;
-        private System.Windows.Forms.ColumnHeader eqonHeader;
         private System.Windows.Forms.Label DB0Label;
         private System.Windows.Forms.Label DB3Label;
         private System.Windows.Forms.Label DB6Label;
@@ -3112,6 +3102,16 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.Label DBInfLabel;
         public NAudio.Gui.VolumeMeter MainVolumePeakMeter;
         public NAudio.Gui.VolumeMeter MainVolumeRMSMeter;
+        public System.Windows.Forms.ColumnHeader echoonHeader;
+        public System.Windows.Forms.ColumnHeader eqband1gHeader;
+        public System.Windows.Forms.ColumnHeader eqband1qHeader;
+        public System.Windows.Forms.ColumnHeader eqband2gHeader;
+        public System.Windows.Forms.ColumnHeader eqband2qHeader;
+        public System.Windows.Forms.ColumnHeader eqband3gHeader;
+        public System.Windows.Forms.ColumnHeader eqband3qHeader;
+        public System.Windows.Forms.ColumnHeader eqband4gHeader;
+        public System.Windows.Forms.ColumnHeader eqband4qHeader;
+        public System.Windows.Forms.ColumnHeader eqonHeader;
     }
 }
 
