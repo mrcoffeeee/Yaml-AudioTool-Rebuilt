@@ -410,7 +410,7 @@ namespace Yaml_AudioTool_Rebuilt
                 if (eqEnabled) sourceVoice.EnableEffect(0);
                 if (echoEnabled) sourceVoice.EnableEffect(1);
                 if (reverbEnabled) sourceVoice.EnableEffect(2);
-                //sourceVoice.EnableEffect(3);  // Limiter always on as master peak protection
+                //sourceVoice.EnableEffect(3);  // Limiter with compressor function
 
                 sourceVoice.SubmitSourceBuffer(audioBuffer);
                 sourceVoice.Start();

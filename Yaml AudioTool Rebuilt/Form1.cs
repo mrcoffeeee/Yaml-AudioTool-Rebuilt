@@ -634,7 +634,7 @@ namespace Yaml_AudioTool_Rebuilt
             {
                 for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text = Convert.ToString(value);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text = value.ToString("0.000");
                 }
             }
         }

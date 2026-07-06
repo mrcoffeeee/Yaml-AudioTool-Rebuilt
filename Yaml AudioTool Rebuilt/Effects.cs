@@ -112,7 +112,7 @@ namespace Yaml_AudioTool_Rebuilt
             // Usage as peak limiter
             var limiterParams = new Vortice.XAPO.MasteringLimiterParameters
             {
-                Release = 6,         // Default = 6     (values from 1-20)
+                Release = 3,         // Default = 6     (values from 1-20)
                 Loudness = 1000      // Default = 1000  (values from 1-1800)
             };
 
