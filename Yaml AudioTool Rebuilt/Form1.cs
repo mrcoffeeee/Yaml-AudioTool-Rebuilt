@@ -23,7 +23,7 @@ namespace Yaml_AudioTool_Rebuilt
 
         private bool stopFlag = false;
         private string fileTime = "";
-        public bool meterDecaying = false;        
+        public bool meterDecaying = false;
         private readonly AudioPlayback ap = new();
 
         private static DestructiveEffectsEditor formDestructiveEffectsEditor;
@@ -88,6 +88,23 @@ namespace Yaml_AudioTool_Rebuilt
             EnumtextBox.Text = "";
             selectedsoundLabel.Text = "Selection: NONE";
             ChangeFilelabel.Text = "Filepath:";
+        }
+
+        private void ResetRoomValues()
+        {
+            //Filter value reset
+            FilternameTextBox.Text = "New Filter";
+            FilterfrequencyPot.Value = 1;
+            FilterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(Convert.ToSingle(FilterfrequencyPot.Value), 48000f).ToString("0.0") + " Hz";
+            FilterComboBox.SelectedIndex = 0;
+            FilteroneoverqPot.Value = 1;
+            FilteroneoverqvalueLabel.Text = FilteroneoverqPot.Value.ToString("0.0");
+
+            //Reverb value reset
+            ReverbpresetComboBox.SelectedIndex = 0;
+            ReverbwetdryPot.Value = 100;
+            ReverbwetdryvalueLabel.Text = Math.Round(ReverbwetdryPot.Value, 1).ToString("0.0") + " %";
+            RoomnameTextBox.Text = "New Room";
         }
 
         private void SetWindowsSize()
@@ -253,7 +270,7 @@ namespace Yaml_AudioTool_Rebuilt
         private void FilelistView_SelectedIndexChanged(object sender, EventArgs e)
         {
             formDestructiveEffectsEditor = (DestructiveEffectsEditor)Application.OpenForms["DestructiveEffectseditor"];
-            
+
             if (FilelistView.SelectedItems.Count == 0)
             {
                 ResetMainFormValues();
@@ -892,6 +909,15 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
+
+        private void FilternameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (RoomListView.SelectedItems.Count > 0)
+            {
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filternameHeader)].Text = FilternameTextBox.Text;
+            }
+        }
+
         private void FiltercomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (RoomListView.SelectedItems.Count == 1)
@@ -926,19 +952,36 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void RoomListView_Click(object sender, EventArgs e)
+        private void RoomnameTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (RoomListView.SelectedItems.Count != 1)
-                return;
-            FilternameTextBox.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filternameHeader)].Text;
-            FilterComboBox.Text = FilterComboBox.Items[Convert.ToInt32(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filtertypeHeader)].Text)].ToString();
-            FilterfrequencyPot.Value = Math.Round(Convert.ToDouble(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filterfrequencyHeader)].Text), 1);
-            FilterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(Convert.ToSingle(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filterfrequencyHeader)].Text), 48000f).ToString("0.0") + " Hz";
-            FilteroneoverqPot.Value = Convert.ToDouble(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filteroneoverqHeader)].Text);
-            FilteroneoverqvalueLabel.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filteroneoverqHeader)].Text;
-            ReverbpresetComboBox.SelectedIndex = Convert.ToInt32(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbidHeader)].Text);
-            ReverbwetdryPot.Value = Convert.ToDouble(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbwetdryHeader)].Text);
-            ReverbwetdryvalueLabel.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbwetdryHeader)].Text + " %";
+            if (RoomListView.SelectedItems.Count > 0)
+            {
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(roomnameHeader)].Text = RoomnameTextBox.Text;
+            }
+        }
+
+        private void RoomListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (RoomListView.SelectedItems.Count == 0)
+            {
+                RoomstoreButton.Enabled = true;
+                ResetRoomValues();
+            }
+
+            else if (RoomListView.SelectedItems.Count == 1)
+            {
+                RoomstoreButton.Enabled = false;
+                FilternameTextBox.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filternameHeader)].Text;
+                FilterComboBox.Text = FilterComboBox.Items[Convert.ToInt32(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filtertypeHeader)].Text)].ToString();
+                FilterfrequencyPot.Value = Math.Round(Convert.ToDouble(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filterfrequencyHeader)].Text), 1);
+                FilterfrequencyvalueLabel.Text = IXAudio2.RadiansToCutoffFrequency(Convert.ToSingle(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filterfrequencyHeader)].Text), 48000f).ToString("0.0") + " Hz";
+                FilteroneoverqPot.Value = Convert.ToDouble(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filteroneoverqHeader)].Text);
+                FilteroneoverqvalueLabel.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(filteroneoverqHeader)].Text;
+                RoomnameTextBox.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(roomnameHeader)].Text;
+                ReverbpresetComboBox.Text = ReverbpresetComboBox.Items[Convert.ToInt32(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbidHeader)].Text)].ToString();
+                ReverbwetdryPot.Value = Convert.ToDouble(RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbwetdryHeader)].Text);
+                ReverbwetdryvalueLabel.Text = RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbwetdryHeader)].Text + " %";
+            }
         }
 
         private void RoomstoreButton_Click(object sender, EventArgs e)
@@ -1112,6 +1155,7 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
+
         #endregion Property-RoomCreation
 
         #region Property-Effects
@@ -1157,7 +1201,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             PitchvalueLabel.Text = "Pitch:\n1";
             PitchrandvalueLabel.Text = "Random:\n0";
-            PitchPot.Value = 100;            
+            PitchPot.Value = 100;
             PitrandPot.Value = 0;
 
             if (PitchenableButton.BackColor == Color.LightGreen)
@@ -1438,7 +1482,7 @@ namespace Yaml_AudioTool_Rebuilt
         {
             EchoDelayPot.Value = 500;
             EchoFeedbackPot.Value = 0.5;
-            EchoWetDryPot.Value= 50;
+            EchoWetDryPot.Value = 50;
             EchoDelayLabel.Text = "Delay:\n500ms";
             EchoFeedbackLabel.Text = "Feedback:\n0,50";
             EchoWetDryLabel.Text = "Mix:\n50%";
@@ -1466,7 +1510,7 @@ namespace Yaml_AudioTool_Rebuilt
                 // Activate EQ
                 if (ap.sourceVoice != null && ap.echoEffect != null)
                 {
-                    ap.sourceVoice.EnableEffect(1);                    
+                    ap.sourceVoice.EnableEffect(1);
                 }
                 if (FilelistView.SelectedItems.Count == 1)
                 {
@@ -1491,6 +1535,7 @@ namespace Yaml_AudioTool_Rebuilt
 
 
         #endregion Property-Effects
+
     }
 
     public class ListViewColumnSorter : IComparer

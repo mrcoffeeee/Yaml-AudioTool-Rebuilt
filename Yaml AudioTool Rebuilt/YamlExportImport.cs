@@ -127,6 +127,39 @@ namespace Yaml_AudioTool_Rebuilt
 
         public static void ExportYAML()
         {
+            Form1 f1 = (Form1)Application.OpenForms["Form1"];
+
+            //Check for room name and filter name duplicates
+            for(int i = 0; i < f1.RoomListView.Items.Count; i++)
+            {
+                for (int j = 0; j < f1.RoomListView.Items.Count; j++)
+                {
+                    if (i == j)
+                        continue;
+                    if (f1.RoomListView.Items[i].SubItems[1].Text == f1.RoomListView.Items[j].SubItems[1].Text)
+                    {
+                        MessageBox.Show(
+                        $"At least 2 Filter Names in the roomlist are identical.\n" +
+                        "Please check & change names before saving.",
+                        "Filter Name duplicates",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (f1.RoomListView.Items[i].Text == f1.RoomListView.Items[j].Text)
+                    {
+                        MessageBox.Show(
+                        $"At least 2 Room Names in the roomlist are identical.\n" +
+                        "Please check & change names before saving.",
+                        "Room Name duplicates",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                        return;
+                    }
+                }            
+            }
+
+            //Open save dialog if duplicate check successful
             SaveFileDialog saveFileDialog = new()
             {
                 Title = "Save your Yaml File",
@@ -136,8 +169,7 @@ namespace Yaml_AudioTool_Rebuilt
             };
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                Form1 f1 = (Form1)Application.OpenForms["Form1"];
+            {                
                 string savePath = saveFileDialog.FileName;
                 List<string> lines =
                 [

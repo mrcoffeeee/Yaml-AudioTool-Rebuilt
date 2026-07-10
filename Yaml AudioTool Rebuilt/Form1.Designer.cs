@@ -1487,6 +1487,7 @@ namespace Yaml_AudioTool_Rebuilt
             RoomnameTextBox.Size = new System.Drawing.Size(108, 23);
             RoomnameTextBox.TabIndex = 71;
             RoomnameTextBox.Text = "New Room";
+            RoomnameTextBox.TextChanged += RoomnameTextBox_TextChanged;
             // 
             // ReverbwetdryPot
             // 
@@ -1701,6 +1702,7 @@ namespace Yaml_AudioTool_Rebuilt
             FilternameTextBox.Size = new System.Drawing.Size(110, 23);
             FilternameTextBox.TabIndex = 65;
             FilternameTextBox.Text = "New Filter";
+            FilternameTextBox.TextChanged += FilternameTextBox_TextChanged;
             // 
             // FilterComboBox
             // 
@@ -2489,7 +2491,7 @@ namespace Yaml_AudioTool_Rebuilt
             RoomListView.TabIndex = 67;
             RoomListView.UseCompatibleStateImageBehavior = false;
             RoomListView.View = System.Windows.Forms.View.Details;
-            RoomListView.Click += RoomListView_Click;
+            RoomListView.SelectedIndexChanged += RoomListView_SelectedIndexChanged;
             // 
             // roomnameHeader
             // 
