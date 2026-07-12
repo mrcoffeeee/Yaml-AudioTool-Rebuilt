@@ -22,8 +22,8 @@ namespace Yaml_AudioTool_Rebuilt
         //######################################################
 
         private bool stopFlag = false;
-        private string fileTime = "";
         public bool meterDecaying = false;
+        private string fileTime = "";        
         private readonly AudioPlayback ap = new();
 
         private static DestructiveEffectsEditor formDestructiveEffectsEditor;
@@ -1135,13 +1135,12 @@ namespace Yaml_AudioTool_Rebuilt
             var actualReverbParameter = Vortice.XAudio2.Fx.Fx.ReverbConvertI3DL2ToNative(RoomCreationEffects.ReverbPresets[ReverbpresetComboBox.SelectedIndex], false);
 
             RoomCreationEffects.UpdateReverbSettings(FilelistView.SelectedItems.Count, ap.sourceVoice);
-            ReverbwetdryPot.Value = Math.Round(actualReverbParameter.WetDryMix, 1);
-            ReverbwetdryvalueLabel.Text = Math.Round(actualReverbParameter.WetDryMix, 1).ToString("0.0") + " %";
 
             if (RoomListView.SelectedItems.Count == 1)
             {
                 RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbpresetHeader)].Text = ReverbpresetComboBox.SelectedItem.ToString();
-                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbwetdryHeader)].Text = actualReverbParameter.WetDryMix.ToString("0.0");
+                RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbidHeader)].Text = ReverbpresetComboBox.SelectedIndex.ToString();
+                //RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbwetdryHeader)].Text = actualReverbParameter.WetDryMix.ToString("0.0");
                 RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbreflectionsdelayHeader)].Text = actualReverbParameter.ReflectionsDelay.ToString("0");
                 RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbroomfrequencyHeader)].Text = actualReverbParameter.RoomFilterFreq.ToString("0.0");
                 RoomListView.SelectedItems[0].SubItems[RoomListView.Columns.IndexOf(reverbdelayHeader)].Text = actualReverbParameter.ReverbDelay.ToString("0");
