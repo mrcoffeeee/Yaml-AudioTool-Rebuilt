@@ -116,7 +116,7 @@ namespace Yaml_AudioTool_Rebuilt
             dopplervalueLabel = new System.Windows.Forms.Label();
             DopplerLabel = new System.Windows.Forms.Label();
             FalloffLabel = new System.Windows.Forms.Label();
-            TypecomboBox = new System.Windows.Forms.ComboBox();
+            SoundTypeComboBox = new System.Windows.Forms.ComboBox();
             StackcomboBox = new System.Windows.Forms.ComboBox();
             MinDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
             MaxDistancenumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -134,14 +134,18 @@ namespace Yaml_AudioTool_Rebuilt
             DBInfLabel = new System.Windows.Forms.Label();
             organizetabPage = new System.Windows.Forms.TabPage();
             OrganizeLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            EnumtextBox = new System.Windows.Forms.TextBox();
-            EnumButton = new System.Windows.Forms.Button();
-            SortcomboBox = new System.Windows.Forms.ComboBox();
-            SortLabel = new System.Windows.Forms.Label();
-            FindButton = new System.Windows.Forms.Button();
-            FindtextBox = new System.Windows.Forms.TextBox();
-            ChangeFilebutton = new System.Windows.Forms.Button();
-            ChangeFilelabel = new System.Windows.Forms.Label();
+            SoundTypeDefaultVolumeButton = new System.Windows.Forms.Button();
+            SoundTypeDefaultVolumeComboBox = new System.Windows.Forms.ComboBox();
+            SoundTypeDefaultVolumeLabel = new System.Windows.Forms.Label();
+            SortTitlesLabel = new System.Windows.Forms.Label();
+            FindTitleButton = new System.Windows.Forms.Button();
+            ChangeFileButton = new System.Windows.Forms.Button();
+            FileEnumButton = new System.Windows.Forms.Button();
+            SortTitlesComboBox = new System.Windows.Forms.ComboBox();
+            FindTitleTextBox = new System.Windows.Forms.TextBox();
+            ChangeFileLabel = new System.Windows.Forms.Label();
+            FileEnumTextBox = new System.Windows.Forms.TextBox();
+            FileArrangementsLabel = new System.Windows.Forms.Label();
             reverbtabPage = new System.Windows.Forms.TabPage();
             RoomGroupBox = new System.Windows.Forms.GroupBox();
             RoomTableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
@@ -838,7 +842,7 @@ namespace Yaml_AudioTool_Rebuilt
             PlaybackLayoutPanel.Controls.Add(dopplervalueLabel, 2, 1);
             PlaybackLayoutPanel.Controls.Add(DopplerLabel, 0, 1);
             PlaybackLayoutPanel.Controls.Add(FalloffLabel, 0, 5);
-            PlaybackLayoutPanel.Controls.Add(TypecomboBox, 1, 4);
+            PlaybackLayoutPanel.Controls.Add(SoundTypeComboBox, 1, 4);
             PlaybackLayoutPanel.Controls.Add(StackcomboBox, 1, 6);
             PlaybackLayoutPanel.Controls.Add(MinDistancenumericUpDown, 1, 8);
             PlaybackLayoutPanel.Controls.Add(MaxDistancenumericUpDown, 1, 7);
@@ -1029,19 +1033,18 @@ namespace Yaml_AudioTool_Rebuilt
             FalloffLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             toolTip1.SetToolTip(FalloffLabel, "Determines the fadeout of the audio file (linear or logarithmic).");
             // 
-            // TypecomboBox
+            // SoundTypeComboBox
             // 
-            TypecomboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            TypecomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            TypecomboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            TypecomboBox.FormattingEnabled = true;
-            TypecomboBox.Items.AddRange(new object[] { "MUSIC", "SFX", "UI", "SPEECH", "CUSTOM" });
-            TypecomboBox.Location = new System.Drawing.Point(95, 112);
-            TypecomboBox.Margin = new System.Windows.Forms.Padding(4);
-            TypecomboBox.Name = "TypecomboBox";
-            TypecomboBox.Size = new System.Drawing.Size(125, 23);
-            TypecomboBox.TabIndex = 23;
-            TypecomboBox.SelectedIndexChanged += TypecomboBox_SelectedIndexChanged;
+            SoundTypeComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            SoundTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            SoundTypeComboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            SoundTypeComboBox.FormattingEnabled = true;
+            SoundTypeComboBox.Location = new System.Drawing.Point(95, 112);
+            SoundTypeComboBox.Margin = new System.Windows.Forms.Padding(4);
+            SoundTypeComboBox.Name = "SoundTypeComboBox";
+            SoundTypeComboBox.Size = new System.Drawing.Size(125, 23);
+            SoundTypeComboBox.TabIndex = 23;
+            SoundTypeComboBox.SelectedIndexChanged += SoundTypeComboBox_SelectedIndexChanged;
             // 
             // StackcomboBox
             // 
@@ -1261,118 +1264,173 @@ namespace Yaml_AudioTool_Rebuilt
             OrganizeLayoutPanel.ColumnCount = 2;
             OrganizeLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             OrganizeLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            OrganizeLayoutPanel.Controls.Add(EnumtextBox, 1, 0);
-            OrganizeLayoutPanel.Controls.Add(EnumButton, 0, 0);
-            OrganizeLayoutPanel.Controls.Add(SortcomboBox, 1, 3);
-            OrganizeLayoutPanel.Controls.Add(SortLabel, 0, 3);
-            OrganizeLayoutPanel.Controls.Add(FindButton, 0, 2);
-            OrganizeLayoutPanel.Controls.Add(FindtextBox, 1, 2);
-            OrganizeLayoutPanel.Controls.Add(ChangeFilebutton, 0, 1);
-            OrganizeLayoutPanel.Controls.Add(ChangeFilelabel, 1, 1);
+            OrganizeLayoutPanel.Controls.Add(SoundTypeDefaultVolumeButton, 0, 6);
+            OrganizeLayoutPanel.Controls.Add(SoundTypeDefaultVolumeComboBox, 1, 6);
+            OrganizeLayoutPanel.Controls.Add(SoundTypeDefaultVolumeLabel, 1, 5);
+            OrganizeLayoutPanel.Controls.Add(SortTitlesLabel, 0, 4);
+            OrganizeLayoutPanel.Controls.Add(FindTitleButton, 0, 3);
+            OrganizeLayoutPanel.Controls.Add(ChangeFileButton, 0, 2);
+            OrganizeLayoutPanel.Controls.Add(FileEnumButton, 0, 1);
+            OrganizeLayoutPanel.Controls.Add(SortTitlesComboBox, 1, 4);
+            OrganizeLayoutPanel.Controls.Add(FindTitleTextBox, 1, 3);
+            OrganizeLayoutPanel.Controls.Add(ChangeFileLabel, 1, 2);
+            OrganizeLayoutPanel.Controls.Add(FileEnumTextBox, 1, 1);
+            OrganizeLayoutPanel.Controls.Add(FileArrangementsLabel, 1, 0);
             OrganizeLayoutPanel.Location = new System.Drawing.Point(6, 6);
             OrganizeLayoutPanel.Name = "OrganizeLayoutPanel";
-            OrganizeLayoutPanel.RowCount = 5;
+            OrganizeLayoutPanel.RowCount = 9;
             OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            OrganizeLayoutPanel.Size = new System.Drawing.Size(324, 166);
+            OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            OrganizeLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            OrganizeLayoutPanel.Size = new System.Drawing.Size(336, 332);
             OrganizeLayoutPanel.TabIndex = 71;
             // 
-            // EnumtextBox
+            // SoundTypeDefaultVolumeButton
             // 
-            EnumtextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            EnumtextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            EnumtextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            EnumtextBox.Location = new System.Drawing.Point(100, 4);
-            EnumtextBox.MaxLength = 40;
-            EnumtextBox.Multiline = true;
-            EnumtextBox.Name = "EnumtextBox";
-            EnumtextBox.Size = new System.Drawing.Size(221, 22);
-            EnumtextBox.TabIndex = 69;
+            SoundTypeDefaultVolumeButton.Font = new System.Drawing.Font("Segoe UI", 9F);
+            SoundTypeDefaultVolumeButton.Location = new System.Drawing.Point(3, 183);
+            SoundTypeDefaultVolumeButton.Name = "SoundTypeDefaultVolumeButton";
+            SoundTypeDefaultVolumeButton.Size = new System.Drawing.Size(91, 23);
+            SoundTypeDefaultVolumeButton.TabIndex = 84;
+            SoundTypeDefaultVolumeButton.Text = "Set Default";
+            SoundTypeDefaultVolumeButton.UseVisualStyleBackColor = true;
+            SoundTypeDefaultVolumeButton.Click += SoundTypeDefaultVolumeButton_Click;
             // 
-            // EnumButton
+            // SoundTypeDefaultVolumeComboBox
             // 
-            EnumButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            EnumButton.Location = new System.Drawing.Point(3, 3);
-            EnumButton.Name = "EnumButton";
-            EnumButton.Size = new System.Drawing.Size(91, 23);
-            EnumButton.TabIndex = 78;
-            EnumButton.Text = "Change Title";
-            EnumButton.UseVisualStyleBackColor = true;
-            EnumButton.Click += EnumButton_Click;
+            SoundTypeDefaultVolumeComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            SoundTypeDefaultVolumeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            SoundTypeDefaultVolumeComboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            SoundTypeDefaultVolumeComboBox.FormattingEnabled = true;
+            SoundTypeDefaultVolumeComboBox.Location = new System.Drawing.Point(104, 184);
+            SoundTypeDefaultVolumeComboBox.Margin = new System.Windows.Forms.Padding(4);
+            SoundTypeDefaultVolumeComboBox.Name = "SoundTypeDefaultVolumeComboBox";
+            SoundTypeDefaultVolumeComboBox.Size = new System.Drawing.Size(228, 23);
+            SoundTypeDefaultVolumeComboBox.TabIndex = 83;
             // 
-            // SortcomboBox
+            // SoundTypeDefaultVolumeLabel
             // 
-            SortcomboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            SortcomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            SortcomboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            SortcomboBox.FormattingEnabled = true;
-            SortcomboBox.Items.AddRange(new object[] { "Title", "Filename", "Filepath", "Room", "Type" });
-            SortcomboBox.Location = new System.Drawing.Point(100, 93);
-            SortcomboBox.Name = "SortcomboBox";
-            SortcomboBox.Size = new System.Drawing.Size(221, 23);
-            SortcomboBox.TabIndex = 73;
-            SortcomboBox.SelectedIndexChanged += SortcomboBox_SelectedIndexChanged;
+            SoundTypeDefaultVolumeLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            SoundTypeDefaultVolumeLabel.AutoSize = true;
+            SoundTypeDefaultVolumeLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            SoundTypeDefaultVolumeLabel.Location = new System.Drawing.Point(103, 157);
+            SoundTypeDefaultVolumeLabel.Name = "SoundTypeDefaultVolumeLabel";
+            SoundTypeDefaultVolumeLabel.Size = new System.Drawing.Size(156, 15);
+            SoundTypeDefaultVolumeLabel.TabIndex = 82;
+            SoundTypeDefaultVolumeLabel.Text = "Sound Type Default Volume:";
+            SoundTypeDefaultVolumeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // SortLabel
+            // SortTitlesLabel
             // 
-            SortLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            SortLabel.AutoSize = true;
-            SortLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            SortLabel.Location = new System.Drawing.Point(17, 97);
-            SortLabel.Name = "SortLabel";
-            SortLabel.Size = new System.Drawing.Size(62, 15);
-            SortLabel.TabIndex = 76;
-            SortLabel.Text = "Sort Titles:";
-            SortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            SortTitlesLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            SortTitlesLabel.AutoSize = true;
+            SortTitlesLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            SortTitlesLabel.Location = new System.Drawing.Point(19, 127);
+            SortTitlesLabel.Name = "SortTitlesLabel";
+            SortTitlesLabel.Size = new System.Drawing.Size(62, 15);
+            SortTitlesLabel.TabIndex = 76;
+            SortTitlesLabel.Text = "Sort Titles:";
+            SortTitlesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // FindButton
+            // FindTitleButton
             // 
-            FindButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            FindButton.Location = new System.Drawing.Point(3, 63);
-            FindButton.Name = "FindButton";
-            FindButton.Size = new System.Drawing.Size(91, 23);
-            FindButton.TabIndex = 79;
-            FindButton.Text = "Find Title";
-            FindButton.UseVisualStyleBackColor = true;
-            FindButton.Click += FindButton_Click;
+            FindTitleButton.Font = new System.Drawing.Font("Segoe UI", 9F);
+            FindTitleButton.Location = new System.Drawing.Point(3, 93);
+            FindTitleButton.Name = "FindTitleButton";
+            FindTitleButton.Size = new System.Drawing.Size(91, 23);
+            FindTitleButton.TabIndex = 79;
+            FindTitleButton.Text = "Find Title";
+            FindTitleButton.UseVisualStyleBackColor = true;
+            FindTitleButton.Click += FindTitleButton_Click;
             // 
-            // FindtextBox
+            // ChangeFileButton
             // 
-            FindtextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            FindtextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            FindtextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            FindtextBox.Location = new System.Drawing.Point(100, 64);
-            FindtextBox.MaxLength = 40;
-            FindtextBox.Multiline = true;
-            FindtextBox.Name = "FindtextBox";
-            FindtextBox.Size = new System.Drawing.Size(221, 22);
-            FindtextBox.TabIndex = 77;
+            ChangeFileButton.Font = new System.Drawing.Font("Segoe UI", 9F);
+            ChangeFileButton.Location = new System.Drawing.Point(3, 63);
+            ChangeFileButton.Name = "ChangeFileButton";
+            ChangeFileButton.Size = new System.Drawing.Size(91, 23);
+            ChangeFileButton.TabIndex = 80;
+            ChangeFileButton.Text = "Change File";
+            ChangeFileButton.UseVisualStyleBackColor = true;
+            ChangeFileButton.Click += ChangeFileButton_Click;
             // 
-            // ChangeFilebutton
+            // FileEnumButton
             // 
-            ChangeFilebutton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            ChangeFilebutton.Location = new System.Drawing.Point(3, 33);
-            ChangeFilebutton.Name = "ChangeFilebutton";
-            ChangeFilebutton.Size = new System.Drawing.Size(91, 23);
-            ChangeFilebutton.TabIndex = 80;
-            ChangeFilebutton.Text = "Change File";
-            ChangeFilebutton.UseVisualStyleBackColor = true;
-            ChangeFilebutton.Click += ChangeFilebutton_Click;
+            FileEnumButton.Font = new System.Drawing.Font("Segoe UI", 9F);
+            FileEnumButton.Location = new System.Drawing.Point(3, 33);
+            FileEnumButton.Name = "FileEnumButton";
+            FileEnumButton.Size = new System.Drawing.Size(91, 23);
+            FileEnumButton.TabIndex = 78;
+            FileEnumButton.Text = "Change Title";
+            FileEnumButton.UseVisualStyleBackColor = true;
+            FileEnumButton.Click += FileEnumButton_Click;
             // 
-            // ChangeFilelabel
+            // SortTitlesComboBox
             // 
-            ChangeFilelabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            ChangeFilelabel.AutoSize = true;
-            ChangeFilelabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            ChangeFilelabel.Location = new System.Drawing.Point(100, 37);
-            ChangeFilelabel.Name = "ChangeFilelabel";
-            ChangeFilelabel.Size = new System.Drawing.Size(52, 15);
-            ChangeFilelabel.TabIndex = 81;
-            ChangeFilelabel.Text = "Filepath:";
-            ChangeFilelabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            SortTitlesComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            SortTitlesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            SortTitlesComboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            SortTitlesComboBox.FormattingEnabled = true;
+            SortTitlesComboBox.Items.AddRange(new object[] { "Title", "Filename", "Filepath", "Room", "Type" });
+            SortTitlesComboBox.Location = new System.Drawing.Point(103, 123);
+            SortTitlesComboBox.Name = "SortTitlesComboBox";
+            SortTitlesComboBox.Size = new System.Drawing.Size(230, 23);
+            SortTitlesComboBox.TabIndex = 73;
+            SortTitlesComboBox.SelectedIndexChanged += SortTitlesComboBox_SelectedIndexChanged;
+            // 
+            // FindTitleTextBox
+            // 
+            FindTitleTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            FindTitleTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            FindTitleTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            FindTitleTextBox.Location = new System.Drawing.Point(103, 93);
+            FindTitleTextBox.MaxLength = 40;
+            FindTitleTextBox.Multiline = true;
+            FindTitleTextBox.Name = "FindTitleTextBox";
+            FindTitleTextBox.Size = new System.Drawing.Size(230, 24);
+            FindTitleTextBox.TabIndex = 77;
+            // 
+            // ChangeFileLabel
+            // 
+            ChangeFileLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            ChangeFileLabel.AutoSize = true;
+            ChangeFileLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            ChangeFileLabel.Location = new System.Drawing.Point(103, 67);
+            ChangeFileLabel.Name = "ChangeFileLabel";
+            ChangeFileLabel.Size = new System.Drawing.Size(52, 15);
+            ChangeFileLabel.TabIndex = 81;
+            ChangeFileLabel.Text = "Filepath:";
+            ChangeFileLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // FileEnumTextBox
+            // 
+            FileEnumTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            FileEnumTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            FileEnumTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            FileEnumTextBox.Location = new System.Drawing.Point(103, 33);
+            FileEnumTextBox.MaxLength = 40;
+            FileEnumTextBox.Multiline = true;
+            FileEnumTextBox.Name = "FileEnumTextBox";
+            FileEnumTextBox.Size = new System.Drawing.Size(230, 24);
+            FileEnumTextBox.TabIndex = 69;
+            // 
+            // FileArrangementsLabel
+            // 
+            FileArrangementsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            FileArrangementsLabel.AutoSize = true;
+            FileArrangementsLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            FileArrangementsLabel.Location = new System.Drawing.Point(103, 7);
+            FileArrangementsLabel.Name = "FileArrangementsLabel";
+            FileArrangementsLabel.Size = new System.Drawing.Size(106, 15);
+            FileArrangementsLabel.TabIndex = 85;
+            FileArrangementsLabel.Text = "File Arrangements:";
+            FileArrangementsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // reverbtabPage
             // 
@@ -3012,19 +3070,19 @@ namespace Yaml_AudioTool_Rebuilt
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
         public System.Windows.Forms.Button RoomenableButton;
         private System.Windows.Forms.ToolStripMenuItem SettingsToolStripMenuItem;
-        public System.Windows.Forms.TextBox EnumtextBox;
+        public System.Windows.Forms.TextBox FileEnumTextBox;
         public System.Windows.Forms.ColumnHeader filenameHeader;
         private System.Windows.Forms.NumericUpDown MinDistancenumericUpDown;
         private System.Windows.Forms.NumericUpDown MaxDistancenumericUpDown;
         private System.Windows.Forms.TabPage organizetabPage;
         private System.Windows.Forms.TableLayoutPanel OrganizeLayoutPanel;
-        private System.Windows.Forms.Label SortLabel;
-        private System.Windows.Forms.ComboBox SortcomboBox;
-        private System.Windows.Forms.Button FindButton;
-        public System.Windows.Forms.TextBox FindtextBox;
-        private System.Windows.Forms.Button EnumButton;
-        private System.Windows.Forms.Button ChangeFilebutton;
-        private System.Windows.Forms.Label ChangeFilelabel;
+        private System.Windows.Forms.Label SortTitlesLabel;
+        private System.Windows.Forms.ComboBox SortTitlesComboBox;
+        private System.Windows.Forms.Button FindTitleButton;
+        public System.Windows.Forms.TextBox FindTitleTextBox;
+        private System.Windows.Forms.Button FileEnumButton;
+        private System.Windows.Forms.Button ChangeFileButton;
+        private System.Windows.Forms.Label ChangeFileLabel;
         private System.Windows.Forms.Label Stacklabel;
         public System.Windows.Forms.ColumnHeader stackHeader;
         public System.Windows.Forms.Button DestructiveEffectsButton;
@@ -3054,7 +3112,7 @@ namespace Yaml_AudioTool_Rebuilt
         public System.Windows.Forms.Button PitchenableButton;
         public NAudio.Gui.VolumeSlider MainVolumeSlider;
         public System.Windows.Forms.ComboBox FalloffcomboBox;
-        public System.Windows.Forms.ComboBox TypecomboBox;
+        public System.Windows.Forms.ComboBox SoundTypeComboBox;
         public System.Windows.Forms.ComboBox StackcomboBox;
         private System.Windows.Forms.GroupBox EQGroupBox;
         private System.Windows.Forms.TableLayoutPanel EQTableLayoutPanel;
@@ -3114,6 +3172,10 @@ namespace Yaml_AudioTool_Rebuilt
         public System.Windows.Forms.ColumnHeader eqband4gHeader;
         public System.Windows.Forms.ColumnHeader eqband4qHeader;
         public System.Windows.Forms.ColumnHeader eqonHeader;
+        private System.Windows.Forms.Label SoundTypeDefaultVolumeLabel;
+        public System.Windows.Forms.ComboBox SoundTypeDefaultVolumeComboBox;
+        private System.Windows.Forms.Button SoundTypeDefaultVolumeButton;
+        private System.Windows.Forms.Label FileArrangementsLabel;
     }
 }
 

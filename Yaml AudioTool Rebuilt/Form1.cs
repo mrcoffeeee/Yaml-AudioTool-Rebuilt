@@ -23,7 +23,8 @@ namespace Yaml_AudioTool_Rebuilt
 
         private bool stopFlag = false;
         public bool meterDecaying = false;
-        private string fileTime = "";        
+        private string fileTime = "";
+        private string[,] soundTypes = new string[5, 2] { { "MUSIC", "0,4" }, { "SFX", "0,5" }, { "UI", "0,6" }, { "SPEECH", "0,7" }, { "CUSTOM", "0,5" } };
         private readonly AudioPlayback ap = new();
 
         private static DestructiveEffectsEditor formDestructiveEffectsEditor;
@@ -53,6 +54,17 @@ namespace Yaml_AudioTool_Rebuilt
 
         private void PopulateComboboxes()
         {
+            // Sound Type Comboboxes
+            for (int i = 0; i < 5; i++)
+            {
+                SoundTypeComboBox.Items.Add(soundTypes[i, 0]);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                SoundTypeDefaultVolumeComboBox.Items.Add(soundTypes[i, 0] + ": " + soundTypes[i, 1]);
+            }
+
             // Filter Combobox
             var f = typeof(FilterType);
             List<string> filterNames = [.. f.GetFields().Select(x => x.Name)];
@@ -85,9 +97,9 @@ namespace Yaml_AudioTool_Rebuilt
             PitchenableButton.Text = "Off";
             PitchenableButton.BackColor = Color.Salmon;
             timeLabel.Text = "00:00";
-            EnumtextBox.Text = "";
+            FileEnumTextBox.Text = "";
             selectedsoundLabel.Text = "Selection: NONE";
-            ChangeFilelabel.Text = "Filepath:";
+            ChangeFileLabel.Text = "Filepath:";
         }
 
         private void ResetRoomValues()
@@ -289,7 +301,7 @@ namespace Yaml_AudioTool_Rebuilt
 
                 try
                 {
-                    EnumtextBox.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text;
+                    FileEnumTextBox.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text;
                     timeLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(durationHeader)].Text;
                     selectedsoundLabel.Text = "Filename: " + GetFilenameFromPath(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text);
                     MainVolumeSlider.Volume = Convert.ToSingle(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text);
@@ -306,10 +318,10 @@ namespace Yaml_AudioTool_Rebuilt
                     dopplervalueLabel.Text = Convert.ToString(dopplerValue);
                     LocalizecheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(localizeHeader)].Text);
                     StreamcheckBox.Checked = Convert.ToBoolean(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(streamHeader)].Text);
-                    TypecomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text;
+                    SoundTypeComboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text;
                     FalloffcomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(falloffHeader)].Text;
                     StackcomboBox.SelectedItem = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(stackHeader)].Text;
-                    ChangeFilelabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
+                    ChangeFileLabel.Text = FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(filepathHeader)].Text;
                     //PitchShifterValues
                     PitchPot.Value = Convert.ToDouble(FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text) * 100;
                     PitchvalueLabel.Text = "Pitch:\n" + FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(pitchHeader)].Text;
@@ -744,13 +756,13 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void TypecomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void SoundTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (FilelistView.SelectedItems.Count > 0)
             {
                 for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text = Convert.ToString(TypecomboBox.SelectedItem);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text = Convert.ToString(SoundTypeComboBox.SelectedItem);
                 }
             }
         }
@@ -820,16 +832,16 @@ namespace Yaml_AudioTool_Rebuilt
         //###                                                ###
         //######################################################
 
-        private void EnumButton_Click(object sender, EventArgs e)
+        private void FileEnumButton_Click(object sender, EventArgs e)
         {
             if (FilelistView.SelectedItems.Count == 1)
             {
-                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text = EnumtextBox.Text;
+                FilelistView.SelectedItems[0].SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text = FileEnumTextBox.Text;
                 FilelistView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
         }
 
-        private void ChangeFilebutton_Click(object sender, EventArgs e)
+        private void ChangeFileButton_Click(object sender, EventArgs e)
         {
             if (FilelistView.SelectedItems.Count == 1)
             {
@@ -847,35 +859,35 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void FindButton_Click(object sender, EventArgs e)
+        private void FindTitleButton_Click(object sender, EventArgs e)
         {
-            if (FindButton.Text == "Find Title" &&
-                FindtextBox.Text != "" &&
+            if (FindTitleButton.Text == "Find Title" &&
+                FindTitleTextBox.Text != "" &&
                 FilelistView.Items.Count > 0)
             {
                 foreach (ListViewItem item in FilelistView.Items)
                 {
-                    if (item.SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text.Contains(FindtextBox.Text) ||
-                        item.SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text.Contains(FindtextBox.Text))
+                    if (item.SubItems[FilelistView.Columns.IndexOf(titleHeader)].Text.Contains(FindTitleTextBox.Text) ||
+                        item.SubItems[FilelistView.Columns.IndexOf(filenameHeader)].Text.Contains(FindTitleTextBox.Text))
                     {
                         item.BackColor = Color.Salmon;
                     }
                 }
-                FindButton.Text = "Reset";
+                FindTitleButton.Text = "Reset";
             }
 
-            else if (FindButton.Text == "Reset")
+            else if (FindTitleButton.Text == "Reset")
             {
                 foreach (ListViewItem item in FilelistView.Items)
                 {
                     item.BackColor = SystemColors.Window;
                 }
-                FindButton.Text = "Find Title";
-                FindtextBox.Text = "";
+                FindTitleButton.Text = "Find Title";
+                FindTitleTextBox.Text = "";
             }
         }
 
-        private void SortcomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void SortTitlesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (FilelistView.Items.Count > 1)
             {
@@ -891,11 +903,23 @@ namespace Yaml_AudioTool_Rebuilt
                     FilelistView.Columns.IndexOf(typeHeader)
                 ];
 
-                lvwColumnSorter.SortColumn = Columns[SortcomboBox.SelectedIndex];
+                lvwColumnSorter.SortColumn = Columns[SortTitlesComboBox.SelectedIndex];
                 lvwColumnSorter.Order = SortOrder.Ascending;
 
                 FilelistView.Sort();
 
+            }
+        }
+
+        private void SoundTypeDefaultVolumeButton_Click(object sender, EventArgs e)
+        {
+            if (FilelistView.SelectedItems.Count > 0 && SoundTypeDefaultVolumeComboBox.SelectedIndex != -1)
+            {
+                MessageBox.Show(
+                        "This will reset the volume settings of all selected " + soundTypes[SoundTypeDefaultVolumeComboBox.SelectedIndex, 0] + "-files to their preset value " + soundTypes[SoundTypeDefaultVolumeComboBox.SelectedIndex, 1] + ".\n\nDo you really want to proceed?",
+                        "Volume Reset: " + soundTypes[SoundTypeDefaultVolumeComboBox.SelectedIndex, 0],
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
             }
         }
 
@@ -1534,7 +1558,6 @@ namespace Yaml_AudioTool_Rebuilt
 
 
         #endregion Property-Effects
-
     }
 
     public class ListViewColumnSorter : IComparer
