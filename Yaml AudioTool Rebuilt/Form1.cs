@@ -24,7 +24,7 @@ namespace Yaml_AudioTool_Rebuilt
         private bool stopFlag = false;
         public bool meterDecaying = false;
         private string fileTime = "";
-        private string[,] soundTypes = new string[5, 2] { { "MUSIC", "0,4" }, { "SFX", "0,5" }, { "UI", "0,6" }, { "SPEECH", "0,7" }, { "CUSTOM", "0,5" } };
+        private readonly string[,] soundTypes = new string[5, 2] { { "MUSIC", "0,400" }, { "SFX", "0,500" }, { "UI", "0,600" }, { "SPEECH", "0,700" }, { "CUSTOM", "0,500" } };
         private readonly AudioPlayback ap = new();
 
         private static DestructiveEffectsEditor formDestructiveEffectsEditor;
@@ -55,14 +55,9 @@ namespace Yaml_AudioTool_Rebuilt
         private void PopulateComboboxes()
         {
             // Sound Type Comboboxes
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < soundTypes.GetLength(0); i++)
             {
-                SoundTypeComboBox.Items.Add(soundTypes[i, 0]);
-            }
-
-            for (int i = 0; i < 5; i++)
-            {
-                SoundTypeDefaultVolumeComboBox.Items.Add(soundTypes[i, 0] + ": " + soundTypes[i, 1]);
+                SoundTypeComboBox.Items.Add(soundTypes[i, 0] + ": " + soundTypes[i, 1]);
             }
 
             // Filter Combobox
@@ -760,9 +755,26 @@ namespace Yaml_AudioTool_Rebuilt
         {
             if (FilelistView.SelectedItems.Count > 0)
             {
+                if (ValueResetCheckBox.Checked)
+                {
+                    var result = MessageBox.Show(
+                        "This will reset the volume settings of all selected " + soundTypes[SoundTypeComboBox.SelectedIndex, 0] + "-files to their preset value " + soundTypes[SoundTypeComboBox.SelectedIndex, 1] + ".\n\nDo you really want to proceed?",
+                        "Volume Reset: " + soundTypes[SoundTypeComboBox.SelectedIndex, 0],
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
+                        {
+                            FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(volumeHeader)].Text = soundTypes[SoundTypeComboBox.SelectedIndex, 1];
+                        }
+                    }
+                }
+
                 for (int a = 0; a < FilelistView.SelectedItems.Count; a++)
                 {
-                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text = Convert.ToString(SoundTypeComboBox.SelectedItem);
+                    FilelistView.SelectedItems[a].SubItems[FilelistView.Columns.IndexOf(typeHeader)].Text = soundTypes[SoundTypeComboBox.SelectedIndex, 0];
                 }
             }
         }
@@ -911,17 +923,6 @@ namespace Yaml_AudioTool_Rebuilt
             }
         }
 
-        private void SoundTypeDefaultVolumeButton_Click(object sender, EventArgs e)
-        {
-            if (FilelistView.SelectedItems.Count > 0 && SoundTypeDefaultVolumeComboBox.SelectedIndex != -1)
-            {
-                MessageBox.Show(
-                        "This will reset the volume settings of all selected " + soundTypes[SoundTypeDefaultVolumeComboBox.SelectedIndex, 0] + "-files to their preset value " + soundTypes[SoundTypeDefaultVolumeComboBox.SelectedIndex, 1] + ".\n\nDo you really want to proceed?",
-                        "Volume Reset: " + soundTypes[SoundTypeDefaultVolumeComboBox.SelectedIndex, 0],
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Warning);
-            }
-        }
 
         #endregion Property-Organize
 
